@@ -4,9 +4,9 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <head>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/fullcalendar.css" />" />
-<script type="text/javascript" src="<c:url value="/resources/js/moment.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/fullcalendar.js" />"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.css" />" />
+<script type="text/javascript" src="<c:url value="/bower/components/moment/min/moment.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.js" />"></script>
 <script>
 $(document).ready(function() {
 
