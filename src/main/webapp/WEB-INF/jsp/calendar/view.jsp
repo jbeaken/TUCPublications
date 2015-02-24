@@ -24,7 +24,9 @@ $(document).ready(function() {
 	       // alert('Current view: ' + view.name);
 
 	        // change the day's background color just for fun
-	        window.href.location = "/bookmarks/events/displayAddFromCalendar?startDate=" + date.format();
+	        var startDate = moment(date).format('DD/MM/YYYY'); 
+	        console.log(startDate)
+	        window.location.href = "/bookmarks/events/displayAddFromCalendar?startDate=" + startDate;
 	       // $(this).css('background-color', 'red');
 
     	}

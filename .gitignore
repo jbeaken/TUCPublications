@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 src/main/resources/spring/application.prod.properties
+=======
+/target/
+>>>>>>> e8af314... image width on customer order search, calendar add

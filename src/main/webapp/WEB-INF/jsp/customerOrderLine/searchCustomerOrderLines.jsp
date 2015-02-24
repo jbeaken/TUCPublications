@@ -119,9 +119,9 @@
 			   defaultorder="ascending"
 			   id="searchTable">
 					  <display:column sortable="true" sortName="col.id"  property="id" title="No."/>
-					  <display:column title="Image">
+					  <display:column title="Image" style="max-width : 30px">
 					    <c:if test="${searchTable.stockItem.imageURL != null}">
-					      <img src="${searchTable.stockItem.imageURL}" style="width : 50px"/>
+					      <img src="${searchTable.stockItem.imageURL}" style="max-width : 100%"/>
 					    </c:if>
 					    <c:if test="${searchTable.stockItem.imageURL == null}">
 					      No Image
@@ -187,9 +187,9 @@
 	   <display:setProperty name="export.pdf.filename" value="customerOrders.pdf"/> 				   
 	   <display:setProperty name="export.csv.filename" value="customerOrders.txt"/> 					   
 					  <display:column sortable="true" sortName="col.id" property="id" title="No." media="html"/>
-					  <display:column title="Image" style="width:10px">
+					  <display:column title="Image" style="max-width:30px">
 						    <c:if test="${searchTable.stockItem.imageURL != null}">
-						      <img src="${searchTable.stockItem.imageURL}" style="max-width : 20%"/>
+						      <img src="${searchTable.stockItem.imageURL}" style="max-width : 100%"/>
 						    </c:if>
 						    <c:if test="${searchTable.stockItem.imageURL == null}">
 						      No Image
