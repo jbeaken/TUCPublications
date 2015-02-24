@@ -83,9 +83,9 @@ public class EventController extends AbstractBookmarksController {
 	}
 	
 	
-	@RequestMapping(value="/getJson")
+	@RequestMapping(value="/getJson", method = RequestMethod.GET)
 	@ResponseBody
-	public Collection<CalendarEvent> getJson(HttpServletRequest request, ModelMap modelMap) {
+	public Collection<CalendarEvent> getJson() {
 		
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		Calendar c = new GregorianCalendar();
