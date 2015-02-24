@@ -217,6 +217,13 @@ public class EventController extends AbstractBookmarksController {
 		modelMap.addAttribute(EventType.values());
 		return "addEvent";
 	}
+
+@RequestMapping(value="/displayAddFromCalendar", method=RequestMethod.GET)
+	public String displayAddFromCalendar(Event event, ModelMap modelMap) {
+		modelMap.addAttribute(new Event());
+		modelMap.addAttribute(EventType.values());
+		return "addEvent";
+	}	
 	
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
