@@ -121,7 +121,7 @@
 					  <display:column sortable="true" sortName="col.id"  property="id" title="No."/>
 					  <display:column title="Image">
 					    <c:if test="${searchTable.stockItem.imageURL != null}">
-					      <img src="${searchTable.stockItem.imageURL}" style="max-width : 20%"/>
+					      <img src="${searchTable.stockItem.imageURL}" style="width : 50px"/>
 					    </c:if>
 					    <c:if test="${searchTable.stockItem.imageURL == null}">
 					      No Image
