@@ -1,0 +1,10 @@
+delete from customer_customerorderline;
+delete from invoice_customerorderline;
+delete from invoice_invoiceorderline;
+delete from customerorderline_supplierdeliveryline;
+delete from supplierdelivery_supplierdeliveryline;
+delete from customerorderline;
+delete from sale;
+delete from invoiceorderline;
+delete from supplierdeliveryline;
+delete from invoice;
