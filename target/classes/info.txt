@@ -1,0 +1,7 @@
+Reorder Review
+
+import org.bookmarks.controller.bean.MonthlySaleReportBean;
+
+Monthly sales populated in service.SaleReportServiceImpl.populate
+
+reports/stockItemMonthlySaleReportFragment.jsp

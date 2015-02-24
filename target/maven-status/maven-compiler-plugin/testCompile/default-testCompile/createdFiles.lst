@@ -1,0 +1,6 @@
+org/bookmarks/test/CustomerOrderLineTests.class
+org/bookmarks/test/CustomerTests.class
+org/bookmarks/test/ChipsTests.class
+org/bookmarks/test/StockItemTests.class
+org/bookmarks/test/AbstractBookmarkWebsiteTests.class
+org/bookmarks/test/InvoiceTests.class
