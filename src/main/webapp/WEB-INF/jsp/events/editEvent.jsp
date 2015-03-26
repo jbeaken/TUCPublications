@@ -131,7 +131,9 @@
                 // Replace the <textarea id="editor1"> with a CKEditor
                 // instance, using default configuration.
                 CKEDITOR.replace( 'editor1', {
-                	extraPlugins = 'div';
+                	extraPlugins : 'div',
+                	customConfig : '',
+                	autoParagraph : false;
                 } );
             </script>  	 	 	 	 
 	</div>	
