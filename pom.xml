@@ -7,24 +7,24 @@
 	<version>2.0-beta</version>
 	<name>bookmarks</name>
 	<properties>
-        <java.version>1.7</java.version>
-        <groovy.version>2.1.1</groovy.version>
+    <java.version>1.7</java.version>
+    <groovy.version>2.1.1</groovy.version>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
 	<!-- Spring -->
-        <spring.version>4.1.4.RELEASE</spring.version>
+    <spring.version>4.1.5.RELEASE</spring.version>
         
-        <!-- Spring Data -->
-        <spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>                
+    <!-- Spring Data -->
+    <spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>                
 
 	<!-- Hibernate -->
-        <hibernate.version>4.3.5.Final</hibernate.version>
-        <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-        <hibernate.search.version>4.1.1.Final</hibernate.search.version> 
+    <hibernate.version>4.3.5.Final</hibernate.version>
+    <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+    <hibernate.search.version>4.1.1.Final</hibernate.search.version> 
 
-        <groovy.eclipse.compiler.version>2.7.0-01</groovy.eclipse.compiler.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+    <groovy.eclipse.compiler.version>2.7.0-01</groovy.eclipse.compiler.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
 
 	<spring.integration.version>2.1.0.RELEASE</spring.integration.version>
 	<slf4j.version>1.7.5</slf4j.version>

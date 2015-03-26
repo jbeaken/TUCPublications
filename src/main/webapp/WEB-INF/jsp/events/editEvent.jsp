@@ -123,9 +123,7 @@
 	 	 </div>
 	</div>	
 	
-	
-		
-      <div class="row">
+	<div class="row">
 			<textarea name="description" id="editor1" rows="20" cols="80">
                 ${event.description}
             </textarea>	
@@ -133,7 +131,7 @@
                 // Replace the <textarea id="editor1"> with a CKEditor
                 // instance, using default configuration.
                 CKEDITOR.replace( 'editor1', {
-                	enterMode : 'ENTER_P'
+                	extraPlugins = 'div';
                 } );
             </script>  	 	 	 	 
 	</div>	
