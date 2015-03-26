@@ -270,13 +270,13 @@ public class EventController extends AbstractBookmarksController {
 			description = description.replace("<br/>", "");
 			event.setDescription(description);
 		}
-		
+		logger.info("AFTER:" + event.getDescription());
 		if(event.getNote() != null && event.getNote().trim().equals("")){
 			event.setNote(null);
 		}
 		
 		eventService.update(event);
-		
+		logger.info("AFTER_UPDATE:" + event.getDescription());
 		//Redirect
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		eventSearchBean.getEvent().setName(event.getName());
@@ -287,6 +287,8 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Long id, ModelMap modelMap) {
 		Event event = eventService.get(id);
+
+		logger.info(event.getDescription());
 		
 		modelMap.addAttribute(EventType.values());
 		modelMap.addAttribute(event);

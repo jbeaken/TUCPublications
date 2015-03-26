@@ -18,29 +18,17 @@ public class EventServiceImpl extends AbstractService<Event> implements EventSer
 	public Repository<Event> getRepository() {
 		return eventRepository;
 	}
-
 	
 	@Override
 	public void save(Event event) {
-		cleanDescription(event);
 		super.save(event);
 	}
 	
 	@Override
 	public void update(Event event) {
-		cleanDescription(event);
 		super.update(event);
 	}	
 	
-	private void cleanDescription(Event event) {
-		if(event.getDescription() != null) {
-			String description = event.getDescription();
-			description = description.replace("\r", "");
-			description = description.replace("\n", "<br/>");
-			event.setDescription(description);
-		}
-	}
-
 	@Override
 	public Collection<Event> getChipsEvents() {
 		return eventRepository.getChipsEvents();
