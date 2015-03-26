@@ -133,7 +133,7 @@
                 CKEDITOR.replace( 'editor1', {
                 	extraPlugins : 'div',
                 	customConfig : '',
-                	autoParagraph : false;
+                	autoParagraph : false
                 } );
             </script>  	 	 	 	 
 	</div>	
