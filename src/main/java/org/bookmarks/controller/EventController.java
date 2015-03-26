@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 import org.bookmarks.controller.bean.CalendarEvent;
@@ -56,6 +59,8 @@ public class EventController extends AbstractBookmarksController {
 	
 	@Value("#{ applicationProperties['imageFileLocation'] }")
 	private String imageFileLocation;	
+
+	private Logger logger = LoggerFactory.getLogger(EventController.class);
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	public @ResponseBody String search(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
@@ -239,6 +244,8 @@ public class EventController extends AbstractBookmarksController {
 		
 		EventValidator eventValidator = new EventValidator();
 		eventValidator.validate(event, bindingResult);
+
+		logger.info(event.getDescription());
 		
 		//Check for errors
 		if(bindingResult.hasErrors()){

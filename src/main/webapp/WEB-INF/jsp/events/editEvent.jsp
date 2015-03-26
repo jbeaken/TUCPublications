@@ -128,12 +128,9 @@
                 ${event.description}
             </textarea>	
  			<script>
-                // Replace the <textarea id="editor1"> with a CKEditor
-                // instance, using default configuration.
                 CKEDITOR.replace( 'editor1', {
                 	extraPlugins : 'div',
-                	customConfig : '',
-                	autoParagraph : false
+                	customConfig : ''
                 } );
             </script>  	 	 	 	 
 	</div>	
