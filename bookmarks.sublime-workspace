@@ -12,35 +12,43 @@
 	"buffers":
 	[
 		{
-			"file": "src/main/webapp/WEB-INF/jsp/calendar/view.jsp",
-			"settings":
-			{
-				"buffer_size": 1449,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
-				"buffer_size": 9999,
+				"buffer_size": 10295,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
+			"file": "src/main/webapp/resources/ckeditor/config.js",
 			"settings":
 			{
-				"buffer_size": 15449,
+				"buffer_size": 334,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "pom.xml",
+			"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 			"settings":
 			{
-				"buffer_size": 23683,
+				"buffer_size": 22811,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/resources/META-INF/persistence.xml",
+			"settings":
+			{
+				"buffer_size": 1308,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/service/EventServiceImpl.java",
+			"settings":
+			{
+				"buffer_size": 788,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -68,6 +76,17 @@
 	},
 	"file_history":
 	[
+		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/editEvent.jsp",
+		"/home/git/bookmarks/pom.xml",
+		"/home/git/puma/pom.xml",
+		"/home/git/bmw/src/main/webapp/WEB-INF/thymeleaf/public/home.html",
+		"/home/git/paper/grails-app/views/article/create.gsp",
+		"/home/git/paper/grails-app/assets/javascripts/ckconfig.js",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/calendar/view.jsp",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
 		"/home/git/bookmarks/bookmarks.sublime-workspace",
 		"/home/svn/bmw/src/main/webapp/WEB-INF/thymeleaf/decorator/sidebar.html",
 		"/home/svn/bmw/src/main/webapp/WEB-INF/thymeleaf/public/sponsor.html",
@@ -105,9 +124,17 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"edit",
+			"servlet",
+			"tomcat.version",
+			"tomcat",
+			".\n",
+			"false",
+			"'\n",
+			"ckeditor",
 			"bower_",
 			"window",
 			"spon",
@@ -141,49 +168,23 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/main/webapp/WEB-INF/jsp/calendar/view.jsp",
-					"settings":
-					{
-						"buffer_size": 1449,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								659,
-								659
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "src/main/java/org/bookmarks/controller/EventController.java",
 					"settings":
 					{
-						"buffer_size": 9999,
+						"buffer_size": 10295,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7443,
-								7443
+								9277,
+								9277
 							]
 						],
 						"settings":
@@ -192,52 +193,78 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3060.0,
+						"translation.y": 4029.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/main/webapp/resources/ckeditor/config.js",
+					"settings":
+					{
+						"buffer_size": 334,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
+					"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 					"settings":
 					{
-						"buffer_size": 15449,
+						"buffer_size": 22811,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6600,
-								6600
+								865,
+								809
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2028.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "pom.xml",
+					"file": "src/main/resources/META-INF/persistence.xml",
 					"settings":
 					{
-						"buffer_size": 23683,
+						"buffer_size": 1308,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1442,
-								1442
+								1178,
+								1178
 							]
 						],
 						"settings":
@@ -245,6 +272,33 @@
 							"syntax": "Packages/XML/XML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/main/java/org/bookmarks/service/EventServiceImpl.java",
+					"settings":
+					{
+						"buffer_size": 788,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								537,
+								537
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -301,12 +355,36 @@
 		"selected_items":
 		[
 			[
-				"searchcust",
-				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
+				"eventservim",
+				"main/java/org/bookmarks/service/EventServiceImpl.java"
+			],
+			[
+				"pers",
+				"main/resources/META-INF/persistence.xml"
+			],
+			[
+				"sic",
+				"main/java/org/bookmarks/controller/StockItemController.java"
+			],
+			[
+				"stocic",
+				"main/java/org/bookmarks/controller/StockItemController.java"
 			],
 			[
 				"eventcon",
 				"main/java/org/bookmarks/controller/EventController.java"
+			],
+			[
+				"edit.j",
+				"main/webapp/WEB-INF/jsp/events/editEvent.jsp"
+			],
+			[
+				"config.j",
+				"main/webapp/resources/ckeditor/config.js"
+			],
+			[
+				"searchcust",
+				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
 			],
 			[
 				"view.",
