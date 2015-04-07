@@ -51,6 +51,14 @@ public class CustomerOrderLine extends OrderLine {
 	
 	private Boolean isSecondHand = false;
 	
+	private Boolean isEncrypted = false;
+	
+	public Boolean getIsEncrypted() {
+		return isEncrypted;
+	}
+	public void setIsEncrypted(Boolean isEncrypted) {
+		this.isEncrypted = isEncrypted;
+	}
 	private Boolean havePrintedLabel = false;
 
 	public Boolean getHavePrintedLabel() {

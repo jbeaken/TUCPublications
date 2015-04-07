@@ -152,7 +152,8 @@
 	    <property name="hibernateProperties">
 	    	<props>
 				<prop key="hibernate.connection.useUnicode">true</prop>
-				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>    		
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>    
+				<prop key="hibernate.connection.charSet">UTF-8</prop>		
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
@@ -209,6 +210,7 @@
 	    	<props>
 	    		<prop key="hibernate.connection.useUnicode">true</prop>
 				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>	
             	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
             	<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 				<prop key="hibernate.show_sql">false</prop>

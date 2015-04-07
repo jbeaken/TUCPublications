@@ -237,26 +237,23 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 					
 					customerRepository.saveOrUpdate(beansCustomer);
 					
-					//Decrypt if necessary
-					//TODO, only decrypt for viewing!!
-					if(chipsCustomer.getPaymentType() == PaymentType.CREDIT_CARD) {
-						StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-						textEncryptor.setPassword(passwd);
-						
-						CreditCard creditCard = chipsCustomer.getCreditCard();
-						
-						String decyptedSecutityCode = textEncryptor.decrypt(creditCard.getSecurityCode());
-						String decyptedCreditCard4 = textEncryptor.decrypt(creditCard.getCreditCard4());
-						
-						creditCard.setSecurityCode(decyptedSecutityCode);
-						creditCard.setCreditCard4(decyptedCreditCard4);
-					}
+					//Decrypt firstname and lastname
+					//Rest of fields are encrypted on customerOrderLine.edit()
+					StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+					textEncryptor.setPassword(passwd);
+					
+					String decyptedLastname = textEncryptor.decrypt(chipsCustomer.getLastName());
+					String decyptedFirstname = textEncryptor.decrypt(chipsCustomer.getFirstName());
+					
+					chipsCustomer.setFirstName(decyptedFirstname);
+					chipsCustomer.setLastName(decyptedLastname);
 					
 					//Build up Beans CustomerOrderLines
 					beansCustomer.setCustomerOrderLines(new HashSet<CustomerOrderLine>());
 					
 					for(OrderLine chipsOl : chipsCustomer.getOrders()) {
 						CustomerOrderLine beansOl = new CustomerOrderLine();
+						beansOl.setIsEncrypted(true);
 						
 						beansOl.setAmount(new Long(chipsOl.getQuantity()));
 						beansOl.setSellPrice(chipsOl.getSellPrice());

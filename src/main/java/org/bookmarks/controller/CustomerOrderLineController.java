@@ -39,9 +39,12 @@ import org.bookmarks.service.SupplierOrderLineService;
 import org.bookmarks.service.SupplierOrderService;
 import org.bookmarks.util.PDFLabels;
 import org.bookmarks.website.domain.Address;
+import org.bookmarks.website.domain.CreditCard;
 import org.bookmarks.website.domain.DeliveryType;
 import org.bookmarks.website.domain.PaymentType;
+import org.jasypt.util.text.StrongTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -85,6 +88,9 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@Autowired
 	private CustomerOrderLineValidator customerOrderLineValidator;
+	
+	@Value("#{ applicationProperties['thingy'] }")
+	private String thingy;	
 
 	/**
 	 * @param id
@@ -242,6 +248,69 @@ public class CustomerOrderLineController extends OrderLineController {
 		modelMap.addAttribute(customerOrderLine.getCustomer());
 		modelMap.addAttribute(customerOrderLine.getStockItem());
 		modelMap.addAttribute(CustomerOrderLineStatus.values());
+		
+		//Decrypt if necessary
+		StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+		textEncryptor.setPassword(thingy);
+		
+		Customer customer = customerOrderLine.getCustomer();
+		
+		Address address = customerOrderLine.getAddress();
+		
+		if(address != null) {
+			if(address.getAddress1() != null) {
+				String temp = textEncryptor.decrypt(address.getAddress1());
+				address.setAddress1(temp);
+			}
+			if(address.getAddress2() != null) {
+				String temp = textEncryptor.decrypt(address.getAddress2());
+				address.setAddress2(temp);
+			}
+			if(address.getAddress3() != null) {
+				String temp = textEncryptor.decrypt(address.getAddress3());
+				address.setAddress3(temp);
+			}
+			if(address.getCountry() != null) {
+				String temp = textEncryptor.decrypt(address.getCountry());
+				address.setCountry(temp);
+			}	
+			if(address.getCity() != null) {
+				String temp = textEncryptor.decrypt(address.getCity());
+				address.setCity(temp);
+			}				
+		}
+		
+		CreditCard creditCard = customerOrderLine.getCreditCard();
+		
+		if(creditCard != null) {
+			if(creditCard.getCreditCard1() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getCreditCard1());
+				creditCard.setCreditCard1(temp);
+			}
+			if(creditCard.getCreditCard2() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getCreditCard2());
+				creditCard.setCreditCard2(temp);
+			}
+			if(creditCard.getCreditCard3() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getCreditCard3());
+				creditCard.setCreditCard3(temp);
+			}
+			if(creditCard.getSecurityCode() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getSecurityCode());
+				creditCard.setSecurityCode(temp);
+			}	
+			if(creditCard.getExpiryMonth() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getExpiryMonth());
+				creditCard.setExpiryMonth(temp);
+			}
+			if(creditCard.getExpiryYear() != null) {
+				String temp = textEncryptor.decrypt(creditCard.getExpiryYear());
+				creditCard.setExpiryYear(temp);
+			}			
+		}		
+		
+		
+		
 
 		return "editCustomerOrderLine";
 	}
