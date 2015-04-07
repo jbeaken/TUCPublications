@@ -142,7 +142,7 @@
         <property name="timeBetweenEvictionRunsMillis" value="1800000"/>
         <property name="numTestsPerEvictionRun" value="3"/>
         <property name="minEvictableIdleTimeMillis" value="1800000"/>
-        <property name="validationQuery" value="SELECT 1"/>	    
+        <property name="validationQuery" value="SELECT 1"/>	  
 	</bean>
  	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource"/>
@@ -151,6 +151,8 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
+				<prop name="hibernate.connection.useUnicode" value="true" />
+				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	    		
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
@@ -177,6 +179,8 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
+	    		<prop name="hibernate.connection.useUnicode" value="true" />
+				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
@@ -202,6 +206,8 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
+	    		<prop name="hibernate.connection.useUnicode" value="true" />
+				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	
             	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
             	<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 				<prop key="hibernate.show_sql">false</prop>
