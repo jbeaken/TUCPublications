@@ -608,7 +608,8 @@ public class SupplierDeliveryController extends OrderLineController {
 	public String cancel(ModelMap modelMap, HttpSession session) {
 		session.removeAttribute("supplierDelivery");
 		session.removeAttribute("supplierDeliveryLinesMap");
-		return stockItemController.displaySearch(new StockItemSearchBean(), session, modelMap);
+		addSuccess("Have Cancelled Supplier Delivery", modelMap);
+		return "welome";
 	}
 
 	@Override
