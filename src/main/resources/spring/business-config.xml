@@ -133,7 +133,7 @@
 <beans profile="prod,mini-beans">
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://localhost/bookmarks"/>
+	    <property name="url" value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8"/>
 	    <property name="username" value="${db.beans.user}"/>
 	    <property name="password" value="${db.beans.password}"/>
         <property name="testOnBorrow" value="true"/>
@@ -151,8 +151,8 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
-				<prop name="hibernate.connection.useUnicode" value="true" />
-				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	    		
+				<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>    		
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
@@ -168,7 +168,7 @@
 <beans profile="dev">
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://localhost/bookmarks"/>
+	    <property name="url" value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8"/>
 	    <property name="username" value="${db.beans.user}"/>
 	    <property name="password" value="${db.beans.password}"/>
 	</bean>
@@ -179,8 +179,9 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
-	    		<prop name="hibernate.connection.useUnicode" value="true" />
-				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	
+	    		<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>		
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
@@ -206,8 +207,8 @@
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
-	    		<prop name="hibernate.connection.useUnicode" value="true" />
-				<prop name="hibernate.connection.characterEncoding" value="UTF-8" />	
+	    		<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
             	<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
             	<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
 				<prop key="hibernate.show_sql">false</prop>
