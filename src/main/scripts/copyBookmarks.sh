@@ -11,6 +11,3 @@ shred bm.sql
 rm bm.sql
 
 echo "Bookmarks database done!"
-
-
-
