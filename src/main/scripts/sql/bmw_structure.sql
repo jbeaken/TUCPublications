@@ -28,7 +28,7 @@ CREATE TABLE `author` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_or6k6jmywerxbme223c988bmg` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +57,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`),
   KEY `FK_81thrbnb8c08gua7tvqj7xdqk` (`parent_id`),
   CONSTRAINT `FK_81thrbnb8c08gua7tvqj7xdqk` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,7 +83,7 @@ CREATE TABLE `category_categories` (
   UNIQUE KEY `UK_7um9d6vh8tpm6caj3ics9jjax` (`categories`),
   CONSTRAINT `FK_s52fgdy2v2gjx1b795j9l9ua6` FOREIGN KEY (`category`) REFERENCES `category` (`id`),
   CONSTRAINT `FK_7um9d6vh8tpm6caj3ics9jjax` FOREIGN KEY (`categories`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `comment` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_gplwv1k6khglovl9nsjmc0ai1` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `customer` (
   `payment_type` varchar(255) NOT NULL,
   `pending_consumption` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -191,7 +191,7 @@ CREATE TABLE `event` (
   UNIQUE KEY `UK_mt8ulcc4k7fnc56rxaeu1sa33` (`name`),
   KEY `FK_9vomkx3y0w408eqkaptii98e9` (`stockitem_id`),
   CONSTRAINT `FK_9vomkx3y0w408eqkaptii98e9` FOREIGN KEY (`stockitem_id`) REFERENCES `stock_item` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `order_line` (
   KEY `FK_1ulg0qibm67hamjfx0sm430rd` (`stock_item`),
   CONSTRAINT `FK_1ulg0qibm67hamjfx0sm430rd` FOREIGN KEY (`stock_item`) REFERENCES `stock_item` (`id`),
   CONSTRAINT `FK_3o5umo9vljpmas3s0gipm19m6` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +252,7 @@ CREATE TABLE `reading_list` (
   `is_on_website` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_fwsvxydyl5u3x3r2qv1owp1k3` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -282,7 +282,7 @@ CREATE TABLE `reading_list_stock_item` (
   KEY `FK_8wunn4eyqjd4ijbn70fab3a24` (`stockitem_id`),
   CONSTRAINT `FK_8wunn4eyqjd4ijbn70fab3a24` FOREIGN KEY (`stockitem_id`) REFERENCES `stock_item` (`id`),
   CONSTRAINT `FK_6v5o4xqyfnmvvig74m5ajud30` FOREIGN KEY (`readinglist_id`) REFERENCES `reading_list` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +348,7 @@ CREATE TABLE `stock_item` (
   UNIQUE KEY `UK_fnayeqhxmjoq9wlgaapwob5ii` (`isbn_as_number`),
   KEY `FK_d5yvxlbyikal47vicsume7esj` (`category_id`),
   CONSTRAINT `FK_d5yvxlbyikal47vicsume7esj` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -374,7 +374,7 @@ CREATE TABLE `stock_item_authors` (
   KEY `FK_emom8hxq3txd9muvsj1ncqlod` (`author_id`),
   CONSTRAINT `FK_my4ug7uuxjnmrjmb3rl4mvfk2` FOREIGN KEY (`stockitem_id`) REFERENCES `stock_item` (`id`),
   CONSTRAINT `FK_emom8hxq3txd9muvsj1ncqlod` FOREIGN KEY (`author_id`) REFERENCES `author` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
