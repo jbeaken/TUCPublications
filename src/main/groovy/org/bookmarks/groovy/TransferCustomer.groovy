@@ -35,7 +35,7 @@ def customer1Name = customer1.getAt(0) + " " + customer1.getAt(1)
 def customer2Name = customer2.getAt(0) + " " + customer2.getAt(1)
 println "Transfering from ${customer2Id} ${customer2Name} to ${customer1Id} ${customer1Name}"
 
-if(customer1.getAt(1) != customer2.getAt(1)) {
+if(customer1.getAt(1).toLowerCase() != customer2.getAt(1).toLowerCase()) {
 	println "Customer names don't match"
 	System.exit(0);
 }
