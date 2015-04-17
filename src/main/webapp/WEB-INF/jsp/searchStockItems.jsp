@@ -58,9 +58,9 @@ Nothing Found
   <display:column property="mainAuthor" maxLength="15" title="Authors"/>
   <display:column property="prices" sortable="true" sortName="s.sellPrice" title="Sell/Pub/Cost"/>
   <display:column property="quantities" sortable="true" sortName="s.quantityInStock" title="S/O/C/R/M" />
-  <display:column property="priceForMarxism" media="xls excel csv pdf" title="Marxism Price" />
-  <display:column property="realQuantityForMarxism" media="xls excel csv pdf" title="Real Quantity For Marxism" />
-  <display:column property="priceMissingForMarxism" media="xls excel csv pdf" title="Real Marxism Price" />	
+  <display:column property="priceForMarxism" media="excel csv pdf" title="Marxism Price" />
+  <display:column property="realQuantityForMarxism" media="excel csv pdf" title="Real Quantity For Marxism" />
+  <display:column property="priceMissingForMarxism" media="excel csv pdf" title="Real Marxism Price" />	
 <display:column title="Actions" media="html" style="width:10%">
 					  	<div class="btn-group">
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
