@@ -29,5 +29,7 @@
 	<td colspan="3" style="border:5px solid SteelBlue;white-space:nowrap;">Total</td>
 	<td style="border:5px solid SteelBlue;white-space:nowrap;">${customerOrder.totalPrice}</td>
 </tbody>
+
+<h2>The price does not include any postage and packing
 </table>
 

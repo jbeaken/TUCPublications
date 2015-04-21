@@ -161,6 +161,7 @@
 						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
 						    <li><a href="javascript:window.open('http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=${searchTable.stockItem.isbn}&rh=n%3A266239%2Ck%3A9780952203834','_blank');javascript:window.open('/bookmarks/customerOrderLine/gotoGardners','_blank');">Supplier Lookup</a></li>
 						    <li class="divider"></li>						   
 						  </ul>
@@ -187,7 +188,7 @@
 	   <display:setProperty name="export.pdf.filename" value="customerOrders.pdf"/> 				   
 	   <display:setProperty name="export.csv.filename" value="customerOrders.txt"/> 					   
 					  <display:column sortable="true" sortName="col.id" property="id" title="No." media="html"/>
-					  <display:column title="Image" style="max-width:30px">
+					  <display:column title="Image" style="max-width: 40px">
 						    <c:if test="${searchTable.stockItem.imageURL != null}">
 						      <img src="${searchTable.stockItem.imageURL}" style="max-width : 100%"/>
 						    </c:if>
@@ -238,6 +239,7 @@
 						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>						   
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
 						  </ul>
 						</div>
 					  </display:column>	

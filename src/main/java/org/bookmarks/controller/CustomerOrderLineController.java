@@ -366,19 +366,20 @@ public class CustomerOrderLineController extends OrderLineController {
 	}
 
 	@RequestMapping(value="/view")
-	public String view(HttpSession session, ModelMap modelMap) {
-		//Two options, from id or from session
-		CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
+	public String view(Long id, String flow, ModelMap modelMap) {
+		
+		CustomerOrderLine customerOrderLine = customerOrderLineService.get(id);
 
+		modelMap.addAttribute(PaymentType.values());
+		modelMap.addAttribute(DeliveryType.values());
+//		modelMap.addAttribute("flow", flow);
 
-		modelMap.addAttribute(customerOrder);
-		modelMap.addAttribute(customerOrder.getCustomer());
-		modelMap.addAttribute(customerOrder.getCustomerOrderline());
+		modelMap.addAttribute(customerOrderLine);
+		modelMap.addAttribute(customerOrderLine.getCustomer());
+		modelMap.addAttribute(customerOrderLine.getStockItem());
+		modelMap.addAttribute(CustomerOrderLineStatus.values());
 
-		//Clean up session, need to keep in session in case of browser refresh
-//		session.removeAttribute("customerOrder");
-
-		return "viewCustomerOrder";
+		return "viewCustomerOrderLine";
 	}
 
 	@RequestMapping(value="/search")

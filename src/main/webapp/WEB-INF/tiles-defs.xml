@@ -478,7 +478,7 @@
       <put-attribute name="body" value="/WEB-INF/jsp/customerOrderLine/editCustomerOrderLine.jsp"/>      
   </definition>
   
-  <definition name="viewCustomerOrderLine" extends="baseLayout">
+  <definition name="viewCustomerOrderLine" extends="bootstrap3Layout">
       <put-attribute name="title" value="View Customer Order"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customerOrderLine/viewCustomerOrderLine.jsp"/>      
   </definition>
