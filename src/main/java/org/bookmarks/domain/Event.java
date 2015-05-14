@@ -17,10 +17,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+import javax.persistence.Transient;
 import org.bookmarks.domain.StockItem;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="event")
@@ -30,11 +32,11 @@ public class Event extends AbstractNamedEntity {
 	@DateTimeFormat(pattern="dd/MM/yy")
 	@Column(name="startDate")
 	private Date startDate;
-	
+
 	@NotNull
 	@Column(name="show_author")
 	private Boolean showAuthor;
-	
+
 	@Column(name="entrance_price")
 	private Float entrancePrice;
 
@@ -42,22 +44,25 @@ public class Event extends AbstractNamedEntity {
 	@NotNull
 	@Column(name="type")
 	private EventType type;
-	
+
 	@Column(columnDefinition="text")
 	private String description;
-	
+
 	private String startTime;
-	
+
 	private String endTime;
-		
+
+	//For upload of sales csv
+	@Transient private MultipartFile file;
+
 	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yy")
 	@Column(name="endDate")
 	private Date endDate;
-	
+
 	@OneToMany(mappedBy = "event")
 	private Set<Sale> sales;
-	
+
 	@Column(name="totalSellPrice")
 	private BigDecimal totalSellPrice;
 
@@ -66,13 +71,13 @@ public class Event extends AbstractNamedEntity {
 	private StockItem stockItem;
 
 	@Column(name="onWebsite")
-	private Boolean onWebsite;	
-	
+	private Boolean onWebsite;
+
 	//Constructors
 	public Event() {
 		super();
 	}
-	
+
 	public Event(Long id, String name, EventType type, Date startDate, Date endDate, String note, BigDecimal totalSellPrice) {
 		this();
 		setId(id);
@@ -83,14 +88,14 @@ public class Event extends AbstractNamedEntity {
 		setTotalSellPrice(totalSellPrice);
 		setType(type);
 	}
-	
+
 	public EventType getType() {
 		return type;
 	}
 
 	public void setType(EventType type) {
 		this.type = type;
-	}	
+	}
 
 	public BigDecimal getTotalSellPrice() {
 		if(totalSellPrice == null) totalSellPrice = new BigDecimal(0);
@@ -164,7 +169,7 @@ public class Event extends AbstractNamedEntity {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
+
 	public Boolean getShowAuthor() {
 		return showAuthor;
 	}
@@ -180,5 +185,10 @@ public class Event extends AbstractNamedEntity {
 	public void setEntrancePrice(Float entrancePrice) {
 		this.entrancePrice = entrancePrice;
 	}
-	
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 }

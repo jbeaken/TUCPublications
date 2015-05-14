@@ -2,6 +2,7 @@ package org.bookmarks.repository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.bookmarks.controller.CustomerSearchBean;
 import org.bookmarks.controller.SearchBean;
@@ -48,7 +49,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 		}
 
     	return new StringBuffer("select " +
-    			"new Sale(s.id, " + 
+    			"new Sale(s.id, " +
     			"s.creationDate, " +
     			"s.quantity, " +
 				"s.discount, " +
@@ -81,35 +82,35 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 		if(saleSearchBean.getIsDateAgnostic() == Boolean.FALSE) {
 			queryBuilder.appendBeetween(saleSearchBean.getStartDate(), saleSearchBean.getEndDate(),  "s.creationDate");
 		}
-		
+
 		//Set event if appropriate
 		if(saleSearchBean.getSale().getEvent().getId() != null) {
 			queryBuilder.append(saleSearchBean.getSale().getEvent(), "s.event.id");
-		} 
+		}
 //		else {
 //			queryBuilder.appendIsNull("s.event.id");
 //		}
-		
+
 		//Set stockitem if appropriate
 		if(saleSearchBean.getSale().getStockItem().getIsbn() != null) {
 			queryBuilder.append(saleSearchBean.getSale().getStockItem().getIsbn(), "si.isbn");
-		} 
+		}
 
 		if(saleSearchBean.getSale().getStockItem().getType() != null) {
 			queryBuilder.append(saleSearchBean.getSale().getStockItem().getType().toString(), "si.type");
-		} 		
+		}
 //		else {
 //			queryBuilder.appendIsNull("s.event.id");
-//		}		
-		
+//		}
+
 		//Set stockitem if appropriate
 //		if(saleSearchBean.getSale().getStockItem().getPublisher().getId() != null) {
 //			queryBuilder.append(saleSearchBean.getSale().getStockItem().getPublisher(), "si.publisher");
-//		} 
+//		}
 
 		queryBuilder.append(saleSearchBean.getSale().getStockItem().getPublisher(), "si.publisher");
 		queryBuilder.append(saleSearchBean.getCategory(), "si.category.id");
-	
+
 		query.append(queryBuilder.getQuery());
 
 	}
@@ -142,7 +143,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 		query.setParameter("endDate", endDate);
 		return query.list();
 	}
-	
+
 	@Override
 	public SaleTotalBean getSaleTotalBean(SearchBean searchBean) {
 		StringBuffer buffer = new StringBuffer("select " +
@@ -159,7 +160,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 			 saleTotalBean = (SaleTotalBean) query.list().iterator().next();
 		}
 		return saleTotalBean;
-	}	
+	}
 
 	@Override
 	public Collection<Sale> getFull(Date startDate, Date endDate) {
@@ -195,7 +196,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 	public Long getTotalQuantityForPeriod(StockItem stockItem, Date startDate,
 			Date endDate) {
 		java.sql.Timestamp sqlStartDate = new java.sql.Timestamp(startDate.getTime());
-		java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endDate.getTime());		
+		java.sql.Timestamp sqlEndDate = new java.sql.Timestamp(endDate.getTime());
 		Query query = sessionFactory
 				.getCurrentSession()
 				.createQuery("select sum(sa.quantity) from Sale sa " +
@@ -206,5 +207,12 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 		query.setParameter("stockItemId", stockItem.getId());
 		Long result = (Long) query.uniqueResult();
 		return result;
+	}
+
+	@Override
+	public List getAllForCsv() {
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("select sa.quantity, sa.discount, si.id from Invoice i right join i.sales sa join sa.stockItem si where i is null");
+		return query.list();
 	}
 }

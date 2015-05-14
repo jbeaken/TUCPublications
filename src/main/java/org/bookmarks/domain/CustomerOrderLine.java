@@ -524,6 +524,9 @@ public class CustomerOrderLine extends OrderLine {
 		if(address.getCity() != null && !address.getCity().isEmpty()) {
 			buffer.append("<br/>" + address.getCity());
 		}
+		if(address.getCountry() != null && !address.getCountry().isEmpty()) {
+			buffer.append("<br/>" + address.getCountry());
+		}		
 		if(address.getPostcode() != null && !address.getPostcode().isEmpty()) {
 			buffer.append("<br/>" + address.getPostcode());
 		}

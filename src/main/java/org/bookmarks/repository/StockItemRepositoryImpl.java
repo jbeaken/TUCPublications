@@ -38,20 +38,20 @@ import org.bookmarks.controller.StockItemSearchBean;
 @Transactional
 public class StockItemRepositoryImpl extends AbstractRepository<StockItem> implements StockItemRepository {
 
-    private SessionFactory sessionFactory;
+  private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+  @Autowired
+  public void setSessionFactory(SessionFactory sessionFactory) {
+      this.sessionFactory = sessionFactory;
+  }
 
-	@Override
-	public Collection<StockItem> getKeepInStockItems() {
-		Query query = sessionFactory
-			.getCurrentSession()
-			.createQuery("select si from StockItem si where si.quantityToKeepInStock > 0");
-		return query.list();
-	}
+  @Override
+  public Collection<StockItem> getKeepInStockItems() {
+  	Query query = sessionFactory
+  		.getCurrentSession()
+  		.createQuery("select si from StockItem si where si.quantityToKeepInStock > 0");
+  	return query.list();
+  }
 
 	@Override
 	public void updateForReorderReview(StockItem stockItem) {

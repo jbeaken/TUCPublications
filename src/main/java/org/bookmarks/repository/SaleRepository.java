@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.bookmarks.controller.bean.SaleTotalBean;
 import org.bookmarks.controller.SearchBean;
-
 import org.bookmarks.controller.StockItemSearchBean;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.controller.bean.SaleTotalBean;
@@ -26,6 +25,8 @@ public interface SaleRepository extends Repository<Sale>{
 
 	Long getTotalQuantityForPeriod(StockItem stockItem, Date startDate,
 			Date endDate);
+
+	List getAllForCsv();
 
 
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+<<<<<<< HEAD
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -21,6 +22,38 @@
 	
 	<!-- Configures the @Controller programming model -->
 	<mvc:annotation-driven />
+=======
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+	<!-- Scans the classpath of this application for @Components to deploy as
+		beans -->
+	<context:component-scan base-package="org.bookmarks.controller" />
+
+	<!-- Can be used in expression language e.g. DailyReport scheduler's cron
+		job -->
+	<util:properties id="emailProperties" location="classpath:spring/email.properties" />
+	<context:property-placeholder
+		properties-ref="emailProperties" />
+
+
+
+	<!-- Turns on support for mapping requests to Spring MVC @Controller methods Also registers default Formatters and Validators
+		for use across all @Controllers -->
+	<mvc:annotation-driven>
+
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.bookmarks.convertor.CSVMessageConvertor" />
+		</mvc:message-converters>
+
+	</mvc:annotation-driven>
+>>>>>>> 27fd69b... First cut of csv sales download
 
 	<!-- Forwards requests to the "/" resource to the "welcome" view -->
 	<mvc:view-controller path="/" view-name="welcome"/>
@@ -32,7 +65,12 @@
 	
 	
 
+<<<<<<< HEAD
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources/ directory -->
+=======
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving
+		up static resources in the ${webappRoot}/resources/ directory -->
+>>>>>>> 27fd69b... First cut of csv sales download
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/bower/**" location="/bower/" />
 	<mvc:resources mapping="/imageFiles/**" location="file:/home/bookmarks/images/" />

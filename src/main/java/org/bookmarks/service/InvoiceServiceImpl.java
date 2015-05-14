@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -298,6 +299,12 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 	@Override
 	public Collection<InvoiceReportBean> getInvoiceReportBeans(InvoiceSearchBean invoiceSearchBean) {
 		return invoiceRepository.getInvoiceReportBeans(invoiceSearchBean);
+	}
+
+
+	@Override
+	public List getAllForCsv() {
+		return invoiceRepository.getAllForCsv();
 	}
 
 }

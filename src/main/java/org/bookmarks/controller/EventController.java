@@ -8,6 +8,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+<<<<<<< HEAD
+=======
+import java.util.Date;
+import java.util.List;
+>>>>>>> 27fd69b... First cut of csv sales download
 import java.util.GregorianCalendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,21 +21,24 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.bookmarks.bean.CSVResponse;
 import org.bookmarks.controller.bean.CalendarEvent;
 import org.bookmarks.controller.bean.SaleReportBean;
 import org.bookmarks.controller.validation.EventValidator;
 import org.bookmarks.domain.AbstractEntity;
 import org.bookmarks.domain.Event;
 import org.bookmarks.domain.EventType;
+import org.bookmarks.domain.Invoice;
 import org.bookmarks.domain.SalesReportType;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.service.EventService;
 import org.bookmarks.service.Service;
+import org.bookmarks.service.SaleService;
 import org.bookmarks.service.StockItemService;
+import org.bookmarks.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -40,6 +48,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+
 
 @Controller
 @RequestMapping("/events")
@@ -55,16 +65,32 @@ public class EventController extends AbstractBookmarksController {
 	private SaleController saleController;
 	
 	@Autowired
+<<<<<<< HEAD
 	private SaleReportController reportController;	
 	
+=======
+	private SaleService saleService;
+
+	@Autowired
+	private InvoiceService invoiceService;
+
+	@Autowired
+	private SaleReportController reportController;
+
+>>>>>>> 27fd69b... First cut of csv sales download
 	@Value("#{ applicationProperties['imageFileLocation'] }")
 	private String imageFileLocation;	
 
 	private Logger logger = LoggerFactory.getLogger(EventController.class);
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
+<<<<<<< HEAD
 	public @ResponseBody String search(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
 	 
+=======
+	public @ResponseBody String upload(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
+
+>>>>>>> 27fd69b... First cut of csv sales download
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
 		}
@@ -86,8 +112,66 @@ public class EventController extends AbstractBookmarksController {
 			
 		return "searchEvents";
 	}
+<<<<<<< HEAD
 	
 	
+=======
+
+	/**
+	* Text file to upload from mini beans, persist external event sales
+	**/
+	@RequestMapping(value="/uploadSales", method=RequestMethod.POST)
+	public String uploadSales(Event event, HttpSession session, ModelMap modelMap) {
+
+		MultipartFile file = event.getFile();
+		String fileName = file.getOriginalFilename();
+		Long fileSize = file.getSize();
+//		String extension = ".jpg";
+//		if(fileName.indexOf(".gif") != -1) extension = ".gif";
+//		if(fileName.indexOf(".png") != -1) extension = ".png";
+
+		if(fileName.indexOf(".csv") == -1) {
+			addError("The file must be a csv file ", modelMap);
+			modelMap.addAttribute("event", new Event());
+			return "uploadSales";
+		}
+
+		if(fileSize > 100000) {
+			addError("File too big!", modelMap);
+			return "displayUploadEventImage";
+		}
+
+		addSuccess("Have successfully created event and added sales", modelMap);
+
+		return "redirect:/event/displaySearch";
+	}
+/**
+* Text file to upload from mini beans, persist external event sales
+**/
+	@RequestMapping(value="/uploadSales", method=RequestMethod.GET)
+	public String uploadSales(ModelMap modelMap) throws IOException {
+		modelMap.addAttribute("event", new Event());
+		return "uploadSales";
+	}
+
+	/**
+	* Generate text file of all sales and invoices on minibeans
+	**/
+		@RequestMapping(value="/downloadSales", method=RequestMethod.GET)
+		public @ResponseBody CSVResponse downloadSales(ModelMap modelMap) throws IOException {
+
+			//
+			List<String[]> sales = saleService.getAllForCsv();
+
+			//i.id, si.id, sa.quantity, sa.discount
+			List<String[]> invoices = invoiceService.getAllForCsv();
+
+			sales.addAll(invoices);
+
+			return new CSVResponse(sales, "mini-beans.csv");
+		}
+
+>>>>>>> 27fd69b... First cut of csv sales download
 	@RequestMapping(value="/getJson", method = RequestMethod.GET)
 	@ResponseBody
 	public Collection<CalendarEvent> getJson() {
@@ -298,6 +382,10 @@ public class EventController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/view", method=RequestMethod.GET)
 	public String displayView(Long id, ModelMap modelMap) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27fd69b... First cut of csv sales download
 		Event event = eventService.get(id);
 		modelMap.addAttribute(event);
 		return "viewEvent";

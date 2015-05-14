@@ -15,4 +15,6 @@ public interface InvoiceRepository extends Repository<Invoice>{
 	Collection<Invoice> getInvoiceReport(CustomerReportBean reportBean);
 
 	Collection<InvoiceReportBean> getInvoiceReportBeans(InvoiceSearchBean invoiceSearchBean);
+
+	List getAllForCsv();
 }

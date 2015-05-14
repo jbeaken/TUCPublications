@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.controller.bean.SaleReportBean;
@@ -125,6 +126,11 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), false);
 		
 		super.update(sale);
+	}
+	
+	@Override
+	public List getAllForCsv() {
+		return saleRepository.getAllForCsv();
 	}
 
 	@Override

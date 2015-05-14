@@ -2,6 +2,7 @@ package org.bookmarks.service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.Event;
@@ -32,6 +33,9 @@ public interface SaleService extends Service<Sale>{
 
 	Long getTotalQuantityForPeriod(StockItem stockItem, Date startDate,
 			Date endDate);
+
+	List getAllForCsv();
+	
 
 //	void sell(InvoiceOrderLine invoiceOrderLine);
 }

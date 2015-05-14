@@ -1,6 +1,7 @@
 package org.bookmarks.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.bookmarks.controller.InvoiceSearchBean;
 import org.bookmarks.controller.SearchBean;
@@ -112,16 +113,16 @@ private boolean appendIsProforma(InvoiceSearchBean invoiceSearchBean, StringBuff
 			return true;
 		}
 		return false;
-	}	
+	}
 
 private boolean appendId(InvoiceSearchBean invoiceSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		Long id = invoiceSearchBean.getInvoice().getId();
 		if(id != null) {
 			query.append(" where i.id = " + id);
 			return true;
-		} 
+		}
 		return false;
-	}	
+	}
 	private boolean appendStockItem(InvoiceSearchBean invoiceSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		StockItem stockItem = invoiceSearchBean.getStockItem();
 		if(stockItem.getId() != null) {
@@ -216,19 +217,26 @@ private boolean appendId(InvoiceSearchBean invoiceSearchBean, StringBuffer query
 	public Collection<InvoiceReportBean> getInvoiceReportBeans(InvoiceSearchBean invoiceSearchBean) {
 		Query query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select new org.bookmarks.report.bean.InvoiceReportBean(c.id, " 
-						+ "c.firstName, " 
-						+ "c.lastName, " 
+				.createQuery("select new org.bookmarks.report.bean.InvoiceReportBean(c.id, "
+						+ "c.firstName, "
+						+ "c.lastName, "
 						+ "case when sum(s.quantity * (1 - s.discount/100) * s.sellPrice) + (i.secondHandPrice) + (i.serviceCharge) is null "
 						+ "then (i.secondHandPrice + i.serviceCharge) "
 						+ "else (sum(s.quantity * (1- s.discount/100) * s.sellPrice) + i.secondHandPrice + i.serviceCharge) end, "
 						+ "sum((case when s.sellPrice is null then 0.0 else s.sellPrice end) * (case when s.vat is null then 0.0 else s.vat end) / 100.0 ) * quantity)"
-						+ "from Invoice i  join i.customer c left join i.sales as s " 
-						+ "where i.creationDate between :startDate and :endDate " 
-						+ "and i.paid = false and i.isProforma = false " 
+						+ "from Invoice i  join i.customer c left join i.sales as s "
+						+ "where i.creationDate between :startDate and :endDate "
+						+ "and i.paid = false and i.isProforma = false "
 						+ "group By c order by c.lastName");
 		query.setParameter("startDate", invoiceSearchBean.getStartDate());
 		query.setParameter("endDate", invoiceSearchBean.getEndDate());
+		return query.list();
+	}
+
+	@Override
+	public List<Invoice> getAllForCsv() {
+		Query query = sessionFactory.getCurrentSession()
+				.createQuery("select i.id, si.id, sa.quantity, sa.discount from Invoice i join i.sales sa join sa.stockItem si");
 		return query.list();
 	}
 

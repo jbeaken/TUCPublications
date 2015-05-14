@@ -28,15 +28,15 @@ import org.springframework.format.annotation.NumberFormat;
 @Entity
 @Table(name="sale")
 public class Sale extends AbstractEntity {
-	
+
 
 	//This is messy!!
 	@Transient //Could argue it should be persisted, on edit it will have to be overriden again
 	private Boolean discountHasBeenOverridden = Boolean.FALSE;
-	
+
 	@Transient
 	private Long originalQuantity;
-	
+
 	//Even messier
 	@Transient
 	private BigDecimal newDiscount;
@@ -77,7 +77,7 @@ public class Sale extends AbstractEntity {
 	@OneToOne(mappedBy="sale")
 	private CustomerOrderLine customerOrderLine;
 
-	
+
 	//Constructors
 	public Sale() {
 		super();
@@ -86,6 +86,11 @@ public class Sale extends AbstractEntity {
 	public Sale(Long id) {
 		this();
 		setId(id);
+	}
+
+	public Sale(StockItem stockItem) {
+		this();
+		setStockItem(stockItem);
 	}
 
 	public Sale(Date creationDate, Long quantity, BigDecimal sellPrice, String categoryName) {
@@ -117,7 +122,7 @@ public class Sale extends AbstractEntity {
 		if(eventName != null) {
 			event.setName(eventName);
 		} else event.setName("Shop");
-		setEvent(event);		
+		setEvent(event);
 	}
 
 	/** From saleRespository.search (group by)**/
@@ -131,7 +136,7 @@ public class Sale extends AbstractEntity {
 
 		setStockItem(stockItem);
 		setQuantity(sumQuantity);
-		setSellPrice(sumSellPrice);			
+		setSellPrice(sumSellPrice);
 	}
 
 	public Sale(Date creationDate) {
@@ -153,10 +158,7 @@ public class Sale extends AbstractEntity {
 		calculate(invoice, true);
 	}
 
-	public Sale(StockItem stockItem) {
-		this();
-		setStockItem(stockItem);
-	}
+
 
 	public BigDecimal getNewDiscount() {
 		return newDiscount;
@@ -172,23 +174,23 @@ public class Sale extends AbstractEntity {
 
 	public void setDiscountHasBeenOverridden(Boolean discountHasBeenOverridden) {
 		this.discountHasBeenOverridden = discountHasBeenOverridden;
-	}	
+	}
 
 	public CustomerOrderLine getCustomerOrderLine() {
 		return customerOrderLine;
 	}
-	
+
 	public void setCustomerOrderLine(CustomerOrderLine customerOrderLine) {
 		this.customerOrderLine = customerOrderLine;
-	}		
+	}
 
 	public Long getOriginalQuantity() {
 		return originalQuantity;
 	}
-	
+
 	public void setOriginalQuantity(Long originalQuantity) {
 		this.originalQuantity = originalQuantity;
-	}	
+	}
 
 	public BigDecimal getDiscountedPrice() {
 		if(discountedPrice == null) {
@@ -264,7 +266,7 @@ public class Sale extends AbstractEntity {
 		Customer customer = invoice.getCustomer();
 		DeliveryType deliveryType = invoice.getDeliveryType();
 		float discount = 0;
-		
+
 		//Check for overrides
 		if(stockItem.isBookmarksPublication()) { //Bookmarks
 			if(customer.getBookmarksDiscount() != null) {
@@ -277,7 +279,7 @@ public class Sale extends AbstractEntity {
 				return;
 			}
 		}
-		
+
 		switch(customer.getCustomerType()) {
 			case BOOKMARKS: {
 				discount = 20;
@@ -287,7 +289,7 @@ public class Sale extends AbstractEntity {
 				if(stockItem.isBookmarksPublication()) {
 					discount = 40;
 				} else { //Non bookmarks, 5% if mailorder (free postage), 10% is collection
-					discount = 10;				
+					discount = 10;
 				}
 				break;
 			}
@@ -320,11 +322,11 @@ public class Sale extends AbstractEntity {
 						discount = 10;
 					} else {
 						discount = 5;
-					}				
+					}
 				}
 				break;
 			}
-			case CUSTOMER: {	
+			case CUSTOMER: {
 				//0% if mailorder (free postage), 10% is collection but only if paying in over 10 pounds monthly
 				if(deliveryType == DeliveryType.COLLECTION && customer.getBookmarksAccount().getAmountPaidInMonthly() != null && customer.getBookmarksAccount().getAmountPaidInMonthly().floatValue() > 9) {
 					discount = 10;
@@ -373,11 +375,11 @@ public class Sale extends AbstractEntity {
 				return true;
 			return false;
 		}
-		
+
 		if(this.getId().equals(that.getId())) return true;
 		return false;
 	}
-	
+
 	@Override
     public int hashCode() {
         if (getId() != null) {
@@ -399,6 +401,6 @@ public class Sale extends AbstractEntity {
 	public boolean isSecondHand() {
 		if(getStockItem().getId() == 39625l) return true;
 		return false;
-	}	
+	}
 
 }

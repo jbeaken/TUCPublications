@@ -10,7 +10,7 @@
           <div class="column w-100-percent">
       	  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search')">Search</button>
       	  <button type="button" class="btn btn-warning" id="reorderReviewButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search?reorderReview=true?skipMarxismRejects=false')">Reorder Review</button>&nbsp;
-          <button type="button" class="btn btn-warning" id="reorderReviewButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search?reorderReview=true&skipMarxismRejects=true')">Reorder Review (skip)</button>&nbsp;
+          <button type="button" class="btn btn-primary" id="reorderReviewButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search?reorderReview=true&skipMarxismRejects=true')">Reorder Review (skip)</button>&nbsp;
           <button type="button" class="btn btn-warning" id="resetButton" accesskey="R">Reset</button>&nbsp;
           <c:if test="${stockItemList == null}">
       		<button type="button" class="btn btn-danger" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/azlookupFromSearchPage')">Add Stock</button>
