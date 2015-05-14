@@ -51,7 +51,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 			.getCurrentSession()
 			.createQuery("select si from StockItem si where si.quantityToKeepInStock > 0");
 		return query.list();
-	}   
+	}
 
 	@Override
 	public void updateForReorderReview(StockItem stockItem) {
@@ -80,9 +80,9 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("lastReorderReviewDate", new Date())
 				.setParameter("quantityInStock", stockItem.getQuantityInStock());
 
-		int result = query.executeUpdate();	
-	} 
-    
+		int result = query.executeUpdate();
+	}
+
     public void updateImageFilename(StockItem stockItem) {
 		Query query = sessionFactory
 				.getCurrentSession()
@@ -93,14 +93,14 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("putOnWebsite", stockItem.getPutOnWebsite())
 				.setParameter("imageFilename", stockItem.getImageFilename());
 
-		int result = query.executeUpdate();	    	
+		int result = query.executeUpdate();
     }
     @Override
     public void buildIndex() {
     	Session session = sessionFactory.getCurrentSession();
 		FullTextSession fullTextSession = Search.getFullTextSession(session);
 		try {
-			fullTextSession.createIndexer().startAndWait();		
+			fullTextSession.createIndexer().startAndWait();
 		} catch(InterruptedException e) {
 			//Do nothing
 		}
@@ -114,9 +114,9 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 						" where si.id = :id")
 				.setParameter("id", stockItem.getId())
 				.setParameter("twentyTwelveSales", stockItem.getTwentyTwelveSales());
-		int result = query.executeUpdate();	
-	}   
-	
+		int result = query.executeUpdate();
+	}
+
 	@Override
 	public void updateTwentyThirteenSales(StockItem stockItem) {
 		Query query = sessionFactory
@@ -125,9 +125,9 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 						" where si.id = :id")
 				.setParameter("id", stockItem.getId())
 				.setParameter("twentyThirteenSales", stockItem.getTwentyThirteenSales());
-		int result = query.executeUpdate();	
-	}  
-	
+		int result = query.executeUpdate();
+	}
+
 	@Override
 	public void updateTwentyFourteenSales(StockItem stockItem) {
 		Query query = sessionFactory
@@ -136,10 +136,10 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 						" where si.id = :id")
 				.setParameter("id", stockItem.getId())
 				.setParameter("twentyFourteenSales", stockItem.getTwentyFourteenSales());
-		int result = query.executeUpdate();	
-	}   	
-	
-	
+		int result = query.executeUpdate();
+	}
+
+
 	@Override
 	public Collection<StockItem> searchIndex(StockItemSearchBean searchBean) {
 		String q = searchBean.getQ();
@@ -164,15 +164,15 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 
 		// execute search
 		List result = hibQuery.list();
-		
-    	searchBean.setSearchResultCount(100);		
-		  
+
+    	searchBean.setSearchResultCount(100);
+
 		//tx.commit();
 		//session.close();
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
 		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean) searchBean;
@@ -188,7 +188,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 
 	@Override
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
-		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean) searchBean; 
+		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean) searchBean;
 		StringBuffer clause =  new StringBuffer("select new StockItem(" +
 				"s.id, " +
 				"s.imageURL, " +
@@ -226,7 +226,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return clause;
 	}
-	
+
     @Override
 	public void appendGroupBy(StringBuffer query, SearchBean searchBean) {
     	if(!isCount) query.append(" group by s.id");
@@ -250,8 +250,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		String name = stockItemSearchBean.getAuthorName();
 		if(name == null || name.isEmpty()) {
 			stockItemSearchBean.setAuthorName(null);
-			return whereAlreadyAppended; 
-		}		
+			return whereAlreadyAppended;
+		}
 		if(authorId != null && whereAlreadyAppended) {
 			query.append(" and a.id = " + authorId);
 			return true;
@@ -306,7 +306,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		String name = stockItemSearchBean.getStockItem().getPublisher().getName();
 		if(name == null || name.isEmpty()) {
 			stockItemSearchBean.getStockItem().getPublisher().setId(null);
-			return whereAlreadyAppended; 
+			return whereAlreadyAppended;
 		}
 		if(id == null) return whereAlreadyAppended; //All is represented by -1
 
@@ -319,13 +319,13 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 	private boolean appendSupplier(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		Long id = stockItemSearchBean.getStockItem().getPublisher().getSupplier().getId();
 		String name = stockItemSearchBean.getStockItem().getPublisher().getSupplier().getName();
 		if(name == null || name.isEmpty()) {
 			stockItemSearchBean.getStockItem().getPublisher().getSupplier().setId(null);
-			return whereAlreadyAppended; 
+			return whereAlreadyAppended;
 		}
 		if(id == null) return whereAlreadyAppended; //All is represented by -1
 
@@ -338,7 +338,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 
 	private boolean appendIsbn(StockItemSearchBean stockItemSearchBean, StringBuffer query) {
 		String isbn = stockItemSearchBean.getStockItem().getIsbn();
@@ -348,7 +348,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				query.append(" where s.isbnAsNumber = " + isbn);
 			} else {
 				query.append(" where s.isbn like '%" + isbn + "'");
-			} 
+			}
 			return true;
 		}
 		return false;
@@ -368,7 +368,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				break;
 			case BELOW_KEEP_IN_STOCK_LEVEL :
 				buffer.append(" and si.quantityInStock < si.quantityToKeepInStock");
-				break;								
+				break;
 		}
 
 		Query query = sessionFactory.getCurrentSession()
@@ -443,14 +443,15 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		whereAlreadyAppended = appendStockType(stockItemSearchBean, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendStockLevel(stockItemSearchBean, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendMarxismStatus(stockItemSearchBean, query, whereAlreadyAppended);
+    whereAlreadyAppended = appendReorderReview(stockItemSearchBean, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendHideBookmarksPublications(stockItemSearchBean, query, whereAlreadyAppended);
 	}
-	
+
 	private boolean appendMarxismStatus(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		Integer marxismStatus = stockItemSearchBean.getMarxismStatus();
-		
+
 		if(marxismStatus == null) return whereAlreadyAppended;
-		
+
 		if(marxismStatus == 1) { //For Marxism
 			if(whereAlreadyAppended) {
 				query.append(" and s.quantityForMarxism > 0");
@@ -459,7 +460,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				return true;
 			}
 		}
-		
+
 		if(marxismStatus == 2) { //Wanted, but hasn't arrived, or fallen below stock
 			if(whereAlreadyAppended) {
 				query.append(" and (s.quantityForMarxism > 0 and s.quantityForMarxism > s.quantityInStock)");
@@ -475,8 +476,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				query.append(" where s.quantityForMarxism < 0");
 				return true;
 			}
-		}	
-		
+		}
+
 		if(marxismStatus == 4) { //Undecided plus going to Marxism
 			if(whereAlreadyAppended) {
 				query.append(" and (s.quantityForMarxism is null or s.quantityForMarxism > -1)");
@@ -484,8 +485,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				query.append(" where (s.quantityForMarxism is null or s.quantityForMarxism > -1)");
 				return true;
 			}
-		}	
-		
+		}
+
 		if(marxismStatus == 5) { //Undecided only
 			if(whereAlreadyAppended) {
 				query.append(" and (s.quantityForMarxism is null or s.quantityForMarxism = 0)");
@@ -493,8 +494,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				query.append(" where (s.quantityForMarxism is null or s.quantityForMarxism = 0)");
 				return true;
 			}
-		}	
-		
+		}
+
 		if(marxismStatus == 6) { //Undecided only
 			if(whereAlreadyAppended) {
 				query.append(" and (s.quantityForMarxism > 4)");
@@ -502,12 +503,24 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				query.append(" where (s.quantityForMarxism > 4)");
 				return true;
 			}
-		}			
+		}
 
 		return whereAlreadyAppended;
-	}	
+	}
 
 
+
+  private boolean appendReorderReview(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
+      Boolean skipMarxismRejects = stockItemSearchBean.getSkipMarxismRejects();
+      if(skipMarxismRejects ==  null) return whereAlreadyAppended;
+      if(whereAlreadyAppended) {
+        query.append(" and s.quantityForMarxism != -1");
+      } else {
+        query.append(" where s.quantityForMarxism != -1");
+        return true;
+      }
+      return whereAlreadyAppended;
+    }
 	private boolean appendAlwaysInStock(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		boolean alwaysInStock = stockItemSearchBean.isAlwaysInStock();
 		if(alwaysInStock == false) return whereAlreadyAppended;
@@ -519,7 +532,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 	private boolean appendHideBookmarksPublications(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		boolean hideBookmarksPublications = stockItemSearchBean.isHideBookmarks();
 		if(hideBookmarksPublications == false) return whereAlreadyAppended;
@@ -530,7 +543,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 			return true;
 		}
 		return whereAlreadyAppended;
-	}	
+	}
 
 	private boolean appendIsOnWebsite(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
 		Boolean putOnWebsite = stockItemSearchBean.getStockItem().getPutOnWebsite();
@@ -574,8 +587,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				break;
 			case BELOW_KEEP_IN_STOCK_LEVEL :
 				query .append(join + "s.quantityInStock < s.quantityToKeepInStock");
-				break;								
-		}			
+				break;
+		}
 		return true;
 	}
 
@@ -589,9 +602,9 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 			query.append(" and s.keepInStockLevel = '" + level + "' ");
 		} else {
 			query.append(" where s.keepInStockLevel = '" + level + "' ");
-		}		
+		}
 		return true;
-	}	
+	}
 
 
 	private boolean appendKeepInStock(StockItemSearchBean stockItemSearchBean, StringBuffer query, boolean whereAlreadyAppended) {
@@ -605,7 +618,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 
 
 
@@ -621,7 +634,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 	public void toggleIsForMarxism(Long id, boolean isForMarxism) {
 		Query query = sessionFactory
 					.getCurrentSession()
@@ -700,7 +713,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		query.setParameter("quantityOnOrder", quantity);
 		query.setParameter("id", stockItem.getId());
 		int result = query.executeUpdate();
-	}	
+	}
 
 	@Override
 	/**
@@ -815,7 +828,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 	query.setParameter("preferredSupplier", supplier);
 	query.setParameter("id", stockItem.getId());
 	int result = query.executeUpdate();
-		
+
 	}
 
 
@@ -828,7 +841,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 	query.setParameter("quantityInStock", quantityInStock);
 	query.setParameter("id", stockItem.getId());
 	int result = query.executeUpdate();
-		
+
 	}
 
 
@@ -842,7 +855,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		stockItem.setIsbn(isbn.toString());
 		return stockItem;
 	}
-	
+
 	@Override
 	public Collection<StockItem> getStockItemsBelowKeepInStockLevel() {
 		Query query = sessionFactory.getCurrentSession().createQuery("select si from" +
@@ -856,7 +869,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.getCurrentSession()
 				.createQuery("update StockItem si set syncedWithAZ = false");
 		query.executeUpdate();
-		
+
 	}
 
 
@@ -880,7 +893,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		Collection<StockItem> list = query.list();
 		return list;
 	}
-	
+
 	@Override
 	public Collection<StockItem> getUnsynchedWithAZ(Integer offset,	Integer noOfResults) {
 		Query query = sessionFactory
@@ -890,7 +903,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setMaxResults(noOfResults);
 		Collection<StockItem> list = query.list();
 		return list;
-	}	
+	}
 
 	@Override
 	public Collection<StockItem> getNoAZAuthors(Integer offset,	Integer noOfResults) {
@@ -972,7 +985,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("id", stockItem.getId())
 				.setParameter("stickyTypeIndex", index);
 
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
@@ -981,7 +994,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.getCurrentSession()
 				.createQuery("update StockItem si set stickyTypeIndex = null where si.type = :type")
 				.setParameter("type", type);
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
@@ -989,8 +1002,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		Query query = sessionFactory
 				.getCurrentSession()
 				.createQuery("update StockItem si set bouncyIndex = null");
-		int result = query.executeUpdate();	
-		
+		int result = query.executeUpdate();
+
 	}
 
 	@Override
@@ -1001,8 +1014,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("id", stockItem.getId())
 				.setParameter("bouncyIndex", index);
 
-		int result = query.executeUpdate();	
-		
+		int result = query.executeUpdate();
+
 	}
 
 	@Override
@@ -1011,7 +1024,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.getCurrentSession()
 				.createQuery("update StockItem si set putOnWebsite = false where si.id = :id")
 				.setParameter("id", id);
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
@@ -1020,29 +1033,29 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.getCurrentSession()
 				.createQuery("update StockItem si set putOnWebsite = true where si.id = :id")
 				.setParameter("id", id);
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
 	public DailyReportBean getDailyReportBean() {
 		DailyReportBean dailyReportBean = new DailyReportBean();
-		
+
 		Query query = sessionFactory.getCurrentSession().createQuery("select count(*) from StockItem");
 		Long noOfItemsInDatabase = (Long) query.uniqueResult();
 		dailyReportBean.setNoOfItemsInDatabase(noOfItemsInDatabase);
-		
+
 		query = sessionFactory.getCurrentSession().createQuery("select count(*) from StockItem where putOnWebsite = true");
 		Long noOfItemsOnWebsite = (Long) query.uniqueResult();
 		dailyReportBean.setNoOfItemsOnWebsite(noOfItemsOnWebsite);
-		
+
 		query = sessionFactory.getCurrentSession().createQuery("select count(*) from StockItem where imageFilename is not null");
 		Long noOfItemsWithImages = (Long) query.uniqueResult();
-		dailyReportBean.setNoOfItemsWithImages(noOfItemsWithImages);		
-		
+		dailyReportBean.setNoOfItemsWithImages(noOfItemsWithImages);
+
 		query = sessionFactory.getCurrentSession().createQuery("select sum(col.amount * si.sellPrice) from CustomerOrderLine col join col.stockItem si where col.source = 'WEB'");
 		BigDecimal webOrderTotal = (BigDecimal) query.uniqueResult();
-		dailyReportBean.setWebOrderTotal(webOrderTotal);	
-		
+		dailyReportBean.setWebOrderTotal(webOrderTotal);
+
 		return dailyReportBean;
 	}
 
@@ -1113,9 +1126,9 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("isbnAsNumber", Long.parseLong(isbn))
 				.setParameter("availableAtSuppliers", availability);
 
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
-	
+
 	@Override
 	public void setGardnersStockLevel(String isbn, Long gardnersStockLevel) {
 		Query query = sessionFactory
@@ -1125,7 +1138,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.setParameter("isbnAsNumber", Long.parseLong(isbn))
 				.setParameter("gardnersStockLevel", gardnersStockLevel);
 
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
@@ -1133,7 +1146,7 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		Query query = sessionFactory
 				.getCurrentSession()
 				.createQuery("update StockItem si set gardnersStockLevel = 0");
-		int result = query.executeUpdate();	
+		int result = query.executeUpdate();
 	}
 
 	@Override
@@ -1192,8 +1205,6 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 				.createQuery("select si from StockItemSales si where si.stockItem = :si");
 		query.setParameter("si", stockItem);
 			return query.list();
-		
+
 	}
 }
-
-

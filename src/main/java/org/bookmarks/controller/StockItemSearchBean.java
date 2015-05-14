@@ -32,11 +32,13 @@ public class StockItemSearchBean extends AbstractSearchBean {
 		this();
 		getStockItem().setIsbn(isbn);
 	}
-	
+
 	private boolean hideBookmarks = false;
-	
+
 	private Boolean reorderReview;
-	
+
+	private Boolean skipMarxismRejects;
+
 	private Integer marxismStatus;
 
 	private SearchEngine searchEngine = SearchEngine.LOCAL_DATABASE;
@@ -44,17 +46,17 @@ public class StockItemSearchBean extends AbstractSearchBean {
 	private StockLevel stockLevel;
 
 	private boolean keepInStock;
-	
+
 	private Long authorId;
-	
+
 	private String authorName;
-	
+
 	private boolean alwaysInStock;
 
 	private Level keepInStockLevel;
-	
+
 	private String authors;
-	
+
 	private String q;
 
 	public void setKeepInStockLevel(Level keepInStockLevel) {
@@ -63,8 +65,8 @@ public class StockItemSearchBean extends AbstractSearchBean {
 
 	public Level getKeepInStockLevel() {
 		return keepInStockLevel;
-	}	
-	
+	}
+
 	public String getQ() {
 		return q;
 	}
@@ -76,7 +78,7 @@ public class StockItemSearchBean extends AbstractSearchBean {
 	public boolean isKeepInStock() {
 		return keepInStock;
 	}
- 
+
 	public void setKeepInStock(boolean keepInStock) {
 		this.keepInStock = keepInStock;
 	}
@@ -148,21 +150,21 @@ public class StockItemSearchBean extends AbstractSearchBean {
 	}
 
 	public String checkValidity() {
-		
+
 		//If keep in stock then it's valid
 		if(getQ() != null && !getQ().trim().isEmpty()) {
 			return null;
 		}
-		
+
 		//If keep in stock then it's valid
 		if(isKeepInStock() ==  true) {
 			return null;
 		}
-		
+
 		if(getStockItem().getPutOnWebsite() !=  null) {
 			return null;
 		}
-		
+
 		//If non book option then it's valid
 		if(getStockItem().getType() != null && getStockItem().getType() != StockItemType.BOOK) {
 			return null;
@@ -187,15 +189,15 @@ public class StockItemSearchBean extends AbstractSearchBean {
 		}
 		if(getAuthorId() != null) {
 			return null;
-		}		
+		}
 		//If in stock selected then it's always valid
 		if(getStockLevel() != null) {
 			return null;
 		}
-	
-	
+
+
 		String isbn = stockItem.getIsbn().trim();
-		
+
 //		if(isbn.length() < 3 && getStockItem().getTitle().length() < 3) {
 //			return "Insufficient data for search";
 //		}
@@ -222,7 +224,7 @@ public class StockItemSearchBean extends AbstractSearchBean {
 		}
 		return null;
 	}
-	
+
 	private boolean convertToISBN13(StockItem stockItem) {
 		String isbn = stockItem.getIsbn();
 		if(isbn.length() != 10) return true;
@@ -233,7 +235,7 @@ public class StockItemSearchBean extends AbstractSearchBean {
 		}
 		stockItem.setIsbn(isbn13);
 		return true;
-	}	
+	}
 	//Getters and setters
 	public StockItem getStockItem() {
 		return stockItem;
@@ -306,8 +308,17 @@ public class StockItemSearchBean extends AbstractSearchBean {
 		this.marxismStatus = marxismStatus;
 	}
 
+
 	public Boolean getReorderReview() {
 		return reorderReview;
+	}
+
+	public void setSkipMarxismRejects(Boolean skipMarxismRejects) {
+		this.skipMarxismRejects = reorderReview;
+	}
+	
+	public Boolean getSkipMarxismRejects() {
+		return skipMarxismRejects;
 	}
 
 	public void setReorderReview(Boolean reorderReview) {
