@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"stockI",
+				"stockItemId"
+			],
+			[
+				"saleRe",
+				"saleService"
+			],
+			[
+				"Hash",
+				"HashSet"
+			],
+			[
+				"cust",
+				"customerId"
+			],
+			[
+				"invoice",
+				"invoiceMap"
+			],
+			[
+				"invo",
+				"invoices"
+			],
+			[
+				"stoc",
+				"stockItemId"
+			],
+			[
 				"Supplier",
 				"SupplierDelivery"
 			],
@@ -16,6 +44,7 @@
 	"buffers":
 	[
 		{
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
@@ -28,10 +57,17 @@
 			"settings":
 			{
 				"buffer_size": 334,
+=======
+			"file": "src/main/webapp/WEB-INF/tiles/navbar.jsp",
+			"settings":
+			{
+				"buffer_size": 7323,
+>>>>>>> 449d36f... Finisihing
 				"line_ending": "Unix"
 			}
 		},
 		{
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 			"settings":
 			{
@@ -79,17 +115,40 @@
 			{
 				"buffer_size": 802,
 				"line_ending": "Windows"
+=======
+			"file": "src/main/webapp/WEB-INF/tiles/header.jsp",
+			"settings":
+			{
+				"buffer_size": 12503,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/webapp/WEB-INF/jsp/calendar/searchEvents.jsp",
+			"settings":
+			{
+				"buffer_size": 2898,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/webapp/WEB-INF/jsp/author/search.jsp",
+			"settings":
+			{
+				"buffer_size": 2469,
+				"line_ending": "Unix"
+>>>>>>> 449d36f... Finisihing
 			}
 		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 33.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
-		"width": 575.0
+		"width": 392.0
 	},
 	"console":
 	{
@@ -106,7 +165,37 @@
 	},
 	"file_history":
 	[
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
+=======
+		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchEventDecorator.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/uploadSales.jsp",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/calendar/searchEvents.jsp",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles-defs.xml",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/convertor/CSVMessageConvertor.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/SaleRepositoryImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/InvoiceRepositoryImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/Invoice.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/SaleService.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/Service.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/Sale.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/InvoiceRepository.java",
+		"/home/git/bookmarks/src/main/resources/spring/datasource-config.xml",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/web.xml",
+		"/home/git/bookmarks/src/main/resources/spring/business-config.xml",
+		"/home/git/bookmarks/src/main/resources/logback.xml",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/ChipsServiceImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EmailServiceImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
+		"/home/git/bookmarks/pom.xml",
+		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
+		"/home/git/bookmarks/src/main/resources/META-INF/persistence.xml",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EventServiceImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java",
+>>>>>>> 449d36f... Finisihing
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/editEvent.jsp",
 		"/home/git/bookmarks/pom.xml",
 		"/home/git/puma/pom.xml",
@@ -158,6 +247,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+<<<<<<< HEAD
+=======
+			"column w-33-percent",
+			"EVent",
+			"List",
+			"BigDecimal",
+			"CSVFormat",
+			"logger",
+>>>>>>> 449d36f... Finisihing
 			"addSuc",
 			"removeTheAndAnd",
 			"prepare",
@@ -189,6 +287,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"col-sm-4",
 			"prepare",
 			"",
 			"sales",
@@ -204,91 +303,142 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 					"file": "src/main/java/org/bookmarks/controller/EventController.java",
 					"settings":
 					{
 						"buffer_size": 10122,
+=======
+					"file": "src/main/webapp/WEB-INF/tiles/navbar.jsp",
+					"settings":
+					{
+						"buffer_size": 7323,
+>>>>>>> 449d36f... Finisihing
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								2819,
+								2819
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 4029.0,
+=======
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 566.0,
+>>>>>>> 449d36f... Finisihing
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+<<<<<<< HEAD
 					"file": "src/main/webapp/resources/ckeditor/config.js",
 					"settings":
 					{
 						"buffer_size": 334,
+=======
+					"file": "src/main/webapp/WEB-INF/tiles/header.jsp",
+					"settings":
+					{
+						"buffer_size": 12503,
+>>>>>>> 449d36f... Finisihing
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								7635,
+								7635
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+=======
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1303.0,
+>>>>>>> 449d36f... Finisihing
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+<<<<<<< HEAD
 					"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 					"settings":
 					{
 						"buffer_size": 22811,
+=======
+					"file": "src/main/webapp/WEB-INF/jsp/calendar/searchEvents.jsp",
+					"settings":
+					{
+						"buffer_size": 2898,
+>>>>>>> 449d36f... Finisihing
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								859,
 								859
+=======
+								1592,
+								1592
+>>>>>>> 449d36f... Finisihing
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+=======
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 204.0,
+>>>>>>> 449d36f... Finisihing
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+<<<<<<< HEAD
 					"file": "src/main/resources/META-INF/persistence.xml",
 					"settings":
 					{
@@ -321,23 +471,35 @@
 					"settings":
 					{
 						"buffer_size": 788,
+=======
+					"file": "src/main/webapp/WEB-INF/jsp/author/search.jsp",
+					"settings":
+					{
+						"buffer_size": 2469,
+>>>>>>> 449d36f... Finisihing
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								537,
 								537
+=======
+								267,
+								267
+>>>>>>> 449d36f... Finisihing
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage",
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+<<<<<<< HEAD
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -603,6 +765,8 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+=======
+>>>>>>> 449d36f... Finisihing
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -656,6 +820,101 @@
 		"selected_items":
 		[
 			[
+<<<<<<< HEAD
+=======
+				"search.jsp",
+				"main/webapp/WEB-INF/jsp/author/search.jsp"
+			],
+			[
+				"sed",
+				"main/java/org/bookmarks/ui/SearchEventDecorator.java"
+			],
+			[
+				"searcheve",
+				"main/webapp/WEB-INF/jsp/calendar/searchEvents.jsp"
+			],
+			[
+				"head",
+				"main/webapp/WEB-INF/tiles/header.jsp"
+			],
+			[
+				"navb",
+				"main/webapp/WEB-INF/tiles/navbar.jsp"
+			],
+			[
+				"tiles",
+				"main/webapp/WEB-INF/tiles-defs.xml"
+			],
+			[
+				"upload",
+				"main/webapp/WEB-INF/jsp/events/uploadSales.jsp"
+			],
+			[
+				"sale.j",
+				"main/java/org/bookmarks/domain/Sale.java"
+			],
+			[
+				"service.j",
+				"main/java/org/bookmarks/service/Service.java"
+			],
+			[
+				"saleser",
+				"main/java/org/bookmarks/service/SaleService.java"
+			],
+			[
+				"invoice",
+				"main/java/org/bookmarks/domain/Invoice.java"
+			],
+			[
+				"invoirei",
+				"main/java/org/bookmarks/repository/InvoiceRepositoryImpl.java"
+			],
+			[
+				"invoiri",
+				"main/java/org/bookmarks/repository/InvoiceRepository.java"
+			],
+			[
+				"salerei",
+				"main/java/org/bookmarks/repository/SaleRepositoryImpl.java"
+			],
+			[
+				"csv",
+				"main/java/org/bookmarks/convertor/CSVMessageConvertor.java"
+			],
+			[
+				"stockitemserim",
+				"main/java/org/bookmarks/service/StockItemServiceImpl.java"
+			],
+			[
+				"stockitemcon",
+				"main/java/org/bookmarks/controller/StockItemController.java"
+			],
+			[
+				"eventcon",
+				"main/java/org/bookmarks/controller/EventController.java"
+			],
+			[
+				"emailse",
+				"main/java/org/bookmarks/service/EmailServiceImpl.java"
+			],
+			[
+				"chipssei",
+				"main/java/org/bookmarks/service/ChipsServiceImpl.java"
+			],
+			[
+				"log",
+				"main/resources/logback.xml"
+			],
+			[
+				"busine",
+				"main/resources/spring/business-config.xml"
+			],
+			[
+				"web",
+				"main/webapp/WEB-INF/web.xml"
+			],
+			[
+>>>>>>> 449d36f... Finisihing
 				"sicon",
 				"main/java/org/bookmarks/controller/StockItemController.java"
 			],
@@ -682,10 +941,6 @@
 			[
 				"stocic",
 				"main/java/org/bookmarks/controller/StockItemController.java"
-			],
-			[
-				"eventcon",
-				"main/java/org/bookmarks/controller/EventController.java"
 			],
 			[
 				"edit.j",

@@ -12,12 +12,17 @@ public class SearchEventDecorator extends AbstractBookmarksTableDecorator {
         		+ showSell(event)
         		+ showSales(event)
 				+ showDelete(event)
+				+ showUpload(event)
 				+ showEditNote(event);
 	}
 
 	private String showSell(Event event) {
 		return getImageAnchor("/bookmarks/events/startSelling?eventId=" + event.getId() + "&eventName=" + event.getName(), "sell.png", "Start Selling", false);
 	}
+
+	private String showUpload(Event event) {
+		return getImageAnchor("/bookmarks/events/uploadSales?eventId=" + event.getId() + "&eventName=" + event.getName(), "report.png", "Upload from Mini Beans", false);
+	}	
 	
 	private String showSales(Event event) {
 		return getImageAnchor("/bookmarks/events/showSales?eventId=" + event.getId() + "&eventName=" + event.getName(), "report.png", "Show Sales", false);

@@ -43,6 +43,25 @@
 			<li><a href="<c:url value="/author/add" />" title="Sale Or Return">Add Author</a></li>
           </ul>
         </li>   
+
+        <!-- Events-->
+
+ <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+      <li><a href="<c:url value="/events/add" />" title="Add Event">Add Event</a></li>
+      <li><a href="<c:url value="/events/search" />" title="Search Events">Search Events</a></li>
+      
+      <li class="divider"></li>
+   <c:if test="${sessionScope.event != null}">
+        <li><a href="<c:url value="/events/stopSelling" />" title="Stop Selling"><img src="<c:url value="/resources/images/blue-database1.png" />" />Stop Selling</a></li>
+      </c:if>    
+
+      <li><a href="<c:url value="/calendar/view" />" title="Calendar">Calendar</a></li>
+      <li><a href="<c:url value="/events/downloadSales" />" title="Download Sales">Download Sales</a></li>
+        </ul>
+        </li>   
+
         
         <!-- Supplier -->
         
@@ -130,15 +149,10 @@
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateChips")' title="Update Chips">Update Chips</a></li>
 			<li><a href="<c:url value="/chips/getOrders" />" title="Get Orders">Get Orders</a></li>
 			<li class="divider"></li>
-			
           </ul>
         </li>         
-        
-        
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://bookmarksbookshop.co.uk">Website</a></li>
-      </ul>
+      
     </div><!--/.nav-collapse -->
   </div>
 </div>

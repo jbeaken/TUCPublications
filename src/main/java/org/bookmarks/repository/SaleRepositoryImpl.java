@@ -212,7 +212,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 	@Override
 	public List getAllForCsv() {
 		Query query = sessionFactory.getCurrentSession()
-				.createQuery("select sa.quantity, sa.discount, si.id from Invoice i right join i.sales sa join sa.stockItem si where i is null");
+				.createQuery("select 'S', sa.quantity, sa.discount, sa.sellPrice, sa.vat, si.id from Invoice i right join i.sales sa join sa.stockItem si where i is null");
 		return query.list();
 	}
 }
