@@ -62,7 +62,6 @@
 				<li><a href="<c:url value="/events/stopSelling" />" title="Stop Selling"><img src="<c:url value="/resources/images/blue-database1.png" />" />Stop Selling</a></li>
 			</c:if>
 			<li><a href="<c:url value="/calendar/view" />" title="Calendar"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Calendar"/>Calendar</a></li>
-			<li><a href="<c:url value="/events/uploadSales" />" title="Upload Sales"><img src="<c:url value="/resources/images/blue-health.png" />" alt="Upload Sales"/>Upload Sales</a></li>
 			<li><a href="<c:url value="/events/downloadSales" />" title="Download Sales"><img src="<c:url value="/resources/images/blue-health.png" />" alt="Download Sales"/>Download Sales</a></li>
 		</ul>
 	</li>

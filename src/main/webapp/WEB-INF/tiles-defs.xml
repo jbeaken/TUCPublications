@@ -380,22 +380,22 @@
 
     <!-- EVENT -->
 
-  <definition name="editEvent" extends="bootstrap3Layout">
+  <definition name="editEvent" extends="baseLayout">
       <put-attribute name="title" value="Edit Event"/>
       <put-attribute name="body" value="/WEB-INF/jsp/events/editEvent.jsp"/>
   </definition>
 
-  <definition name="addEvent" extends="bootstrap3Layout">
+  <definition name="addEvent" extends="baseLayout">
       <put-attribute name="title" value="Add Event"/>
       <put-attribute name="body" value="/WEB-INF/jsp/events/addEvent.jsp"/>
   </definition>
 
-  <definition name="searchEvents" extends="bootstrap3Layout">
+  <definition name="searchEvents" extends="baseLayout">
       <put-attribute name="title" value="Search Events"/>
       <put-attribute name="body" value="/WEB-INF/jsp/events/searchEvents.jsp"/>
   </definition>
 
-  <definition name="viewEvent" extends="bootstrap3Layout">
+  <definition name="viewEvent" extends="baseLayout">
       <put-attribute name="title" value="View Event"/>
       <put-attribute name="body" value="/WEB-INF/jsp/events/viewEvent.jsp"/>
   </definition>

@@ -41,7 +41,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 
 	@Autowired
 	private CustomerOrderLineService customerOrderLineService;
-	
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -49,8 +49,8 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 	private InvoiceRepository invoiceRepository;
 
 	@Autowired
-	private SaleService saleService;	
-	
+	private SaleService saleService;
+
 	@Value("#{ applicationProperties['vatNumber'] }")
 	private String vatNumber;
 
@@ -75,9 +75,9 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 	public void delete(Invoice invoice) {
 		//Credit customer invoice amount
 		BigDecimal creditAmount = invoice.getTotalPrice().add(invoice.getSecondHandPrice()).add(invoice.getServiceCharge());
-		
+
 		customerService.debitAccount(invoice.getCustomer(), creditAmount);
-		
+
 
 		//Place back into stock
 		for(Sale sale : invoice.getSales()) {
@@ -109,7 +109,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 		}
 		invoice.calculate(orderLineMap.values(), true);
 	}
-	
+
 
 	@Override
 	public void addStockItem(CustomerOrderLine col, Map<Long, Sale> orderLineMap, Invoice invoice) {
@@ -129,7 +129,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 			orderLineMap.put(stockItem.getId(), sale);
 		}
 		invoice.calculate(orderLineMap.values(), true);
-	}	
+	}
 
 
 
@@ -183,7 +183,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 //		}
 //		return new BigDecimal(totalPrice);
 //	}
- 
+
 	/**
 	 * update stock record if this isn't a proforma
 	 */
@@ -192,6 +192,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 	public void save(Invoice invoice, Collection<Sale> sales, Map<Long, CustomerOrderLine> customerOrderLineMap, Event event) {
 //		Customer customer = customerService.get(invoice.getCustomer().getId());
 //		invoice.setCustomer(customer);
+
 		invoice.setSales(new HashSet<Sale>(sales));
 		invoice.calculate(false);
 
@@ -221,7 +222,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 		}
 
 		save(invoice); //Persists sales as well
-		
+
 		if(invoice.getUpdateStock() == Boolean.TRUE) {
 			//Need to remove items from stock, but not for customer orders, need to remove quantityReadyForCustomer
 			for(Sale sale : invoice.getSales()) {
@@ -244,7 +245,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 			}// end for
 		}
 	}
-	
+
 
 
 	@Override
@@ -261,7 +262,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 		StockItem stockItem = stockItemService.get(stockItemId);
 		addStockItem(stockItem, orderLineMap, invoice);
 	}
-	
+
 
 
 

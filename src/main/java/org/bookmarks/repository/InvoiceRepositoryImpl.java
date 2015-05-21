@@ -236,7 +236,7 @@ private boolean appendId(InvoiceSearchBean invoiceSearchBean, StringBuffer query
 	@Override
 	public List<Invoice> getAllForCsv() {
 		Query query = sessionFactory.getCurrentSession()
-				.createQuery("select 'I', sa.quantity, sa.discount, sa.sellPrice, sa.vat, si.id, i.customer.id from Invoice i join i.sales sa join sa.stockItem si");
+				.createQuery("select 'I', sa.quantity, sa.discount, sa.sellPrice, sa.vat,  sa.creationDate, si.id, i.customer.id, i.creationDate from Invoice i join i.sales sa join sa.stockItem si");
 		return query.list();
 	}
 
