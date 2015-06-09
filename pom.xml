@@ -7,6 +7,7 @@
 	<version>2.0-beta</version>
 	<name>bookmarks</name>
 	<properties>
+<<<<<<< HEAD
     <java.version>1.7</java.version>
     <groovy.version>2.1.1</groovy.version>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -51,6 +52,43 @@
         <jstl.version>1.2</jstl.version>
         <servlet.version>2.5</servlet.version>
         <javax-el.version>2.2</javax-el.version>
+=======
+
+		<!-- Spring -->
+		<spring.version>4.1.6.RELEASE</spring.version>
+
+		<!-- Spring Data -->
+		<spring-data-jpa.version>1.7.2.RELEASE</spring-data-jpa.version>
+
+		<!-- Hibernate -->
+		<hibernate.version>4.3.8.Final</hibernate.version>
+		<hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+		<hibernate.search.version>4.1.1.Final</hibernate.search.version>
+
+
+		<slf4j.version>1.7.5</slf4j.version>
+
+		<!-- AOP -->
+		<aspectj.version>1.8.3</aspectj.version>
+
+		<!-- Test -->
+		<junit.version>4.11</junit.version>
+		<hamcrest.version>1.3</hamcrest.version>
+
+		<!-- Encryption -->
+		<jasypt.version>1.9.2</jasypt.version>
+		<bouncy.castle.version>1.52</bouncy.castle.version>
+
+		<!-- Image Manipulation -->
+		<imgscalr.version>4.2</imgscalr.version>
+
+
+		<!-- Java EE / Java SE dependencies -->
+		<jsp.version>2.2</jsp.version>
+		<jstl.version>1.2</jstl.version>
+		<servlet.version>2.5</servlet.version>
+		<javax-el.version>2.2</javax-el.version>
+>>>>>>> 268cddb... Changing pom.xml
 	</properties>
 	<!-- 
 	<repositories>
@@ -829,6 +867,7 @@
 						</goals> </execution> -->
 				</executions>
 
+<<<<<<< HEAD
 			</plugin>		
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -967,5 +1006,93 @@
             </plugin>   		        
             
         </plugins>
+=======
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjrt</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.aspectj</groupId>
+						<artifactId>aspectjtools</artifactId>
+						<version>${aspectj.version}</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outxml>true</outxml>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+					<complianceLevel>1.7</complianceLevel>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.8</version>
+				<executions>
+					<!-- <execution> <id>copy</id> <phase>package</phase> <goals> <goal>copy</goal>
+						</goals> <configuration> <artifactItems> <artifactItem> <groupId>[ groupId
+						]</groupId> <artifactId>[ artifactId ]</artifactId> <version>[ version ]</version>
+						<type>[ packaging ]</type> <classifier> [classifier - optional] </classifier>
+						<overWrite>[ true or false ]</overWrite> <outputDirectory>[ output directory
+						]</outputDirectory> <destFileName>[ filename ]</destFileName> </artifactItem>
+						</artifactItems> </configuration> </execution> -->
+				</executions>
+			</plugin>
+
+			<!-- TOMCAT 7 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<systemProperties>
+						<spring.profiles.active>dev</spring.profiles.active>
+					</systemProperties>
+				</configuration>
+			</plugin>
+
+		</plugins>
+>>>>>>> 268cddb... Changing pom.xml
 	</build>
 </project>
