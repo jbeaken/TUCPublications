@@ -37,6 +37,10 @@ public class Event extends AbstractNamedEntity {
 	@Column(name="show_author")
 	private Boolean showAuthor;
 
+	@NotNull
+	@Column(name="show_name_not_stock_title")
+	private Boolean showName;
+
 	@Column(name="entrance_price")
 	private Float entrancePrice;
 

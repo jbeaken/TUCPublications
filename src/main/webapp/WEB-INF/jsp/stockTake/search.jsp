@@ -6,22 +6,22 @@
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">
-				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/> 
-				<form:input path="stockItem.isbn" id="focus" /> <form:errors path="stockItem.isbn" />			
+				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/>
+				<form:input path="stockItem.isbn" id="focus" /> <form:errors path="stockItem.isbn" />
 	  	 </div>
           <div class="column w-33-percent">
 						<form:label for="stockItem.title" path="stockItem.title" cssErrorClass="error">Title</form:label><br/>
 						<form:input path="stockItem.title" /> <form:errors path="stockItem.title" />
-	  	 </div>	
+	  	 </div>
 	  	</div>
 </div>
 <div id="rows">
 	<div class="row">
-          <div class="column w-100-percent"> 
+          <div class="column w-100-percent">
 		  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('/bookmarks/stockTakeLine/search')">Search</button>
           <button type="button" class="btn btn-primary" id="resetButton" accesskey="R">Reset</button>&nbsp;
 	 	 </div>
-	</div>	
+	</div>
 </div>
 </form:form>
 <c:if test="${stockTakeLineList == null}">
@@ -30,22 +30,22 @@
 Nothing Found
 </c:if>
 <c:if test="${stockTakeLineList != null}">
-<display:table name="stockTakeLineList" 
-			   requestURI="search" 
+<display:table name="stockTakeLineList"
+			   requestURI="search"
 			   decorator="org.bookmarks.ui.SearchStockItemsDecorator"
-			   sort="external" 
-			   defaultsort="1" 
+			   sort="external"
+			   defaultsort="1"
 			   defaultorder="ascending"
 			   pagesize="${pageSize}"
 			   export="true"
 			   partialList="true"
-			   size="${searchResultCount}"			   
+			   size="${searchResultCount}"
 			   id="searchTable"
 			   class="smallTextTable">
-	   <display:setProperty name="export.pdf" value="true" /> 
-	   <display:setProperty name="export.xml" value="false" /> 
-	   <display:setProperty name="export.pdf.filename" value="stockTake.pdf"/> 				   
-	   <display:setProperty name="export.csv.filename" value="stockTake.txt"/> 				   
+	   <display:setProperty name="export.pdf" value="true" />
+	   <display:setProperty name="export.xml" value="false" />
+	   <display:setProperty name="export.pdf.filename" value="stockTake.pdf"/>
+	   <display:setProperty name="export.csv.filename" value="stockTake.txt"/>
   <display:column property="stockItem.isbn" sortable="true" sortName="s.isbn" title="ISBN"/>
   <display:column property="stockItem.title" sortable="true" sortName="s.title" maxLength="100" title="Title" style="width:70%"/>
   <display:column property="quantity" sortable="true" maxLength="10" class="category" sortName="s.category.name" title="Quantity"/>

@@ -6,22 +6,25 @@
     <head>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-1.11.1.min.js" />" ></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-ui.min.js" />"></script>
-	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/jquery-ui.min.css" />" />	
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/jquery-ui.min.css" />" />
 	<link rel="stylesheet" href="<c:url value="/resources/css/bookmarks.css" />" type="text/css" />
 	<link rel="stylesheet" href="<c:url value="/resources/css/css3style.css" />" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/displaytag.css" />" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/font-awesome.css" />" type="text/css" />	
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/font-awesome.css" />" type="text/css" />
 	<script type="text/javascript" src="<c:url value="/resources/js/chosen.jquery.min.js" />" ></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bookmarks.js" />" ></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js" />" ></script>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/chosen.css" />" />
 <style type="text/css">
+td.title {
+  font-size : 120%;
+}
 ul#css3menu1 a {
 	background-color:${requestScope.menuColour};
 }
 ul#css3menu1 li:hover>a,ul#css3menu1 li>a.pressed{
 	background-color:${requestScope.menuHoverColour};
-}	
+}
 ul#css3menu1 li:hover>a{
 	background-color:${requestScope.menuHoverColour};
 }
@@ -34,7 +37,7 @@ thead tr {
 th.sorted {
 	background-color: ${requestScope.menuColour};
 }
-tr.tableRowEven,tr.even {
+tr.tableRowEven, tr.even {
 	background-color: ${requestScope.tableRowEven};
 }
 .button {
@@ -43,7 +46,7 @@ tr.tableRowEven,tr.even {
 h1 {
 	color: ${requestScope.menuColour};
 }
-</style>	
+</style>
 	<script type="text/javascript">
 	$(function() {
 			<c:if test="${message != null}">
@@ -73,7 +76,7 @@ h1 {
 			</c:if>
 			<c:if test="${focusId == null}">
 				$('#focus').focus();
-			</c:if>	
+			</c:if>
 	});
 		function submitForm(action) {
 			document.forms[0].action = action;
@@ -88,10 +91,10 @@ h1 {
 		function confirmDeletion(action) {
 			confirmation(action, "Are you sure you want to delete? Cannot be undone!");
 		}
-	</script>    
+	</script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><tiles:insertAttribute name="title" ignore="true" /></title>
-        
+
     </head>
 	<body>
         <table cellpadding="2" cellspacing="2" align="center" width="100%">
@@ -104,7 +107,7 @@ h1 {
 	            <tr>
 	            	<td>
 		            	<div class="alert alert-info" style="width:400px">
-		              		<button type="button" class="close" data-dismiss="alert">×</button>
+		              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
 		              		<h4>Information</h4>
 		              		<p>${info}</p>
 		            	</div>
@@ -115,7 +118,7 @@ h1 {
 	            <tr>
 	            	<td>
 		            	<div class="alert alert-block" style="width:400px">
-		              		<button type="button" class="close" data-dismiss="alert">×</button>
+		              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
 		              		<h4>Warning!</h4>
 		              		<p>${warning}</p>
 		            	</div>
@@ -126,7 +129,7 @@ h1 {
 	            <tr>
 	            	<td>
 		            	<div class="alert alert-error" style="width:400px">
-		              		<button type="button" class="close" data-dismiss="alert">×</button>
+		              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
 		              		<h4>Error!</h4>
 		              		<p>${error}</p>
 		            	</div>
@@ -137,7 +140,7 @@ h1 {
 	            <tr>
 	            	<td>
 		            	<div class="alert alert-success" style="width:400px">
-		              		<button type="button" class="close" data-dismiss="alert">×</button>
+		              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
 		              		<h4>Success!</h4>
 		              		<p>${success}</p>
 		            	</div>

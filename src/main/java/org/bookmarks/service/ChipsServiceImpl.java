@@ -81,6 +81,7 @@ public class ChipsServiceImpl implements ChipsService {
 	
 	@Value("#{ applicationProperties['sftpPassword'] }")
 	private String sftpPassword;
+<<<<<<< HEAD
 	
 	@Value("#{ applicationProperties['chipsUrl'] }")
 	private String chipsUrl;	
@@ -93,6 +94,63 @@ public class ChipsServiceImpl implements ChipsService {
 	final static Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class); 
 	
 //	@Override
+=======
+
+	@Value("#{ applicationProperties['chips.host'] }")
+	private String chips_host;
+
+	@Value("#{ applicationProperties['chips.context'] }")
+	private String chips_context;
+
+	@Value("#{ applicationProperties['chips.port'] }")
+	private Integer chips_port;
+
+	@Value("#{ applicationProperties['chips.protocol'] }")
+	private String chips_protocol;
+
+	@Value("#{ applicationProperties['chips.get.orders'] }")
+	private Boolean chipsGetOrders;
+
+	@Autowired
+	private StandardPBEStringEncryptor jsonEcryptor;
+
+	@Autowired
+	private Environment environment;
+
+	final static Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class);
+
+	private HttpHost target;
+
+	private CredentialsProvider credsProvider;
+
+	private HttpClientContext localContext;
+
+	@PostConstruct
+	public void postConstruct() {
+		logger.debug("Building chips host details");
+		target = new HttpHost(chips_host, chips_port, chips_protocol);
+
+		credsProvider = new BasicCredentialsProvider();
+
+		// credsProvider.setCredentials( new AuthScope(AuthScope.ANY_HOST, -1),
+		// new UsernamePasswordCredentials("little", "large"));
+		credsProvider.setCredentials(new AuthScope(target.getHostName(), -1), new UsernamePasswordCredentials("little", "large"));
+
+		// // Create AuthCache instance
+		AuthCache authCache = new BasicAuthCache();
+		// // Generate BASIC scheme object and add it to the local
+		// // auth cache
+		BasicScheme basicScheme = new BasicScheme();
+		authCache.put(target, basicScheme);
+		//
+		// // Add AuthCache to the execution context
+		localContext = HttpClientContext.create();
+		localContext.setCredentialsProvider(credsProvider);
+		localContext.setAuthCache(authCache);
+	}
+
+	// @Override
+>>>>>>> fc67d45... Adding showHome
 	private void uploadImageToChips(StockItem stockItem) throws SftpException, JSchException, IOException {
 		
 		if(!isProduction()) {
@@ -334,6 +392,10 @@ public class ChipsServiceImpl implements ChipsService {
 		
 
 		String jsonCustomers = null;
+<<<<<<< HEAD
+=======
+
+>>>>>>> fc67d45... Adding showHome
 		try {
 		    System.out.println(response.getStatusLine());
 		    HttpEntity entity = response.getEntity();
@@ -344,7 +406,17 @@ public class ChipsServiceImpl implements ChipsService {
 		} finally {
 		    response.close();
 		}
+<<<<<<< HEAD
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize( jsonCustomers );
+=======
+
+		//Decrypt json
+		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
+
+		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
+		logger.info("Have retrived " + chipsCustomers.size() + " chips orders");
+
+>>>>>>> fc67d45... Adding showHome
 		return chipsCustomers;
 	}
 	
@@ -486,6 +558,7 @@ public class ChipsServiceImpl implements ChipsService {
 		}
 
 		String eventsAsJson = serializer.serialize(events);
+<<<<<<< HEAD
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
@@ -501,6 +574,17 @@ public class ChipsServiceImpl implements ChipsService {
 		
 		CloseableHttpResponse response = httpclient.execute(httpPost); 
 		
+=======
+
+		logger.info("Sending json " + eventsAsJson);
+
+		CloseableHttpClient httpclient = getHttpClient();
+
+		HttpPost httpPost = getHttpPost("/website/updateEvents", "eventsAsJson", eventsAsJson);
+
+		CloseableHttpResponse response = httpclient.execute(httpPost);
+
+>>>>>>> fc67d45... Adding showHome
 		try {
 		    checkStatus(response);
 		} finally {

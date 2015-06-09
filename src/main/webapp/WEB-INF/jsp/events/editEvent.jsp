@@ -47,7 +47,7 @@
     </div>
 </spring:hasBindErrors>
 
-	                
+
                 <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add files...</span>
@@ -97,6 +97,8 @@
 			<form:label for="onWebsite" path="onWebsite" cssErrorClass="error">Put On Website</form:label><br/>
 			<form:checkbox path="showAuthor" />
 			<form:label for="showAuthor" path="showAuthor">Show Author</form:label>
+			<form:checkbox path="showName" />
+			<form:label for="showName" path="showName">Show Name</form:label>			
 		  </div>
 	</div>
       <div class="row">
