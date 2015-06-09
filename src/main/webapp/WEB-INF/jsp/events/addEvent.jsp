@@ -63,9 +63,9 @@
       <form:checkbox path="onWebsite" />
 			<form:label for="onWebsite" path="onWebsite" cssErrorClass="error">Put On Website</form:label><br/>
 			<form:checkbox path="showAuthor" />
-			<form:label for="showAuthor" path="showAuthor">Show Author</form:label>
+			<form:label for="showAuthor" path="showAuthor">Show Author</form:label><br/>
 			<form:checkbox path="showName" />
-			<form:label for="showName" path="showName">Show Name</form:label>                 		  
+			<form:label for="showName" path="showName">Show Name instead of Stock Title</form:label>
 		  </div>
 	</div>
       <div class="row">

@@ -37,7 +37,6 @@ public class Event extends AbstractNamedEntity {
 	@Column(name="show_author")
 	private Boolean showAuthor;
 
-	@NotNull
 	@Column(name="show_name_not_stock_title")
 	private Boolean showName;
 
@@ -185,6 +184,16 @@ public class Event extends AbstractNamedEntity {
 	public Float getEntrancePrice() {
 		return entrancePrice;
 	}
+
+	public Boolean getShowName() {
+		return showName;
+	}
+
+
+	public void setShowName(Boolean showName) {
+		this.showName = showName;
+	}
+
 
 	public void setEntrancePrice(Float entrancePrice) {
 		this.entrancePrice = entrancePrice;
