@@ -41,7 +41,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
 # bit Java version.
 # http://www.springsource.com/files/uploads/tomcat/tomcatx-large-scale-deployments.pdf
 # http://www.oracle.com/technetwork/java/hotspotfaq-138619.html
-export CATALINA_OPTS="$CATALINA_OPTS -Xss192k"
+export CATALINA_OPTS="$CATALINA_OPTS -Xss228k"
 export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
 # Oracle Java as default, uses the serial garbage collector on the
 # Full Tenured heap. The Young space is collected in parallel, but the
