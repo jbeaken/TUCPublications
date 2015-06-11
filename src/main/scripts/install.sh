@@ -9,28 +9,27 @@ apt-get update
 apt-get install oracle-java8-installer
 #apt-get install oracle-java8-set-default
 
+# Git (requires password entry)
+apt-get install git
+mkdir /home/git
+git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
+
+
 # Tomcat
 wget -P /opt http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v8.0.23/bin/apache-tomcat-8.0.23.tar.gz
 tar  -xzC /opt -f /opt/apache-tomcat-8.0.23.tar.gz
 ln -s /opt/apache-tomcat-8.0.23 /opt/tomcat
 rm -rf /opt/tomcat/webapps/*
+cp /home/git/bookmarks/src/main/scripts/server.xml /opt/tomcat/conf/server.xml
+cp /home/git/bookmarks/src/main/scripts/setenv.sh /opt/tomcat/bin/setenv.sh
 
 # Maven
 wget -P /opt ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
 tar -xzC /opt -f /opt/apache-maven-3.3.3-bin.tar.gz
 ln -s /opt/apache-maven-3.3.3 /opt/maven
 
-# Git (requires password entry)
-apt-get install git
-mkdir /home/git
-git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
-
 # Mysql
 apt-get install mysql-server
-
-# Tomcat conf
-cp /home/git/bookmarks/src/main/scripts/server.xml /opt/tomcat/conf/server.xml
-cp /home/git/bookmarks/src/main/scripts/setenv.sh /opt/tomcat/bin/setenv.sh
 
 # Build bookmarks
 cp /home/git/bookmarks/src/main/resources/spring/application.dev.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties

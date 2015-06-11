@@ -1,5 +1,16 @@
 <<<<<<< HEAD
 src/main/resources/spring/application.prod.properties
+<<<<<<< HEAD
 =======
 /target/
 >>>>>>> e8af314... image width on customer order search, calendar add
+=======
+src/main/resources/spring/application.dev.properties
+src/main/groovy/org/bookmarks/groovy/DecyptDatabase.groovy
+target/
+.settings
+.project
+.classpath
+ip*
+bm.sql*
+>>>>>>> a53eb52... Removing bower

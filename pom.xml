@@ -862,6 +862,7 @@
 	<build>
         <finalName>bookmarks</finalName>
 		<plugins>
+<<<<<<< HEAD
 <plugin>
 				<!-- EXEC PLUGIN -->
 				<groupId>org.codehaus.mojo</groupId>
@@ -1037,6 +1038,8 @@
         </plugins>
 =======
 			</plugin>
+=======
+>>>>>>> a53eb52... Removing bower
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
