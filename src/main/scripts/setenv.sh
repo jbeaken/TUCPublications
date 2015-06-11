@@ -33,21 +33,21 @@
 
 # discourage address map swapping by setting Xms and Xmx to the same value
 # http://confluence.atlassian.com/display/DOC/Garbage+Collector+Performance+Issues
-export CATALINA_OPTS="$CATALINA_OPTS -Xms512m"
-export CATALINA_OPTS="$CATALINA_OPTS -Xmx512m"
-#AUTHBIND=yes
+export CATALINA_OPTS="$CATALINA_OPTS -Xms1024m"
+export CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
+AUTHBIND=yes
 # Increase maximum perm size for web base applications to 4x the default amount
 # http://wiki.apache.org/tomcat/FAQ/Memoryhttp://wiki.apache.org/tomcat/FAQ/Memory
 export CATALINA_OPTS="$CATALINA_OPTS -XX:MaxPermSize=256m"
 # export CATALINA_OPTS="$CATALINA_OPTS -XX:PermSize=256m"
-export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=dev"
+
 # Reset the default stack size for threads to a lower value (by 1/10th original)
 # By default this can be anywhere between 512k -> 1024k depending on x32 or x64
 # bit Java version.
 # http://www.springsource.com/files/uploads/tomcat/tomcatx-large-scale-deployments.pdf
 # http://www.oracle.com/technetwork/java/hotspotfaq-138619.html
-export CATALINA_OPTS="$CATALINA_OPTS -Xss512k"
-
+export CATALINA_OPTS="$CATALINA_OPTS -Xss192k"
+export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
 # Oracle Java as default, uses the serial garbage collector on the
 # Full Tenured heap. The Young space is collected in parallel, but the
 # Tenured is not. This means that at a time of load if a full collection
