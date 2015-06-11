@@ -14,7 +14,6 @@ apt-get install git
 mkdir /home/git
 git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
 
-
 # Tomcat
 wget -P /opt http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v8.0.23/bin/apache-tomcat-8.0.23.tar.gz
 tar  -xzC /opt -f /opt/apache-tomcat-8.0.23.tar.gz
@@ -31,10 +30,39 @@ ln -s /opt/apache-maven-3.3.3 /opt/maven
 # Mysql
 apt-get install mysql-server
 
+# Download bookmarks database.
+mkdir -p /home/bookmarks/logs
+DAY_OF_WEEK=$(date +"%a")
+FILENAME=$DAY_OF_WEEK
+wget -P /home/bookmarks ftp://u34059913-kevin:obama08elected@217.160.101.49/backup/bm.$FILENAME.sql.gpg
+
+# Import bookmarks database
+# THIS REQUIRES THE INFO@BOOKMARKSBOOKSHOP.CO.UK PRIVATE KEY TO BE INSTALLED.
+# Find at dropbox
+#gpg -d /home/bookmarks/bm.$FILENAME.sql.gpg > /home/bookmarks/bm.sql
+#mysql -uroot -p < /home/bookmarks/bm.sql
+#shred /home/bookmarks/bm.sql
+#rm /home/bookmarks/bm.sql
+
 # Build bookmarks
+mkdir /home/bak
 cp /home/git/bookmarks/src/main/resources/spring/application.dev.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties
 sh /home/git/bookmarks/src/main/scripts/build.sh
 
 # Tomcat systemd
 cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
 systemctl enable tomcat
+
+# File server
+#apt-get install samba cifs-utils
+#Add to fstab
+#UUID=144E3AED4E3AC770 /srv/samba/share ntfs guest 0 0
+
+# Add to /etc/samba/smb.conf
+# [share]
+#    comment = BRAIN File Server Share
+#    path = /srv/samba/share
+#    browsable = yes
+#    guest ok = yes
+#    read only = no
+#    create mask = 0755
