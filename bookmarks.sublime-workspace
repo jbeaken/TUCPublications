@@ -119,7 +119,7 @@
 			"file": "src/main/webapp/WEB-INF/tiles/header.jsp",
 			"settings":
 			{
-				"buffer_size": 12503,
+				"buffer_size": 12322,
 				"line_ending": "Windows"
 			}
 		},
@@ -138,6 +138,14 @@
 				"buffer_size": 2469,
 				"line_ending": "Unix"
 >>>>>>> 449d36f... Finisihing
+			}
+		},
+		{
+			"file": "src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
+			"settings":
+			{
+				"buffer_size": 15708,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -236,7 +244,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
 			""
@@ -303,7 +311,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -360,16 +368,20 @@
 					"file": "src/main/webapp/WEB-INF/tiles/header.jsp",
 					"settings":
 					{
+<<<<<<< HEAD
 						"buffer_size": 12503,
 >>>>>>> 449d36f... Finisihing
+=======
+						"buffer_size": 12322,
+>>>>>>> 18b5828... Updating accounts import
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7635,
-								7635
+								0,
+								0
 							]
 						],
 						"settings":
@@ -770,6 +782,33 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
+					"settings":
+					{
+						"buffer_size": 15708,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 675.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
 				}
 			]
 		}
@@ -821,7 +860,14 @@
 		[
 			[
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+				"searchcust",
+				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
+			],
+			[
+>>>>>>> 18b5828... Updating accounts import
 				"search.jsp",
 				"main/webapp/WEB-INF/jsp/author/search.jsp"
 			],
@@ -949,10 +995,6 @@
 			[
 				"config.j",
 				"main/webapp/resources/ckeditor/config.js"
-			],
-			[
-				"searchcust",
-				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
 			],
 			[
 				"view.",
