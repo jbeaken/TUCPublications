@@ -65,7 +65,7 @@ public class SupplierReturnController extends OrderLineController {
 
 	@Autowired
 	private CustomerOrderLineService customerOrderLineService;
-	
+
 	@Autowired
 	private SupplierReturnLineValidator supplierReturnLineValidator;
 
@@ -91,11 +91,13 @@ public class SupplierReturnController extends OrderLineController {
 		//Save for return later
 		session.setAttribute("savedSearchBean", supplierReturnSearchBean);
 		return "searchSupplierReturns";
-	}	
+	}
+
+
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Long id, ModelMap modelMap, HttpSession session) {
- 
+
 		SupplierReturn supplierReturn = supplierReturnService.get(id);
 
 		Map<Long, SupplierReturnLine> supplierReturnLinesMap = new HashMap<Long, SupplierReturnLine>();
@@ -113,11 +115,27 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 	/**
-	 * @param id
-	 * @param modelMap
-	 * @param session
-	 * @return
-	 */
+	* id refers to stockItem id,
+	*/
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/editSupplierReturnOrderLine", method=RequestMethod.GET)
+	public String editSupplierReturnOrderLine(Long id, ModelMap modelMap, HttpSession session) {
+		Map<Long, SupplierReturnLine> supplierReturnLineMap = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
+		SupplierReturn supplierReturn = (SupplierReturn) session.getAttribute("supplierReturn");
+
+		SupplierReturnLine supplierReturnLine = supplierReturnLineMap.get(id);
+		StockItem stockItem = stockItemService.get(id);
+		supplierReturnLine.setStockItem(stockItem);
+
+		modelMap.addAttribute(supplierReturn);
+		modelMap.addAttribute("supplierReturnLine", supplierReturnLine);
+		modelMap.addAttribute(new SupplierReturnSearchBean());
+		modelMap.addAttribute(supplierReturnLineMap.values());
+//		fillStockSearchModel(session, modelMap);
+
+		return "createSupplierReturn";
+	}
+
 	@RequestMapping(value="/editSupplierReturnOrderLine", method=RequestMethod.POST)
 	public String editSupplierReturnLine(SupplierReturnLine supplierReturnLine, BindingResult bindingResult, ModelMap modelMap, HttpSession session) {
 		Map<Long, SupplierReturnLine> supplierReturnLineMap = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
@@ -145,7 +163,7 @@ public class SupplierReturnController extends OrderLineController {
 
 		//Why?
 		modelMap.remove("supplierReturnLine");
-		calculateTotalPrice(supplierReturnLineMap.values(), modelMap);
+		//calculateTotalPrice(supplierReturnLineMap.values(), modelMap);
 
 		return "createSupplierReturn";
 	}
@@ -172,10 +190,10 @@ public class SupplierReturnController extends OrderLineController {
 		supplierReturnLinesMap.remove(id);
 
 		fillModel(supplierReturn, supplierReturnLinesMap, new SupplierReturnSearchBean(), modelMap);
-		
+
 		return "createSupplierReturn";
 	}
-	
+
 	private void fillModel(SupplierReturn supplierReturn, Map<Long, SupplierReturnLine> supplierReturnLinesMap, SupplierReturnSearchBean supplierReturnSearchBean, ModelMap modelMap) {
 		//Sort
 		List<SupplierReturnLine> list = new ArrayList<SupplierReturnLine>(supplierReturnLinesMap.values());
@@ -188,10 +206,10 @@ public class SupplierReturnController extends OrderLineController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public String create(@ModelAttribute SupplierReturnSearchBean goodsIntoStockSearchBean, BindingResult bindingResult, HttpSession session, ModelMap modelMap) {
-		
+
 		Map<Long, SupplierReturnLine> map = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
 		SupplierReturn supplierReturn = (SupplierReturn) session.getAttribute("supplierReturn");
-		
+
 		if(map == null) {
 			return sessionExpired(modelMap);
 		}
@@ -239,21 +257,21 @@ public class SupplierReturnController extends OrderLineController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/addStock", method=RequestMethod.POST)
 	public String addStock(@ModelAttribute SupplierReturnSearchBean supplierReturnSearchBean, BindingResult bindingResult,	HttpSession session, ModelMap modelMap) {
-		
+
 		//Map of previously entered lines, by key is stock item id
 		Map<Long, SupplierReturnLine> supplierReturnLinesMap = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
-		
+
 		if(supplierReturnLinesMap == null) {
 			return sessionExpired(modelMap);
 		}
 		//The containing supplier return domain object
 		SupplierReturn supplierReturn = (SupplierReturn) session.getAttribute("supplierReturn");
-		
+
 		//Get stock from isbn
 		//Why does this call get supplier and category if it doesn't come from addStock??
 		String isbn = supplierReturnSearchBean.getStockItem().getIsbn();
 		StockItem stockItem = stockItemService.get(isbn);
-		
+
 		//Must deal with null, not found in database
 		if(stockItem == null) {
 			//Shouldn't happen
@@ -263,7 +281,7 @@ public class SupplierReturnController extends OrderLineController {
 
 		//Has this stock already been added or is it the first one?
 		SupplierReturnLine supplierReturnLine = supplierReturnLinesMap.get(stockItem.getId());
-		
+
 		if(supplierReturnLine != null) { //Has already been added
 			Long amount = supplierReturnLine.getAmount();
 			supplierReturnLine.setAmount(amount + 1);
@@ -271,17 +289,17 @@ public class SupplierReturnController extends OrderLineController {
 			supplierReturnLine = new SupplierReturnLine(stockItem);
 			supplierReturnLine.setAmount(1l);
 			supplierReturnLine.setStockItem(stockItem);
-			
-			
+
+
 			supplierReturnLinesMap.put(stockItem.getId(), supplierReturnLine);
 		}
-		
+
 		//Reset
 		supplierReturnSearchBean.getStockItem().setIsbn("");
 
 		//Sort
 		List<SupplierReturnLine> list = new ArrayList<SupplierReturnLine>(supplierReturnLinesMap.values());
-		
+
 		modelMap.addAttribute(list);
 		modelMap.addAttribute(supplierReturnSearchBean);
 		modelMap.addAttribute("lastSupplierReturnLine", supplierReturnLine);
@@ -299,7 +317,7 @@ public class SupplierReturnController extends OrderLineController {
 		double retailPrice = 0;
 		for(SupplierReturnLine line : supplierReturnLines) {
 			Double price = line.getAmount() * line.getStockItem().getPublisherPrice().doubleValue();
-			line.setPrice(new BigDecimal(price));
+			//line.setPrice(new BigDecimal(price));
 			totalPrice = totalPrice + price;
 		}
 		modelMap.addAttribute("totalPrice", totalPrice);
@@ -332,15 +350,15 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/fillStock", method=RequestMethod.POST) 
+	@RequestMapping(value="/fillStock", method=RequestMethod.POST)
 	public String fillStock(HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		//Get the customerOrderLine to fill, if not in map get from database
 		Map<Long, Collection<CustomerOrderLine>> customerOrdersToFillMap = (Map<Long, Collection<CustomerOrderLine>>) session.getAttribute("customerOrdersToFillMap");
-		
+
 		Long stockItemId = (Long) session.getAttribute("stockItemIdToFill");
-		
+
 		Collection<CustomerOrderLine> customerOrderLinesToFill = customerOrdersToFillMap.get(stockItemId);
-		
+
 		Collection<CustomerOrderLine> filledCustomerOrderLines =  (Collection<CustomerOrderLine>) session.getAttribute("filledCustomerOrderLines");
 
 //		//Get the supplierReturnLine that will do the filling
@@ -411,9 +429,9 @@ public class SupplierReturnController extends OrderLineController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/selectSupplier", method=RequestMethod.GET)
 	public String selectSupplier(ModelMap modelMap, HttpSession session) {
-		
+
 		SupplierReturn supplierReturn = (SupplierReturn) session.getAttribute("supplierReturn");
-		
+
 		if(supplierReturn != null) {
 			Map<Long, SupplierReturnLine> map = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
 			modelMap.addAttribute(new SupplierReturnSearchBean(supplierReturn));
@@ -424,7 +442,7 @@ public class SupplierReturnController extends OrderLineController {
 		//Otherwise new request, direct to select supplier
 		modelMap.addAttribute(new SupplierReturn());
 		modelMap.addAttribute(getSuppliers());
-		
+
 		return "selectSupplierForSupplierReturn";
 	}
 

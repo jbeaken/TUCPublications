@@ -8,15 +8,13 @@ fi
 
 set -e
 NOW=$(date +"%m-%d-%Y")
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+#export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 /opt/maven/bin/mvn -DskipTests clean install
 
-sudo cp /opt/tomcat/webapps/puma.war /home/puma/bak/puma.$NOW.war
+echo Deploying new version bookmarks##$1.war
 
-echo Deploying new version puma##$1.war
-
-sudo cp target/puma.war /opt/tomcat/webapps/puma##$1.war
+sudo cp target/bookmarks.war /opt/tomcat/webapps/bookmarks##$1.war
 
 
 

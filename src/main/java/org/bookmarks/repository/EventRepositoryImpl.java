@@ -25,32 +25,32 @@ public class EventRepositoryImpl extends AbstractRepository<Event> implements Ev
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
-    
+
+
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
-    	return new StringBuffer("select new Event(e.id, e.name, e.type, e.startDate, e.endDate, e.note, sum(s.sellPrice * s.quantity)) " +
+    	return new StringBuffer("select new Event(e.id, e.name, e.type, e.startDate, e.endDate, e.note, sum(s.sellPrice * s.quantity * ( case when s.discount is null then 1 else ((100 - s.discount) / 100) end  ) )) " +
     			"from Event as e " +
     			"left join e.sales as s");
     }
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
 		return new StringBuffer("select count(e) from Event as e");
-	}    
-	
+	}
+
     @Override
 	public void appendGroupBy(StringBuffer query, SearchBean searchBean) {
     	query.append(" group by e");
 	}
-    
-    
+
+
 
 	@Override
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 		EventSearchBean eventSearchBean = (EventSearchBean) searchBean;
 		QueryBuilder qb = new QueryBuilder();
-		
+
 		qb.append(eventSearchBean.getEvent().getName(), "e.name");
 		qb.append(eventSearchBean.getEvent().getType());
-		
+
 		query.append(qb.getQuery());
 	}
 

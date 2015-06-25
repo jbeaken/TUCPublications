@@ -9,15 +9,14 @@ public class SupplierReturnLineDecorator extends SearchStockItemsDecorator {
 
 	public String getLink()	{
         SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
-        return  showView(supplierReturnLine) + showEdit(supplierReturnLine)
-        	+ showDelete(supplierReturnLine);
+        return  showView(supplierReturnLine) + showEdit(supplierReturnLine)	+ showDelete(supplierReturnLine);
 	}
-	
+
 	public String getTitle() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
 		return getStockTitleLink(supplierReturnLine.getStockItem(), "editSupplierOrderLine");
-	}	
- 
+	}
+
 	private String showEdit(SupplierReturnLine supplierReturnLine) {
 		Long stockItemid = supplierReturnLine.getStockItem().getId();
 		return getImageAnchor(contextPath + "/supplierReturn/editSupplierReturnOrderLine?id=" + stockItemid,
@@ -36,14 +35,14 @@ public class SupplierReturnLineDecorator extends SearchStockItemsDecorator {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
 		return currencyFormatter.print(supplierReturnLine.getStockItem().getPublisherPrice(), Locale.UK);
 	}
-	
+
 	public String getSellPrice() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
 		return currencyFormatter.print(supplierReturnLine.getStockItem().getSellPrice(), Locale.UK);
-	}	
-	
+	}
+
 	public String getTotalPrice() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierReturnLine.getPrice(), Locale.UK);
-	}		
+		return currencyFormatter.print(supplierReturnLine.getAmount() * supplierReturnLine.getStockItem().getSellPrice().doubleValue(), Locale.UK);
+	}
 }

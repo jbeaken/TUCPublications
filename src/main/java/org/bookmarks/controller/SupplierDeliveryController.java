@@ -85,7 +85,7 @@ public class SupplierDeliveryController extends OrderLineController {
 
 	@Autowired
 	private CustomerOrderLineService customerOrderLineService;
-	
+
 	@Autowired
 	private SupplierDeliveryLineValidator supplierDeliveryLineValidator;
 
@@ -104,7 +104,7 @@ public class SupplierDeliveryController extends OrderLineController {
 		modelMap.addAttribute(new SupplierDeliveryLine());
 		return "setGlobalDiscount";
 	}
-	
+
 	@RequestMapping(value="/setGlobalDiscount", method=RequestMethod.POST)
 	public String setGlobalDiscount(SupplierDeliveryLine supplierDeliveryLine, HttpSession session, ModelMap modelMap) {
 		Map<Long, SupplierDeliveryLine> supplierDeliveryLineMap = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
@@ -123,12 +123,12 @@ public class SupplierDeliveryController extends OrderLineController {
 		modelMap.addAttribute(supplierDelivery);
 		modelMap.addAttribute(new SupplierDeliverySearchBean());
 
-		calculateTotalPrice(supplierDeliveryLineMap.values(), modelMap);	
+		calculateTotalPrice(supplierDeliveryLineMap.values(), modelMap);
 		modelMap.remove("supplierDeliveryLine");
-	
+
 		return "createSupplierDelivery";
-	}	
-	
+	}
+
 	@RequestMapping(value="/search")
 	public String search(SupplierDeliverySearchBean supplierDeliverySearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		setPaginationFromRequest(supplierDeliverySearchBean, request);
@@ -143,13 +143,9 @@ public class SupplierDeliveryController extends OrderLineController {
 		//Save for return later
 		session.setAttribute("savedSearchBean", supplierDeliverySearchBean);
 		return "searchSupplierDeliveries";
-	}	
+	}
 	/**
 	 * id refers to stockItem id, or -1 if 2nd hand
-	 * @param id
-	 * @param modelMap
-	 * @param session
-	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/editSupplierDeliveryOrderLine", method=RequestMethod.GET)
@@ -168,12 +164,6 @@ public class SupplierDeliveryController extends OrderLineController {
 		return "createSupplierDelivery";
 	}
 
-	/**
-	 * @param id
-	 * @param modelMap
-	 * @param session
-	 * @return
-	 */
 	@RequestMapping(value="/editSupplierDeliveryOrderLine", method=RequestMethod.POST)
 	public String editSupplierDeliveryLine(SupplierDeliveryLine supplierDeliveryLine, BindingResult bindingResult, ModelMap modelMap, HttpSession session) {
 		Map<Long, SupplierDeliveryLine> supplierDeliveryLineMap = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
@@ -189,7 +179,7 @@ public class SupplierDeliveryController extends OrderLineController {
 		    return "createSupplierDelivery";
 		}
 
-		supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
+		//supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
 		supplierDeliveryLineMap.put(supplierDeliveryLine.getStockItem().getId(), supplierDeliveryLine);
 
 		//Sort
@@ -229,10 +219,10 @@ public class SupplierDeliveryController extends OrderLineController {
 		supplierDeliveryLinesMap.remove(id);
 
 		fillModel(supplierDelivery, supplierDeliveryLinesMap, new SupplierDeliverySearchBean(), modelMap);
-		
+
 		return "createSupplierDelivery";
 	}
-	
+
 	private void fillModel(SupplierDelivery supplierDelivery, Map<Long, SupplierDeliveryLine> supplierDeliveryLinesMap, SupplierDeliverySearchBean supplierDeliverySearchBean, ModelMap modelMap) {
 		//Sort
 		List<SupplierDeliveryLine> list = new ArrayList<SupplierDeliveryLine>(supplierDeliveryLinesMap.values());
@@ -339,18 +329,18 @@ public class SupplierDeliveryController extends OrderLineController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/addStock", method=RequestMethod.POST)
 	public String addStock(@ModelAttribute SupplierDeliverySearchBean supplierDeliverySearchBean, BindingResult bindingResult,	HttpSession session, ModelMap modelMap) {
-		
+
 		//Map of previously entered lines, by key is stock item id
 		Map<Long, SupplierDeliveryLine> supplierDeliveryLinesMap = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
-		
+
 		//The containing supplier delivery domain object
 		SupplierDelivery supplierDelivery = (SupplierDelivery) session.getAttribute("supplierDelivery");
-		
+
 		//Get stock from isbn
 		//Why does this call get supplier and category if it doesn't come from addStock??
 		String isbn = supplierDeliverySearchBean.getStockItem().getIsbn();
 		StockItem stockItem = stockItemService.get(isbn);
-		
+
 		//Must deal with null, not found in database
 		if(stockItem == null) {
 			//Check isbn is valid
@@ -377,8 +367,8 @@ public class SupplierDeliveryController extends OrderLineController {
 			}
 			//This should link to stockItemController.add
 			fillStockSearchModel(session, modelMap);
-			modelMap.addAttribute(stockItem); 
-			
+			modelMap.addAttribute(stockItem);
+
 			session.setAttribute("flow", "supplierDelivery");
 
 			return "addStock";
@@ -388,14 +378,14 @@ public class SupplierDeliveryController extends OrderLineController {
 		Long stockLevelChange = 0l;
 		//Has this stock already been added or is it the first one?
 		SupplierDeliveryLine supplierDeliveryLine = supplierDeliveryLinesMap.get(stockItem.getId());
-		
+
 		if(supplierDeliveryLine != null) { //Has already been added
 			Long amount = supplierDeliveryLine.getAmount();
 			stockLevelChange = supplierDeliveryLine.getAmount();
-			
+
 			supplierDeliveryLine.setAmount(amount + 1);
 			supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
-			
+
 		} else {
 			isNew = true;
 			supplierDeliveryLine = new SupplierDeliveryLine();
@@ -408,7 +398,7 @@ public class SupplierDeliveryController extends OrderLineController {
 			supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
 			supplierDeliveryLinesMap.put(stockItem.getId(), supplierDeliveryLine);
 		}
-		
+
 		//Reset
 		supplierDeliverySearchBean.getStockItem().setIsbn("");
 
@@ -427,17 +417,17 @@ public class SupplierDeliveryController extends OrderLineController {
 			session.setAttribute("stockItemIdToFill", stockItem.getId());
 			return "createSupplierDelivery";
 		}
-		
+
 		//Persist sdl
 //		supplierDeliveryLineService.save(supplierDeliveryLineFromMap);
-		
+
 		//Change stock record
-		//update stockrecord = sdl.amount - stockLevelChange		
+		//update stockrecord = sdl.amount - stockLevelChange
 
 		//Sort
 		List<SupplierDeliveryLine> list = new ArrayList<SupplierDeliveryLine>(supplierDeliveryLinesMap.values());
 		Collections.sort(list, new GardnersDeliveryComparator());
-		
+
 		modelMap.addAttribute(list);
 		modelMap.addAttribute(supplierDeliverySearchBean);
 		modelMap.addAttribute("lastSupplierDeliveryLine", supplierDeliveryLine);
@@ -487,15 +477,15 @@ public class SupplierDeliveryController extends OrderLineController {
 	}
 
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/fillStock", method=RequestMethod.POST) 
+	@RequestMapping(value="/fillStock", method=RequestMethod.POST)
 	public String fillStock(HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		//Get the customerOrderLine to fill, if not in map get from database
 		Map<Long, Collection<CustomerOrderLine>> customerOrdersToFillMap = (Map<Long, Collection<CustomerOrderLine>>) session.getAttribute("customerOrdersToFillMap");
-		
+
 		Long stockItemId = (Long) session.getAttribute("stockItemIdToFill");
-		
+
 		Collection<CustomerOrderLine> customerOrderLinesToFill = customerOrdersToFillMap.get(stockItemId);
-		
+
 		Collection<CustomerOrderLine> filledCustomerOrderLines =  (Collection<CustomerOrderLine>) session.getAttribute("filledCustomerOrderLines");
 
 //		//Get the supplierDeliveryLine that will do the filling
@@ -589,8 +579,10 @@ public class SupplierDeliveryController extends OrderLineController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/selectSupplier", method=RequestMethod.GET)
-	public String displaySelectSupplier(ModelMap modelMap, HttpSession session) {
+	public String selectSupplier(ModelMap modelMap, HttpSession session) {
+
 		SupplierDelivery supplierDelivery = (SupplierDelivery) session.getAttribute("supplierDelivery");
+
 		if(supplierDelivery != null) {
 			Map<Long, SupplierDeliveryLine> map = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
 			modelMap.addAttribute(new SupplierDeliverySearchBean(supplierDelivery));

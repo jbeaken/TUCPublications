@@ -7,17 +7,17 @@
         <div class="row">
           <div class="column w-33-percent">
           	<label>Supplier Return for </label>${supplierReturn.supplier.name} <br/>
-          	<label>Returns No. </label>${supplierReturn.returnsNumber}	
+          	<label>Returns No. </label>${supplierReturn.returnsNumber}
 	  	 </div>
-	  	 
-<c:if test="${lastSupplierReturnLine != null}">		 
+
+<c:if test="${lastSupplierReturnLine != null}">
           <div class="column w-70-percent">
           	<label>Last Line </label>${lastSupplierReturnLine.stockItem.title}<br/>
           	<label>Pub. Price </label>${lastSupplierReturnLine.stockItem.publisherPrice}<br/>
-			<label>Amount </label>${lastSupplierReturnLine.amount}			
-	  	 </div>		
-</c:if>		 
-	  	</div>		
+			<label>Amount </label>${lastSupplierReturnLine.amount}
+	  	 </div>
+</c:if>
+	  	</div>
 </div>
 
 <c:if test="${supplierReturnLine != null}">
@@ -27,88 +27,53 @@
 
 <legend>${supplierReturnLine.stockItem.title}</legend>
 <form:form modelAttribute="supplierReturnLine" action="../supplierReturn/editSupplierReturnOrderLine" method="post">
-	<form:hidden path="hasCustomerOrderLines"/>
+  <form:hidden path="id"/>
 	<form:hidden path="stockItem.id"/>
-	<form:hidden path="stockItem.type"/>
-	<form:hidden path="stockItem.isbn"/>
-	<form:hidden path="stockItem.mainAuthor"/>
-	<form:hidden path="stockItem.category.name"/>
-	<form:hidden path="stockItem.title"/>
-	<form:hidden path="stockItem.quantityInStock"/>	
-	<form:hidden path="stockItem.quantityOnLoan"/>	
-	<form:hidden path="stockItem.quantityForCustomerOrder"/>
-	<form:hidden path="stockItem.quantityReadyForCustomer"/>
-	<form:hidden path="stockItem.quantityToKeepInStock"/>	
 		<div class="rows">
-		      <div class="row">
-		          <div class="column w-33-percent">
-		 				<form:label for="publisherPrice" path="publisherPrice" cssErrorClass="error">Publisher Price</form:label><br/>
-		 				<form:input for="publisherPrice" required="required" id="publisherPrice" path="publisherPrice" onkeyup="javascript:calculatePricesFromPublisherPrice('costPrice')"/>&nbsp;<form:errors path="publisherPrice" />
-			 	 </div>
-		          <div class="column w-33-percent">
-		 				<form:label for="sellPrice" path="sellPrice" cssErrorClass="error">Sell Price</form:label><br/>
-		 				<form:input for="sellPrice" required="required" id="sellPrice" path="sellPrice"/>&nbsp;<form:errors path="sellPrice" />
-			 	 </div>
-		          <div class="column w-33-percent">
-		 				<form:label for="costPrice" path="costPrice" cssErrorClass="error">Cost Price</form:label><br/>
-		 				<form:input for="costPrice" id="costPrice" path="costPrice" onkeyup="javascript:calculatePricesFromCostPrice('costPrice')"/>&nbsp;<form:errors path="costPrice" />
-			 	 </div>
+		  <div class="row">
+
 			</div>
 			<div class="row">
-		          <div class="column w-33-percent">
-		 				<form:label for="discount" path="discount" cssErrorClass="error">Discount</form:label><br/>
-		 				<form:input for="discount" required="required" id="discount" path="discount" onkeyup="javascript:calculatePricesFromDiscount('discount')"/>&nbsp;<form:errors path="discount" />
-			 	 </div>
-		          <div class="column w-33-percent">
+		     <div class="column w-33-percent">
 		 				<form:label for="amount" path="amount" cssErrorClass="error">Amount</form:label><br/>
 		 				<form:input for="amount" required="required" path="amount" id="focus"/>&nbsp;<form:errors path="amount" />
-			 	 </div>		          
-				 <div class="column w-33-percent">
-		 				<form:checkbox for="updateStockItemDiscount" path="updateStockItemDiscount"/>&nbsp;
-		 				<form:label for="updateStockItemDiscount" path="updateStockItemDiscount">Update Stock Item with new Discount</form:label><br/>
-		 				<form:checkbox for="updateStockItemCostPrice" path="updateStockItemCostPrice"/>&nbsp;
-		 				<form:label for="updateStockItemCostPrice" path="updateStockItemCostPrice">Update Stock Item with new Cost Price</form:label><br/>
-		 				<form:checkbox for="updateStockItemSellPrice" path="updateStockItemSellPrice"/>&nbsp;
-		 				<form:label for="updateStockItemSellPrice" path="updateStockItemSellPrice">Update Stock Item with new Sell Price</form:label><br/>
-		 				<form:checkbox for="updateStockItemPublisherPrice" path="updateStockItemPublisherPrice"/>&nbsp;
-		 				<form:label for="updateStockItemPublisherPrice" path="updateStockItemPublisherPrice">Update Stock Item with new Publisher Price</form:label><br/>
-               	</div>
-			</div>		
+			 	 </div>
+			</div>
 		      <div class="row">
 		          <div class="column w-33-percent">
 		 				<input type="submit" class="btn btn-primary" value="Save" id="editSupplierReturnLineSubmitButton"/>
 			 	 </div>
-			</div>		
-		</div>					
+			</div>
+		</div>
 </form:form>
 </c:if>
 <br/>
 <br/>
 
-<c:if test="${supplierReturnLine == null}">	
+<c:if test="${supplierReturnLine == null}">
 	<form:form modelAttribute="supplierReturnSearchBean" action="../supplierReturn/addStock" method="post">
 		<form:hidden path="supplierReturn.supplier.name"/>
 		<form:hidden path="supplierReturn.returnsNumber"/>
 		<form:hidden path="supplierReturn.supplier.id"/>
 		<div class="rows">
 	        <div class="row">
-	          <div class="column w-100-percent">					
+	          <div class="column w-100-percent">
 				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/>
-				
+
 				<form:input path="stockItem.isbn" autofocus="autofocus" required="required"/>&nbsp;<form:errors path="stockItem.isbn" />&nbsp;<form:errors path="supplierReturn.supplierReturnLine" />
 				<input type="submit" class="btn btn-primary" value="Add" id="addStockToSupplierReturnButton"/>&nbsp;
-				
+
 				<a href="${pageContext.request.contextPath}/supplierReturn/editSupplierReturnOrderLine?id=${lastSupplierReturnLine.stockItem.id}">
 					<button type="button" class="btn btn-danger" id="editLastLine">Edit Last Line</button>
-				</a>			
+				</a>
 			</div>
 		</div>
 	</div>
-	</form:form>	
-		
-<br/>	
+	</form:form>
+
 <br/>
-	
+<br/>
+
 <c:if test="${not empty supplierReturnLineList}">
 	<display:table name="supplierReturnLineList" requestURI="" decorator="org.bookmarks.ui.SupplierReturnLineDecorator">
 		  <display:column property="stockItem.isbn" title="ISBN"/>
@@ -119,7 +84,7 @@
 		  <display:column property="amount" title="New Stock"/>
 		  <display:column property="link" title="Actions"/>
 	</display:table>
-</c:if>  					
+</c:if>
   					<br/>
   					<c:if test="${not empty totalPrice}">
   					Total Price : <fmt:formatNumber value="${totalPrice}" type="currency" currencyCode="GBP"/>
@@ -129,4 +94,4 @@
   					<br/><br/>
 		<button class="btn btn-primary" type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/supplierReturn/create')" id="placeIntoStockButton">Place in stock</button>
 		<a href="${pageContext.request.contextPath}/supplierReturn/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
-</c:if>			
+</c:if>

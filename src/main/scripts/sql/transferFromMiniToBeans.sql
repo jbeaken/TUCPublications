@@ -5,7 +5,7 @@
 -- select max(id) from bookmarks.invoice;
 set foreign_key_checks = 0;
 
-update mb.sale set event_id = 381;
+update mb.sale set event_id = 423;
 
 SET @maxId = (select max(id) from bookmarks.sale);
 update mb.sale set id = id + @maxId;
