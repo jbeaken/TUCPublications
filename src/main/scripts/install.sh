@@ -53,6 +53,17 @@ sh /home/git/bookmarks/src/main/scripts/build.sh
 cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
 systemctl enable tomcat
 
+# Static ip
+# /etc/network/interfaces
+# The primary network interface
+#allow-hotplug eth0
+#iface eth0 inet static
+# address 192.168.1.88
+# netmask 255.255.255.0
+# gateway 192.168.1.1
+# dns-domain bookmarks
+# dns-nameservers 192.168.1.1
+
 # File server
 #apt-get install samba cifs-utils
 #Add to fstab
