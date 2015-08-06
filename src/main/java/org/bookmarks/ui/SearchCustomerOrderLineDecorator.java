@@ -19,8 +19,8 @@ import java.math.BigDecimal;
 
 public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDecorator {
 	protected DateFormat simpleDateFormat = new SimpleDateFormat("dd/mm/yy");
-	
-	
+
+
 	public String getLink()	{
         CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
         return showEdit(customerOrderLine)
@@ -34,7 +34,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
         		//+ showChangeISBN(customerOrderLine)
 				+ showCreateSupplierOrder(customerOrderLine);
 	}
-	
+
 	private String showChangeISBN(CustomerOrderLine customerOrderLine) {
 		if(!customerOrderLine.isComplete()){
 		return getImageAnchor(contextPath  + "/customerOrderLine/changeISBN" +
@@ -48,10 +48,10 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 	public String getInvoiceId() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		Invoice invoice = customerOrderLine.getInvoice();
-		if(invoice.getId() == null) return "-"; 
+		if(invoice.getId() == null) return "-";
 		return getAnchor(contextPath  + "/invoice/view?id=" + invoice.getId() + "&flow=searchCustomerOrderLines", invoice.getId().toString(), "Edit", true, false);
 	}
-	
+
 	private String showSupplierOrder(CustomerOrderLine customerOrderLine) {
 		if(customerOrderLine.hasSupplierOrder()){
 		return getImageAnchor(contextPath  + "/supplierOrderLine/showSupplierOrderForCustomerOrder" +
@@ -80,7 +80,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 //		return getAnchor("/bookmarks/stock/edit?id=" + stockItem.getId(),
 //				stockItem.getIsbn(),"ISBN", true, false);
 //	}
-	
+
 	public String getTitle() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		StockItem stockItem = customerOrderLine.getStockItem();
@@ -88,7 +88,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 			return "RESEARCH";
 		}
 		return getStockItemTitleLink(stockItem, contextPath + "/customerOrderLine/searchCustomerOrders");
-		
+
 	}
 
 	public String getSupplier() {
@@ -97,7 +97,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 		return getAnchor(contextPath + "/supplier/view?id=" + supplier.getId() +"&flow=searchCustomerOrderLines",
 				supplier.getName(),"Supplier", true, false);
 	}
-	
+
 	public String getType() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		DeliveryType dt = customerOrderLine.getDeliveryType();
@@ -108,6 +108,8 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 			buffer.append("<span style='color:red'>MO</span>");
 		} else if(dt.equals(DeliveryType.COLLECTION)) {
 			buffer.append("<span style='color:blue'>COL</span>");
+		} else if(dt.equals(DeliveryType.SPONSORSHIP)) {
+			buffer.append("<span style='color:black'>SPO</span>");
 		}
 		buffer.append("-");
 		if(pt.equals(PaymentType.ACCOUNT)) {
@@ -129,16 +131,16 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 			buffer.append("-<span style='color:red'>PHONE</span>");
 		} else if(sc == Source.IN_PERSON) {
 			buffer.append("-<span style='color:black'>PERSON</span>");
-		} 
-		
+		}
+
 		if(customerOrderLine.getIsSecondHand() == null || customerOrderLine.getIsSecondHand() == false) {
 			buffer.append("-<span style='color:red'>NEW</span>");
 		} else buffer.append("-<span style='color:black'>2nd</span>");
-		
+
 		return buffer.toString();
-		
+
 	}
-	
+
 	public String getRawType() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		DeliveryType dt = customerOrderLine.getDeliveryType();
@@ -160,23 +162,23 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 			buffer.append("CC");
 		}
 		return buffer.toString();
-		
+
 	}
-	
-	
+
+
 	public String getRawId() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		StockItem stockItem = customerOrderLine.getStockItem();
 		return stockItem.getId().toString();
-	}	
-	
-	
+	}
+
+
 	public String getRawTitle() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		StockItem stockItem = customerOrderLine.getStockItem();
 		return stockItem.getTitle();
-	}	
-	
+	}
+
 	public String getCreationDate() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		Date creationDate = customerOrderLine.getCreationDate();
@@ -222,7 +224,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 		}
 		return "";
 	}
-	
+
 	private String completeAndStay(CustomerOrderLine customerOrderLine) {
 		if(customerOrderLine.getCanComplete() && customerOrderLine.getPaymentType() == PaymentType.ACCOUNT){
 			return getImageAnchor(contextPath + "/customerOrderLine/complete?customerOrderLineId=" + customerOrderLine.getId()
@@ -233,7 +235,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 					"Raise Invoice & Complete & Stay", false);
 		}
 		return "";
-	}	
+	}
 
 	private String showMarkAsPosted(CustomerOrderLine customerOrderLine) {
 		if(customerOrderLine.getCanPost()){
@@ -261,13 +263,13 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 
 	public String getCustomer() {
 		return getCustomerName() + " " + getTelephoneNumber();
-	}	
-	
+	}
+
 	public String getRawCustomerName() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
 		Customer customer = customerOrderLine.getCustomer();
 		return customer.getFullName();
-	}	
+	}
 
 
 	public String getAddress() {
