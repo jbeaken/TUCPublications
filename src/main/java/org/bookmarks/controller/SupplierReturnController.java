@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 import java.util.Date;
+import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 @RequestMapping(value="/supplierReturn")
@@ -447,7 +448,7 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 	@RequestMapping(value="/markAsReceivedCredit", method=RequestMethod.GET)
-	//@Transactional
+	@Transactional
 	public String markAsReceivedCredit(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 		SupplierReturn supplierReturn = supplierReturnService.get(id);
 
@@ -460,7 +461,7 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 		@RequestMapping(value="/sendToSupplier", method=RequestMethod.GET)
-		//@Transactional
+		@Transactional
 		public String sendToSupplier(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 			SupplierReturn supplierReturn = supplierReturnService.get(id);
 

@@ -68,9 +68,10 @@ public class SupplierReturn extends AbstractEntity {
 		setSupplier(supplier);
 	}
 	//select new SupplierReturn(sd.id, sd.status, sd.creationDate, sd.invoiceNumber, sd.supplier.name, sup.telephone1, sup.supplierAccount.accountNumber, count(sdl)
-	public SupplierReturn(Long id, SupplierReturnStatus status, Date creationDate, String returnsNumber, String supplierName, String telephone1, String accountNumber, Long noOfLines) {
+	public SupplierReturn(Long id, SupplierReturnStatus status, Date creationDate, Date dateSentToSupplier, String returnsNumber, String supplierName, String telephone1, String accountNumber, Long noOfLines) {
 		this();
 		setId(id);
+		this.dateSentToSupplier = dateSentToSupplier;
 		setStatus(status);
 		setReturnsNumber(returnsNumber);
 		setCreationDate(creationDate);

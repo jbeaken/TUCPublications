@@ -24,4 +24,9 @@ public class SearchSupplierReturnDecorator extends AbstractBookmarksTableDecorat
 
 			return link;
 	}
+
+	public String getStatus() {
+		SupplierReturn supplierReturn = (SupplierReturn)getCurrentRowObject();
+		return supplierReturn.getStatus().getDisplayName();
+	}
 }
