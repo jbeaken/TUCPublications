@@ -30,6 +30,8 @@ import org.bookmarks.service.Service;
 import org.bookmarks.service.StockItemService;
 import org.bookmarks.service.SupplierReturnService;
 import org.bookmarks.service.SupplierService;
+import org.bookmarks.domain.SupplierReturnStatus;
+
 import org.bookmarks.ui.comparator.GardnersDeliveryComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+
+import java.util.Date;
 
 @Controller
 @RequestMapping(value="/supplierReturn")
@@ -168,19 +173,6 @@ public class SupplierReturnController extends OrderLineController {
 		return "createSupplierReturn";
 	}
 
-	//private void getTotalPrice(orderLineMap)
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/displayCustomerOrderLinesToFill")
-	public String displayCustomerOrderLinesToFill(Long stockItemId, ModelMap modelMap, HttpSession session) {
-		Map<Long, SupplierReturnLine> supplierReturnLinesMap = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
-		SupplierReturnLine supplierReturnLine = supplierReturnLinesMap.get(stockItemId);
-
-		Collection<CustomerOrderLine> customerOrderLinesToFill = getCustomerOrdersToFillMap(supplierReturnLine.getStockItem(), session);
-		modelMap.addAttribute(customerOrderLinesToFill);
-		session.setAttribute("stockItemIdToFill", supplierReturnLine.getStockItem().getId());
-		return "createSupplierReturn";
-	}
 
 	@RequestMapping(value="/deleteSupplierReturnOrderLine")
 	public String deleteSupplierReturnOrderLine(Long id, ModelMap modelMap, HttpSession session) {
@@ -227,7 +219,7 @@ public class SupplierReturnController extends OrderLineController {
 
 		supplierReturnService.create(supplierReturn);
 
-		return "redirect:supplierReturnSummary";
+		return "redirect:displaySearch";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -274,9 +266,15 @@ public class SupplierReturnController extends OrderLineController {
 
 		//Must deal with null, not found in database
 		if(stockItem == null) {
-			//Shouldn't happen
+
 			addError("Cannot find stock on system", modelMap);
-			return "welcome";
+			List<SupplierReturnLine> list = new ArrayList<SupplierReturnLine>(supplierReturnLinesMap.values());
+
+
+			modelMap.addAttribute(list);
+			modelMap.addAttribute(supplierReturnSearchBean);
+
+			return "createSupplierReturn";
 		}
 
 		//Has this stock already been added or is it the first one?
@@ -443,14 +441,47 @@ public class SupplierReturnController extends OrderLineController {
 		modelMap.addAttribute(new SupplierReturn());
 		modelMap.addAttribute(getSuppliers());
 
+		addInfo("Please select a supplier for this return", modelMap);
+
 		return "selectSupplierForSupplierReturn";
 	}
 
+	@RequestMapping(value="/markAsReceivedCredit", method=RequestMethod.GET)
+	//@Transactional
+	public String markAsReceivedCredit(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
+		SupplierReturn supplierReturn = supplierReturnService.get(id);
+
+		supplierReturn.setStatus(SupplierReturnStatus.COMPLETE);
+
+		supplierReturnService.update(supplierReturn);
+
+		return displaySearch(request, session, modelMap);
+
+	}
+
+		@RequestMapping(value="/sendToSupplier", method=RequestMethod.GET)
+		//@Transactional
+		public String sendToSupplier(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
+			SupplierReturn supplierReturn = supplierReturnService.get(id);
+
+			for(SupplierReturnLine srl : supplierReturn.getSupplierReturnLine()) {
+				stockItemService.updateQuantityInStock(srl.getStockItem(), srl.getAmount() * -1);
+			}
+
+			supplierReturn.setStatus(SupplierReturnStatus.AWAITING_CREDIT);
+			supplierReturn.setDateSentToSupplier(new Date());
+
+			supplierReturnService.update(supplierReturn);
+
+			return displaySearch(request, session, modelMap);
+
+		}
+
 	@RequestMapping(value="/cancel", method=RequestMethod.GET)
-	public String cancel(ModelMap modelMap, HttpSession session) {
+	public String cancel(ModelMap modelMap,  HttpServletRequest request, HttpSession session) {
 		session.removeAttribute("supplierReturn");
 		session.removeAttribute("supplierReturnLinesMap");
-		return stockItemController.displaySearch(new StockItemSearchBean(), session, modelMap);
+		return  displaySearch(request, session, modelMap);
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public class SupplierReturnRepositoryImpl extends AbstractRepository<SupplierReturn> implements SupplierReturnRepository {
 
     private SessionFactory sessionFactory;
-    
+
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -23,22 +23,21 @@ public class SupplierReturnRepositoryImpl extends AbstractRepository<SupplierRet
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
-	
+
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
-		return new StringBuffer("select new SupplierReturn(sd.id, sd.creationDate, sd.returnsNumber, sd.supplier.name, sup.telephone1, sup.supplierAccount.accountNumber, count(sdl)) from SupplierReturn as sd "
-						+ "join sd.supplierReturnLine sdl "
-						+ "join sd.supplier sup "
-						+ "join sdl.stockItem si ");
+		return new StringBuffer("select new SupplierReturn(sd.id, sd.status, sd.creationDate, sd.returnsNumber, sd.supplier.name, sup.telephone1, sup.supplierAccount.accountNumber, count(sdl)) from SupplierReturn as sd "
+						+ "left join sd.supplierReturnLine sdl "
+						+ "join sd.supplier sup ");
     }
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
 		return new StringBuffer("select count(sd) from SupplierReturn as sd join sd.supplierReturnLine sdl join sdl.stockItem si");
-	}	
+	}
 
 	@Override
 	public void appendGroupBy(StringBuffer query, SearchBean searchBean) {
     	query.append(" group by sd ");
 	}
-	
+
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 		SupplierReturnSearchBean deliverySearchBean = (SupplierReturnSearchBean) searchBean;
 
@@ -53,7 +52,7 @@ public class SupplierReturnRepositoryImpl extends AbstractRepository<SupplierRet
 
 		query.append(queryBuilder.getQuery());
 
-	}	
+	}
 
 	@Override
 	public String getEntityName() {

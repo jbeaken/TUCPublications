@@ -42,7 +42,7 @@ public class SupplierReturnLineDecorator extends SearchStockItemsDecorator {
 	}
 
 	public String getTotalPrice() {
-		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
+		SupplierReturnLine supplierReturnLine = (SupplierReturnLine) getCurrentRowObject();
 		return currencyFormatter.print(supplierReturnLine.getAmount() * supplierReturnLine.getStockItem().getSellPrice().doubleValue(), Locale.UK);
 	}
 }

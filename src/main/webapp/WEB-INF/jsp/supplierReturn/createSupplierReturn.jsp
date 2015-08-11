@@ -29,6 +29,11 @@
 <form:form modelAttribute="supplierReturnLine" action="../supplierReturn/editSupplierReturnOrderLine" method="post">
   <form:hidden path="id"/>
 	<form:hidden path="stockItem.id"/>
+  <form:hidden path="stockItem.sellPrice"/>
+  <form:hidden path="stockItem.title"/>
+  <form:hidden path="stockItem.isbn"/>
+  <form:hidden path="stockItem.category.name"/>
+  <form:hidden path="stockItem.category.id"/>
 		<div class="rows">
 		  <div class="row">
 
