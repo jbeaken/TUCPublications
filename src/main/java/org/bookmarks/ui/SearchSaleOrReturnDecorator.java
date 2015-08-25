@@ -33,7 +33,7 @@ public class SearchSaleOrReturnDecorator extends AbstractBookmarksTableDecorator
 	        	+ getImageAnchor("print?saleOrReturnId=" + saleOrReturn.getId(),
 	        						"blue-printer.png",
 	        						"Print", true)
-				+ showEdit(saleOrReturn)
+				+ confirmation("/bookmarks/saleOrReturn/delete?id=" + saleOrReturn.getId(), "delete_blue.png")
 	        	+ showEditNote(saleOrReturn);
 	}
 
