@@ -699,12 +699,52 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 
 
 	private void getReview3(Document doc, StockItem stockItem) throws java.io.UnsupportedEncodingException {
-		//Review
-		Element reviewElement = doc.select("noscript").first();
 
+		logger.debug("Looking up review : " );
+		String reviewAsHtml = null;
+		String reviewAsText = null;
+
+		try {
+
+		Elements productDescriptionElements = doc.select("div#productDescription");
+
+		if(productDescriptionElements != null) {
+
+			Element productDescription = productDescriptionElements.first();
+
+			logger.debug(productDescription.html());
+
+			if(productDescription != null) {
+				reviewAsText = "";
+
+				for(Element e : productDescription.select("p")) {
+					logger.debug(e.text());
+					reviewAsText = reviewAsText + e.text();
+				}
+
+				reviewAsText = java.net.URLDecoder.decode(reviewAsText, "UTF-8");
+
+		  	logger.debug("review : " + reviewAsText);
+
+		  	reviewAsHtml = reviewAsText;
+				stockItem.setReviewAsText(reviewAsText);
+				stockItem.setReviewAsHTML(reviewAsHtml);
+				stockItem.setIsReviewOnAZ(true);
+				return;
+			}
+		} else {
+			logger.debug("Cannot get review from lookup 1 : Cannot find elements div#productDescription");
+		}
+	} catch(Exception e) {
+		logger.error("Cannot get review", e);
+	}
+
+/*
 		String docText = doc.html();
 		int start = docText.indexOf("bookDescEncodedData");
 		int end = docText.indexOf("bookDescriptionAvailableHeight");
+	logger.debug("start : " + start );
+	logger.debug("end : " + end );
 
 		if(start != -1 && end != -1) {
 		//	String reviewAsText = docText.substring(start, end);
@@ -731,7 +771,12 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 			stockItem.setReviewAsText(reviewAsText);
 			stockItem.setReviewAsHTML(reviewAsHtml);
 			stockItem.setIsReviewOnAZ(true);
+		} else {
+			//Try something else
+			Element reviewElement2 = doc.select("div#iframeContent").first();
+				logger.debug("re2 : " + reviewElement2.html() );
 		}
+		*/
 	}
 
 	private void getReview2(Document doc, StockItem stockItem) {

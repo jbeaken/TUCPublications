@@ -97,7 +97,6 @@ public class SupplierDeliveryController extends OrderLineController {
 		return search(supplierDeliverySearchBean, request, session, modelMap);
 	}
 
-
 	@RequestMapping(value="/setGlobalDiscount", method=RequestMethod.GET)
 	public String setGlobalDiscount(ModelMap modelMap) {
 		//Use a SupplierDeliveryLine instance to hold discount
@@ -107,6 +106,7 @@ public class SupplierDeliveryController extends OrderLineController {
 
 	@RequestMapping(value="/setGlobalDiscount", method=RequestMethod.POST)
 	public String setGlobalDiscount(SupplierDeliveryLine supplierDeliveryLine, HttpSession session, ModelMap modelMap) {
+
 		Map<Long, SupplierDeliveryLine> supplierDeliveryLineMap = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
 		SupplierDelivery supplierDelivery = (SupplierDelivery) session.getAttribute("supplierDelivery");
 
@@ -179,7 +179,7 @@ public class SupplierDeliveryController extends OrderLineController {
 		    return "createSupplierDelivery";
 		}
 
-		//supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
+		supplierDeliveryService.calculatePrice(supplierDelivery, supplierDeliveryLine);
 		supplierDeliveryLineMap.put(supplierDeliveryLine.getStockItem().getId(), supplierDeliveryLine);
 
 		//Sort
@@ -439,8 +439,7 @@ public class SupplierDeliveryController extends OrderLineController {
 
 
 
-	private void calculateTotalPrice(Collection<SupplierDeliveryLine> supplierDeliveryLines,
-			ModelMap modelMap) {
+	private void calculateTotalPrice(Collection<SupplierDeliveryLine> supplierDeliveryLines, ModelMap modelMap) {
 		double totalPrice = 0;
 		double retailPrice = 0;
 		for(SupplierDeliveryLine line : supplierDeliveryLines) {
@@ -452,10 +451,8 @@ public class SupplierDeliveryController extends OrderLineController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Collection<CustomerOrderLine> getCustomerOrdersToFillMap(StockItem stockItem,
-			HttpSession session) {
-		Map<Long, Collection<CustomerOrderLine>> customerOrdersToFillMap
-			= (Map<Long, Collection<CustomerOrderLine>>) session.getAttribute("customerOrdersToFillMap");
+	private Collection<CustomerOrderLine> getCustomerOrdersToFillMap(StockItem stockItem, HttpSession session) {
+		Map<Long, Collection<CustomerOrderLine>> customerOrdersToFillMap = (Map<Long, Collection<CustomerOrderLine>>) session.getAttribute("customerOrdersToFillMap");
 		Collection<CustomerOrderLine> customerOrderLinesToFill = customerOrdersToFillMap.get(stockItem.getId());
 		if(customerOrderLinesToFill == null) {
 			customerOrderLinesToFill = customerOrderLineService.findOpenOrdersForStockItem(stockItem);
