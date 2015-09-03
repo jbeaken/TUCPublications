@@ -379,9 +379,13 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		}
 		
 		addSuccess("Have successfully got review for " + stockItem.getTitle(), modelMap);
+<<<<<<< HEAD
 		fillStockSearchModel(session, modelMap);
 		modelMap.addAttribute(stockItem);
 		return "editStock";	
+=======
+		return "welcome";
+>>>>>>> db9ff92... Adding getReview to edit screen
 	}	
 
 	@RequestMapping(value="/getImage", method=RequestMethod.POST)

@@ -47,6 +47,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
@@ -137,11 +138,21 @@
 			{
 				"buffer_size": 20509,
 >>>>>>> 63be499... Added calculate price back in
+=======
+			"contents": "package org.bookmarks.controller;\n\nimport java.util.ArrayList;\nimport java.util.Collection;\nimport java.util.Enumeration;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\n\nimport javax.servlet.http.HttpServletRequest;\nimport javax.servlet.http.HttpSession;\nimport javax.validation.Valid;\n\nimport org.bookmarks.controller.validation.SaleOrReturnOrderLineValidator;\nimport org.bookmarks.domain.Customer;\nimport org.bookmarks.domain.SaleOrReturn;\nimport org.bookmarks.domain.SaleOrReturnOrderLine;\nimport org.bookmarks.domain.SaleOrReturnStatus;\nimport org.bookmarks.domain.StockItem;\nimport org.bookmarks.domain.SupplierOrder;\nimport org.bookmarks.domain.SupplierOrderLine;\nimport org.bookmarks.service.CustomerService;\nimport org.bookmarks.service.SaleOrReturnService;\nimport org.bookmarks.service.Service;\nimport org.bookmarks.service.StockItemService;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.stereotype.Controller;\nimport org.springframework.ui.ModelMap;\nimport org.springframework.validation.BindingResult;\nimport org.springframework.web.bind.annotation.ModelAttribute;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RequestMethod;\n\n@Controller\n@RequestMapping(\"/saleOrReturn\")\npublic class SaleOrReturnController extends OrderLineController {\n\n	@Autowired\n	private CustomerService customerService;\n\n	@Autowired\n	private StockItemService stockItemService;\n\n	@Autowired\n	private SaleOrReturnService saleOrReturnService;\n\n	@Autowired\n	private SaleOrReturnOrderLineValidator saleOrReturnOrderLineValidator;\n\n\n	@SuppressWarnings(\"unchecked\")\n	@RequestMapping(value = \"/searchStockItems\")\n	public String searchStockItems(@ModelAttribute StockItemSearchBean stockItemSearchBean, HttpServletRequest request, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n//		BigDecimal price = (BigDecimal) session.getAttribute(\"price\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		String errorMessage = stockItemSearchBean.checkValidityForISBN();\n		if(errorMessage != null) {\n			modelMap.addAttribute(\"message\", errorMessage);\n			fillModel(saleOrReturn, stockItemSearchBean, modelMap, orderLineMap);\n			return editOrCreateView(saleOrReturn);\n		}\n\n		String isbn = stockItemSearchBean.getStockItem().getIsbn();\n		StockItem stockItem = null;\n		try {\n			stockItem = stockItemService.getByISBNAsNumber(isbn);\n		} catch(NumberFormatException e) {\n			modelMap.addAttribute(\"message\", \"Invalid isbn!\");\n			fillModel(saleOrReturn, stockItemSearchBean, modelMap, orderLineMap);\n			return editOrCreateView(saleOrReturn);\n		}\n\n		if(stockItem == null) {\n			modelMap.addAttribute(\"message\", \"Cannot find isbn in database!\");\n			fillModel(saleOrReturn, stockItemSearchBean, modelMap, orderLineMap);\n			return editOrCreateView(saleOrReturn);\n		}\n\n		addStockItem(stockItem, modelMap, orderLineMap, saleOrReturn);\n		fillModel(saleOrReturn, stockItemSearchBean, modelMap, orderLineMap);\n		modelMap.addAttribute(new StockItemSearchBean());\n		return editOrCreateView(saleOrReturn);\n	}\n\n	private void fillModel(SaleOrReturn saleOrReturn,\n			StockItemSearchBean stockItemSearchBean, ModelMap modelMap, Map<Long, SaleOrReturnOrderLine> orderLineMap) {\n//		modelMap.addAttribute(\"price\", saleOrReturnService.getPrice(saleOrReturn, orderLineMap));\n		saleOrReturn.setSaleOrReturnOrderLines(orderLineMap.values());\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());		\n		modelMap.addAttribute(\"saleOrReturnOrderLineList\", orderLineMap);\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(stockItemSearchBean);\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n	}\n\n	private void addStockItem(StockItem stockItem, ModelMap modelMap, Map<Long, SaleOrReturnOrderLine> orderLineMap, SaleOrReturn saleOrReturn) {\n		//Check if this stock item is already in map\n		SaleOrReturnOrderLine saleOrReturnOrderLineInMap = orderLineMap.get(stockItem.getId());\n		if(saleOrReturnOrderLineInMap != null) {\n			//Already there, increment\n			saleOrReturnOrderLineInMap.setAmount(saleOrReturnOrderLineInMap.getAmount() + 1l);\n		} else {\n			//New stock, put into sorol\n			SaleOrReturnOrderLine sorol = new SaleOrReturnOrderLine(stockItem);\n			sorol.setSaleOrReturn(saleOrReturn);\n			orderLineMap.put(stockItem.getId(), sorol);\n		}\n	}\n\n	/**\n	 * Save saleOrReturn and then save to file system. Refresh customer saving effort\n	 * in hidden form fields\n	 * @param saleOrReturn\n	 * @param bindingResult\n	 * @param modelMap\n	 * @param session\n	 * @return\n	 */\n	@SuppressWarnings(\"unchecked\")\n	@RequestMapping(value=\"/save\")\n	public String save(@Valid SaleOrReturn saleOrReturn, BindingResult bindingResult, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		\n		saleOrReturn.setSaleOrReturnStatus(SaleOrReturnStatus.WITH_CUSTOMER);\n\n		if(orderLineMap.values().isEmpty()) {\n			addError(\"Add stock items!\", modelMap);\n			fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n			return \"createSaleOrReturn\";\n		}\n		\n		if(bindingResult.hasErrors()) {\n			fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n			return \"createSaleOrReturn\";\n		}\n\n		saleOrReturn.setSaleOrReturnOrderLines(orderLineMap.values());\n		\n		saleOrReturnService.save(saleOrReturn);\n\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n\n		session.removeAttribute(\"saleOrReturn\");\n		session.removeAttribute(\"orderLineMap\");\n\n		return \"viewSaleOrReturn\";\n	}\n\n	@RequestMapping(value=\"/edit\", method=RequestMethod.GET)\n	public String displayEdit(Long id, HttpSession session, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(id);\n		\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = new HashMap<Long, SaleOrReturnOrderLine>();\n		\n		for(SaleOrReturnOrderLine sorol : saleOrReturn.getSaleOrReturnOrderLines()) {\n			sorol.setOriginalAmount(sorol.getAmount());\n			orderLineMap.put(sorol.getStockItem().getId(), sorol);\n		}\n\n		//Place into session\n		session.setAttribute(\"saleOrReturn\", saleOrReturn);\n		session.setAttribute(\"orderLineMap\", orderLineMap);\n\n		//Place into model\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n		return \"editSaleOrReturn\";\n	}\n\n	@RequestMapping(value=\"/view\", method=RequestMethod.GET)\n	public String view(Long id, String flow, HttpSession session, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(id);\n\n		//Need to calculate price\n\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(\"flow\", flow);\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());\n		modelMap.addAttribute(saleOrReturn.getSaleOrReturnOrderLines());\n\n		return \"viewSaleOrReturn\";\n	}\n\n\n\n\n	@RequestMapping(value=\"/print\", method=RequestMethod.GET)\n	public String print(Long saleOrReturnId, HttpSession session, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(saleOrReturnId);\n\n		//Need to calculate price\n\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(\"customer\", saleOrReturn.getCustomer());\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());\n		modelMap.addAttribute(saleOrReturn.getSaleOrReturnOrderLines());\n\n		return \"printSaleOrReturn\";\n	}\n\n\n	@RequestMapping(value=\"/markAsWithCustomer\", method=RequestMethod.GET)\n	public String markAsWithCustomer(Long saleOrReturnId, HttpSession session, HttpServletRequest request, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(saleOrReturnId);\n\n		saleOrReturn.setSaleOrReturnStatus(SaleOrReturnStatus.WITH_CUSTOMER);\n		//TO-DO, what if the status is RETURNED? Take out of stock?\n		saleOrReturnService.update(saleOrReturn);\n\n		return searchFromSession(session, request, modelMap);\n	}\n\n\n	@RequestMapping(value=\"/markAsReturned\", method=RequestMethod.GET)\n	public String markAsReturned(Long saleOrReturnId, HttpSession session, HttpServletRequest request, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(saleOrReturnId);\n		\n		if(saleOrReturn.getSaleOrReturnStatus() == SaleOrReturnStatus.WITH_CUSTOMER) {\n			saleOrReturnService.markAsReturn(saleOrReturn); //Put back into stock\n		} // else nothing to do, it's already returned.\n		\n		return searchFromSession(session, request, modelMap);\n	}\n	\n	@RequestMapping(value=\"/return\", method=RequestMethod.GET)\n	public String returnSaleOrReturn(Long saleOrReturnId, HttpSession session, HttpServletRequest request, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = saleOrReturnService.get(saleOrReturnId);\n		\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = new HashMap<Long, SaleOrReturnOrderLine>();\n		\n		for(SaleOrReturnOrderLine saleOrReturnOrderLine : saleOrReturn.getSaleOrReturnOrderLines()) {\n			saleOrReturnOrderLine.setOriginalAmountSold(saleOrReturnOrderLine.getAmountSold());\n			saleOrReturnOrderLine.setOriginalAmount(saleOrReturnOrderLine.getAmount());\n			saleOrReturnOrderLine.setOriginalAmountRemainingWithCustomer(saleOrReturnOrderLine.getAmountRemainingWithCustomer());\n			orderLineMap.put(saleOrReturnOrderLine.getStockItem().getId(), saleOrReturnOrderLine);\n		}\n\n		//Place into session\n		session.setAttribute(\"saleOrReturn\", saleOrReturn);\n		session.setAttribute(\"orderLineMap\", orderLineMap);\n\n		//Place into model\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n		modelMap.addAttribute(\"flow\", \"return\");\n		return \"sellSaleOrReturn\";\n	}\n	\n	@RequestMapping(value=\"/sell\", method=RequestMethod.POST)\n	public String sell(Long saleOrReturnId, HttpSession session, HttpServletRequest request, ModelMap modelMap) {\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n\n		request.getAttributeNames();\n		Enumeration<String> enumeration = request.getParameterNames();\n		List<Long> stockItemIds  = new ArrayList<Long>();\n		while(enumeration.hasMoreElements()) {\n			String pName = enumeration.nextElement();\n			if(pName.startsWith(\"r\")) { //Quantity remaining with customer\n				continue;\n			}\n			stockItemIds.add(Long.parseLong(pName));\n		}\n\n		for(Long stockItemId : stockItemIds) {\n			String[] amountSoldArray = request.getParameterValues(stockItemId.toString());\n			String[] quantityRemainingWithCustomerArray = request.getParameterValues(\"r\" + stockItemId.toString());\n			Long amountSold = Long.parseLong(amountSoldArray[0]);\n			Long quantityRemainingWithCustomer = 0l;\n			try {\n				quantityRemainingWithCustomer = Long.parseLong(quantityRemainingWithCustomerArray[0]);\n			} catch(NumberFormatException e) {\n				\n			}\n\n			//Get supplier order\n			SaleOrReturnOrderLine saleOrReturnOrderLine = orderLineMap.get(stockItemId);\n\n			saleOrReturnOrderLine.setAmountRemainingWithCustomer(quantityRemainingWithCustomer);\n			saleOrReturnOrderLine.setAmountSold(amountSold);\n		}\n		\n		saleOrReturn.setSaleOrReturnOrderLines(orderLineMap.values());\n\n		saleOrReturnService.sell(saleOrReturn);\n\n		return \"viewSaleOrReturn\";\n	}\n\n\n\n	@RequestMapping(value=\"/edit\", method=RequestMethod.POST)\n	public String edit(@Valid SaleOrReturn saleOrReturn, BindingResult bindingResult, HttpSession session, ModelMap modelMap) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n\n		Collection<SaleOrReturnOrderLine> sorolMap = orderLineMap.values();\n		\n		if(sorolMap.isEmpty()) {\n			bindingResult.rejectValue(\"returnDate\", \"invalid\", \"Must add stock items\");\n		}\n		\n		if(bindingResult.hasErrors()) {\n			fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n			return \"editSaleOrReturn\";\n		}\n\n		saleOrReturn.setSaleOrReturnOrderLines(sorolMap);\n\n		saleOrReturnService.update(saleOrReturn);\n\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n\n		session.removeAttribute(\"saleOrReturn\");\n		session.removeAttribute(\"orderLineMap\");\n\n		return \"viewSaleOrReturn\";\n	}\n\n	@SuppressWarnings(\"unchecked\")\n	@RequestMapping(value=\"/addStockItem\")\n	public String addStockItem(Long id, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		StockItem stockItem = stockItemService.get(id);\n\n		addStockItem(stockItem, modelMap, orderLineMap, saleOrReturn);\n\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n\n		return editOrCreateView(saleOrReturn);\n	}\n	\n	private String editOrCreateView(SaleOrReturn sor) {\n		if(sor.getId() != null) return \"editSaleOrReturn\"; else return \"createSaleOrReturn\";\n	}\n	\n	@RequestMapping(value=\"/displaySearch\", method=RequestMethod.GET)\n	public String displaySearch(HttpServletRequest request, HttpSession session, ModelMap modelMap) {\n		SaleOrReturnSearchBean saleOrReturnSearchBean = new SaleOrReturnSearchBean();\n		modelMap.addAttribute(saleOrReturnSearchBean);\n		return search(saleOrReturnSearchBean, null, request, session, modelMap);\n	}	\n\n	@RequestMapping(value=\"/search\")\n	public String search(@ModelAttribute SaleOrReturnSearchBean saleOrReturnSearchBean, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {\n		if(!saleOrReturnSearchBean.isFromSession()) {\n			setPaginationFromRequest(saleOrReturnSearchBean, request);\n		}\n		saleOrReturnSearchBean.isFromSession(false);\n\n		Collection<SaleOrReturn> saleOrReturns = saleOrReturnService.search(saleOrReturnSearchBean);\n\n		session.setAttribute(\"searchBean\", saleOrReturnSearchBean);\n\n		modelMap.addAttribute(saleOrReturns);\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n		modelMap.addAttribute(\"searchResultCount\", saleOrReturnSearchBean.getSearchResultCount());\n\n		return \"searchSaleOrReturns\";\n	}\n\n	@RequestMapping(value=\"/searchFromSession\")\n	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {\n		SaleOrReturnSearchBean saleOrReturnSearchBean = (SaleOrReturnSearchBean) session.getAttribute(\"searchBean\");\n		if(saleOrReturnSearchBean == null) saleOrReturnSearchBean = new SaleOrReturnSearchBean();\n		else saleOrReturnSearchBean.isFromSession(true);\n		modelMap.addAttribute(saleOrReturnSearchBean);\n		return search(saleOrReturnSearchBean, null,  request, session, modelMap);\n	}\n\n\n	@RequestMapping(value=\"/showSearchStock\", method=RequestMethod.GET)\n	public String showSearchStock(ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(\"showSearchStock\", true);\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n\n		return \"createSaleOrReturn\";\n	}\n\n	/**\n	 * id refers to stockItem id, or -1 if 2nd hand\n	 * @param id\n	 * @param modelMap\n	 * @param session\n	 * @return\n	 */\n	@RequestMapping(value=\"/editSaleOrReturnOrderLine\", method=RequestMethod.GET)\n	public String editSaleOrReturnOrderLine(Long id, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		SaleOrReturnOrderLine saleOrReturnOrderLine = orderLineMap.get(id);\n		modelMap.addAttribute(\"saleOrReturnOrderLine\", saleOrReturnOrderLine);\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());	\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n\n		return editOrCreateView(saleOrReturn);\n	}\n\n	/**\n	 * @param id\n	 * @param modelMap\n	 * @param session\n	 * @return\n	 */\n	@RequestMapping(value=\"/editSaleOrReturnOrderLine\", method=RequestMethod.POST)\n	public String editSaleOrReturnOrderLine(SaleOrReturnOrderLine saleOrReturnOrderLine, BindingResult bindingResult, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		//Validate\n		saleOrReturnOrderLineValidator.validate(saleOrReturnOrderLine, bindingResult);\n		if(bindingResult.hasErrors()) {\n			modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n			modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());	\n			modelMap.addAttribute(saleOrReturn);\n			modelMap.addAttribute(SaleOrReturnStatus.values());\n			modelMap.addAttribute(\"saleOrReturnOrderLine\", saleOrReturnOrderLine);\n		    return editOrCreateView(saleOrReturn);\n		}\n		orderLineMap.put(saleOrReturnOrderLine.getStockItem().getId(), saleOrReturnOrderLine);\n\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());	\n		modelMap.addAttribute(orderLineMap.values());\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(new StockItemSearchBean());\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n		//Why?\n		modelMap.remove(\"saleOrReturnOrderLine\");\n\n		return editOrCreateView(saleOrReturn);\n	}\n\n	@RequestMapping(value=\"/deleteSaleOrReturnOrderLine\")\n	public String deleteSaleOrReturnOrderLine(Long id, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		orderLineMap.remove(id);\n\n		modelMap.addAttribute(\"totalPrice\", saleOrReturn.getTotalPrice());\n		modelMap.addAttribute(\"noOfLines\", saleOrReturn.getTotalAmount());	\n		modelMap.addAttribute(orderLineMap.values());\n		modelMap.addAttribute(saleOrReturn);\n		modelMap.addAttribute(new StockItemSearchBean());\n		modelMap.addAttribute(SaleOrReturnStatus.values());\n\n		return editOrCreateView(saleOrReturn);\n	}\n\n\n	@RequestMapping(value=\"/delete\")\n	public String delete(Long id, ModelMap modelMap, HttpSession session, HttpServletRequest request) {\n		SaleOrReturn sor = saleOrReturnService.get(id);\n		\n		saleOrReturnService.delete(sor);\n\n		return searchFromSession(session, request, modelMap);\n	}\n\n	/**\n	 * Get the customer for which the saleOrReturn is for\n	 * create session objects and then redirect\n	 * to /saleOrReturn/createSaleOrReturn.jsp\n	 * @param id\n	 * @param modelMap\n	 * @param session\n	 * @return\n	 */\n	@RequestMapping(value=\"/init\")\n	public String init(Long id, ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap = new HashMap<Long, SaleOrReturnOrderLine>();\n\n		//Create saleOrReturn and attach customer\n		Customer customer = customerService.get(id);\n		SaleOrReturn saleOrReturn = new SaleOrReturn(customer);\n\n		//Place into session\n		session.setAttribute(\"saleOrReturn\", saleOrReturn);\n		session.setAttribute(\"orderLineMap\", orderLineMap);\n\n		//Place into model\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n		return \"createSaleOrReturn\";\n	}\n\n	/**\n	 * Get stuff from session\n	 * @param id\n	 * @param modelMap\n	 * @param session\n	 * @return\n	 */\n	@RequestMapping(value=\"/continue\")\n	public String continueFromSession(ModelMap modelMap, HttpSession session) {\n		Map<Long, SaleOrReturnOrderLine> orderLineMap =  (Map<Long, SaleOrReturnOrderLine>) session.getAttribute(\"orderLineMap\");\n		SaleOrReturn saleOrReturn = (SaleOrReturn) session.getAttribute(\"saleOrReturn\");\n\n		//Place into session\n		session.setAttribute(\"saleOrReturn\", saleOrReturn);\n		session.setAttribute(\"orderLineMap\", orderLineMap);\n\n		//Place into model\n		fillModel(saleOrReturn, new StockItemSearchBean(), modelMap, orderLineMap);\n		return editOrCreateView(saleOrReturn);\n	}\n\n	@Override\n	public Service getService() {\n		return saleOrReturnService;\n	}\n\n}\n",
+			"file": "src/main/java/org/bookmarks/controller/SaleOrReturnController.java",
+			"file_size": 21029,
+			"file_write_time": 1424786446000000,
+			"settings":
+			{
+				"buffer_size": 20509,
+>>>>>>> db9ff92... Adding getReview to edit screen
 				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "src/main/java/org/bookmarks/service/SaleOrReturnServiceImpl.java",
+<<<<<<< HEAD
 			"settings":
 			{
 <<<<<<< HEAD
@@ -172,6 +183,12 @@
 				"buffer_size": 4012,
 				"line_ending": "Windows"
 >>>>>>> 63be499... Added calculate price back in
+=======
+			"settings":
+			{
+				"buffer_size": 4012,
+				"line_ending": "Windows"
+>>>>>>> db9ff92... Adding getReview to edit screen
 			}
 		}
 	],
@@ -202,10 +219,13 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 =======
 =======
 =======
+=======
+>>>>>>> db9ff92... Adding getReview to edit screen
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/saleOrReturn/searchSaleOrReturns.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchInvoiceDecorator.java",
 		"/home/git/bookmarks/pom.xml",
@@ -214,7 +234,10 @@
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/InvoiceServiceImpl.java",
 		"/home/git/bookmarks/src/main/groovy/org/bookmarks/groovy/UpdateAccountsFromCSV.groovy",
 		"/home/till/Brain/accounts.csv",
+<<<<<<< HEAD
 >>>>>>> 63be499... Added calculate price back in
+=======
+>>>>>>> db9ff92... Adding getReview to edit screen
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/navbar.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/header.jsp",
@@ -303,11 +326,16 @@
 		[
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 			"edit",
 			"delete",
 >>>>>>> 63be499... Added calculate price back in
+=======
+			"edit",
+			"delete",
+>>>>>>> db9ff92... Adding getReview to edit screen
 			"column w-33-percent",
 			"EVent",
 			"List",
@@ -367,6 +395,7 @@
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -439,6 +468,12 @@
 					{
 						"buffer_size": 20509,
 >>>>>>> 63be499... Added calculate price back in
+=======
+					"file": "src/main/java/org/bookmarks/controller/SaleOrReturnController.java",
+					"settings":
+					{
+						"buffer_size": 20509,
+>>>>>>> db9ff92... Adding getReview to edit screen
 						"regions":
 						{
 						},
@@ -451,6 +486,7 @@
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -526,6 +562,13 @@
 						"translation.x": 4.0,
 						"translation.y": 7438.0,
 >>>>>>> 63be499... Added calculate price back in
+=======
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 4.0,
+						"translation.y": 7438.0,
+>>>>>>> db9ff92... Adding getReview to edit screen
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -577,17 +620,22 @@
 					"settings":
 					{
 <<<<<<< HEAD
+<<<<<<< HEAD
 						"buffer_size": 39657,
 >>>>>>> 9230b24... Adding sor delete
 =======
 						"buffer_size": 4012,
 >>>>>>> 63be499... Added calculate price back in
+=======
+						"buffer_size": 4012,
+>>>>>>> db9ff92... Adding getReview to edit screen
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -840,10 +888,15 @@
 							[
 								564,
 								564
+=======
+								2787,
+								2787
+>>>>>>> db9ff92... Adding getReview to edit screen
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"detect_indentation": false,
 							"output_tag": 1,
 							"result_base_dir": "",
@@ -851,9 +904,13 @@
 							"result_line_regex": "^ +([0-9]+):",
 							"scroll_past_end": true,
 							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+=======
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+>>>>>>> db9ff92... Adding getReview to edit screen
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1080.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -942,9 +999,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
+=======
+>>>>>>> db9ff92... Adding getReview to edit screen
 				"searchinvoi",
 				"main/java/org/bookmarks/ui/SearchInvoiceDecorator.java"
 			],
@@ -973,7 +1033,10 @@
 				"main/java/org/bookmarks/controller/SaleOrReturnController.java"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 63be499... Added calculate price back in
+=======
+>>>>>>> db9ff92... Adding getReview to edit screen
 				"searchcust",
 				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
 			],
