@@ -24,9 +24,12 @@
 		$('#authorTable').load("/bookmarks/author/loadAuthorTable");		
 	});
 	
-	function lookUpFromAZ() {
+	function getImage() {
 		submitForm('${pageContext.request.contextPath}/stock/getImage?flow=editStock');
 	}
+	function getReview() {
+		submitForm('${pageContext.request.contextPath}/stock/getReview?flow=editStock');
+	}	
 	</script>
 		<form:form modelAttribute="stockItem" action="edit" method="post">
 		  	<form:hidden path="id"/>
@@ -239,7 +242,8 @@
           <div class="column w-100-percent">
                <button type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/edit')" class="btn btn-danger">Save Changes</button>&nbsp;
 				<button type="button" onclick="window.close();" class="btn btn-primary">Back to search</button>
-				<button class="btn btn-success" onclick="javascript:lookUpFromAZ()">Get Image</button>
+				<button class="btn btn-success" onclick="javascript:getImage()">Get Image</button>
+				<button class="btn btn-success" onclick="javascript:getReview()">Get Review</button>
 				<button type="button" onclick="javascript:authoriseSuperUser('${pageContext.request.contextPath}/stock/delete')" class="btn btn-primary">Delete</button>
 	 </div>	
     </div> 

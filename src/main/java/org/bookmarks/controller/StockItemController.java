@@ -345,6 +345,45 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		return "addStock";
 	}
 
+	@RequestMapping(value="/getReview", method=RequestMethod.POST)
+	public String getReview(StockItem stockItem, BindingResult bindingResult, String flow, HttpSession session, ModelMap modelMap) {
+		String result = "editStock";
+
+		//Check validity of isbn
+		stockItemValidator.validateISBN(stockItem, bindingResult, "isbn");
+		if(bindingResult.hasErrors()) {
+			modelMap.addAttribute(stockItem);
+			fillStockSearchModel(session, modelMap);
+			return "editStock";
+		}
+
+		//Looup from AZ
+		StockItem stockItemFromLookup = null;
+		try {
+			stockItemFromLookup = azLookupService.lookupWithJSoup(stockItem.getIsbn());	
+		} catch (Exception e) {
+			logger.error("Cannot lookup from AZLookupService", e);
+		}
+		
+		
+		//Has it been successful?
+		if(stockItemFromLookup == null) {
+			addError("Cannot find this isbn at AZ", modelMap);
+			fillStockSearchModel(session, modelMap);
+			modelMap.addAttribute(stockItem);
+			return "editStock";	
+		}
+		if(stockItemFromLookup.getReviewAsText() != null) {
+			stockItem.setReviewAsText(stockItemFromLookup.getReviewAsText());
+			stockItem.setReviewAsHTML(stockItemFromLookup.getReviewAsHTML());
+		}
+		
+		addSuccess("Have successfully got review for " + stockItem.getTitle(), modelMap);
+		fillStockSearchModel(session, modelMap);
+		modelMap.addAttribute(stockItem);
+		return "editStock";	
+	}	
+
 	@RequestMapping(value="/getImage", method=RequestMethod.POST)
 	public String getImage(StockItem stockItem, BindingResult bindingResult, String flow, HttpSession session, ModelMap modelMap) {
 		String result = "editStock";
@@ -382,9 +421,6 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		addSuccess("Have successfully got image for " + stockItem.getTitle(), modelMap);
 		return "welcome";
 	}
-
-
-	
 
 
 //	@RequestMapping(value="/isbnDBlookup", method=RequestMethod.POST)
