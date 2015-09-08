@@ -159,6 +159,9 @@ update bmw.stock_item set review_as_text = null, review_as_html = null where rev
 update bmw.stock_item set sell_price = 8 where type = 'MUG';
 
 -- READING LIST
+-- Remove stockitems on reading list with put_on_website = false
+delete rl.* from bookmarks.reading_list_stockitem rl left join bookmarks.stockitem si on si.id = rl.stockItems_id where put_on_website = false; 
+
 -- Only copy across reading lists on website
 INSERT INTO bmw.reading_list (id, name, is_on_website, is_on_sidebar) select id, name, is_on_website, is_on_sidebar from bookmarks.reading_list brl;
 
