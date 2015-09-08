@@ -63,20 +63,22 @@
 =======
 
 		<!-- Spring -->
-		<spring.version>4.1.6.RELEASE</spring.version>
+		<spring.version>4.2.1.RELEASE</spring.version>
 
 		<!-- Spring Data -->
 		<spring-data-jpa.version>1.7.2.RELEASE</spring-data-jpa.version>
 
 		<!-- Hibernate -->
-		<hibernate.version>4.3.8.Final</hibernate.version>
-		<hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate.validator.version>4.3.2.Final</hibernate.validator.version>
 		<hibernate.search.version>4.1.1.Final</hibernate.search.version>
 
-		<slf4j.version>1.7.5</slf4j.version>
+		<!-- Logging -->
+		<logback.version>1.1.3</logback.version>
+		<slf4j.version>1.7.12</slf4j.version>
 
 		<!-- AOP -->
-		<aspectj.version>1.8.3</aspectj.version>
+		<aspectj.version>1.8.6</aspectj.version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -150,7 +152,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			<version>1.7.12</version>
+			<version>${slf4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.flexjson</groupId>
@@ -185,7 +187,11 @@
 		<dependency>
 			<groupId>com.jcraft</groupId>
 			<artifactId>jsch</artifactId>
+<<<<<<< HEAD
 			<version>0.1.50</version>
+=======
+			<version>0.1.53</version>
+>>>>>>> f6b36c6... Upgrading spring, hibernate jsftp slfj
 		</dependency>
 		
 <dependency>
@@ -635,6 +641,15 @@
   
          <!--      
 
+<<<<<<< HEAD
+=======
+		<!-- Logging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+>>>>>>> f6b36c6... Upgrading spring, hibernate jsftp slfj
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
