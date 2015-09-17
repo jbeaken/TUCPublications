@@ -48,10 +48,10 @@ import org.bookmarks.controller.bean.SaleTotalBean;
 @Transactional
 public class CustomerReportServiceImpl implements CustomerReportService {
 
-	
+
 	@Autowired
 	private InvoiceRepository invoiceRepository;
-	
+
 	@Autowired
 	private CreditNoteRepository creditNoteRepository;
 
@@ -59,7 +59,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 	public Collection<InvoiceReportLine> getInvoiceReport(CustomerReportBean customerReportBean) {
 		Collection<Invoice> invoices = invoiceRepository.getInvoiceReport(customerReportBean);
 		Collection<CreditNote> creditNotes = creditNoteRepository.getCreditNotes(customerReportBean);
-		
+
 		//Put them into InvoiceReportLine objects
 		List<InvoiceReportLine> invoiceReportLines = new ArrayList<InvoiceReportLine>();
 		for(Invoice invoice : invoices) {
@@ -83,6 +83,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 				sale.setStockItem(stockItem);
 				sale.setCreationDate(invoice.getCreationDate());
 				irl.setSale(sale);
+				irl.setDeliveryType(invoice.getDeliveryType());
 				invoiceReportLines.add(irl);
 			}
 			if(invoice.getServiceCharge() != null && invoice.getServiceCharge().floatValue() != 0) {
@@ -97,6 +98,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 				sale.setStockItem(stockItem);
 				sale.setCreationDate(invoice.getCreationDate());
 				irl.setSale(sale);
+				irl.setDeliveryType(invoice.getDeliveryType());
 				invoiceReportLines.add(irl);
 			}
 		}
@@ -105,24 +107,24 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 			irl.setCreditNote(creditNote);
 			invoiceReportLines.add(irl);
 		}
-		
+
 		//Sort them by date, most recent first
 		Collections.sort(invoiceReportLines);
-		
+
 		//Get current balance from customer
 		BigDecimal latestBalance = customerReportBean.getCustomer().getBookmarksAccount().getCurrentBalance();
-		
+
 		//Starting with the latest work backwards, setting balance at time of sale/credit note
 		for(InvoiceReportLine invoiceReportLine : invoiceReportLines) {
 			invoiceReportLine.setCurrentBalance(latestBalance);
 			latestBalance = latestBalance.subtract(invoiceReportLine.getCreditAmount());
 		}
-		
-		
+
+
 		return invoiceReportLines;
 	}
-	
 
-	
-	
+
+
+
 }

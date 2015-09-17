@@ -77,16 +77,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/customerReport")
 public class CustomerReportController extends AbstractBookmarksController {
-	
+
 	@Autowired
 	private CustomerReportService customerReportService;
-	
+
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private CustomerReportBeanValidator customerReportBeanValidator;
-	
+
 	/**
 	 * Main entry point, analyses report bean to see which report to call
 	 * @param saleReportBean
@@ -100,23 +100,22 @@ public class CustomerReportController extends AbstractBookmarksController {
 	public String report(@Valid CustomerReportBean customerReportBean, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		Customer customer = customerService.get(customerReportBean.getCustomer());
 		customerReportBean.setCustomer(customer);
-		
+
 		customerReportBeanValidator.validate(customerReportBean, bindingResult);
 		if(bindingResult.hasErrors()) {
 			modelMap.addAttribute(customerReportBean);
 			return "customerReport";
-		}		
+		}
 		switch (customerReportBean.getCustomerReportType()) {
 			case INVOICE:
 				return invoiceReport(customerReportBean, request, modelMap);
 			default:
 				return null;
-		}		
+		}
 	}
 
-	private String invoiceReport(CustomerReportBean customerReportBean,
-			HttpServletRequest request, ModelMap modelMap) {
-		
+	private String invoiceReport(CustomerReportBean customerReportBean,	HttpServletRequest request, ModelMap modelMap) {
+
 		Collection<InvoiceReportLine> invoiceReportLines = customerReportService.getInvoiceReport(customerReportBean);
 		modelMap.addAttribute(invoiceReportLines);
 		return "customerReport";
@@ -127,14 +126,14 @@ public class CustomerReportController extends AbstractBookmarksController {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@RequestMapping(value="/init", method=RequestMethod.GET)
 	public String init(ModelMap modelMap) {
 		modelMap.addAttribute(new CustomerReportBean());
 		modelMap.addAttribute(CustomerReportType.values());
 		return "customerReport";
-	}	
+	}
 
-	
-	
+
+
 }
