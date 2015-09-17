@@ -31,7 +31,7 @@
 <form:hidden path="customer.id" id="customerId"/>
 <div class="rows">
         <div class="row">
-          <div class="column w-33-percent">		  
+          <div class="column w-33-percent">
 					<div class="demo">
 						<div class="ui-widget">
 							<form:label	for="customer.id" path="customer.id" cssErrorClass="error">Customer</form:label><br/>
@@ -41,12 +41,12 @@
 		</div>
           <div class="column w-33-percent">
 				<form:label	for="customer.firstName" path="customer.firstName" cssErrorClass="error">Wide Search</form:label><br/>
-				<form:input path="customer.firstName" /> <form:errors path="customer.firstName" />			
-				
+				<form:input path="customer.firstName" /> <form:errors path="customer.firstName" />
+
 	  	 </div>
           <div class="column w-33-percent">
 		         <form:label for="customer.address.address1" path="customer.address.address1" cssErrorClass="error">Address</form:label><br/>
-		         <form:input path="customer.address.address1" /> <form:errors path="customer.address.address1" />                  
+		         <form:input path="customer.address.address1" /> <form:errors path="customer.address.address1" />
 	 	 </div>
 	</div>
         <div class="row">
@@ -55,19 +55,23 @@
 				<form:select path="customer.customerType">
         			<form:option value="" label="All"/>
         			<form:options items="${customerTypeOptions}" itemLabel="displayName"/>
-    			</form:select>                       
-	 	 </div>      	 
+    			</form:select>
+	 	 </div>
 		  <div class="column w-33-percent">
-                 <form:checkbox path="customer.bookmarksAccount.accountHolder" />                         
+                 <form:checkbox path="customer.bookmarksAccount.accountHolder" />
 				 <form:label id="checkboxLabel" for="customer.bookmarksAccount.accountHolder" path="customer.bookmarksAccount.accountHolder" cssErrorClass="error">Account</form:label>
 				 <br/>
-                 <form:checkbox path="customer.bookmarksAccount.sponsor" />                         
+                 <form:checkbox path="customer.bookmarksAccount.sponsor" />
 				 <form:label for="customer.bookmarksAccount.sponsor" path="customer.bookmarksAccount.sponsor" cssErrorClass="error">Sponsor</form:label>
-				<br/>				 
-                 <form:checkbox path="customer.bookmarksAccount.paysInMonthly" />                         
+				<br/>
+        <form:checkbox path="customer.bookmarksAccount.paysInMonthly" />
 				 <form:label for="customer.bookmarksAccount.paysInMonthly" path="customer.bookmarksAccount.paysInMonthly" cssErrorClass="error">Pays In Monthly</form:label>
 		  </div>
-		 </div>
+			<div class="column w-33-percent">
+				 <form:label for="customer.id" path="customer.id" cssErrorClass="error">ID</form:label><br/>
+				 <form:input path="customer.id" /> <form:errors path="customer.id" />
+ 		 </div>
+		</div><!-- /row -->
 		<div class="row">
           <div class="column w-100-percent">
  				<button id="searchCustomerSubmitButton" type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/search')">Search</button>
@@ -77,8 +81,8 @@
 	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addCustomerFromSearch')">Add Customer</button>
 	 				<button type="button" class="btn btn-success" onclick="javascript:printLabels()">Print Labels</button>
 	 	 </div>
-	</div>		
-</div>		
+	</div>
+</div>
 </form:form>
 <br/>
 <c:if test="${customerList != null}">
@@ -115,7 +119,7 @@
 <a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}" target="_blank"><img src="../resources/images/credit.png" title="Add Credit" /></a>
 <a href="displayEditNote?id=${searchTable.id}" target="_blank"><img src="../resources/images/note.png" title="Add note" /></a>
                       </display:column>
-                      <!-- 
+                      <!--
 					  	<div class="btn-group">
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						    Action <span class="caret"></span>
@@ -136,4 +140,3 @@
                        -->
                       </display:table>
  </c:if>
- 

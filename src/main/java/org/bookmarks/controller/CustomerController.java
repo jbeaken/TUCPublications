@@ -63,31 +63,31 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@Autowired
 	private CustomerOrderController customerOrderController;
-	
+
 	private Logger logger = LoggerFactory.getLogger(CustomerController.class);
-	
+
 	private static final String postcodeLookupKey = "BH89-YF22-ZU91-EE62";
 
 
 	@Autowired
 	private InvoiceController invoiceController;
-	
+
 	@RequestMapping(value="/lookupPostcode", method=RequestMethod.GET)
 	public @ResponseBody String lookupPostcode(String postcode) {
-		
+
 		//Now post up to chips
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		
+
 		HttpGet httpGet = new HttpGet("http://api.postcodefinder.royalmail.com/CapturePlus/Interactive/Find/v2.00/json3ex.ws?Key=" + postcodeLookupKey + "&Country=GBR&SearchTerm=" + postcode + "&LanguagePreference=en&LastId=&SearchFor=Everything&$block=true&$cache=true");
 		//httpPost.addHeader("Cookie", "PHPSESSID=sc8g4n5rhvl7bq5p3s8r1k6pi6; __utma=38167458.116586123.1410943363.1410943363.1410945307.2; __utmb=38167458.6.10.1410945307; __utmc=38167458; __utmz=38167458.1410943363.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)");
 		httpGet.addHeader("Referer", "http://www.royalmail.com/find-a-postcode");
 		httpGet.addHeader("Origin", "http://www.royalmail.com");
 
-		
+
 		CloseableHttpResponse response =  null;
 		try {
 			response = httpclient.execute(httpGet);
-			
+
 			try {
 			    HttpEntity entity = response.getEntity();
 			    String returnCode = EntityUtils.toString(entity);
@@ -97,7 +97,7 @@ public class CustomerController extends AbstractBookmarksController {
 			    return returnCode;
 			} finally {
 			    response.close();
-			}				
+			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -105,28 +105,28 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		return "error";
-	}		
-	
-	
-	
-	
+	}
+
+
+
+
 	@RequestMapping(value="/lookupAddress", method=RequestMethod.GET)
 	public @ResponseBody String lookupAddress(String encodedId) {
-		
+
 		//Now post up to chips
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		
+
 		String url = "http://api.postcodefinder.royalmail.com/CapturePlus/Interactive/RetrieveFormatted/v2.00/json3ex.ws?Key=BH89-YF22-ZU91-EE62&Id=" + encodedId + "&Source=&$cache=true&field1format=%7BLatitude%7D&field2format=%7BLongitude%7D";
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.addHeader("Referer", "http://www.royalmail.com/find-a-postcode");
 		httpGet.addHeader("Origin", "http://www.royalmail.com");
 		httpGet.addHeader("Host", "api.postcodefinder.royalmail.com");
 
-		
+
 		CloseableHttpResponse response =  null;
 		try {
 			response = httpclient.execute(httpGet);
-			
+
 			try {
 			    HttpEntity entity = response.getEntity();
 			    String returnCode = EntityUtils.toString(entity);
@@ -136,7 +136,7 @@ public class CustomerController extends AbstractBookmarksController {
 			    return returnCode;
 			} finally {
 			    response.close();
-			}				
+			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -144,9 +144,9 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		return "error";
-	}		
-	
-	
+	}
+
+
 	@RequestMapping(value="/search")
 	public String search(CustomerSearchBean customerSearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		if(customerSearchBean.isFromSession() == false) { //Pagination etc. already set
@@ -154,6 +154,8 @@ public class CustomerController extends AbstractBookmarksController {
 		} else {
 			//
 		}
+
+		logger.info("id " + customerSearchBean.getCustomer().getId() );
 
 		Collection<Customer> customers = customerService.search(customerSearchBean);
 
@@ -166,9 +168,9 @@ public class CustomerController extends AbstractBookmarksController {
 		modelMap.addAttribute(customers);
 		modelMap.addAttribute("searchResultCount", customerSearchBean.getSearchResultCount());
 		modelMap.addAttribute(CustomerType.values());
-		
+
 		//setFocus("customerAutoComplete", modelMap);
-		
+
 		return "searchCustomers";
 	}
 
@@ -178,7 +180,7 @@ public class CustomerController extends AbstractBookmarksController {
 		modelMap.addAttribute(creditNote);
 		return "addCredit";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value="/autoCompleteSurname", method=RequestMethod.GET)
 	public String autoCompleteSurname(String term, HttpServletRequest request, ModelMap modelMap) {
@@ -236,7 +238,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/displaySearch", method=RequestMethod.GET)
 	public String displaySearch(ModelMap modelMap) {
-		
+
 		modelMap.addAttribute(new CustomerSearchBean());
 		modelMap.addAttribute(CustomerType.values());
 		modelMap.addAttribute("focusId", "customerId");
@@ -252,25 +254,25 @@ public class CustomerController extends AbstractBookmarksController {
 		} catch (Exception e) {
 			//Most likely due to this invoice being referenced from col
 			addError("Cannot delete! Perhaps this customer has invoices or customer orders, contact admin (Jack) to sort it out", modelMap);
-		}		
-		
+		}
+
 		return displaySearch(modelMap);
-	}	
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid Customer customer, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		//Check for errors
-		if(bindingResult.hasErrors()){ 
+		if(bindingResult.hasErrors()){
 			return "addCustomer";
 		}
-		
+
 		customerService.save(customer);
-		
+
 		CustomerSearchBean csb = new CustomerSearchBean();
 		csb.setCustomer(customer);
 		csb.setPage("1");
 		session.setAttribute("customerSearchBean", csb);
-		
+
 		return "redirect:searchFromSession";
 	}
 
@@ -298,42 +300,42 @@ public class CustomerController extends AbstractBookmarksController {
 
 		return searchFromSession(session, request, modelMap);
 	}
-	
+
 	@RequestMapping(value="/printLabels")
 	public @ResponseBody void printLabels(@ModelAttribute CustomerSearchBean customerSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws DocumentException {
-		
+
 		setPaginationFromRequest(customerSearchBean, request);
-		
+
 		customerSearchBean.setExport(true); //Override
-		
+
 		Collection<Customer> customers = customerService.search(customerSearchBean);
-		
+
 		Document doc = new Document();
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
- 
-        //Here We are writing the pdf contents to the output stream via pdfwriter 
+
+        //Here We are writing the pdf contents to the output stream via pdfwriter
 		//doc will contain the all the format and pages generated by the iText
-		
+
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 		//doc.setPageSize(PageSize.A4);
 		doc.setMargins(0, 0, 0, 0);
 //		doc.setMarginMirroring(true);
-		
+
 		PdfPTable table = new PdfPTable(2);
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		table.setWidthPercentage(100);
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		doc.open();
-		
-		
+
+
 		String nl = System.getProperty("line.separator");
-		
+
 		for(Customer customer : customers) {
 			Customer c = customerService.get(customer.getId());
-			 
+
 			 StringBuilder labelText = new StringBuilder();
-			 
+
 			 Address a = c.getAddress();
 			 if(a != null) {
 		    	 labelText.append(c.getFullName() + nl);
@@ -342,13 +344,13 @@ public class CustomerController extends AbstractBookmarksController {
 		    	 if(a.getAddress3() != null && !a.getAddress3().trim().isEmpty()) labelText.append(a.getAddress3() + nl);
 		    	 if(a.getPostcode() != null && !a.getPostcode().trim().isEmpty()) labelText.append(a.getPostcode() + nl);
 //		    	 logger.info(labelText.toString());
-		    	// pl.add(labelText.toString());//, "45140-8778");  //regular label with postnet barcode 
-		    	 
+		    	// pl.add(labelText.toString());//, "45140-8778");  //regular label with postnet barcode
+
 		    	 Font DOC_FONT = new Font (Font.FontFamily.COURIER, 12, Font.NORMAL);
-		    	 
+
 		    	 PdfPCell cell = new PdfPCell (new Phrase(labelText.toString(), DOC_FONT));
-		    	 cell.setBorder(Rectangle.NO_BORDER); 
-		    	 cell.setFixedHeight(125f); 
+		    	 cell.setBorder(Rectangle.NO_BORDER);
+		    	 cell.setFixedHeight(125f);
 
 //		         cell.setNoWrap(true);
 
@@ -357,33 +359,33 @@ public class CustomerController extends AbstractBookmarksController {
 
 //		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 //		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		         
+
 		    	 table.addCell(cell);
 			 }
 		}
-		
+
 //		pl.finish();
-		
+
 		doc.add(table);
-		
+
 		try {
 			doc.close();
-		
-		
+
+
 		 response.setContentType("application/pdf");
 		 response.setHeader("Content-Disposition","attachment; filename=\"ringAround.pdf\"");
 		 response.setContentLength(baos.size());
-		   
+
 		 OutputStream os = response.getOutputStream();
 		 baos.writeTo(os);
 		 os.flush();
-		 os.close(); 	
-		 
+		 os.close();
+
 		} catch(IOException e) {
 			//Probably no labels, no page exeption
-		}		 
+		}
 
-	}		
+	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String displayEdit(Long id, String flow, ModelMap modelMap) {

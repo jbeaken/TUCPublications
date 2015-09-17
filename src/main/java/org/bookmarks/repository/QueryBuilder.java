@@ -15,18 +15,18 @@ import org.bookmarks.domain.EventType;
 public class QueryBuilder {
 	private StringBuffer query = new StringBuffer();
 	private boolean whereAlreadyAppended = false;
-	
+
 	public StringBuffer getQuery() {
 		return query;
 	}
-	
+
 	public void appendToQuery(String str) {
 		query.append(str);
 	}
-	
+
 	public void append(String str) {
 		str = str.trim();
-		if(str.isEmpty()) return;	
+		if(str.isEmpty()) return;
 		if(whereAlreadyAppended) {
 			query.append(" and (" + str + ")");
 		} else {
@@ -43,22 +43,22 @@ public class QueryBuilder {
 			whereAlreadyAppended = true;
 		}
 	}
-	
+
 	public void append(EventType type) {
-		if(type == null) return; 
+		if(type == null) return;
 		if(whereAlreadyAppended) {
 			query.append(" and e.type = '" + type + "'");
 		} else {
 			query.append(" where e.type = '" + type + "'");
 			whereAlreadyAppended = true;
 		}
-	}	
+	}
 
 	public void append(String value, String property) {
 		if(value == null) return;
 	//Replace with String trimmedValue = value.trim().replace("'", "''"); and delete appendAndEscape
 		String trimmedValue = value.trim();
-		
+
 		if(!trimmedValue.isEmpty()) {
 			if(whereAlreadyAppended) {
 				query.append(" and " + property + " like '%" + trimmedValue + "%'");
@@ -67,8 +67,8 @@ public class QueryBuilder {
 				whereAlreadyAppended = true;
 			}
 		}
-	}	
-	
+	}
+
 	public void appendAndEscape(String value, String property) {
 		String trimmedValue = value.trim().replace("'", "''");
 		if(!trimmedValue.isEmpty()) {
@@ -79,8 +79,8 @@ public class QueryBuilder {
 				whereAlreadyAppended = true;
 			}
 		}
-	}		
-	
+	}
+
 	public void appendExact(String value, String property) {
 	//Escape at some point
 		if(value != null && !value.isEmpty()) {
@@ -103,7 +103,7 @@ public class QueryBuilder {
 			}
 		}
 	}
-	
+
 	public void append(SupplierOrderStatus supplierOrderStatus, String property) {
 		if(supplierOrderStatus != null) {
 			if(whereAlreadyAppended) {
@@ -124,11 +124,11 @@ public class QueryBuilder {
 				whereAlreadyAppended = true;
 			}
 		}
-	}	
-	
+	}
 
 
-	
+
+
 	public void appendIsNotNull(String property) {
 		if(whereAlreadyAppended) {
 				query.append(" and " + property + " is not null");
@@ -136,8 +136,8 @@ public class QueryBuilder {
 				query.append(" where " + property + " is not null");
 				whereAlreadyAppended = true;
 			}
-	}		
-	
+	}
+
 	public void appendIsNull(String property) {
 		if(whereAlreadyAppended) {
 				query.append(" and " + property + " is null");
@@ -145,9 +145,10 @@ public class QueryBuilder {
 				query.append(" where " + property + " is null");
 				whereAlreadyAppended = true;
 			}
-	}	
+	}
 
 	public void append(AbstractEntity e, String property) {
+		System.out.println("id " + e.getId());
 		if(e != null && e.getId() != null) {
 			if(whereAlreadyAppended) {
 				query.append(" and " + property + " = " + e.getId());
@@ -156,7 +157,7 @@ public class QueryBuilder {
 				whereAlreadyAppended = true;
 			}
 		}
-		
+
 	}
 
 	public void appendBeetween(Date startDate, Date endDate, String property) {
@@ -174,7 +175,7 @@ public class QueryBuilder {
 //				query.append(" where " + property + " between '" + dateFormat.format(sqlStartDate) + "' and '" + dateFormat.format(sqlEndDate) + "'");
 //				whereAlreadyAppended = true;
 //			}
-		 
+
 	}
 
 	public void append(SupplierOrderLineType type, String property) {
@@ -197,7 +198,7 @@ public class QueryBuilder {
 				whereAlreadyAppended = true;
 			}
 		}
-		
-	}	
+
+	}
 
 }

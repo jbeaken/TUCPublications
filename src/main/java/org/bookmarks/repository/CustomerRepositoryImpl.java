@@ -25,29 +25,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerRepositoryImpl extends AbstractRepository<Customer> implements CustomerRepository {
 
     private SessionFactory sessionFactory;
-    
+
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
+
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
     	return new StringBuffer("select c from Customer as c");
     }
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
 		return new StringBuffer("select count(c) from Customer as c");
 	}
-	
+
 	protected String getDefaultSortColumn() {
 		return "c.lastName";
-	}	
-    
+	}
+
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 		CustomerSearchBean customerSearchBean = (CustomerSearchBean) searchBean;
 		Customer c = customerSearchBean.getCustomer();
 		BookmarksAccount ba = c.getBookmarksAccount();
 		Address a = c.getAddress();
-		
+
 		QueryBuilder queryBuilder = new QueryBuilder();
 
 		//Build query
@@ -74,11 +74,11 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 				queryBuilder.append("c.address.address1 like '%" + a.getAddress1() + "%' or c.address.city = '%" + a.getAddress1() + "%' or c.address.postcode like '%" + a.getAddress1() + "%' or c.address.address2 like '%" + a.getAddress1() + "%' or c.address.address2 like '%" + a.getAddress1() + "%'");
 			}
 		}
-		
+
 		query.append(queryBuilder.getQuery());
 
 	}
-	
+
 	@Override
 	public void debitAccount(Customer customer, BigDecimal amountChange) {
 		Query query = sessionFactory
@@ -89,9 +89,9 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 	query.setParameter("amountChange", amountChange);
 	query.setParameter("id", customer.getId());
 	int result = query.executeUpdate();
-		
+
 	}
-	
+
 	@Override
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -108,7 +108,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		searchString = searchString.trim().replace("'", "''");  //trim and escape apostrophe
 		int index = searchString.indexOf(",");
 		Query query = null;
-		//No comma 
+		//No comma
 		if(index == -1) {
 			query = sessionFactory
 				.getCurrentSession()
@@ -130,11 +130,11 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 				.getCurrentSession()
 				.createQuery("select new Customer(c.id, c.firstName, c.lastName, c.address.postcode) from Customer c " +
 					"where c.lastName = '" + surname + "' and c.firstName like '" + firstName + "%'");
-			
-		}		
+
+		}
 		return query.list();
 	}
-	
+
 	@Override
 	public Customer getMinimal(Long id) {
 		Query query = sessionFactory
@@ -157,7 +157,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 				"creditCard.expiryMonth = :expiryMonth, " +
 				"creditCard.expiryYear = :expiryYear " +
 				"where id = :id");
-			
+
 		query.setParameter("creditCard1", creditCard.getCreditCard1());
 		query.setParameter("creditCard2", creditCard.getCreditCard2());
 		query.setParameter("creditCard3", creditCard.getCreditCard3());
@@ -165,7 +165,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		query.setParameter("expiryMonth", creditCard.getExpiryMonth());
 		query.setParameter("expiryYear", creditCard.getExpiryYear());
 		query.setParameter("id", customer.getId());
-		
+
 		query.executeUpdate();
 	}
 
@@ -175,16 +175,16 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 				.getCurrentSession()
 				.createQuery("update Customer " +
 				"set bookmarksAccount.currentBalance = :currentBalance, " +
-				"bookmarksAccount.openingBalance = :openingBalance, " + 
-				"bookmarksAccount.accountHolder = true " + 
+				"bookmarksAccount.openingBalance = :openingBalance, " +
+				"bookmarksAccount.accountHolder = true " +
 				"where id = :id");
-			
+
 		query.setParameter("currentBalance", customer.getBookmarksAccount().getCurrentBalance());
 		query.setParameter("openingBalance", customer.getBookmarksAccount().getOpeningBalance());
 		query.setParameter("id", customer.getId());
-		
+
 		query.executeUpdate();
-		
+
 	}
 
 	@Override
@@ -207,11 +207,11 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 				.createQuery("update Customer " +
 				"set email = :email " +
 				"where id = :id");
-			
+
 		query.setParameter("email", customer.getContactDetails().getEmail());
 		query.setParameter("id", customer.getId());
-		
+
 		query.executeUpdate();
-		
+
 	}
 }
