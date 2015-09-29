@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"Stock",
+				"StockTakeComparator"
+			],
+			[
 				"stockI",
 				"stockItemId"
 			],
@@ -48,14 +52,22 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
 				"buffer_size": 10122,
+=======
+			"file": "src/main/java/org/bookmarks/controller/StockTakeLineController.java",
+			"settings":
+			{
+				"buffer_size": 10753,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 			"file": "src/main/webapp/resources/ckeditor/config.js",
 			"settings":
 			{
@@ -147,10 +159,17 @@
 			{
 				"buffer_size": 20509,
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+			"file": "src/main/java/org/bookmarks/ui/comparator/StockTakeComparator.java",
+			"settings":
+			{
+				"buffer_size": 408,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/service/SaleOrReturnServiceImpl.java",
 <<<<<<< HEAD
 			"settings":
@@ -181,6 +200,20 @@
 				"line_ending": "Unix"
 =======
 				"buffer_size": 4012,
+=======
+			"file": "src/main/java/org/bookmarks/domain/StockTakeLine.java",
+			"settings":
+			{
+				"buffer_size": 2152,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/domain/AbstractEntity.java",
+			"settings":
+			{
+				"buffer_size": 1816,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 				"line_ending": "Windows"
 >>>>>>> 63be499... Added calculate price back in
 =======
@@ -220,12 +253,19 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 =======
 =======
 =======
 =======
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/stockItem/editStock.jsp",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/SaleOrReturnController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/SaleOrReturnServiceImpl.java",
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/saleOrReturn/searchSaleOrReturns.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchInvoiceDecorator.java",
 		"/home/git/bookmarks/pom.xml",
@@ -262,7 +302,6 @@
 		"/home/git/bookmarks/src/main/resources/logback.xml",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/ChipsServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EmailServiceImpl.java",
-		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 		"/home/git/bookmarks/src/main/resources/META-INF/persistence.xml",
@@ -327,12 +366,21 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 			"edit",
 			"delete",
 >>>>>>> 63be499... Added calculate price back in
 =======
+=======
+			"stockTakeComparator",
+			"	\n",
+			"stockTakeComparator",
+			"fillStockTakeLineModel",
+			"stockTakeComparator",
+			"lookUpFromAZ",
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 			"edit",
 			"delete",
 >>>>>>> db9ff92... Adding getReview to edit screen
@@ -374,6 +422,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"getImage",
 			"col-sm-4",
 			"prepare",
 			"",
@@ -390,11 +439,12 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -474,14 +524,20 @@
 					{
 						"buffer_size": 20509,
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+					"file": "src/main/java/org/bookmarks/controller/StockTakeLineController.java",
+					"settings":
+					{
+						"buffer_size": 10753,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18802,
-								18802
+								10515,
+								10515
 							]
 						],
 						"settings":
@@ -566,9 +622,14 @@
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
+<<<<<<< HEAD
 						"translation.x": 4.0,
 						"translation.y": 7438.0,
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+						"translation.x": 0.0,
+						"translation.y": 4651.0,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -616,9 +677,36 @@
 >>>>>>> 449d36f... Finisihing
 =======
 					"buffer": 1,
-					"file": "src/main/java/org/bookmarks/service/SaleOrReturnServiceImpl.java",
+					"file": "src/main/java/org/bookmarks/ui/comparator/StockTakeComparator.java",
 					"settings":
 					{
+						"buffer_size": 408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/main/java/org/bookmarks/domain/StockTakeLine.java",
+					"settings":
+					{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 						"buffer_size": 39657,
@@ -700,6 +788,9 @@
 					"settings":
 					{
 						"buffer_size": 9791,
+=======
+						"buffer_size": 2152,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 						"regions":
 						{
 							"match":
@@ -886,6 +977,7 @@
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								564,
 								564
 =======
@@ -929,6 +1021,10 @@
 							[
 								495,
 								495
+=======
+								1062,
+								1062
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 							]
 						],
 						"settings":
@@ -937,12 +1033,43 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
+<<<<<<< HEAD
 						"translation.y": 0.0,
 =======
 >>>>>>> 449d36f... Finisihing
 =======
 						"translation.y": 1080.0,
 >>>>>>> 63be499... Added calculate price back in
+=======
+						"translation.y": 359.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/main/java/org/bookmarks/domain/AbstractEntity.java",
+					"settings":
+					{
+						"buffer_size": 1816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								682,
+								682
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 153.0,
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1000,11 +1127,38 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
 =======
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+				"abst",
+				"main/java/org/bookmarks/domain/AbstractEntity.java"
+			],
+			[
+				"stocktake",
+				"main/java/org/bookmarks/domain/StockTakeLine.java"
+			],
+			[
+				"stocktakecom",
+				"main/java/org/bookmarks/ui/comparator/StockTakeComparator.java"
+			],
+			[
+				"stocktakecon",
+				"main/java/org/bookmarks/controller/StockTakeLineController.java"
+			],
+			[
+				"sic",
+				"main/java/org/bookmarks/controller/StockItemController.java"
+			],
+			[
+				"edit",
+				"main/webapp/WEB-INF/jsp/stockItem/editStock.jsp"
+			],
+			[
+>>>>>>> 9668c83... attempt to fix stockitemcomparator
 				"searchinvoi",
 				"main/java/org/bookmarks/ui/SearchInvoiceDecorator.java"
 			],
@@ -1153,10 +1307,6 @@
 			[
 				"pers",
 				"main/resources/META-INF/persistence.xml"
-			],
-			[
-				"sic",
-				"main/java/org/bookmarks/controller/StockItemController.java"
 			],
 			[
 				"stocic",

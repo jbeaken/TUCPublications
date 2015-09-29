@@ -32,9 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value="/stockTakeLine")
 public class StockTakeLineController extends AbstractBookmarksController {
-	
-	private StockTakeComparator stockTakeComparator;
-	
+		
 	@Autowired
 	private StockTakeLineService stockTakeLineService;
 	
@@ -88,13 +86,9 @@ public class StockTakeLineController extends AbstractBookmarksController {
 		return "searchStockTakeItems";
 	}		
 	/**
-	 * Used from addStockTakeLine.jsp
-	 * 
-	 * @param stockItemSearchBean
-	 * @param request
-	 * @param modelMap
-	 * @param session
-	 * @return
+	 *
+	 * From addStockTakeLine.jsp
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/save", method=RequestMethod.POST)
@@ -146,8 +140,11 @@ public class StockTakeLineController extends AbstractBookmarksController {
 		//Is this a new stock record or an update?
 		StockTakeLine stockTakeLine = stockTakeLineService.getByStockItemId(stockItem.getId());
 		if(stockTakeLine == null) {
+			//New
 			stockTakeLine = new StockTakeLine(stockItem);
 		} else {
+			//Has previous record, sync creation date as this is used to sort list for display
+			//using stockTakeComparator
 			stockTakeLine.setQuantity(stockTakeLine.getQuantity() + 1);
 			stockTakeLine.setCreationDate(new Date());
 		}
@@ -299,7 +296,7 @@ public class StockTakeLineController extends AbstractBookmarksController {
 
 //		int start = list.size() > 20 ? list.size() - 4 : 0;
 //		list = list.subList(start, list.size());
-
+		StockTakeComparator stockTakeComparator = new StockTakeComparator();
 		Collections.sort(list, stockTakeComparator);
 		
 		modelMap.addAttribute(list);
