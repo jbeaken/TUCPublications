@@ -217,14 +217,20 @@ public class AZLookupServiceImpl implements AZLookupService {
 		//http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=9780198229773&rh=n%3A266239%2Ck%3A9780198229773
 		String url = "http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=" + isbn;
 		logger.debug("Search Url : " + url);
+
 		Document doc = Jsoup.connect(url)
-			.data("query", "Java")
-			.userAgent("Mozilla")
+			.data("query", "Java") 
+			.data("Cache-Control", "max-age=0") 
+			.data("Accept-Language", "en-GB,en;q=0.5") 
+
+			
+			.data("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+			.userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0")
 			.cookie("auth", "token")
 			.timeout(12000)
 			.post();
 
-
+		
 		Element element = doc.select("h1#noResultsTitle").first();
 		if(element != null) {
 			//There is a no results message so skip this isbn
@@ -237,21 +243,25 @@ public class AZLookupServiceImpl implements AZLookupService {
 	}
 
 	private Document getDrilldownPageDocument(Document doc) throws IOException {
-
+		logger.debug(doc.html());
 		Elements elements = doc.select(".newaps");
 
 		//Drill down for more details
 		String drilldownUrl = elements.select("a[href]").attr("href");
 
 		if(drilldownUrl.isEmpty()) {
-			logger.info("Cannot find drilldown using .newapps, attempting with a-link-normal");
+			logger.debug("Cannot find drilldown using .newapps, attempting with a-link-normal");
 			//2nd look
-			elements = doc.select("a.a-link-normal.s-access-detail-page.a-text-normal");
+			//<a class="a-link-normal s-access-detail-page  a-text-normal"
+
+			elements = doc.select(".s-access-detail-page");
+			logger.debug("Elements size : " + elements.size());
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
 
 		}
+
 		if(drilldownUrl.isEmpty()) {
-			logger.info("Cannot find drilldown using a-link-normal, attempting with a.s-access-detail-page");
+			logger.debug("Cannot find drilldown using a-link-normal, attempting with a.s-access-detail-page");
 			//3nd look
 			elements = doc.select("a.s-access-detail-page");
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
@@ -264,8 +274,11 @@ public class AZLookupServiceImpl implements AZLookupService {
 		}
 		logger.debug("Drilldown : " + drilldownUrl);
 		doc = Jsoup.connect(drilldownUrl)
-			.data("query", "Java")
-			.userAgent("Mozilla")
+			.data("query", "Java") 
+			.data("Cache-Control", "max-age=0") 
+			.data("Accept-Language", "en-GB,en;q=0.5") 
+			.data("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+			.userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0")
 			.cookie("auth", "token")
 			.timeout(8000)
 			.post();
