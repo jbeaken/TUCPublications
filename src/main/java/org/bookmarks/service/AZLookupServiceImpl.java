@@ -244,11 +244,19 @@ public class AZLookupServiceImpl implements AZLookupService {
 		String drilldownUrl = elements.select("a[href]").attr("href");
 
 		if(drilldownUrl.isEmpty()) {
+			logger.info("Cannot find drilldown using .newapps, attempting with a-link-normal");
 			//2nd look
-			elements = doc.select("a.s-access-detail-page");
+			elements = doc.select("a.a-link-normal.s-access-detail-page.a-text-normal");
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
 
 		}
+		if(drilldownUrl.isEmpty()) {
+			logger.info("Cannot find drilldown using a-link-normal, attempting with a.s-access-detail-page");
+			//3nd look
+			elements = doc.select("a.s-access-detail-page");
+			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
+
+		}		
 		if(drilldownUrl.isEmpty()) throw new BookmarksException("Cannot get drill down page");
 
 		if(drilldownUrl.indexOf("http://www.amazon.co.uk") == -1) {
@@ -847,9 +855,11 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 	}
 
 	private String getImageUrlFromDocument(Document doc) {
+		
 		String imageUrl = null;
 
 		Elements elements = doc.select("img.productImage");
+
 		if(!elements.isEmpty()) {
 			imageUrl = elements.first().attr("src");
 		} else {
