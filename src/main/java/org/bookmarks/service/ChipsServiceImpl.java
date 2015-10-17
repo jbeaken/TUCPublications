@@ -164,8 +164,13 @@ public class ChipsServiceImpl implements ChipsService {
 		try {
 			JSch jsch = new JSch();
 
+<<<<<<< HEAD
 			String knownHostsFilename = "/home/hal/.ssh/known_hosts";
 			jsch.setKnownHosts( knownHostsFilename );
+=======
+			String knownHostsFilename = "/root/.ssh/known_hosts";
+			jsch.setKnownHosts(knownHostsFilename);
+>>>>>>> f35c91c... Chaning location of known hosts
 
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
 			// non-interactive version. Relies in host key being in known-hosts file
