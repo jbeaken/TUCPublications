@@ -99,6 +99,7 @@
 			}
 		},
 		{
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/service/EventServiceImpl.java",
 			"settings":
 			{
@@ -160,6 +161,17 @@
 				"buffer_size": 20509,
 >>>>>>> db9ff92... Adding getReview to edit screen
 =======
+=======
+			"contents": "<h1>Dundee Public Meeting</h1><div>\n<a class=\"a_red\" href=\"javascript:getNearbyEvents(56.4623043,-2.9749233)\">See More Meetings Nearby</a>\n</div>\n<div id=\"bodyContent\"><hr>This branch does not have any upcoming events yet, please check back soon or click the link above to see meetings nearby.</div>",
+			"settings":
+			{
+				"buffer_size": 299,
+				"line_ending": "Unix",
+				"name": "<h1>Dundee Public Meeting</h1><div>"
+			}
+		},
+		{
+>>>>>>> c3a1db8... Adding JCE Policy
 			"file": "src/main/java/org/bookmarks/ui/comparator/StockTakeComparator.java",
 			"settings":
 			{
@@ -439,7 +451,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -677,6 +689,32 @@
 >>>>>>> 449d36f... Finisihing
 =======
 					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								146,
+								146
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<h1>Dundee Public Meeting</h1><div>",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"file": "src/main/java/org/bookmarks/ui/comparator/StockTakeComparator.java",
 					"settings":
 					{
@@ -702,7 +740,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "src/main/java/org/bookmarks/domain/StockTakeLine.java",
 					"settings":
 					{
@@ -1047,7 +1085,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "src/main/java/org/bookmarks/domain/AbstractEntity.java",
 					"settings":
 					{
