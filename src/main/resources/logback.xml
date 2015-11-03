@@ -7,7 +7,7 @@
                         </pattern>
                 </encoder>
         </appender>
-        
+
         <appender name="FILE"
                 class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>/home/bookmarks/log/bookmarks.log</file>
@@ -28,17 +28,30 @@
                         <MaxFileSize>200MB</MaxFileSize>
                 </triggeringPolicy>
         </appender>
+<<<<<<< HEAD
         
 		<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
         <logger name="org.hibernate.type" level="INFO" /> 
+=======
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
+        <logger name="org.hibernate.type" level="INFO" />
+
+>>>>>>> aa4a49e... Added spring security
         <logger name="org.hibernate" level="INFO" />
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="DEBUG" />
         <logger name="org.bookmarks.controller.AuthorController" level="DEBUG" />
         <logger name="org.springframework" level="INFO" />
+        <logger name="org.springframework.security" level="DEBUG" />
 
+<<<<<<< HEAD
+=======
+        <logger name="org.apache.http" level="INFO" />
+
+>>>>>>> aa4a49e... Added spring security
         <root level="INFO">
                 <appender-ref ref="STDOUT" />
                 <appender-ref ref="FILE" />
-        </root>     
+        </root>
 
 </configuration>
