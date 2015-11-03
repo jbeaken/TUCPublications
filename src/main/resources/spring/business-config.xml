@@ -41,6 +41,7 @@
 	            <!-- Use TLS to encrypt communication with SMTP server -->
 	            <prop key="mail.smtp.starttls.enable">true</prop>                    
 	        </props>
+<<<<<<< HEAD
 	    </property>    
 	</bean>	
 	
@@ -49,6 +50,16 @@
       <property name="velocityEngine" ref="velocityEngine"/>
    </bean>	
    
+=======
+	    </property>
+	</bean>
+
+	<bean id="emailService" class="org.bookmarks.service.EmailServiceImpl">
+      <property name="mailSender" ref="mailSender"/>
+      <property name="velocityEngine" ref="velocityEngine"/>
+   </bean>
+
+>>>>>>> 5e6452c... Clean up
    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
       <property name="velocityProperties">
          <value>
@@ -56,8 +67,43 @@
           class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
          </value>
       </property>
+<<<<<<< HEAD
    </bean>   
 	<!-- 
+=======
+   </bean>	
+
+	<!-- Encryption -->
+	<bean id="bcProvider" class="org.bouncycastle.jce.provider.BouncyCastleProvider" />
+
+	<bean id="beansEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="algorithm" value="${db.encrypt.algorithm}" />
+		<property name="password" value="${db.encrypt.password}" />
+		<property name="provider">
+			<ref bean="bcProvider" />
+		</property>
+	</bean>
+
+	<bean id="jsonEcryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="algorithm" value="${json.encrypt.algorithm}" />
+		<property name="password" value="${json.encrypt.password}" />
+		<property name="provider">
+			<ref bean="bcProvider" />
+		</property>
+	</bean>
+
+	<bean id="hibernateStringEncryptor" class="org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor">
+		<property name="registeredName">
+			<value>strongHibernateStringEncryptor</value>
+		</property>
+		<property name="encryptor">
+			<ref bean="beansEncryptor" />
+		</property>
+	</bean>
+
+
+	<!--
+>>>>>>> 5e6452c... Clean up
 	<jpa:repositories base-package="org.bookmarks.repository.data"/>
 	 -->
 
