@@ -17,8 +17,24 @@ import org.bookmarks.domain.StockItem;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class SaleReportBean extends ReportBean {
-	
+
 	private Category category;
+
+	private Sale sale;
+
+/* Can be books only, merchandies only etc */
+	private Integer status;
+
+	@NotNull
+	private SalesReportType salesReportType;
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
 	public Category getCategory() {
 		return category;
@@ -27,13 +43,11 @@ public class SaleReportBean extends ReportBean {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	private Sale sale;
+
 
 	public Sale getSale() {
 		return sale;
 	}
-	
-
 
 	public void setSale(Sale sale) {
 		this.sale = sale;
@@ -47,8 +61,6 @@ public class SaleReportBean extends ReportBean {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	@NotNull
-	private SalesReportType salesReportType;
 
 	public SalesReportType getSalesReportType() {
 		return salesReportType;
@@ -68,7 +80,7 @@ public class SaleReportBean extends ReportBean {
 		setSortOrder("1");
 //		setSortColumn("sum(s.quantity)");
 	}
-	
+
 	//Used by EventController to set sale list report for this event only
 	public SaleReportBean(Event event) {
 		this();

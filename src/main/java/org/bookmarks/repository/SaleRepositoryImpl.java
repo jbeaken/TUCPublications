@@ -99,6 +99,17 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 		if(saleSearchBean.getSale().getStockItem().getType() != null) {
 			queryBuilder.append(saleSearchBean.getSale().getStockItem().getType().toString(), "si.type");
 		}
+
+    if(saleSearchBean.getStatus() != null) {
+      switch( saleSearchBean.getStatus() ) {
+         case 1 :
+           	queryBuilder.appendExact("BOOK", "si.type");
+           break;
+        case 2 :
+          queryBuilder.appendNotEqual("'BOOK'", "si.type");
+          break;
+      }
+    }
 //		else {
 //			queryBuilder.appendIsNull("s.event.id");
 //		}

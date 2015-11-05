@@ -44,6 +44,17 @@ public class QueryBuilder {
 		}
 	}
 
+	public void appendNotEqual(String value, String property) {
+		value = value.trim();
+		if(value.isEmpty()) return;
+		if(whereAlreadyAppended) {
+			query.append(" and " + property + " != " + value);
+		} else {
+			query.append(" where " + property + " != " + value);
+			whereAlreadyAppended = true;
+		}
+	}
+
 	public void append(EventType type) {
 		if(type == null) return;
 		if(whereAlreadyAppended) {
