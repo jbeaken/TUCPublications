@@ -8,12 +8,7 @@
 	http://www.springframework.org/schema/beans
   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-    <http use-expressions="true" disable-url-rewriting="true">
-        <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
-        <form-login />
-        <logout />
-    </http>
-    
+
     <authentication-manager>
         <authentication-provider>
             <user-service>
@@ -21,5 +16,29 @@
             </user-service>
         </authentication-provider>
     </authentication-manager>
+
+		<beans:beans profile="dev">
+
+	    <http use-expressions="true" disable-url-rewriting="true">
+				<!--
+					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+				-->
+					<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
+	        <form-login />
+	        <logout />
+	    </http>
+		</beans:beans>
+
+		<beans:beans profile="prod">
+
+	    <http use-expressions="true" disable-url-rewriting="true">
+				<!--
+					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+				-->
+					<intercept-url pattern="/**" access="permitAll" requires-channel="https"/>
+	        <form-login />
+	        <logout />
+	    </http>
+		</beans:beans>
 
 </beans:beans>
