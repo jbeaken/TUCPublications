@@ -85,7 +85,7 @@
 		            			<form:options items="${stockItemTypeList}" itemLabel="displayName"/></form:select>
 				  </div>
 					<div class="column w-33-percent">
-							<form:label for="status" path="status" cssErrorClass="error">Stock Status</form:label><br/>
+							<form:label for="status" path="status" cssErrorClass="error">Books/Non-Books</form:label><br/>
 								<form:select id="statusSelect" path="status" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/saleReport/report')">
 			            			<form:option value="" label="All"/>
 												<form:option value="1" label="Books"/>
