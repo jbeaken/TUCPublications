@@ -104,6 +104,17 @@ public class QueryBuilder {
 		}
 	}
 
+	public void appendBooks(boolean notIn) {
+			String in = " in ";
+			if(notIn) in = " not in ";
+			if(whereAlreadyAppended) {
+				query.append(" and si.type" + in + "('BOOK', 'PAMPHLET')");
+			} else {
+				query.append(" where si.type" + in + "('BOOK', 'PAMPHLET')");
+				whereAlreadyAppended = true;
+			}
+	}
+
 	public void append(CustomerType customerType, String property) {
 		if(customerType != null) {
 			if(whereAlreadyAppended) {

@@ -1151,7 +1151,6 @@
 				<version>2.2</version>
 				<configuration>
 					<port>8080</port>
-					<httpsPort>8443</httpsPort>
 					<systemProperties>
 						<spring.profiles.active>dev</spring.profiles.active>
 					</systemProperties>
