@@ -220,6 +220,9 @@ public class SupplierReturnController extends OrderLineController {
 
 		supplierReturnService.create(supplierReturn);
 
+	  session.removeAttribute("supplierReturnLinesMap");
+		session.removeAttribute("supplierReturn");		
+
 		return "redirect:displaySearch";
 	}
 
