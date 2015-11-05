@@ -812,7 +812,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
-		</dependency>		
+		</dependency>
 
 		<!-- HIBERNATE -->
 		<dependency>
@@ -1151,6 +1151,7 @@
 				<version>2.2</version>
 				<configuration>
 					<port>8080</port>
+					<httpsPort>8443</httpsPort>
 					<systemProperties>
 						<spring.profiles.active>dev</spring.profiles.active>
 					</systemProperties>
