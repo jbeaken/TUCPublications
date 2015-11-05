@@ -108,9 +108,9 @@ public class QueryBuilder {
 			String in = " in ";
 			if(notIn) in = " not in ";
 			if(whereAlreadyAppended) {
-				query.append(" and si.type" + in + "('BOOK', 'PAMPHLET')");
+				query.append(" and si.type" + in + "('BOOK', 'PAMPHLET', 'NEWSPAPER')");
 			} else {
-				query.append(" where si.type" + in + "('BOOK', 'PAMPHLET')");
+				query.append(" where si.type" + in + "('BOOK', 'PAMPHLET', 'NEWSPAPER')");
 				whereAlreadyAppended = true;
 			}
 	}
