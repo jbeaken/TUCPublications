@@ -278,7 +278,7 @@ public class SupplierDeliveryController extends OrderLineController {
 		//Check for expired session
 		if(supplierDeliveryLinesMap == null) {
 			addError("This Supplier Delivery has already been completed", modelMap);
-			return "welome";
+			return "welcome";
 		}
 
 		Collection<SupplierDeliveryLine> supplierDeliveryLines = supplierDeliveryLinesMap.values();
