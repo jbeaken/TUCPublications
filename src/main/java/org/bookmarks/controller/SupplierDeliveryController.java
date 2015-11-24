@@ -275,6 +275,12 @@ public class SupplierDeliveryController extends OrderLineController {
 		Map<Long, SupplierDeliveryLine> supplierDeliveryLinesMap = (Map<Long, SupplierDeliveryLine>) session.getAttribute("supplierDeliveryLinesMap");
 		Collection<CustomerOrderLine> filledCustomerOrderLines = (Collection<CustomerOrderLine>) session.getAttribute("filledCustomerOrderLines");
 
+		//Check for expired session
+		if(supplierDeliveryLinesMap == null) {
+			addError("This Supplier Delivery has already been completed", modelMap);
+			return "welome";
+		}
+
 		Collection<SupplierDeliveryLine> supplierDeliveryLines = supplierDeliveryLinesMap.values();
 		Collection<CustomerOrderLine> filledCustomerOrderLinesToCollect = new ArrayList<CustomerOrderLine>();
 		Collection<CustomerOrderLine> filledCustomerOrderLinesForMailOrder = new ArrayList<CustomerOrderLine>();

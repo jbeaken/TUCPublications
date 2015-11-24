@@ -173,6 +173,12 @@ public class AZLookupServiceImpl implements AZLookupService {
 				if(text.contains("Ireland")) {
 					stockItem.setCategory(new Category(38l)) ;
 				}
+				if(text.contains("China")) {
+					stockItem.setCategory(new Category(86l)) ;
+				}			
+				if(text.contains("Middle East")) {
+					stockItem.setCategory(new Category(42l)) ;
+				}						
 				if(text.contains("Britain")) {
 					stockItem.setCategory(new Category(31l)) ;
 				}
@@ -725,34 +731,51 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 		String reviewAsHtml = null;
 		String reviewAsText = null;
 
+
+		//Check for presense of id=iframeContent
+		Elements iframeContentElements = doc.select("div#iframeContent");
+
+		if(iframeContentElements != null) {
+			Element iframeContent = iframeContentElements.first();
+			logger.debug("Have iframeContent as text = " + iframeContent.text());
+			logger.debug("Have iframeContent as html = " + iframeContent.html());
+			reviewAsText = iframeContent.text();
+			reviewAsHtml = "<p" + iframeContent.html() + "</p>";
+		}
+
+
+
 		try {
 
-		Elements productDescriptionElements = doc.select("div#productDescription");
+			Elements productDescriptionElements = doc.select("div#productDescription");
 
-		if(productDescriptionElements != null) {
+			if(productDescriptionElements != null) {
 
-			Element productDescription = productDescriptionElements.first();
+				Element productDescription = productDescriptionElements.first();
 
-			logger.debug(productDescription.html());
+				logger.debug(productDescription.html());
 
-			if(productDescription != null) {
-				reviewAsText = "";
+				if(productDescription != null) {
+					if(reviewAsText == null) reviewAsText = "";
+					if(reviewAsHtml == null) reviewAsHtml = "";
 
-				for(Element e : productDescription.select("p")) {
-					logger.debug(e.text());
-					reviewAsText = reviewAsText + e.text();
+					for(Element e : productDescription.select("p")) {
+						logger.debug(e.text());
+						logger.debug(e.html());
+						reviewAsText = reviewAsText + e.text();
+						reviewAsHtml =  "<p" + reviewAsHtml + e.html() + "</p>";
+					}
+
+					reviewAsText = java.net.URLDecoder.decode(reviewAsText, "UTF-8");
+
+			  		logger.debug("review : " + reviewAsText);
+
+			  		//reviewAsHtml = reviewAsText;
+					stockItem.setReviewAsText(reviewAsText);
+					stockItem.setReviewAsHTML(reviewAsHtml);
+					stockItem.setIsReviewOnAZ(true);
+					return;
 				}
-
-				reviewAsText = java.net.URLDecoder.decode(reviewAsText, "UTF-8");
-
-		  	logger.debug("review : " + reviewAsText);
-
-		  	reviewAsHtml = reviewAsText;
-				stockItem.setReviewAsText(reviewAsText);
-				stockItem.setReviewAsHTML(reviewAsHtml);
-				stockItem.setIsReviewOnAZ(true);
-				return;
-			}
 		} else {
 			logger.debug("Cannot get review from lookup 1 : Cannot find elements div#productDescription");
 		}
