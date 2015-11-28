@@ -175,10 +175,10 @@ public class AZLookupServiceImpl implements AZLookupService {
 				}
 				if(text.contains("China")) {
 					stockItem.setCategory(new Category(86l)) ;
-				}			
+				}
 				if(text.contains("Middle East")) {
 					stockItem.setCategory(new Category(42l)) ;
-				}						
+				}
 				if(text.contains("Britain")) {
 					stockItem.setCategory(new Category(31l)) ;
 				}
@@ -225,18 +225,18 @@ public class AZLookupServiceImpl implements AZLookupService {
 		logger.debug("Search Url : " + url);
 
 		Document doc = Jsoup.connect(url)
-			.data("query", "Java") 
-			.data("Cache-Control", "max-age=0") 
-			.data("Accept-Language", "en-GB,en;q=0.5") 
+			.data("query", "Java")
+			.data("Cache-Control", "max-age=0")
+			.data("Accept-Language", "en-GB,en;q=0.5")
 
-			
+
 			.data("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 			.userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0")
 			.cookie("auth", "token")
 			.timeout(12000)
 			.post();
 
-		
+
 		Element element = doc.select("h1#noResultsTitle").first();
 		if(element != null) {
 			//There is a no results message so skip this isbn
@@ -272,7 +272,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 			elements = doc.select("a.s-access-detail-page");
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
 
-		}		
+		}
 		if(drilldownUrl.isEmpty()) throw new BookmarksException("Cannot get drill down page");
 
 		if(drilldownUrl.indexOf("http://www.amazon.co.uk") == -1) {
@@ -280,9 +280,9 @@ public class AZLookupServiceImpl implements AZLookupService {
 		}
 		logger.debug("Drilldown : " + drilldownUrl);
 		doc = Jsoup.connect(drilldownUrl)
-			.data("query", "Java") 
-			.data("Cache-Control", "max-age=0") 
-			.data("Accept-Language", "en-GB,en;q=0.5") 
+			.data("query", "Java")
+			.data("Cache-Control", "max-age=0")
+			.data("Accept-Language", "en-GB,en;q=0.5")
 			.data("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
 			.userAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:41.0) Gecko/20100101 Firefox/41.0")
 			.cookie("auth", "token")
@@ -737,10 +737,14 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 
 		if(iframeContentElements != null) {
 			Element iframeContent = iframeContentElements.first();
-			logger.debug("Have iframeContent as text = " + iframeContent.text());
-			logger.debug("Have iframeContent as html = " + iframeContent.html());
-			reviewAsText = iframeContent.text();
-			reviewAsHtml = "<p" + iframeContent.html() + "</p>";
+			if(iframeContent != null) {
+				logger.debug("Have iframeContent as text = " + iframeContent.text());
+				logger.debug("Have iframeContent as html = " + iframeContent.html());
+				reviewAsText = iframeContent.text();
+				reviewAsHtml = "<p" + iframeContent.html() + "</p>";
+			} else {
+					logger.debug("iframeContent is null!");
+			}
 		}
 
 
@@ -891,7 +895,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 	}
 
 	private String getImageUrlFromDocument(Document doc) {
-		
+
 		String imageUrl = null;
 
 		Elements elements = doc.select("img.productImage");
