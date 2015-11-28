@@ -42,7 +42,7 @@
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="DEBUG" />
         <logger name="org.bookmarks.controller.AuthorController" level="DEBUG" />
         <logger name="org.springframework" level="INFO" />
-        <logger name="org.springframework.security" level="DEBUG" />
+        <logger name="org.springframework.security" level="INFO" />
 
 <<<<<<< HEAD
 =======
