@@ -767,7 +767,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 						logger.debug(e.text());
 						logger.debug(e.html());
 						reviewAsText = reviewAsText + e.text();
-						reviewAsHtml =  "<p" + reviewAsHtml + e.html() + "</p>";
+						reviewAsHtml =  "<p>" + reviewAsHtml + e.html() + "</p>";
 					}
 
 					reviewAsText = java.net.URLDecoder.decode(reviewAsText, "UTF-8");
