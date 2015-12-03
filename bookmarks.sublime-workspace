@@ -280,8 +280,36 @@
 			"file": "src/main/resources/spring/application.dev.properties",
 			"settings":
 			{
+<<<<<<< HEAD
 				"buffer_size": 559,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+				"buffer_size": 564,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
+			"settings":
+			{
+				"buffer_size": 26348,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/website/domain/ReadingListStockItem.java",
+			"settings":
+			{
+				"buffer_size": 867,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/domain/ReadingList.java",
+			"settings":
+			{
+				"buffer_size": 1477,
+>>>>>>> 6537b95... Removed review from manage bouncies screen
 				"line_ending": "Windows"
 >>>>>>> db9ff92... Adding getReview to edit screen
 			}
@@ -531,7 +559,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1222,15 +1250,15 @@
 					"file": "src/main/resources/spring/application.dev.properties",
 					"settings":
 					{
-						"buffer_size": 559,
+						"buffer_size": 564,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								164,
-								164
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1240,6 +1268,87 @@
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 >>>>>>> 7fbef06... Adding expired session check!
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
+					"settings":
+					{
+						"buffer_size": 26348,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11546,
+								11546
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4515.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/main/java/org/bookmarks/website/domain/ReadingListStockItem.java",
+					"settings":
+					{
+						"buffer_size": 867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								144,
+								144
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/main/java/org/bookmarks/domain/ReadingList.java",
+					"settings":
+					{
+						"buffer_size": 1477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								55,
+								55
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1300,6 +1409,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1308,6 +1418,20 @@
 =======
 =======
 =======
+=======
+				"readinglist.java",
+				"main/java/org/bookmarks/domain/ReadingList.java"
+			],
+			[
+				"readingliststo",
+				"main/java/org/bookmarks/website/domain/ReadingListStockItem.java"
+			],
+			[
+				"supplierde",
+				"main/java/org/bookmarks/controller/SupplierDeliveryController.java"
+			],
+			[
+>>>>>>> 6537b95... Removed review from manage bouncies screen
 				"azloo",
 				"main/java/org/bookmarks/service/AZLookupServiceImpl.java"
 			],
@@ -1503,10 +1627,6 @@
 			[
 				"gdc",
 				"main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java"
-			],
-			[
-				"supplierde",
-				"main/java/org/bookmarks/controller/SupplierDeliveryController.java"
 			],
 			[
 				"eventservim",

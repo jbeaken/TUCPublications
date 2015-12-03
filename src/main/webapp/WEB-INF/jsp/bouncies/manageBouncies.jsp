@@ -38,7 +38,6 @@
 					  <display:column property="id" title="ID"/>
 					  <display:column property="isbn" title="ISBN"/>
 					  <display:column property="title" title="Title"/>
-					  <display:column property="reviewAsHTML" title="Review"/>
 					  <display:column title="Actions" media="html">
 					  	<div class="btn-group">
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">

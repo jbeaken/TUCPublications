@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
  * @author hal
  *
  */
-@Entity
+//@Entity
 public class ReadingListStockItem extends AbstractEntity {
 
 	@ManyToOne
