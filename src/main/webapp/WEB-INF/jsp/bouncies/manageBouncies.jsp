@@ -29,7 +29,7 @@
 			   id="searchTable">		
 					  <display:column title="Image">
 					    <c:if test="${searchTable.imageURL != null}">
-					      <img src="${searchTable.imageURL}" style="max-width : 50%"/>
+					      <img src="${searchTable.imageURL}" style="max-width : 35%"/>
 					    </c:if>
 					    <c:if test="${searchTable.imageURL == null}">
 					      No Image
