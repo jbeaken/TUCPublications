@@ -178,7 +178,7 @@ public class ChipsServiceImpl implements ChipsService {
 			// SFTP up original file
 		//	InputStream in = FileUtils.openInputStream(file);
 
-			sftpChannel.put(in, "/images/abrochure.pdf", ChannelSftp.OVERWRITE);
+			sftpChannel.put(in, "/images/brochure.pdf", ChannelSftp.OVERWRITE);
 
 			sftpChannel.exit();
 		} catch (Exception e) {
