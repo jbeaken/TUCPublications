@@ -97,6 +97,11 @@
       <put-attribute name="body" value="/WEB-INF/jsp/bouncies/manageBouncies.jsp"/>
   </definition>
 
+  <definition name="displayUploadBrochure" extends="baseLayout">
+      <put-attribute name="title" value="Upload Image"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/brochure/upload.jsp"/>
+  </definition>
+
   <definition name="displayUploadStockItemImage" extends="baseLayout">
       <put-attribute name="title" value="Upload Image"/>
       <put-attribute name="body" value="/WEB-INF/jsp/stockItem/displayUploadStockItemImage.jsp"/>

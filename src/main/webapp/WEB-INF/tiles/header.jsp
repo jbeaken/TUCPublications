@@ -77,6 +77,7 @@
 			<li><a href="<c:url value="/chips/getOrders" />" title="Get Chips Orders"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Send Email Report"/>Get Chips Orders</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateChips")' title="Update Chips"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Chips"/>Update Chips</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateEvents")' title="Update Events"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Events"/>Update Events</a></li>
+			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/uploadBrochure")' title="Upload Brochure"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Brochure"/>Upload Brochure</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateReadingLists")' title="Update Reading Lists"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Reading Lists"/>Update Reading Lists</a></li>
 		</ul>
 	</li>

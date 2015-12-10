@@ -13,6 +13,8 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
 import java.io.IOException;
+import java.io.File;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 public interface ChipsService {
@@ -22,6 +24,8 @@ public interface ChipsService {
 	void putOnWebsite(Long id);
 
 	List<Customer> getOrders() throws ClientProtocolException, IOException;
+
+ void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException;
 
 	void removeConsumedCustomers() throws ClientProtocolException, IOException;
 

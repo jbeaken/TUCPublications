@@ -21,31 +21,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/chips")
 public class ChipsController extends AbstractBookmarksController {
-	
+
 	@Value("#{ applicationProperties['chipsUrl'] }")
 	private String chipsUrl;
-	
+
  	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Autowired
 	private StockItemRepository stockItemRepository;
-	
+
 	@Autowired
-	private StockItemService stockItemService;	
-	
+	private StockItemService stockItemService;
+
 	@Autowired
-	private ChipsService chipsService;	
-	
+	private ChipsService chipsService;
+
 	@Autowired
 	private CustomerOrderService customerOrderService;
-	
+
 	 final static Logger logger = LoggerFactory.getLogger(ChipsController.class);
-	 
+
 	@RequestMapping(value="/updateChips", method=RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {
 		try {
@@ -57,8 +58,8 @@ public class ChipsController extends AbstractBookmarksController {
 		addSuccess("Have updated chips", modelMap);
 		return "welcome";
 	}
-	
-	 
+
+
 	@RequestMapping(value="/updateEvents", method=RequestMethod.GET)
 	public String updateEvents(HttpSession session, ModelMap modelMap) {
 		try {
@@ -70,8 +71,8 @@ public class ChipsController extends AbstractBookmarksController {
 		}
 		addSuccess("Have updated events", modelMap);
 		return "welcome";
-	}		
-	
+	}
+
 	@RequestMapping(value="/updateReadingLists", method=RequestMethod.GET)
 	public String updateReadingLists(HttpSession session, ModelMap modelMap) {
 		try {
@@ -82,7 +83,7 @@ public class ChipsController extends AbstractBookmarksController {
 		}
 		addSuccess("Have updated reading lists", modelMap);
 		return "welcome";
-	}		
+	}
 	/*
 	@RequestMapping(value="/evictAll", method=RequestMethod.GET)
 	public String evictAll(HttpSession session, ModelMap modelMap) {
@@ -94,30 +95,73 @@ public class ChipsController extends AbstractBookmarksController {
 		}
 		addSuccess("Have reset beans", modelMap);
 		return "welcome";
-	}	
+	}
 	*/
-	
+
+	@RequestMapping(value="/uploadBrochure", method=RequestMethod.GET)
+	public String uploadBrochure(Long id, HttpSession session, ModelMap modelMap) {
+		modelMap.addAttribute( new StockItem() );
+		return "displayUploadBrochure";
+	}
+
+	@RequestMapping(value="/uploadBrochure", method=RequestMethod.POST)
+	public String uploadBrochure(	StockItem stockItem, HttpSession session, ModelMap modelMap) {
+
+		MultipartFile file = stockItem.getFile();
+		String fileName = file.getOriginalFilename();
+		Long fileSize = file.getSize();
+//		String extension = ".jpg";
+//		if(fileName.indexOf(".gif") != -1) extension = ".gif";
+//		if(fileName.indexOf(".png") != -1) extension = ".png";
+
+		if(fileName.indexOf(".pdf") == -1 && fileName.indexOf(".jpeg") == -1) {
+			addError("Can only upload pdfs", modelMap);
+			modelMap.addAttribute(stockItem);
+			return "displayUploadBrochure";
+		}
+
+
+
+		if(fileSize < 50000) {
+			addError("File too small!", modelMap);
+			modelMap.addAttribute(stockItem);
+			return "displayUploadBrochure";
+		}
+
+		try {
+			chipsService.uploadBrochure(file.getInputStream());
+		} catch (Exception e) {
+			logger.error("Cannot upload brochure", e);
+			addError("Cannot upload brochure!! " + e.getMessage(), modelMap);
+			modelMap.addAttribute(stockItem);
+			return "displayUploadBrochure";
+		}
+
+		addSuccess("Have successfully uploaded brochure ", modelMap);
+		return "welcome";
+	}
+
 	@RequestMapping(value="/removeFromWebsite", method=RequestMethod.GET)
 	public String removeFromWebsite(Long id, HttpSession session, ModelMap modelMap) {
 		chipsService.removeFromWebsite(id);
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";
-	}	
-	
+	}
+
 	@RequestMapping(value="/putOnWebsite", method=RequestMethod.GET)
 	public String putOnWebsite(Long id, HttpSession session, ModelMap modelMap) {
 		chipsService.putOnWebsite(id);
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";
-	}	
-		
+	}
+
 	@RequestMapping(value="/syncStockItemWithChips", method=RequestMethod.GET)
 	public String syncStockItemWithChips(Long id, ModelMap modelMap)  {
-		
+
 		StockItem stockItem = stockItemService.get(id);
-		
+
 		try {
-			chipsService.syncStockItemWithChips(stockItem); 
+			chipsService.syncStockItemWithChips(stockItem);
 			if(stockItem.getPutOnWebsite()) {
 				addSuccess("Successfully updated " + stockItem.getTitle(), modelMap);
 			} else addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
@@ -125,17 +169,17 @@ public class ChipsController extends AbstractBookmarksController {
 			e.printStackTrace();
 			addError("Cannot sync with chips! " + e.getMessage(), modelMap);
 		}
-	
+
 		return "welcome";
 	}
-	
+
 	@RequestMapping(value="/buildIndex", method=RequestMethod.GET)
 	public String buildIndex(ModelMap modelMap)  {
-		
+
 		long start = System.currentTimeMillis();
-		
+
 		logger.info("Building index on chips");
-		
+
 		try {
 			chipsService.buildIndex();
 			long end = System.currentTimeMillis();
@@ -146,10 +190,10 @@ public class ChipsController extends AbstractBookmarksController {
 			e.printStackTrace();
 			addError("Error building Chips index " + e.getMessage(), modelMap);
 		}
-	
+
 		return "welcome";
-	}	
-	
+	}
+
 	@RequestMapping(value="/removeConsumedCustomers")
 	public String removeConsumedCustomers(ModelMap modelMap) {
 		try {
@@ -166,6 +210,10 @@ public class ChipsController extends AbstractBookmarksController {
 	public String getOrders(ModelMap modelMap) {
 
 		List<Customer> chipsCustomers;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 49e2612... Added upload brochure functionality
 		try {
 			chipsCustomers = chipsService.getOrders();
 		} catch (Exception e) {
@@ -174,6 +222,13 @@ public class ChipsController extends AbstractBookmarksController {
 			return "chipsTransferReport";
 		}
 
+<<<<<<< HEAD
+=======
+		if(chipsCustomers == null) {
+			return "chipsTransferReport";
+		}
+
+>>>>>>> 49e2612... Added upload brochure functionality
 		try {
 			customerOrderService.saveChipsOrders(chipsCustomers);
 		} catch (Exception e) {
@@ -181,11 +236,11 @@ public class ChipsController extends AbstractBookmarksController {
 			addError("Have got orders, but beans cannot process them :  " + e.getMessage(), modelMap);
 			return "chipsTransferReport";
 		}
-		
+
 		addSuccess("Have retrieved " + chipsCustomers.size() + " orders from chips" , modelMap);
-		
+
 		modelMap.addAttribute(chipsCustomers);
-		
+
 		return "chipsTransferReport";
 	}
 

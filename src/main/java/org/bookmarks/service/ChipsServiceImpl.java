@@ -150,7 +150,47 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	// @Override
+<<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
+=======
+	public void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException {
+
+		Session session = null;
+
+		try {
+			JSch jsch = new JSch();
+
+			String knownHostsFilename = "/root/.ssh/known_hosts";
+			jsch.setKnownHosts(knownHostsFilename);
+
+			session = jsch.getSession(sftpUsername, sftpHost, 2298);
+			// non-interactive version. Relies in host key being in known-hosts
+			// file
+			session.setPassword(sftpPassword);
+
+			session.connect();
+
+			Channel channel = session.openChannel("sftp");
+			channel.connect();
+
+			ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+			// SFTP up original file
+		//	InputStream in = FileUtils.openInputStream(file);
+
+			sftpChannel.put(in, "/images/abrochure.pdf", ChannelSftp.OVERWRITE);
+
+			sftpChannel.exit();
+		} catch (Exception e) {
+			logger.error("FTP error", e);
+		} finally {
+			if (session != null)
+				session.disconnect();
+		}
+	}
+
+	// @Override
+>>>>>>> 49e2612... Added upload brochure functionality
 	private void uploadImageToChips(StockItem stockItem) throws SftpException, JSchException, IOException {
 		
 		if(!isProduction()) {

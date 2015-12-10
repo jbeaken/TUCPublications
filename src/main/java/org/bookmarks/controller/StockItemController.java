@@ -104,7 +104,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 			return "displayUploadStockItemImage";
 		}
 
-		if(fileSize < 5000) {
+		if(fileSize < 1000) {
 			addError("File too small!", modelMap);
 			return "displayUploadStockItemImage";
 		}
