@@ -452,10 +452,13 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String displayEdit(Long id, String flow, ModelMap modelMap) {
+
 		Customer customer = customerService.get(id);
+
 		modelMap.addAttribute(customer);
 		modelMap.addAttribute("flow", flow);
 		modelMap.addAttribute(CustomerType.values());
+		
 		return "editCustomer";
 	}
 

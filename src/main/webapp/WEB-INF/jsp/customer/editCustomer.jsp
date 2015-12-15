@@ -9,19 +9,15 @@
 			<form:hidden path="bookmarksAccount.openingBalance"/>
 			<form:hidden path="bookmarksAccount.currentBalance"/>
 <div class="rows">
-      <div class="row">
+        <div class="row">
           <div class="column w-33-percent">
-						<label>Customer To Keep</label><br/>
-						<form:input path="customerToKeepId" />
-					</div>
-					<div class="column w-33-percent">
-						<label>Customer To Keep</label><br/>
-						<form:input path="customerToDiscardId" />
-					</div>
-					<div class="column w-33-percent">
-						<form:label for="lastName" path="lastName" id="focus" cssErrorClass="error">Last name</form:label><br/>
-						<form:input path="lastName" />
-					</div>
+			<form:label	for="firstName" path="firstName" cssErrorClass="error">First Name</form:label><br/>
+			<form:input path="firstName" />
+	  	 </div>
+		  <div class="column w-33-percent">
+			          <form:label for="lastName" path="lastName" id="focus" cssErrorClass="error">Last name</form:label><br/>
+                      <form:input path="lastName" />
+	  	</div>
 		  <div class="column w-33-percent">
                                         <form:label for="contactDetails.email" path="contactDetails.email" cssErrorClass="error">Email</form:label><br/>
                                         <form:input path="contactDetails.email" /> <form:errors path="contactDetails.email" />
