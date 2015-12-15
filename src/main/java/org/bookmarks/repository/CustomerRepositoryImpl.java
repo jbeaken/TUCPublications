@@ -79,6 +79,39 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 
 	}
 
+  @Override
+  public void merge(Customer customerToKeep, Customer customerToDiscard) {
+    Query query = sessionFactory
+        .getCurrentSession()
+        .createSQLQuery("update customer_customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+
+    query.executeUpdate();
+
+    query = sessionFactory
+        .getCurrentSession()
+        .createSQLQuery("update SaleOrReturn set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+
+    query.executeUpdate();
+
+    query = sessionFactory
+        .getCurrentSession()
+        .createSQLQuery("update customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+
+    query.executeUpdate();
+
+    query = sessionFactory
+        .getCurrentSession()
+        .createSQLQuery("update invoice set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+
+    query.executeUpdate();
+
+    query = sessionFactory
+        .getCurrentSession()
+        .createSQLQuery("delete from customer where id = " + customerToDiscard.getId());
+
+    query.executeUpdate();
+  }
+
 	@Override
 	public void debitAccount(Customer customer, BigDecimal amountChange) {
 		Query query = sessionFactory

@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerServiceImpl extends AbstractService<Customer> implements CustomerService {
 
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
+
+
 	@Autowired
 	private CreditNoteService creditNoteService;
 
@@ -29,6 +29,11 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	@Override
 	public Repository<Customer> getRepository() {
 		return customerRepository;
+	}
+
+	@Override
+	public void merge(Customer customerToKeep, Customer customerToDiscard) {
+		customerRepository.merge(customerToKeep, customerToDiscard);
 	}
 
 
@@ -49,25 +54,25 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	@Override
 	public void debitAccount(CreditNote creditNote) {
 		creditNoteService.save(creditNote);
-		debitAccount(creditNote.getCustomer(), creditNote.getAmount());	
+		debitAccount(creditNote.getCustomer(), creditNote.getAmount());
 	}
-	
+
 	@Override
 	public void save(Customer customer) {
 		if(customer.getBookmarksAccount().getAccountHolder() == true) {
 			//Default to 0
 			customer.getBookmarksAccount().setCurrentBalance(new BigDecimal(0));
-		}	
+		}
 		super.save(customer);
-	}	
+	}
 	@Override
 	public void update(Customer customer) {
 		if(customer.getBookmarksAccount().getAccountHolder() == true && customer.getBookmarksAccount().getCurrentBalance() == null) {
 			//Default to 0
 			customer.getBookmarksAccount().setCurrentBalance(new BigDecimal(0));
-		}	
+		}
 		super.update(customer);
-	}	
+	}
 
 
 	@Override
@@ -85,13 +90,13 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	@Override
 	public void updateBookmarksAccountInfo(Customer customer) {
 		customerRepository.updateBookmarksAccountInfo(customer);
-		
+
 	}
 
 
 	@Override
 	public void updateEmail(Customer customer) {
 		customerRepository.updateEmail(customer);
-		
+
 	}
 }

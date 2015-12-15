@@ -25,4 +25,6 @@ public interface CustomerService extends Service<Customer>{
 
 	void updateEmail(Customer customer);
 
+	void merge(Customer customerToKeep, Customer customeroDiscard);
+
 }

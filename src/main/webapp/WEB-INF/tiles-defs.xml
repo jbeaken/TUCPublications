@@ -228,6 +228,16 @@
       <put-attribute name="body" value="/WEB-INF/jsp/reports/displayStockReports.jsp"/>
   </definition>
 
+  <definition name="mergeCustomer" extends="baseLayout">
+      <put-attribute name="title" value="Merge Customer"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/customer/mergeCustomer.jsp"/>
+  </definition>
+
+  <definition name="mergeCustomerConfirmation" extends="baseLayout">
+      <put-attribute name="title" value="Merge Customer"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/customer/mergeCustomerConfirmation.jsp"/>
+  </definition>
+
   <definition name="addCustomer" extends="baseLayout">
       <put-attribute name="title" value="Add Customer"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/addCustomer.jsp"/>

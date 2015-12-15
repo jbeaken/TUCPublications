@@ -30,6 +30,11 @@ import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
 import org.bookmarks.website.domain.Address;
+import org.bookmarks.controller.bean.CustomerMergeFormObject;
+
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -258,6 +263,64 @@ public class CustomerController extends AbstractBookmarksController {
 
 		return displaySearch(modelMap);
 	}
+
+	@RequestMapping(value="/merge", method=RequestMethod.GET)
+	public String merge(ModelMap modelMap) {
+
+		CustomerMergeFormObject customerMergeFormObject = new CustomerMergeFormObject();
+
+		modelMap.addAttribute(customerMergeFormObject);
+		addInfo("Please enter ids of customers to merge", modelMap);
+
+		return "mergeCustomer";
+	}
+
+
+		@RequestMapping(value="/merge", method=RequestMethod.POST)
+		@Transactional
+		public String merge(@Valid CustomerMergeFormObject customerMergeFormObject, BindingResult bindingResult, ModelMap modelMap) {
+
+			//Check for errors
+			if(bindingResult.hasErrors()){
+				return "mergeCustomer";
+			}
+
+			Customer customerToKeep = customerService.get( customerMergeFormObject.getCustomerToKeep().getId() );
+			Customer customerToDiscard = customerService.get( customerMergeFormObject.getCustomerToDiscard().getId() );
+
+			if(customerToKeep == null) {
+				bindingResult.rejectValue("customerToKeep", "error", "Customer to keep with id " + customerMergeFormObject.getCustomerToKeep().getId() + " does not exist!" );
+				modelMap.addAttribute(customerMergeFormObject);
+				return "mergeCustomer";
+			}
+			if(customerToDiscard == null) {
+				bindingResult.rejectValue("customerToDiscard", "error", "Customer to discard with id " + customerMergeFormObject.getCustomerToDiscard().getId() + " does not exist!" );
+				modelMap.addAttribute(customerMergeFormObject);
+				return "mergeCustomer";
+			}
+			modelMap.addAttribute("customerToDiscard", customerToDiscard);
+			modelMap.addAttribute("customerToKeep", customerToKeep);
+
+			if(!customerToKeep.getFullName().equals(customerToDiscard.getFullName())) {
+				addWarning("Customer names do not match! Are you sure??", modelMap);
+			}
+
+			return "mergeCustomerConfirmation";
+		}
+
+		@RequestMapping(value="/mergeConfirmed", method=RequestMethod.GET)
+		@Transactional
+		public String mergeConfirmed(Long customerToKeepId, Long customerToDiscardId, ModelMap modelMap, RedirectAttributes redirectAttributes) {
+
+			Customer customerToKeep = customerService.get( customerToKeepId );
+			Customer customerToDiscard = customerService.get( customerToDiscardId );
+
+			redirectAttributes.addFlashAttribute("info", "Have performed merge in a successful manner");
+
+			customerService.merge(customerToKeep, customerToDiscard);
+
+			return "redirect:/";
+		}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid Customer customer, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {

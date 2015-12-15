@@ -22,4 +22,6 @@ public interface CustomerRepository extends Repository<Customer>{
 	Customer getByEmail(String email);
 
 	void updateEmail(Customer customer);
+
+	void merge(Customer customerToKeep, Customer customerToDiscard);
 }
