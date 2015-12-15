@@ -8,11 +8,11 @@
       <div class="row">
           <div class="column w-33-percent">
 						<label>Customer To Keep</label><br/>
-						<form:input path="customerToKeep.id" />
+						<form:input path="customerToKeep.id" required="required" type="number"/>
 					</div>
 					<div class="column w-33-percent">
 						<label>Customer To Discard</label><br/>
-						<form:input path="customerToDiscard.id" />
+						<form:input path="customerToDiscard.id" required="required" type="number"/>
       </div>
 
       <div class="row">

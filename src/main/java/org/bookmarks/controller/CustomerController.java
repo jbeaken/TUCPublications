@@ -315,7 +315,7 @@ public class CustomerController extends AbstractBookmarksController {
 			Customer customerToKeep = customerService.get( customerToKeepId );
 			Customer customerToDiscard = customerService.get( customerToDiscardId );
 
-			redirectAttributes.addFlashAttribute("info", "Have performed merge in a successful manner");
+			redirectAttributes.addFlashAttribute("info", "Success! There can be only one");
 
 			customerService.merge(customerToKeep, customerToDiscard);
 
@@ -458,7 +458,7 @@ public class CustomerController extends AbstractBookmarksController {
 		modelMap.addAttribute(customer);
 		modelMap.addAttribute("flow", flow);
 		modelMap.addAttribute(CustomerType.values());
-		
+
 		return "editCustomer";
 	}
 
