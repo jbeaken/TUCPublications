@@ -298,6 +298,12 @@ public class CustomerController extends AbstractBookmarksController {
 				modelMap.addAttribute(customerMergeFormObject);
 				return "mergeCustomer";
 			}
+			if(customerToDiscard.getBookmarksAccount() != null && customerToDiscard.getBookmarksAccount().getAccountHolder() != null && customerToDiscard.getBookmarksAccount().getAccountHolder() == true) {
+				addError("Customer To Discard has an account!! Cannot proceed", modelMap);
+				modelMap.addAttribute(customerMergeFormObject);
+				return "mergeCustomer";
+			}
+
 			modelMap.addAttribute("customerToDiscard", customerToDiscard);
 			modelMap.addAttribute("customerToKeep", customerToKeep);
 
