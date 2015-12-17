@@ -20,48 +20,44 @@ count = 0
 
 sql.executeUpdate('update customer set currentBalance = 0, amountPaidInMonthly = 0, paysInMonthly = false') //Reset all balances
 
-new File("/home/bookmarks/accounts.csv").splitEachLine(",") {fields ->
+new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
 //	def customerName = fields[0]
-	def customerId = fields[0]      //This will be customer id, of blank
-	def currentBalance = fields[1]
-	def monthlyPayment = fields[2]
+  def customerName = fields[0]      //This will be customer id, of blank
+	def customerId = fields[1]      //This will be customer id, of blank
+	def currentBalance = fields[2]
+	def monthlyPayment = fields[3]
 	def monthlyPaymentAsFloat = 0
 	def monthlyMatcher  = (monthlyPayment =~ /£\d{1,2}/)
 
-	println customerId + " " + currentBalance + " " + currentBalance
-	////println customerName
-	//println customerId
-	//println currentBalance
-	//println currentBalance
+  if(!customerId) {println "Invalid id ${customerId}!";return} //Skip nonsense row
+	if(!currentBalance) {println "Invalid current balance ${currentBalance}!";return} //Skip nonsense row
+  if(customerName == 'Name') {println "Header row, skipping";return}//Skip certian header fields
+	println "*****************************************"
+	println "customerName ${customerName}, customerID : ${customerId},  currentBalance ${currentBalance}"
 
-//	if(customerName == 'Name') return  //Skip header row
-	if(!customerId) {println "No!";return} //Skip nonsense row
+	currentBalance = currentBalance.replace("\"","")
+	currentBalance = currentBalance.replace(",","")
 
-	if(currentBalance && customerId) {
-		currentBalance = currentBalance.replace("\"","")
-		currentBalance = currentBalance.replace(",","")
+	def currentBalanceAsFloat = Float.parseFloat(currentBalance) * -1
 
-
-		def currentBalanceAsFloat = Float.parseFloat(currentBalance) * -1
-
-		if(monthlyMatcher)	{
-			//println "Have regex match " + monthlyMatcher[0]
-			monthlyPaymentAsFloat = Float.parseFloat(monthlyMatcher[0].replace('£', ''))
-		}
-
-		println "*****************************************"
-		println fields
-	//	println "customerName : " + customerName
-		println "customerID : " + customerId
-		println "currentBalance : " + currentBalance
-		println "monthlyPayment : " + monthlyPayment
-		println "monthlyPaymentAsFloat : " + monthlyPaymentAsFloat
-		println "currentBalanceAsFloat : " + currentBalanceAsFloat
-
-		sql.executeUpdate('update customer set currentBalance = ?, amountPaidInMonthly = ? where id=?', [(currentBalanceAsFloat), monthlyPaymentAsFloat, customerId])
-		count++
+	if(monthlyMatcher)	{
+		//println "Have regex match " + monthlyMatcher[0]
+		monthlyPaymentAsFloat = Float.parseFloat(monthlyMatcher[0].replace('£', ''))
 	}
-}
+
+
+	println fields
+//	println "customerName : " + customerName
+	println "customerID : " + customerId
+	println "currentBalance : " + currentBalance
+	println "monthlyPayment : " + monthlyPayment
+	println "monthlyPaymentAsFloat : " + monthlyPaymentAsFloat
+	println "currentBalanceAsFloat : " + currentBalanceAsFloat
+
+	sql.executeUpdate('update customer set currentBalance = ?, amountPaidInMonthly = ? where id=?', [(currentBalanceAsFloat), monthlyPaymentAsFloat, customerId])
+	count++
+  if(count > 4) System.exit(2)
+} //end splitEachLine
 sql.executeUpdate('update customer set paysInMonthly = true where amountPaidInMonthly > 0')
 println "Finished - Updated ${count} accounts"
