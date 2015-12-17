@@ -57,7 +57,7 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
 	sql.executeUpdate('update customer set currentBalance = ?, amountPaidInMonthly = ? where id=?', [(currentBalanceAsFloat), monthlyPaymentAsFloat, customerId])
 	count++
-  if(count > 4) System.exit(2)
+  //if(count > 4) System.exit(2)
 } //end splitEachLine
 sql.executeUpdate('update customer set paysInMonthly = true where amountPaidInMonthly > 0')
 println "Finished - Updated ${count} accounts"
