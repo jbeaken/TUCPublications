@@ -83,7 +83,7 @@ public class StockItem extends AbstractEntity {
 
 	@Transient private Integer salesLastYear;
 
-    @Transient private Integer salesTotal;
+  @Transient private Integer salesTotal;
 
 	//For upload of images
 	@Transient private MultipartFile file;
