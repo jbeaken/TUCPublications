@@ -43,7 +43,7 @@ import org.springframework.web.multipart.MultipartFile;
  * is_on_az
  * is_review_on_az
  * is_image_on_az
- * 
+ *
  * @author jb
  *
  */
@@ -51,7 +51,7 @@ import org.springframework.web.multipart.MultipartFile;
 //@Indexed
 @Table(name="stockitem")
 public class StockItem extends AbstractEntity {
-	
+
 	//Overrides
 	@Column(name="update_title") private Boolean updateTitle = true;
 	@Column(name="update_availablity") private Boolean updateAvailablity = true;
@@ -60,41 +60,45 @@ public class StockItem extends AbstractEntity {
 	@Column(name="update_image") private Boolean updateImage = true;
 	@Column(name="update_publisher") private Boolean updatePublisher = true;
 	@Column(name="update_authors") private Boolean updateAuthors = true;
-	
+
 	//Availability
 	@Column(name="always_in_stock") private Boolean alwaysInStock = false;
 	@Column(name="gardners_stock_level") private Long gardnersStockLevel = 0l;
 	@Column(name="available_at_suppliers") private Boolean isAvailableAtSuppliers = false;
-	
+
 	//Stickies and bouncies
 	@Column(name="sticky_category_idx") private Long stickyCategoryIndex;
 	@Column(name="sticky_type_idx") private Long stickyTypeIndex;
 	@Column(name="bouncy_idx") private Long bouncyIndex;
 	@Column(name="merchandise_idx") private Long merchandiseIndex;
-	
+
+	//Ebook links
+	@Column(name="ebook_turnaround_url") private String ebookTurnaroundUrl;
+	@Column(name="ebook_alternate_url") private String ebookAlternateUrl;
+
 	//Extas
 	@Column(name="is_on_extras") private Boolean isOnExtras = false;
-	
+
 	@Column(name="is_new_release") private Boolean isNewRelease = false;
-	
+
 	@Transient private Integer salesLastYear;
-    
+
     @Transient private Integer salesTotal;
-	
+
 	//For upload of images
 	@Transient private MultipartFile file;
-	
+
 	@NotNull
 	@DateTimeFormat(pattern="yyyy-mm-dd hh:mm:ss")
 	private Date lastReorderReviewDate;
 	@Transient
 	private BigDecimal margin;
-	
+
 	//Quantities
 	@NotNull
 	@Min(value=0)
 	private Long quantityOnLoan = 0l;
-	
+
 	@NotNull
 	@Column(name="quantityInStock")
 	private Long quantityInStock = 0l;
@@ -115,17 +119,17 @@ public class StockItem extends AbstractEntity {
 
 	@NotNull
 	@Column(name="quantityReadyForCustomer")
-	private Long quantityReadyForCustomer = 0l;	
+	private Long quantityReadyForCustomer = 0l;
 
 	@NotNull
 	@Min(value=0)
 	private Long quantityForCustomerOrder = 0l;
-	
+
 	@Min(value=0)
-	private Long quantityInStockForMarxism2012 = 0l;	
-	
+	private Long quantityInStockForMarxism2012 = 0l;
+
 	@Min(value=-1)
-	private Long quantityForMarxism = 0l;	
+	private Long quantityForMarxism = 0l;
 
 	@ManyToOne
 	@JoinColumn(name="preferredSupplier_id")
@@ -133,9 +137,9 @@ public class StockItem extends AbstractEntity {
 
 	@Column(name="img_url")
 	private String imageURL;
-		
+
 	@Column(name="img_filename")
-	private String imageFilename;	
+	private String imageFilename;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name="stockItemType")
@@ -144,13 +148,13 @@ public class StockItem extends AbstractEntity {
 	@NotNull
 	@Size(min = 1, max = 255)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
-	private String title;	
-	
+	private String title;
+
 	//@NotNull
 	//@Size(min = 1, max = 255)
 	private String originalTitle;
-	
-	
+
+
 	//Prices
 		@Min(value=0)
 		@NotNull
@@ -162,7 +166,7 @@ public class StockItem extends AbstractEntity {
 		@Max(value=100)
 		@NotNull
 //		@NumberFormat(pattern="##")
-		private BigDecimal discount = new BigDecimal(40);	
+		private BigDecimal discount = new BigDecimal(40);
 
 //Booleans
 	@NotNull
@@ -171,68 +175,68 @@ public class StockItem extends AbstractEntity {
 
 	@Transient
 	private Boolean generateISBN = Boolean.FALSE;
-	
-	
+
+
 	@Column(name="review_as_html", columnDefinition="text")
-    private String reviewAsHTML; 
-	
+    private String reviewAsHTML;
+
 	@Column(name="review_as_text")
-    private String reviewAsText; 	
-    
+    private String reviewAsText;
+
 	@Column(name="has_newer_edition")
 	private Boolean hasNewerEdition = false;
-		
+
 	@NotNull
 	@Column(name="put_image_on_website")
 	private Boolean putImageOnWebsite = Boolean.TRUE;
-	
+
 	@NotNull
 	@Column(name="put_review_on_website")
-	private Boolean putReviewOnWebsite = Boolean.TRUE;	
-	
+	private Boolean putReviewOnWebsite = Boolean.TRUE;
+
 	@NotNull
 	@Column(name="put_on_website")
-	private Boolean putOnWebsite = Boolean.TRUE;	
-	
+	private Boolean putOnWebsite = Boolean.TRUE;
+
 	@Column(name="is_on_az")
 	private Boolean isOnAZ;
-	
+
 	@Column(name="is_image_on_az")
 	private Boolean isImageOnAZ;
-	
+
 	@Column(name="is_review_on_az")
-	private Boolean isReviewOnAZ;	
-	
+	private Boolean isReviewOnAZ;
+
 	@Column(name="is_synced_with_az")
 	private Boolean syncedWithAZ;
-	
+
 	@OneToMany(mappedBy="stockItem")
 	private Set<Sale> sales;
-	
+
 	@OneToMany(mappedBy="stockItem")
 	private Set<SupplierOrderLine> supplierOrderLines;
-	
+
 //	private Boolean isForMarxism;
 
 	private Long marxism2012SaleAmount;
 
 	private Integer noOfPages;
 
-	
+
     @ManyToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.EAGER)
-    @JoinTable(joinColumns = { @JoinColumn(name = "stockitem_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })    
+    @JoinTable(joinColumns = { @JoinColumn(name = "stockitem_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })
     @NotNull
     @IndexedEmbedded
     private Set<Author> authors = new HashSet<Author>();
-    
+
 
 	private String twentyTwelveSales;
-	
+
 	private String twentyThirteenSales;
-	
+
 	private String twentyFourteenSales;
-	
-	
+
+
 	public StockItem() {
 		super();
 		this.isbn = new String();
@@ -244,8 +248,8 @@ public class StockItem extends AbstractEntity {
 	//	setId(id);
 	//	setIsbn(isbn);
 	//	setTitle(title);
-	//}	
-	
+	//}
+
 //	categoryRepository.getWebsiteStockItems
 	public StockItem(Long id, String title, String reviewAsHTML, String imageURL, String isbn) {
 		this();
@@ -254,7 +258,7 @@ public class StockItem extends AbstractEntity {
 		setReviewAsHTML(reviewAsHTML);
 		setImageURL(imageURL);
 		setTitle(title);
-		
+
 	}
 	//getExtras
 	//new StockItem(si.id, si.isbn, si.title, si.type)
@@ -264,8 +268,8 @@ public class StockItem extends AbstractEntity {
 		setIsbn(isbn);
 		setTitle(title);
 		setType(type);
-	}	
-	
+	}
+
 	//getSTockItemByISBNForSTockTake
 	public StockItem(Long id, String title, String categoryName) {
 		this();
@@ -277,7 +281,7 @@ public class StockItem extends AbstractEntity {
 	}
 
 	//reorderReviewRepository.getReorderReview
-	public StockItem(Long id, String isbn, String title, String note, Long quantityInStock, 
+	public StockItem(Long id, String isbn, String title, String note, Long quantityInStock,
 			Long quantityOnOrder, Long quantityToKeepInStock, Long quantityForMarxism, BigDecimal publisherPrice, BigDecimal costPrice, BigDecimal sellPrice, String twentyTwelveSales, String twentyThirteenSales, String twentyFourteenSales, Date publishedDate,
 	Boolean putOnWebsite, Boolean putImageOnWebsite, Long preferredSupplierId, String publisherName, String imageURL, Long categoryId, String categoryName, String supplierName) {
 			super();
@@ -296,21 +300,21 @@ public class StockItem extends AbstractEntity {
 			setPublishedDate(publishedDate);
 			setPutOnWebsite(putOnWebsite);
 			setPutImageOnWebsite(putImageOnWebsite);
-			
+
 			setTwentyFourteenSales(twentyFourteenSales);
 			setTwentyThirteenSales(twentyThirteenSales);
 			setTwentyTwelveSales(twentyTwelveSales);
-			
+
 			Publisher publisher = new Publisher(publisherName);
 //			Supplier supplier = new Supplier(supplierId);
 //			supplier.setName(supplierName);
 //			publisher.setSupplier(supplier);
 			setPublisher(publisher);
-			
+
 			Category category = new Category(categoryId);
 			category.setName(categoryName);
 			setCategory(category);
-			
+
 			Supplier preferredSupplier = new Supplier(preferredSupplierId);
 			setPreferredSupplier(preferredSupplier);
 	}
@@ -407,8 +411,15 @@ public class StockItem extends AbstractEntity {
 		setTitle(title);
 		setQuantityInStock(quantityInStock);
 		setPublisher(publisher);
-	}	
+	}
 
+	public String getEbookTurnaroundUrl() {
+		return ebookTurnaroundUrl;
+	}
+
+	public void setEbookTurnaroundUrl(String ebookTurnaroundUrl) {
+		this.ebookTurnaroundUrl = ebookTurnaroundUrl;
+	}
 
 	public Boolean getGenerateISBN() {
 		return generateISBN;
@@ -454,30 +465,30 @@ public class StockItem extends AbstractEntity {
 	@NumberFormat(pattern="#.##")
 	@Column(name="sellPrice")
 	private BigDecimal sellPrice;
-	
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	private BigDecimal postage;
-	
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Column(name="price_third_party_second_hand")
-	private BigDecimal priceThirdPartySecondHand;	
-	
+	private BigDecimal priceThirdPartySecondHand;
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Column(name="price_third_party_collectable")
 	private BigDecimal priceThirdPartyCollectable;
-	
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Column(name="price_third_party_new")
-	private BigDecimal priceThirdPartyNew;	
-	
+	private BigDecimal priceThirdPartyNew;
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Column(name="price_at_az")
-	private BigDecimal priceAtAZ;	
+	private BigDecimal priceAtAZ;
 
 	@Min(value=0)
 	@NotNull
@@ -493,14 +504,14 @@ public class StockItem extends AbstractEntity {
 	@Column(unique=true)
 	@Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
 	private String isbn;
-	
+
 	public BigDecimal getPriceAtAZ() {
 		return priceAtAZ;
 	}
 	public void setPriceAtAZ(BigDecimal priceAtAZ) {
 		this.priceAtAZ = priceAtAZ;
 	}
-	
+
 	@NotNull
 	@Column(name="isbnAsNumber", unique=true)
 	private Long isbnAsNumber;
@@ -526,9 +537,9 @@ public class StockItem extends AbstractEntity {
 	@Cascade(value={org.hibernate.annotations.CascadeType.PERSIST})
 	@NotNull
 	private Publisher publisher;
-	
+
 	String dimensions;
-	
+
 	@ManyToOne
 	@NotNull
 	@IndexedEmbedded
@@ -568,7 +579,7 @@ public class StockItem extends AbstractEntity {
 
 	public void setQuantityToKeepInStock(Long quantityToKeepInStock) {
 		this.quantityToKeepInStock = quantityToKeepInStock;
-	}	
+	}
 
 	public Long getQuantityInStock() {
 		return quantityInStock;
@@ -694,7 +705,7 @@ public class StockItem extends AbstractEntity {
 			case BOOK :
 				return new BigDecimal(0);
 			case PAMPHLET :
-				return new BigDecimal(0);				
+				return new BigDecimal(0);
 			case DVD :
 				return new BigDecimal(20);
 			case BUST :
@@ -728,7 +739,7 @@ public class StockItem extends AbstractEntity {
 			return false;
 		}
 	}
-	
+
 	public boolean convertToISBN13() {
 		String isbn = getIsbn();
 		if(isbn.length() != 10) return true;
@@ -740,11 +751,11 @@ public class StockItem extends AbstractEntity {
 		setIsbn(isbn13);
 		return true;
 	}
-	
+
 	public String toString() {
 		return getId() + " " + getIsbn() + " " + getTitle() + " " + getAuthorsToString();
 	}
-	
+
 	private String getAuthorsToString() {
 		StringBuilder build = new StringBuilder();
 		for(Author author : getAuthors()) {
