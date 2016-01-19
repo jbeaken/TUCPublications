@@ -187,6 +187,7 @@ CREATE TABLE `event` (
   `start_date` datetime NOT NULL,
   `start_time` varchar(255) DEFAULT NULL,
   `stockitem_id` bigint(20) DEFAULT NULL,
+  `show_name_not_stock_title` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_mt8ulcc4k7fnc56rxaeu1sa33` (`name`),
   KEY `FK_9vomkx3y0w408eqkaptii98e9` (`stockitem_id`),

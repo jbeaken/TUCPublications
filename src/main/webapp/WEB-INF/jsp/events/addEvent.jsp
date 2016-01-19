@@ -10,7 +10,7 @@
 			changeYear: true,
 			dateFormat: 'dd/mm/yy'
 		});
-		$("#endDate" ).datepicker({
+		$( "#endDate" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
 			dateFormat: 'dd/mm/yy'
