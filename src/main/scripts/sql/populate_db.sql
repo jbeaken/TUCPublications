@@ -75,12 +75,12 @@ insert into bmw.stock_item (
  always_in_stock,
  available_at_suppliers
  )
-select 
+select
 id,
 availability,
 binding,
 isbn,
-isbnAsNumber, 
+isbnAsNumber,
 publishedDate,
 publisherPrice,
 quantityInStock,
@@ -105,13 +105,15 @@ bouncy_idx,
 category_id,
 gardners_stock_level,
 always_in_stock,
-available_at_suppliers
+available_at_suppliers,
+ebook_alternate_url,
+ebook_turnaround_url
 from bookmarks.stockitem si where si.put_on_website = true;
 
 -- Update Parent category
 update bmw.stock_item si, bmw.category c set si.parent_category_id = c.parent_id where c.id = si.category_id;
 
--- fill in parent category 
+-- fill in parent category
 update bmw.stock_item si set si.parent_category_id = si.category_id where si.parent_category_id is null;
 
 -- Get short review
@@ -120,10 +122,10 @@ update bmw.stock_item set review_short = null where review_short = '';
 
 -- Copy over publisher name
 update bookmarks.stockitem si, bmw.stock_item bsi set bsi.publisher_id = si.publisher_id where bsi.id = si.id;
-update bmw.stock_item si, bookmarks.publisher p set si.publisher_name = p.name where p.id = si.publisher_id; 
+update bmw.stock_item si, bookmarks.publisher p set si.publisher_name = p.name where p.id = si.publisher_id;
 
 -- Copy over category name
-update bmw.stock_item si, bookmarks.category c set si.category_name = c.name where c.id = si.category_id; 
+update bmw.stock_item si, bookmarks.category c set si.category_name = c.name where c.id = si.category_id;
 
 -- Is the review to be shown
 update bmw.stock_item si, bookmarks.stockitem bsi set si.review_as_text = null, si.review_short = null where bsi.put_review_on_website = false and bsi.id = si.id;
@@ -160,12 +162,12 @@ update bmw.stock_item set sell_price = 8 where type = 'MUG';
 
 -- READING LIST
 -- Remove stockitems on reading list with put_on_website = false
-delete rl.* from bookmarks.reading_list_stockitem rl left join bookmarks.stockitem si on si.id = rl.stockItems_id where put_on_website = false; 
+delete rl.* from bookmarks.reading_list_stockitem rl left join bookmarks.stockitem si on si.id = rl.stockItems_id where put_on_website = false;
 
 -- Only copy across reading lists on website
 INSERT INTO bmw.reading_list (id, name, is_on_website, is_on_sidebar) select id, name, is_on_website, is_on_sidebar from bookmarks.reading_list brl;
 
-INSERT INTO bmw.reading_list_stock_item (stockitem_id, readinglist_id, position) 
+INSERT INTO bmw.reading_list_stock_item (stockitem_id, readinglist_id, position)
 	select rlsi.stockItems_id, rlsi.reading_list_id, rlsi.stockItem_idx from bookmarks.reading_list_stockitem rlsi
 	join bookmarks.reading_list brl  on brl.id = rlsi.reading_list_id;
 
@@ -190,7 +192,3 @@ create index publisher_id_idx on bmw.stock_item (publisher_id);
 create index sticky_category_idx on bmw.stock_item (sticky_category_idx);
 create index bouncy_idx on bmw.stock_item (bouncy_idx);
 create index sticky_type_idx on bmw.stock_item (sticky_type_idx);
-
-
-
-
