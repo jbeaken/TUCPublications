@@ -16,12 +16,12 @@
 		$( "#startDate" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'dd-MM-yy'
+			dateFormat: 'dd/mm/yy'
 		});
 		$( "#endDate" ).datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'dd-MM-yy'
+			dateFormat: 'dd/mm/yy'
 		});
 
 		 $('#fileupload').fileupload({
