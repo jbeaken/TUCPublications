@@ -73,7 +73,9 @@ insert into bmw.stock_item (
  category_id,
  gardners_stock_level,
  always_in_stock,
- available_at_suppliers
+ available_at_suppliers,
+ ebook_alternate_url,
+ ebook_turnaround_url
  )
 select
 id,

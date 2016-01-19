@@ -343,8 +343,8 @@ CREATE TABLE `stock_item` (
   `type` varchar(255) NOT NULL,
   `width` bigint(20) DEFAULT NULL,
   `category_id` bigint(20) NOT NULL,
-  `ebook_alternate_url` varchar(255) NOT NULL,
-  `ebook_turnaround_url` varchar(255) NOT NULL    
+  `ebook_alternate_url` varchar(255) NULL,
+  `ebook_turnaround_url` varchar(255) NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_9cw8tbx3leu3s5qtt183n1fh3` (`isbn`),
   UNIQUE KEY `UK_fnayeqhxmjoq9wlgaapwob5ii` (`isbn_as_number`),

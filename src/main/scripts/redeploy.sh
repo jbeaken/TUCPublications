@@ -14,7 +14,7 @@ NOW=$(date +"%m-%d-%Y")
 
 echo Deploying new version bookmarks##$1.war
 
-sudo cp target/bookmarks.war /opt/tomcat/webapps/bookmarks##$1.war
+cp target/bookmarks.war /opt/tomcat/webapps/bookmarks##$1.war
 
 
 

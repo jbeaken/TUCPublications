@@ -1,6 +1,7 @@
 // From VT :
 // Display Ledger Balances, customers, copy entire report button,
-/// paste into /home/bookmarks/accounts.csv with delimiter \t
+// Past into libre calc, save as csv, edit filters, delimiter tab
+/// copy to  /home/bookmarks/accounts.csv 
 // Run this script
 
 package org.bookmarks.groovy
@@ -14,7 +15,7 @@ this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admin", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "ortiz16", "com.mysql.jdbc.Driver")
 
 count = 0
 
