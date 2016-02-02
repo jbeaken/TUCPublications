@@ -390,8 +390,6 @@ public class CustomerOrderLineController extends OrderLineController {
 	@RequestMapping(value="/search")
 	public String search(@ModelAttribute CustomerOrderLineSearchBean customerOrderLineSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 
-		logger.info("binding result = " +  bindingResult.hasErrors() + " " + bindingResult);
-
 		if(bindingResult != null && bindingResult.hasErrors()) {
 			modelMap.addAttribute(PaymentType.values());
 			modelMap.addAttribute(DeliveryType.values());
@@ -399,7 +397,11 @@ public class CustomerOrderLineController extends OrderLineController {
 			modelMap.addAttribute("customerOrderStatusOptions", CustomerOrderLineStatus.values());
 		    return "searchCustomerOrderLines";
 		}
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> f61b9b0... Removing debug
 		setPaginationFromRequest(customerOrderLineSearchBean, request);
 		if(customerOrderLineSearchBean.getCustomerOrderLine().getStatus() == CustomerOrderLineStatus.OUT_OF_STOCK) {
 			//Because this is a form, pagination will lose input so display all results (up to a hundred, more than a hundred is
@@ -407,9 +409,12 @@ public class CustomerOrderLineController extends OrderLineController {
 			customerOrderLineSearchBean.setPageSize(100);
 		}
 
-
 		Collection<CustomerOrderLine> customerOrderLines = customerOrderLineService.search(customerOrderLineSearchBean);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> f61b9b0... Removing debug
 		//Don't like, fix for shitty export
 		setPageSize(customerOrderLineSearchBean, modelMap, customerOrderLines.size());		
 
