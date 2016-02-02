@@ -173,8 +173,6 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 			}
 		}
 
-      logger.debug(query.toString());
-
     if(customerOrderLineSearchBean.getEndDate() != null) {
 
     	java.sql.Timestamp sqlED = new java.sql.Timestamp(customerOrderLineSearchBean.getEndDate().getTime());
