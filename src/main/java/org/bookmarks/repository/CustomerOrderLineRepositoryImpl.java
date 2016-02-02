@@ -157,7 +157,7 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 		whereAlreadyAppended = appendSource(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendStockItem(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendResearchText(customerOrderSearchBean, query, whereAlreadyAppended);
-    whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
+    //whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
 	}
 
   private boolean appendDates(CustomerOrderLineSearchBean customerOrderLineSearchBean,	StringBuffer query, boolean whereAlreadyAppended) {
