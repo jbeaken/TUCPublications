@@ -49,11 +49,15 @@
         <logger name="org.apache.http" level="INFO" />
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> aa4a49e... Added spring security
         <root level="INFO">
 =======
         <root level="DEBUG">
 >>>>>>> 85bbe47... Added documentation
+=======
+        <root level="INFO">
+>>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />
                 <appender-ref ref="FILE" />
         </root>

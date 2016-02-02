@@ -29,7 +29,7 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 
     private SessionFactory sessionFactory;
 
-    	private Logger logger = LoggerFactory.getLogger(CustomerOrderLineRepositoryImpl.class);
+    private Logger logger = LoggerFactory.getLogger(CustomerOrderLineRepositoryImpl.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -144,7 +144,6 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 	//TO-DO can throw exception if session has expired
 		CustomerOrderLineSearchBean customerOrderSearchBean = (CustomerOrderLineSearchBean) searchBean;
-      logger.debug(customerOrderSearchBean.getStartDate().toString());
 		CustomerOrderLine customerOrderLine = customerOrderSearchBean.getCustomerOrderLine();
 		boolean whereAlreadyAppended = false;
 		whereAlreadyAppended = appendId(customerOrderLine, query, whereAlreadyAppended);
@@ -157,17 +156,17 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 		whereAlreadyAppended = appendSource(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendStockItem(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendResearchText(customerOrderSearchBean, query, whereAlreadyAppended);
-    //whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
+    whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
 	}
 
   private boolean appendDates(CustomerOrderLineSearchBean customerOrderLineSearchBean,	StringBuffer query, boolean whereAlreadyAppended) {
-    logger.debug(customerOrderLineSearchBean.getStartDate().toString());
 		if(customerOrderLineSearchBean.getStartDate() != null) {
+      logger.debug(customerOrderLineSearchBean.getStartDate().toString());
       java.sql.Date sqlSD = new java.sql.Date(customerOrderLineSearchBean.getStartDate().getTime());
 			if(whereAlreadyAppended) {
-				query.append(" and col.dateCreated >= '" + sqlSD + "' ");
+				query.append(" and col.creationDate >= '" + sqlSD + "' ");
 			} else {
-				query.append(" where col.dateCreated >= '" + sqlSD + "' ");
+				query.append(" where col.creationDate >= '" + sqlSD + "' ");
           whereAlreadyAppended = true;
 			}
 		}
@@ -176,9 +175,9 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 
     if(customerOrderLineSearchBean.getEndDate() != null) {
 			if(whereAlreadyAppended) {
-				query.append(" and col.dateCreated <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
+				query.append(" and col.creationDate <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
 			} else {
-				query.append(" where col.dateCreated <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
+				query.append(" where col.creationDate <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
           whereAlreadyAppended = true;
 			}
 		}

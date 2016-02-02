@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.bookmarks.controller.validation.CustomerOrderLineValidator;
 import org.bookmarks.domain.BookmarksRole;
 import org.bookmarks.domain.Customer;
@@ -91,6 +94,8 @@ public class CustomerOrderLineController extends OrderLineController {
 	
 	@Value("#{ applicationProperties['thingy'] }")
 	private String thingy;	
+
+	private Logger logger = LoggerFactory.getLogger(CustomerOrderLineController.class);
 
 	/**
 	 * @param id
@@ -367,7 +372,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@RequestMapping(value="/view")
 	public String view(Long id, String flow, ModelMap modelMap) {
-		
+
 		CustomerOrderLine customerOrderLine = customerOrderLineService.get(id);
 
 		modelMap.addAttribute(PaymentType.values());
@@ -384,6 +389,9 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@RequestMapping(value="/search")
 	public String search(@ModelAttribute CustomerOrderLineSearchBean customerOrderLineSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
+
+		logger.info("binding result = " +  bindingResult.hasErrors() + " " + bindingResult);
+
 		if(bindingResult != null && bindingResult.hasErrors()) {
 			modelMap.addAttribute(PaymentType.values());
 			modelMap.addAttribute(DeliveryType.values());

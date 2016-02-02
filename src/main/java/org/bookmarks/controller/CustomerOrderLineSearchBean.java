@@ -6,6 +6,9 @@ import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.website.domain.PaymentType;
 import java.util.Date;
 
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class CustomerOrderLineSearchBean extends AbstractSearchBean {
 	private CustomerOrderLine customerOrderLine;
 
@@ -13,10 +16,10 @@ public class CustomerOrderLineSearchBean extends AbstractSearchBean {
 
 	private String researchText;
 
-	// @DateTimeFormat(pattern="dd/MM/yy")
+	@DateTimeFormat(pattern="dd/MM/yy")
 	private Date startDate;
 
-	// @DateTimeFormat(pattern="dd/MM/yy")
+	@DateTimeFormat(pattern="dd/MM/yy")
 	private Date endDate;
 
 	public String getResearchText() {
