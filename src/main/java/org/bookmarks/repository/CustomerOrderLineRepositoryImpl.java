@@ -159,26 +159,30 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
     whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
 	}
 
-  private boolean appendDates(CustomerOrderLineSearchBean customerOrderLineSearchBean,	StringBuffer query, boolean whereAlreadyAppended) {
+	private boolean appendDates(CustomerOrderLineSearchBean customerOrderLineSearchBean,	StringBuffer query, boolean whereAlreadyAppended) {
 		if(customerOrderLineSearchBean.getStartDate() != null) {
-      logger.debug(customerOrderLineSearchBean.getStartDate().toString());
-      java.sql.Date sqlSD = new java.sql.Date(customerOrderLineSearchBean.getStartDate().getTime());
+      		logger.debug(customerOrderLineSearchBean.getStartDate().toString());
+
+    		java.sql.Timestamp sqlSD = new java.sql.Timestamp(customerOrderLineSearchBean.getStartDate().getTime());
+
 			if(whereAlreadyAppended) {
 				query.append(" and col.creationDate >= '" + sqlSD + "' ");
 			} else {
 				query.append(" where col.creationDate >= '" + sqlSD + "' ");
-          whereAlreadyAppended = true;
+        		whereAlreadyAppended = true;
 			}
 		}
 
       logger.debug(query.toString());
 
     if(customerOrderLineSearchBean.getEndDate() != null) {
+
+    	java.sql.Timestamp sqlED = new java.sql.Timestamp(customerOrderLineSearchBean.getEndDate().getTime());
 			if(whereAlreadyAppended) {
-				query.append(" and col.creationDate <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
+				query.append(" and col.creationDate <= '" + sqlED + "' ");
 			} else {
-				query.append(" where col.creationDate <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
-          whereAlreadyAppended = true;
+				query.append(" where col.creationDate <= '" + sqlED + "' ");
+        		whereAlreadyAppended = true;
 			}
 		}
 		return whereAlreadyAppended;
