@@ -131,6 +131,7 @@ public class CustomerReportController extends AbstractBookmarksController {
 	public String init(ModelMap modelMap) {
 		modelMap.addAttribute(new CustomerReportBean());
 		modelMap.addAttribute(CustomerReportType.values());
+		modelMap.addAttribute("info", "Select customer and dates to show all books ordered on account for given period");
 		return "customerReport";
 	}
 

@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/documentation")
-public class DocumentationController extends AbstractBookmarksController {
+public class DocumentationController {
 
-	
+
 	@RequestMapping(value="/")
 	public String index(ModelMap modelMap) throws ClientProtocolException, IOException {
-		return "index";
+		return "documentation";
 	}
-	
+
 }

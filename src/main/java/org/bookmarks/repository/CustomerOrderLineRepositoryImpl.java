@@ -7,6 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.bookmarks.controller.CustomerOrderLineSearchBean;
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.domain.BookmarksRole;
@@ -25,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerOrderLineRepositoryImpl extends AbstractRepository<CustomerOrderLine> implements CustomerOrderLineRepository{
 
     private SessionFactory sessionFactory;
+
+    	private Logger logger = LoggerFactory.getLogger(CustomerOrderLineRepositoryImpl.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -90,7 +95,7 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 		BookmarksRole role = customerOrderSearchBean.getBookmarksRole();
 		CustomerOrderLineStatus status = col.getStatus();
 		Collection<CustomerOrderLineStatus> statuses = null;
-		
+
 		if(role != null) {
 			if(role == BookmarksRole.BUYER) {
 				statuses = col.getBuyerStatuses();
@@ -98,7 +103,7 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 				statuses = col.getMailorderStatuses();
 			}
 		}
-		
+
 		if(statuses != null) {
 			int i = 0;
 			int size = statuses.size() - 1;
@@ -113,16 +118,16 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 				i++;
 			}
 			query.append(")");
-			
+
 			if(role == BookmarksRole.BUYER) {
 				statuses = col.getBuyerStatuses();
 			} else if(role == BookmarksRole.MAILORDER) {
 				query.append(" and col.deliveryType = 'MAIL'");
 			}
-			
+
 			return true;
 		}
-		
+
 		if(status != null) {
 			if(whereAlreadyAppended) {
 				query.append(" and col.status = '" + status + "'");
@@ -139,6 +144,7 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 	//TO-DO can throw exception if session has expired
 		CustomerOrderLineSearchBean customerOrderSearchBean = (CustomerOrderLineSearchBean) searchBean;
+      logger.debug(customerOrderSearchBean.getStartDate().toString());
 		CustomerOrderLine customerOrderLine = customerOrderSearchBean.getCustomerOrderLine();
 		boolean whereAlreadyAppended = false;
 		whereAlreadyAppended = appendId(customerOrderLine, query, whereAlreadyAppended);
@@ -151,6 +157,32 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 		whereAlreadyAppended = appendSource(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendStockItem(customerOrderLine, query, whereAlreadyAppended);
 		whereAlreadyAppended = appendResearchText(customerOrderSearchBean, query, whereAlreadyAppended);
+    whereAlreadyAppended = appendDates(customerOrderSearchBean, query, whereAlreadyAppended);
+	}
+
+  private boolean appendDates(CustomerOrderLineSearchBean customerOrderLineSearchBean,	StringBuffer query, boolean whereAlreadyAppended) {
+    logger.debug(customerOrderLineSearchBean.getStartDate().toString());
+		if(customerOrderLineSearchBean.getStartDate() != null) {
+      java.sql.Date sqlSD = new java.sql.Date(customerOrderLineSearchBean.getStartDate().getTime());
+			if(whereAlreadyAppended) {
+				query.append(" and col.dateCreated >= '" + sqlSD + "' ");
+			} else {
+				query.append(" where col.dateCreated >= '" + sqlSD + "' ");
+          whereAlreadyAppended = true;
+			}
+		}
+
+      logger.debug(query.toString());
+
+    if(customerOrderLineSearchBean.getEndDate() != null) {
+			if(whereAlreadyAppended) {
+				query.append(" and col.dateCreated <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
+			} else {
+				query.append(" where col.dateCreated <= '" + customerOrderLineSearchBean.getEndDate() + "' ");
+          whereAlreadyAppended = true;
+			}
+		}
+		return whereAlreadyAppended;
 	}
 
 	private boolean appendWebReference(CustomerOrderLine customerOrderLine,	StringBuffer query, boolean whereAlreadyAppended) {
@@ -312,12 +344,12 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 				.append(CustomerOrderLineStatus.IN_STOCK + "','")
 				.append(CustomerOrderLineStatus.OUT_OF_STOCK + "','")
 				.append(CustomerOrderLineStatus.ON_ORDER + "')");
-		
+
 		Collection<CustomerOrderLine> customerOrderLine = getSessionFactory().
 				getCurrentSession().
 				createQuery(buffer.toString()).
 				list();
-		
+
 		return customerOrderLine;
 	}
 
@@ -398,9 +430,9 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 			" where id = :id");
 		query.setParameter("id", id);
 		query.setParameter("havePrintedLabel", havePrintedLabel);
-		
+
 		int result = query.executeUpdate();
-		
+
 	}
 
 }

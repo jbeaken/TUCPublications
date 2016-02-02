@@ -34,7 +34,7 @@
         <logger name="org.hibernate.type" level="INFO" /> 
 =======
 
-	<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
+        <logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
         <logger name="org.hibernate.type" level="INFO" />
 
 >>>>>>> aa4a49e... Added spring security
@@ -48,8 +48,12 @@
 =======
         <logger name="org.apache.http" level="INFO" />
 
+<<<<<<< HEAD
 >>>>>>> aa4a49e... Added spring security
         <root level="INFO">
+=======
+        <root level="DEBUG">
+>>>>>>> 85bbe47... Added documentation
                 <appender-ref ref="STDOUT" />
                 <appender-ref ref="FILE" />
         </root>

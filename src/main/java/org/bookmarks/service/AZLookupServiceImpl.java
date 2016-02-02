@@ -727,7 +727,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 
 	private void getReview3(Document doc, StockItem stockItem) throws java.io.UnsupportedEncodingException {
 
-		logger.debug("Looking up review : " );
+		logger.debug("Looking up review in review3 : " );
 		String reviewAsHtml = null;
 		String reviewAsText = null;
 
