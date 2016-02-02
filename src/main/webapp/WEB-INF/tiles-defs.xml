@@ -44,6 +44,11 @@
       <put-attribute name="body" value="/WEB-INF/jsp/welcome.jsp"/>
   </definition>
 
+ <definition name="documentation" extends="baseLayout">
+      <put-attribute name="title" value="Documentation"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/documentation/documentation.jsp"/>
+  </definition>  
+
 
   <!-- REORDER REVIEW
  <definition name="initReorderReview" extends="baseLayout">

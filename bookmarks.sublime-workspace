@@ -63,6 +63,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
@@ -111,10 +112,17 @@
 			{
 				"buffer_size": 349,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+			"file": "src/main/webapp/WEB-INF/tiles/baseLayout.jsp",
+			"settings":
+			{
+				"buffer_size": 5618,
+>>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/service/EventServiceImpl.java",
@@ -148,10 +156,25 @@
 			{
 				"buffer_size": 31037,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+			"file": "src/main/webapp/WEB-INF/tiles/footer.jsp",
+			"settings":
+			{
+				"buffer_size": 144,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/controller/AdminController.java",
+			"settings":
+			{
+				"buffer_size": 1581,
+>>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			"contents": "Searching 1136 files for \"addSuc\"\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/AbstractBookmarksController.java:\n  101  	} \n  102  	\n  103: 	protected void addSuccess(String success, ModelMap modelMap) {\n  104  		modelMap.addAttribute(\"success\", success);\n  105  	}\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/AbstractStickyController.java:\n  101  		if(dbStockItem.getPutOnWebsite() == false) {\n  102  			addWarning(\"This stock is set to not be on the website\", modelMap);\n  103: 		} else addSuccess(\"Added but not saved\", modelMap);\n  104  		\n  105  		return getManagedView();\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/BounciesController.java:\n   57  		session.removeAttribute(\"bouncyObject\");\n   58  		\n   59: 		addSuccess(\"Have saved bouncies!\", modelMap);\n   60  		\n   61  		return \"welcome\";\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/BounciesMerchandiseController.java:\n   57  		session.removeAttribute(\"bouncyObject\");\n   58  		\n   59: 		addSuccess(\"Have saved bouncies!\", modelMap);\n   60  		\n   61  		return \"welcome\";\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/CategoryController.java:\n   65  		session.removeAttribute(\"categoryToManage\");\n   66  		\n   67: 		addSuccess(\"Have saved stickies for \" + category.getName(), modelMap);\n   68  		\n   69  		return searchFromSession(session, request, modelMap);\n   ..\n  131  			categoryService.delete(category);\n  132  			staticDataService.resetCategories();\n  133: 			addSuccess(category.getName() + \" has been deleted\", modelMap);\n  134  		} catch (Exception e) {\n  135  			//Most likely due to this invoice being referenced from col\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/ChipsController.java:\n   55  			return \"welcome\";\n   56  		}\n   57: 		addSuccess(\"Have updated chips\", modelMap);\n   58  		return \"welcome\";\n   59  	}\n   ..\n   69  			return \"welcome\";\n   70  		}\n   71: 		addSuccess(\"Have updated events\", modelMap);\n   72  		return \"welcome\";\n   73  	}		\n   ..\n   81  			return \"welcome\";\n   82  		}\n   83: 		addSuccess(\"Have updated reading lists\", modelMap);\n   84  		return \"welcome\";\n   85  	}		\n   ..\n   93  			return \"welcome\";\n   94  		}\n   95: 		addSuccess(\"Have reset beans\", modelMap);\n   96  		return \"welcome\";\n   97  	}	\n   ..\n  120  			chipsService.syncStockItemWithChips(stockItem); \n  121  			if(stockItem.getPutOnWebsite()) {\n  122: 				addSuccess(\"Successfully updated \" + stockItem.getTitle(), modelMap);\n  123: 			} else addSuccess(\"Have removed stock item \" + stockItem.getTitle(), modelMap);\n  124  		} catch (Exception e) {\n  125  			e.printStackTrace();\n  ...\n  141  			long end = System.currentTimeMillis();\n  142  			long time = (end - start) / 1000;\n  143: 			addSuccess(\"Successfully build chips index in \" + time + \" seconds\", modelMap);\n  144  			logger.info(\"Success!! Build index\");\n  145  		} catch (Exception e) {\n  ...\n  159  			return \"chipsTransferReport\";\n  160  		}\n  161: 		addSuccess(\"Have removed all consumed customers\", modelMap);\n  162  		return \"chipsTransferReport\";\n  163  	}\n  ...\n  183  		}\n  184  		\n  185: 		addSuccess(\"Have retrieved \" + chipsCustomers.size() + \" orders from chips\" , modelMap);\n  186  		\n  187  		modelMap.addAttribute(chipsCustomers);\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/CustomerController.java:\n  249  		try {\n  250  			customerService.delete(customer);\n  251: 			addSuccess(customer.getFullName() + \" has been deleted\", modelMap);\n  252  		} catch (Exception e) {\n  253  			//Most likely due to this invoice being referenced from col\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/CustomerOrderLineController.java:\n  339  		session.setAttribute(\"request\", request);\n  340  		\n  341: 		addSuccess((String) session.getAttribute(\"success\"), modelMap);\n  342  		session.removeAttribute(\"success\");\n  343  \n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java:\n  136  		try {\n  137  			eventService.delete(event);\n  138: 			addSuccess(\"Event has been deleted\", modelMap);\n  139  		} catch(Exception e) {\n  140  			e.printStackTrace();\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/InvoiceController.java:\n  167  		session.setAttribute(\"invoiceSearchBean\", invoiceSearchBean);\n  168  		\n  169: 		addSuccess(\"Invoice for \" + invoice.getCustomer().getFullName() + \" successful\", modelMap);\n  170  		return \"redirect:searchFromSession\";\n  171  	}\n  ...\n  326  		try {\n  327  			invoiceService.delete(invoice);\n  328: 			addSuccess(\"Invoice has been deleted\", modelMap);\n  329  		} catch (Exception e) {\n  330  			//Most likely due to this invoice being referenced from col\n  ...\n  360  		session.removeAttribute(\"originalInvoicePrice\");\n  361  \n  362: 		addSuccess(\"Invoice has been edited\", modelMap);\n  363  		\n  364  		return searchFromSession(session, request, modelMap);\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/PublisherController.java:\n  108  		staticDataService.resetPublishers();\n  109  		\n  110: 		addSuccess(\"Have successfully added publisher\", modelMap);\n  111  		\n  112  		if(flow != null && (flow.equals(\"addStock\") || flow.equals(\"editStock\"))) {\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/ReadingListController.java:\n   82  		readingListService.update(db);\n   83  		\n   84: 		addSuccess(\"Have saved reading list \" + db.getName(), modelMap);\n   85  		return searchFromSession(session, request, modelMap);\n   86  	}		\n   ..\n  113  		readingListService.delete(readingList);\n  114  		\n  115: 		addSuccess(\"Have successfully deleted \" + readingList.getName(), modelMap);\n  116  		\n  117  		return searchFromSession(session, request, modelMap);\n  ...\n  157  		modelMap.addAttribute(readingList);\n  158  		\n  159: 		addSuccess(\"Select Reading List \", modelMap);\n  160  		\n  161  		return \"selectReadingList\";\n  ...\n  170  		\n  171  		session.setAttribute(\"readingList\", readingList);\n  172: 		addSuccess(\"Added but not saved\", modelMap);\n  173  		\n  174  		return \"manageReadingList\";\n  ...\n  202  		readingListService.update(readingList);\n  203  		\n  204: 		addSuccess(\"Saved \" + readingList.getName(), modelMap);\n  205  		\n  206  		session.removeAttribute(\"readingList\");\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/ReorderReviewController.java:\n   91  		session.removeAttribute(\"reorderReviewBeans\");\n   92  		session.removeAttribute(\"supplierOrderMap\");\n   93: 		addSuccess(\"Have canceled the reorder review\", modelMap);\n   94  		return \"welcome\";\n   95  	}	\n   ..\n  104  		session.removeAttribute(\"reorderReviewBeans\");\n  105  		\n  106: 		addSuccess(\"Have saved the reorder review\", modelMap);\n  107  \n  108  		return \"welcome\";\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/StickiesController.java:\n   54  		session.removeAttribute(\"typeToManage\");\n   55  		\n   56: 		addSuccess(\"Have saved stickies for \" + type.getDisplayName(), modelMap);\n   57  		\n   58  		return \"welcome\";\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java:\n  119  		}\n  120  		\n  121: 		addSuccess(\"Have successfully uploaded image \" + fileName, modelMap);\n  122  		modelMap.addAttribute(stockItem);\n  123  		modelMap.addAttribute(\"closeWindowNoRefresh\", true);\n  ...\n  130  		stockItem = stockItemService.get(stockItem.getId());\n  131  		stockItemService.delete(stockItem);\n  132: 		addSuccess(\"Have deleted \" + stockItem.getTitle(), modelMap);\n  133  		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean)session.getAttribute(\"stockItemSearchBean\");\n  134  		return displaySearch(stockItemSearchBean, session, modelMap);\n  ...\n  236  			try {\n  237  				chipsService.syncStockItemWithChips(stockItem);\n  238: 				addSuccess(\"Have successfully added \" + stockItem.getTitle() + \" and put on website\", modelMap);\n  239  			} catch (Exception e) {\n  240  				addError(\"Have added stock, but not been able to put on chips: \" + e.getMessage(), modelMap);\n  ...\n  324  			addError(\"This isbn is already in the database!\", modelMap);\n  325  		} else {\n  326: 			addSuccess(\"Have successfully looked up  \" + stockItemFromLookup.getTitle(), modelMap);\n  327  		}\n  328  		\n  ...\n  380  		}\n  381  		\n  382: 		addSuccess(\"Have successfully got image for \" + stockItem.getTitle(), modelMap);\n  383  		return \"welcome\";\n  384  	}\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/SupplierDeliveryController.java:\n  609  		session.removeAttribute(\"supplierDelivery\");\n  610  		session.removeAttribute(\"supplierDeliveryLinesMap\");\n  611: 		addSuccess()\n  612  		return \"welome\";\n  613  	}\n\n/home/git/bookmarks/src/main/java/org/bookmarks/controller/WebScraperController.java:\n   57  //		webScraper.getVerso();\n   58  //		\n   59: //		addSuccess(\"Have sucessfully scraped Verso\", modelMap);\n   60  //		return \"welcome\";\n   61  //	}\n   ..\n   66  		zedWebScraper.scrape();\n   67  		\n   68: 		addSuccess(\"Have sucessfully scraped Zed\", modelMap);\n   69  		return \"welcome\";\n   70  	}\n   ..\n   76  		haymarketWebScraper.scrape();\n   77  		\n   78: 		addSuccess(\"Have sucessfully scraped Haymarket\", modelMap);\n   79  		return \"welcome\";\n   80  	}	\n   ..\n   85  		plutoWebScraper.scrape();\n   86  		\n   87: 		addSuccess(\"Have sucessfully scraped Pluto\", modelMap);\n   88  		return \"welcome\";\n   89  	}	\n   ..\n   94  		versoWebScraper.scrape();\n   95  		\n   96: 		addSuccess(\"Have sucessfully scraped Verso\", modelMap);\n   97  		return \"welcome\";\n   98  	}\n   ..\n  103  		lrbWebScraper.scrape();\n  104  		\n  105: 		addSuccess(\"Have sucessfully scraped LRB\", modelMap);\n  106  		return \"welcome\";\n  107  	}		\n  ...\n  112  		//polityWebScraper.scrape();\n  113  		\n  114: 		addSuccess(\"Have sucessfully scraped Polity\", modelMap);\n  115  		return \"welcome\";\n  116  	}		\n\n43 matches across 17 files\n",
@@ -285,13 +308,23 @@
 >>>>>>> 7fbef06... Adding expired session check!
 =======
 				"buffer_size": 564,
+=======
+			"contents": "package org.bookmarks.controller;\n\nimport java.io.IOException;\nimport java.util.List;\n\nimport javax.servlet.http.HttpSession;\n\nimport org.apache.http.client.ClientProtocolException;\nimport org.bookmarks.scheduler.ChipsOrdersManager;\nimport org.bookmarks.scheduler.GardnersAvailability;\nimport org.bookmarks.scheduler.DailyReport;\nimport org.bookmarks.service.AdminService;\nimport org.bookmarks.service.EmailService;\nimport org.bookmarks.service.Service;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.stereotype.Controller;\nimport org.springframework.ui.ModelMap;\nimport org.springframework.web.bind.annotation.RequestMapping;\n\n@Controller\n@RequestMapping(\"/documentation\")\npublic class DocumentationController extends AbstractBookmarksController {\n\n	\n	@RequestMapping(value=\"/\")\n	public String index(ModelMap modelMap) throws ClientProtocolException, IOException {\n		return \"documentation\";\n	}\n	\n}\n",
+			"file": "src/main/java/org/bookmarks/controller/DocumentationController.java",
+			"file_size": 964,
+			"file_write_time": 1454422077000000,
+			"settings":
+			{
+				"buffer_size": 942,
+>>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
+			"file": "src/main/webapp/WEB-INF/tiles-defs.xml",
 			"settings":
 			{
+<<<<<<< HEAD
 				"buffer_size": 26348,
 				"line_ending": "Windows"
 			}
@@ -310,6 +343,9 @@
 			{
 				"buffer_size": 1477,
 >>>>>>> 6537b95... Removed review from manage bouncies screen
+=======
+				"buffer_size": 26952,
+>>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 >>>>>>> db9ff92... Adding getReview to edit screen
 			}
@@ -346,6 +382,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 =======
 =======
@@ -355,9 +392,20 @@
 =======
 =======
 =======
+=======
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/editCustomerOrderLine.jsp",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/SupplierReturnLine.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/OrderLine.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/website/domain/ReadingListStockItem.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/ReadingList.java",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/bouncies/manageBouncies.jsp",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/BounciesController.java",
+		"/home/git/bookmarks/src/main/resources/spring/application.dev.properties",
+>>>>>>> 58d5adc... asdf
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/ChipsController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/ChipsServiceImpl.java",
-		"/home/git/bookmarks/src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
 		"/home/git/bookmarks/src/main/resources/logback.xml",
 		"/home/git/bookmarks/src/main/resources/META-INF/persistence.xml",
 		"/home/git/bookmarks/src/main/resources/spring/business-config.xml",
@@ -408,7 +456,6 @@
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EventServiceImpl.java",
-		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java",
 >>>>>>> 449d36f... Finisihing
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/editEvent.jsp",
@@ -559,11 +606,11 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -805,47 +852,51 @@
 =======
 					"file": "src/main/java/org/bookmarks/domain/SupplierReturnLine.java",
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+					"file": "src/main/webapp/WEB-INF/tiles/baseLayout.jsp",
+>>>>>>> 58d5adc... asdf
 					"settings":
 					{
-						"buffer_size": 349,
+						"buffer_size": 5618,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5524,
+								5524
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage"
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2235.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/main/java/org/bookmarks/domain/OrderLine.java",
+					"file": "src/main/webapp/WEB-INF/tiles/footer.jsp",
 					"settings":
 					{
-						"buffer_size": 797,
+						"buffer_size": 144,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								64,
+								64
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 <<<<<<< HEAD
 							"syntax": "Packages/Java/Java.tmLanguage"
 						},
@@ -1187,6 +1238,9 @@
 >>>>>>> 1f13f79... Adding alternate way to drilldown for az
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
+=======
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
+>>>>>>> 58d5adc... asdf
 						},
 						"translation.x": 0.0,
 <<<<<<< HEAD
@@ -1212,9 +1266,10 @@
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
+					"file": "src/main/java/org/bookmarks/controller/AdminController.java",
 					"settings":
 					{
+<<<<<<< HEAD
 						"buffer_size": 31037,
 						"regions":
 						{
@@ -1251,6 +1306,9 @@
 					"settings":
 					{
 						"buffer_size": 564,
+=======
+						"buffer_size": 1581,
+>>>>>>> 58d5adc... asdf
 						"regions":
 						{
 						},
@@ -1263,6 +1321,7 @@
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 							"syntax": "Packages/Java/JavaProperties.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -1290,29 +1349,31 @@
 						],
 						"settings":
 						{
+=======
+>>>>>>> 58d5adc... asdf
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4515.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "src/main/java/org/bookmarks/website/domain/ReadingListStockItem.java",
+					"buffer": 3,
+					"file": "src/main/java/org/bookmarks/controller/DocumentationController.java",
 					"settings":
 					{
-						"buffer_size": 867,
+						"buffer_size": 942,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								144,
-								144
+								919,
+								919
 							]
 						],
 						"settings":
@@ -1327,28 +1388,29 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "src/main/java/org/bookmarks/domain/ReadingList.java",
+					"buffer": 4,
+					"file": "src/main/webapp/WEB-INF/tiles-defs.xml",
 					"settings":
 					{
-						"buffer_size": 1477,
+						"buffer_size": 26952,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								55,
-								55
+								2121,
+								2121
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 204.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1362,7 +1424,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 33.0
 	},
 	"layout":
 	{
@@ -1410,6 +1472,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1419,6 +1482,24 @@
 =======
 =======
 =======
+=======
+				"tiles",
+				"main/webapp/WEB-INF/tiles-defs.xml"
+			],
+			[
+				"foot",
+				"main/webapp/WEB-INF/tiles/footer.jsp"
+			],
+			[
+				"boun",
+				"main/java/org/bookmarks/controller/BounciesController.java"
+			],
+			[
+				"manage",
+				"main/webapp/WEB-INF/jsp/bouncies/manageBouncies.jsp"
+			],
+			[
+>>>>>>> 58d5adc... asdf
 				"readinglist.java",
 				"main/java/org/bookmarks/domain/ReadingList.java"
 			],
@@ -1546,10 +1627,6 @@
 			[
 				"navb",
 				"main/webapp/WEB-INF/tiles/navbar.jsp"
-			],
-			[
-				"tiles",
-				"main/webapp/WEB-INF/tiles-defs.xml"
 			],
 			[
 				"upload",
