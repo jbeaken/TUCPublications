@@ -40,6 +40,9 @@ public class Event extends AbstractNamedEntity {
 	@Column(name="show_name_not_stock_title")
 	private Boolean showName;
 
+	@Column(name="show_bookmarks_address")
+	private Boolean showBookmarksAddress = true;
+
 	@Column(name="entrance_price")
 	private Float entrancePrice;
 
@@ -171,6 +174,14 @@ public class Event extends AbstractNamedEntity {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
+	}
+
+	public Boolean getShowBookmarksAddress() {
+		return showBookmarksAddress;
+	}
+
+	public void setShowBookmarksAddress(Boolean showBookmarksAddress) {
+		this.showBookmarksAddress = showBookmarksAddress;
 	}
 
 	public Boolean getShowAuthor() {

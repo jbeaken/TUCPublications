@@ -65,7 +65,9 @@
 			<form:checkbox path="showAuthor" />
 			<form:label for="showAuthor" path="showAuthor">Show Author On Website</form:label><br/>
 			<form:checkbox path="showName" />
-			<form:label for="showName" path="showName">Show Name instead of Stock Title On Website</form:label>
+			<form:label for="showName" path="showName">Show Name instead of Stock Title On Website</form:label><br/>
+			<form:checkbox path="showBookmarksAddress" />
+			<form:label for="showBookmarksAddress" path="showBookmarksAddress">Show Bookmarks Address</form:label>
 		  </div>
 	</div>
       <div class="row">
