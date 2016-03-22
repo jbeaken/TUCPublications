@@ -33,21 +33,6 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
 		SaleReportBean saleSearchBean = (SaleReportBean) searchBean;
 
-		if(saleSearchBean.getGroupBy()) {
-			if(saleSearchBean.getSortColumn() ==  null) saleSearchBean.setSortColumn("sum(s.quantity)");
-		//System.out.println("***************** " + searchBean.getSortColumn());
-		//System.out.println("***************** " + searchBean.getSortOrder());
-			return new StringBuffer("select " +
-					"new Sale(si.title, " +
-					"si.isbn, " +
-					"sum(s.quantity), " +
-					"sum(s.sellPrice * s.quantity * (100-s.discount)/100), " +
-					"p.name) " +
-					"from Sale as s " +
-					"join s.stockItem as si " +
-					"join si.publisher as p");
-		}
-
 		if(saleSearchBean.getIsCategorySearch() == true) {
 			   return new StringBuffer("select " +
     			"new Sale(s.id, " +
@@ -65,7 +50,24 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
     			"join s.stockItem as si " +
     			"join si.category as c " +
 				"join si.publisher as p");
+		}		
+
+		if(saleSearchBean.getGroupBy()) {
+			if(saleSearchBean.getSortColumn() ==  null) saleSearchBean.setSortColumn("sum(s.quantity)");
+		//System.out.println("***************** " + searchBean.getSortColumn());
+		//System.out.println("***************** " + searchBean.getSortOrder());
+			return new StringBuffer("select " +
+					"new Sale(si.title, " +
+					"si.isbn, " +
+					"sum(s.quantity), " +
+					"sum(s.sellPrice * s.quantity * (100-s.discount)/100), " +
+					"p.name) " +
+					"from Sale as s " +
+					"join s.stockItem as si " +
+					"join si.publisher as p");
 		}
+
+
 
     	return new StringBuffer("select " +
     			"new Sale(s.id, " +
