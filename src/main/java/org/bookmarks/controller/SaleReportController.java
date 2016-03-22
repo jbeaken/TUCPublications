@@ -326,7 +326,19 @@ public class SaleReportController extends AbstractBookmarksController {
 	 * @return
 	 */
 	private String categoryReport(SaleReportBean saleReportBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		DefaultPieDataset categoryPieDataset = saleReportService.getCategoryPieDataset(saleReportBean);
+
+		setPaginationFromRequest(saleReportBean, request);
+
+		saleReportBean.setIsCategorySearch( true );
+		
+		Collection<Sale> sales = saleService.search(saleReportBean);
+		
+		SaleTotalBean saleTotalBean = saleReportService.getSaleTotalBean(saleReportBean);
+		
+		//Don't like, fix for shitty export
+		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
+
+		DefaultPieDataset categoryPieDataset = saleReportService.getCategoryPieDataset( sales );
 		
 		session.setAttribute("categoryReportPieDataset", categoryPieDataset);
 		modelMap.addAttribute("showCategoryReport", true);

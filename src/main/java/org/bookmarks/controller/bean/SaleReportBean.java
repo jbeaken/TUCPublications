@@ -22,6 +22,16 @@ public class SaleReportBean extends ReportBean {
 
 	private Sale sale;
 
+	private boolean isCategorySearch;
+
+	public boolean getIsCategorySearch() {
+		return isCategorySearch;
+	}
+
+	public void setIsCategorySearch(boolean isCategorySearch) {
+		this.isCategorySearch = isCategorySearch;
+	}
+
 /* Can be books only, merchandies only etc */
 	private Integer status;
 

@@ -160,7 +160,7 @@
 			"file": "src/main/webapp/WEB-INF/tiles/footer.jsp",
 			"settings":
 			{
-				"buffer_size": 144,
+				"buffer_size": 149,
 				"line_ending": "Unix"
 			}
 		},
@@ -348,6 +348,22 @@
 >>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 >>>>>>> db9ff92... Adding getReview to edit screen
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
+			"settings":
+			{
+				"buffer_size": 15460,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
+			"settings":
+			{
+				"buffer_size": 25525,
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -606,6 +622,7 @@
 	"groups":
 	[
 		{
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -883,15 +900,15 @@
 					"file": "src/main/webapp/WEB-INF/tiles/footer.jsp",
 					"settings":
 					{
-						"buffer_size": 144,
+						"buffer_size": 149,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								64,
-								64
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1414,6 +1431,60 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
+					"settings":
+					{
+						"buffer_size": 15460,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6235,
+								6235
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2601.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
+					"settings":
+					{
+						"buffer_size": 25525,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12576,
+								12576
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5364.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
 				}
 			]
 		}
@@ -1473,6 +1544,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1483,6 +1555,16 @@
 =======
 =======
 =======
+=======
+				"colc",
+				"main/java/org/bookmarks/controller/CustomerOrderLineController.java"
+			],
+			[
+				"customerorderlinerei",
+				"main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java"
+			],
+			[
+>>>>>>> 4bf6b4e... Fixing by category sale report, now searches not just using dates
 				"tiles",
 				"main/webapp/WEB-INF/tiles-defs.xml"
 			],

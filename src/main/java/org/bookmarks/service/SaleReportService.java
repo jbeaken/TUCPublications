@@ -21,7 +21,7 @@ import org.bookmarks.controller.SearchBean;
 
 public interface SaleReportService {
 
-	DefaultPieDataset getCategoryPieDataset(SaleReportBean saleReportBean);
+	DefaultPieDataset getCategoryPieDataset(Collection<Sale> sales);
 
 	JFreeChart getCategoryReportPieChart(DefaultPieDataset categoryReportPieDataset);
 

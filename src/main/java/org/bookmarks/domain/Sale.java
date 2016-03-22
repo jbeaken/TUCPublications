@@ -125,6 +125,35 @@ public class Sale extends AbstractEntity {
 		setEvent(event);
 	}
 
+	//From salerepository search (category search)
+	public Sale(Long id, Date creationDate, Long quantity, BigDecimal discount, BigDecimal sellPrice, String title, String isbn, String publisherName, String eventName, String categoryName) {
+		this();
+		setId(id);
+		setDiscount(discount);
+		setCreationDate(creationDate);
+		setQuantity(quantity);
+		setSellPrice(sellPrice);
+
+		StockItem stockItem = new StockItem(title, isbn);
+		Publisher publisher = new Publisher();
+		Category category = new Category();
+		category.setName(categoryName);
+		publisher.setName(publisherName);
+		stockItem.setPublisher(publisher);
+		stockItem.setCategory(category);
+		setStockItem(stockItem);
+
+		Event event = new Event();
+		if(eventName != null) {
+			event.setName(eventName);
+		} else event.setName("Shop");
+		setEvent(event);
+
+
+
+
+	}	
+
 	/** From saleRespository.search (group by)**/
 	public Sale(String title, String isbn, Long sumQuantity, BigDecimal sumSellPrice, String publisherName) {
 		this();

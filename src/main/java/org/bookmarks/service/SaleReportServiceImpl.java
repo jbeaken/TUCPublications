@@ -69,8 +69,12 @@ public class SaleReportServiceImpl implements SaleReportService {
 	}
 
 	@Override
-	public DefaultPieDataset getCategoryPieDataset(SaleReportBean saleReportBean) {
-		Collection<Sale> sales = saleService.getFull(saleReportBean.getStartDate(), saleReportBean.getEndDate());
+	public DefaultPieDataset getCategoryPieDataset(Collection<Sale> sales) {
+
+		// Collection<Sale> sales = saleService.search(saleReportBean);
+		
+		// Collection<Sale> sales = saleService.getFull(saleReportBean.getStartDate(), saleReportBean.getEndDate());
+
 		Map<String, Long> map = new HashMap<String, Long>(); // <category name, saleNo.>
 		for(Sale sale : sales) {
 			String categoryName = sale.getStockItem().getCategory().getName();

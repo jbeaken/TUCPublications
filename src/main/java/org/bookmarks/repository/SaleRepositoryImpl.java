@@ -48,6 +48,25 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
 					"join si.publisher as p");
 		}
 
+		if(saleSearchBean.getIsCategorySearch() == true) {
+			   return new StringBuffer("select " +
+    			"new Sale(s.id, " +
+    			"s.creationDate, " +
+    			"s.quantity, " +
+				"s.discount, " +
+    			"s.sellPrice, " +
+    			"si.title, " +
+    			"si.isbn, " +
+    			"p.name, " +
+    			"e.name, " +
+    			"c.name) " +
+    			"from Sale as s " +
+    			"left join s.event as e " +
+    			"join s.stockItem as si " +
+    			"join si.category as c " +
+				"join si.publisher as p");
+		}
+
     	return new StringBuffer("select " +
     			"new Sale(s.id, " +
     			"s.creationDate, " +
