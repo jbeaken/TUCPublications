@@ -329,6 +329,8 @@ public class SaleReportController extends AbstractBookmarksController {
 
 		setPaginationFromRequest(saleReportBean, request);
 
+		saleReportBean.setExport( true );
+
 		saleReportBean.setIsCategorySearch( true );
 		
 		Collection<Sale> sales = saleService.search(saleReportBean);
