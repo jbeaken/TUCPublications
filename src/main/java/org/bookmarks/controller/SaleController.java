@@ -231,11 +231,6 @@ public class SaleController extends AbstractBookmarksController {
 	
 	private Sale sellSingleStockItem(StockItem stockItem, Event event, ModelMap modelMap, Map<Long, Sale> saleMap) {
 
-		//In case session has become invalid
-		if(saleMap == null) {
-			saleMap = new HashMap<Long, Sale>();
-		}
-		
 		//Sell
 		Sale sale = saleService.sell(stockItem, event);
 		
@@ -341,6 +336,7 @@ public class SaleController extends AbstractBookmarksController {
 
 		if(saleMap == null) {
 			saleMap = new HashMap<Long, Sale>();
+			session.put("saleMap", saleMap);
 		}
 
 		//Put into model
