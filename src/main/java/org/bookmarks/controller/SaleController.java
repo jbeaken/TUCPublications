@@ -21,12 +21,17 @@ import org.bookmarks.domain.StockItemType;
 import org.bookmarks.service.SaleService;
 import org.bookmarks.service.StockItemService;
 import org.bookmarks.ui.comparator.SaleComparator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping(value="/sale")
@@ -42,6 +47,8 @@ public class SaleController extends AbstractBookmarksController {
 	
 	@Autowired
 	private SaleService saleService;
+
+	private Logger logger = LoggerFactory.getLogger(SaleController.class);
 	
 	public void setStockItemService(StockItemService stockItemService) {
 		this.stockItemService = stockItemService;
@@ -179,6 +186,7 @@ public class SaleController extends AbstractBookmarksController {
 		Sale sale = sellSingleStockItem(stockItem, event, modelMap, saleMap);
 
 		fillSaleModel(saleMap, session, modelMap);
+
 		session.setAttribute("lastSale", sale);
 		modelMap.addAttribute(new StockItemSearchBean());
 		
@@ -187,10 +195,6 @@ public class SaleController extends AbstractBookmarksController {
 	
 	/**
 	 * Called from searchStockItems.jsp
-	 * @param id
-	 * @param modelMap
-	 * @param session
-	 * @return
 	 */
 	@RequestMapping(value = "/sellSingleStockItem", method=RequestMethod.GET)
 	public String sellSingleStockItem(Long id, ModelMap modelMap, HttpSession session) {
@@ -201,8 +205,29 @@ public class SaleController extends AbstractBookmarksController {
 		Sale sale = sellSingleStockItem(stockItem, event, modelMap, saleMap);
 		
 		fillSaleModel(saleMap, session, modelMap);
+
 		return "sellStockItem";		
 	}
+
+	/**
+	 * Called from sellStockItem.jsp
+	 */
+	@RequestMapping(value = "/sellExtra/{id}", method=RequestMethod.GET)
+	public String sellExtra(@PathVariable("id") Long id, ModelMap modelMap, HttpSession session) {
+		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("saleMap");
+
+		Event event = (Event) session.getAttribute("event");
+		StockItem stockItem = stockItemService.get(id);
+		Sale sale = sellSingleStockItem(stockItem, event, modelMap, saleMap);
+		
+		fillSaleModel(saleMap, session, modelMap);
+
+		modelMap.addAttribute(new StockItemSearchBean());
+		session.setAttribute("lastSale", sale);
+		modelMap.addAttribute(new StockItemSearchBean());
+		
+		return "redirect:/sale/sell";
+	}	
 	
 	private Sale sellSingleStockItem(StockItem stockItem, Event event, ModelMap modelMap, Map<Long, Sale> saleMap) {
 		//Sell
@@ -305,12 +330,13 @@ public class SaleController extends AbstractBookmarksController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sell", method=RequestMethod.GET)
 	public String displaySellStockItem(ModelMap modelMap, HttpSession session) {
+
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("saleMap");
+
 		if(saleMap == null) {
 			saleMap = new HashMap<Long, Sale>();
 		}
-		session.setAttribute("saleMap", saleMap);
-		
+
 		//Put into model
 		fillSaleModel(saleMap, session, modelMap, new StockItemSearchBean());
 		return "sellStockItem";
@@ -363,6 +389,9 @@ public class SaleController extends AbstractBookmarksController {
 			total = total.add(s.getTotalPrice());
 		}
 		modelMap.addAttribute("totalPrice", total);
+
+		Collection<StockItem> extras = stockItemService.getExtras();
+		modelMap.put("extras", extras);
 	}	
 
 	@Override

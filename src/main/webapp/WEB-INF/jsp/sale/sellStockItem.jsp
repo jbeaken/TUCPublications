@@ -2,6 +2,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+  		$("#extras").select2();
+	});
+
+	function sellExtra() {
+		var stockItemid =  $('#extras').val() 
+
+		document.location.href = '${pageContext.request.contextPath}/sale/sellExtra/' + stockItemid
+	}
+</script>
+
+</head>
+
 <div class="rows">
         <div class="row">
           <div class="column w-70-percent">
@@ -29,12 +47,24 @@
 <form:form modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/sale/sellByISBN" method="post">
 <div class="rows">
         <div class="row">
-          <div class="column w-33-percent">
+
+			<div class="column w-33-percent">
 				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/>
 				<form:input path="stockItem.isbn" autofocus="autofocus" required="required"/> <form:errors path="stockItem.isbn" />
-	  	 </div>
-	  	</div>
-      <div class="row">
+			</div>
+
+			<div class="column w-50-percent">
+				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">Extras</form:label><br/>
+
+					<select id="extras" style="width : 80%" onchange="javascript:sellExtra()">
+							<option value="">--Select Extras</option>
+					  		<c:forEach items="${extras}" var="extra">
+					  			<option value="${extra.id}">${extra.title}</option>
+					  		</c:forEach>
+					 </select>
+			</div>
+	  	</div>	  	
+    	<div class="row">
           <div class="column w-100-percent">
  				<input type="submit" id="sellStockSubmitButton" class="btn btn-primary" value="Sell"/>
  				 <c:if test="${lastSale != null}"> 
