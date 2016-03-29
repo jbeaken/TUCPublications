@@ -336,7 +336,7 @@ public class SaleController extends AbstractBookmarksController {
 
 		if(saleMap == null) {
 			saleMap = new HashMap<Long, Sale>();
-			session.put("saleMap", saleMap);
+			session.setAttribute("saleMap", saleMap);
 		}
 
 		//Put into model
