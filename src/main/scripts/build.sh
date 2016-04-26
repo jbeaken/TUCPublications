@@ -2,6 +2,7 @@
 # Script to build beans from git
 git pull
 /opt/maven/bin/mvn clean package
+<<<<<<< HEAD
 cp /opt/tomcat/webapps/bookmarks.war /home/bak/
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -26,6 +27,9 @@ sudo cp target/bookmarks.war /opt/tomcat/webapps/bookmarks.war
 sudo start tomcat
 >>>>>>> 30c8b70... upgrading sourcer 1.7
 =======
+=======
+#cp /opt/tomcat/webapps/bookmarks.war /home/bak/
+>>>>>>> 9ea20d9... Removing sublime files
 rm -rf /opt/tomcat/webapps/bookmarks*
 rm /opt/tomcat/logs/*
 cp target/bookmarks.war /opt/tomcat/webapps/bookmarks.war
