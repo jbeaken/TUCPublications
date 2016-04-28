@@ -249,7 +249,9 @@ public class AZLookupServiceImpl implements AZLookupService {
 	}
 
 	private Document getDrilldownPageDocument(Document doc) throws IOException {
+
 		logger.debug(doc.html());
+
 		Elements elements = doc.select(".newaps");
 
 		//Drill down for more details
@@ -275,8 +277,8 @@ public class AZLookupServiceImpl implements AZLookupService {
 		}
 		if(drilldownUrl.isEmpty()) throw new BookmarksException("Cannot get drill down page");
 
-		if(drilldownUrl.indexOf("http://www.amazon.co.uk") == -1) {
-			drilldownUrl = "http://www.amazon.co.uk" + drilldownUrl;
+		if(drilldownUrl.indexOf("https://www.amazon.co.uk") == -1) {
+			drilldownUrl = "https://www.amazon.co.uk" + drilldownUrl;
 		}
 		logger.debug("Drilldown : " + drilldownUrl);
 		doc = Jsoup.connect(drilldownUrl)

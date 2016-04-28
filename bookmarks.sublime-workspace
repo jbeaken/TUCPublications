@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"Pt",
+				"PathVariable"
+			],
+			[
+				"stockI",
+				"stockItemid"
+			],
+			[
+				"sto",
+				"stockItemRepository"
+			],
+			[
+				"stockItem",
+				"stockItems"
+			],
+			[
 				"ifr",
 				"iframeContent"
 			],
@@ -14,10 +30,6 @@
 			[
 				"Stock",
 				"StockTakeComparator"
-			],
-			[
-				"stockI",
-				"stockItemId"
 			],
 			[
 				"saleRe",
@@ -56,6 +68,7 @@
 	"buffers":
 	[
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -135,10 +148,17 @@
 			{
 				"buffer_size": 797,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+			"file": "src/main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp",
+			"settings":
+			{
+				"buffer_size": 3553,
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
 			"settings":
@@ -170,10 +190,17 @@
 			{
 				"buffer_size": 1581,
 >>>>>>> 58d5adc... asdf
+=======
+			"file": "src/main/java/org/bookmarks/controller/SaleController.java",
+			"settings":
+			{
+				"buffer_size": 13170,
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -318,12 +345,20 @@
 				"buffer_size": 942,
 >>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
+=======
+			"contents": "select\n        stockitem0_.id as col_0_0_,\n        stockitem0_.isbn as col_1_0_,\n        stockitem0_.title as col_2_0_,\n        stockitem0_.stockItemType as col_3_0_ \n    from\n        stockitem stockitem0_ \n    where\n        stockitem0_.is_on_extras=1 \n    order by\n        stockitem0_.stockItemType,\n        stockitem0_.title;\n",
+			"settings":
+			{
+				"buffer_size": 328,
+				"line_ending": "Unix"
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 			}
 		},
 		{
-			"file": "src/main/webapp/WEB-INF/tiles-defs.xml",
+			"file": "src/main/java/org/bookmarks/repository/StockItemRepository.java",
 			"settings":
 			{
+<<<<<<< HEAD
 <<<<<<< HEAD
 				"buffer_size": 26348,
 				"line_ending": "Windows"
@@ -346,24 +381,27 @@
 =======
 				"buffer_size": 26952,
 >>>>>>> 58d5adc... asdf
+=======
+				"buffer_size": 3806,
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 				"line_ending": "Windows"
 >>>>>>> db9ff92... Adding getReview to edit screen
 			}
 		},
 		{
-			"file": "src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
+			"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
 			"settings":
 			{
-				"buffer_size": 15460,
+				"buffer_size": 42923,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
+			"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 			"settings":
 			{
-				"buffer_size": 25525,
-				"line_ending": "Windows"
+				"buffer_size": 23896,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -399,6 +437,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 =======
 =======
@@ -409,6 +448,18 @@
 =======
 =======
 =======
+=======
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemService.java",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/reorderReview/reorderReview.jsp",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/baseLayout.jsp",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/footer.jsp",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/AdminController.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/DocumentationController.java",
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles-defs.xml",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
+		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/editCustomerOrderLine.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/SupplierReturnLine.java",
@@ -457,7 +508,6 @@
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchEventDecorator.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/uploadSales.jsp",
-		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles-defs.xml",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/convertor/CSVMessageConvertor.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/SaleRepositoryImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/InvoiceRepositoryImpl.java",
@@ -469,7 +519,6 @@
 		"/home/git/bookmarks/src/main/resources/spring/datasource-config.xml",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/web.xml",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EmailServiceImpl.java",
-		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EventServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java",
@@ -517,7 +566,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			""
@@ -534,6 +583,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 			"edit",
@@ -543,6 +593,13 @@
 =======
 =======
 =======
+=======
+			"sellSingleStockItem",
+			"redirect",
+			"extra",
+			"Logger",
+			"<select",
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 			"getLandingPageDocument",
 			"getDrilldownPageDocument",
 			"		\n",
@@ -622,11 +679,12 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -872,47 +930,52 @@
 =======
 					"file": "src/main/webapp/WEB-INF/tiles/baseLayout.jsp",
 >>>>>>> 58d5adc... asdf
+=======
+					"file": "src/main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp",
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 					"settings":
 					{
-						"buffer_size": 5618,
+						"buffer_size": 3553,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5524,
-								5524
+								896,
+								896
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage"
+							"syntax": "Packages/Java/Java Server Pages (JSP).tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2235.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/main/webapp/WEB-INF/tiles/footer.jsp",
+					"file": "src/main/java/org/bookmarks/controller/SaleController.java",
 					"settings":
 					{
-						"buffer_size": 149,
+						"buffer_size": 13170,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								11222,
+								11222
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 							"syntax": "Packages/Java/Java.tmLanguage"
@@ -1277,15 +1340,22 @@
 =======
 						"translation.y": 0.0,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5059.0,
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "src/main/java/org/bookmarks/controller/AdminController.java",
 					"settings":
 					{
+<<<<<<< HEAD
 <<<<<<< HEAD
 						"buffer_size": 31037,
 						"regions":
@@ -1326,6 +1396,9 @@
 =======
 						"buffer_size": 1581,
 >>>>>>> 58d5adc... asdf
+=======
+						"buffer_size": 328,
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 						"regions":
 						{
 						},
@@ -1369,7 +1442,8 @@
 =======
 >>>>>>> 58d5adc... asdf
 							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1379,18 +1453,18 @@
 				},
 				{
 					"buffer": 3,
-					"file": "src/main/java/org/bookmarks/controller/DocumentationController.java",
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepository.java",
 					"settings":
 					{
-						"buffer_size": 942,
+						"buffer_size": 3806,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								919,
-								919
+								774,
+								774
 							]
 						],
 						"settings":
@@ -1406,46 +1480,45 @@
 				},
 				{
 					"buffer": 4,
-					"file": "src/main/webapp/WEB-INF/tiles-defs.xml",
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
 					"settings":
 					{
-						"buffer_size": 26952,
+						"buffer_size": 42923,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2121,
-								2121
+								41022,
+								41022
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 204.0,
+						"translation.y": 19169.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
+					"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 					"settings":
 					{
-						"buffer_size": 15460,
+						"buffer_size": 23896,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6235,
-								6235
+								23861,
+								23861
 							]
 						],
 						"settings":
@@ -1454,34 +1527,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2601.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
-					"settings":
-					{
-						"buffer_size": 25525,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								12576,
-								12576
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5364.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1545,6 +1591,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1556,6 +1603,36 @@
 =======
 =======
 =======
+=======
+				"sicon",
+				"main/java/org/bookmarks/controller/StockItemController.java"
+			],
+			[
+				"sirim",
+				"main/java/org/bookmarks/repository/StockItemRepositoryImpl.java"
+			],
+			[
+				"stockitemre",
+				"main/java/org/bookmarks/repository/StockItemRepository.java"
+			],
+			[
+				"sisei",
+				"main/java/org/bookmarks/service/StockItemServiceImpl.java"
+			],
+			[
+				"stockitemser",
+				"main/java/org/bookmarks/service/StockItemService.java"
+			],
+			[
+				"salecon",
+				"main/java/org/bookmarks/controller/SaleController.java"
+			],
+			[
+				"sell.jsp",
+				"main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp"
+			],
+			[
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 				"colc",
 				"main/java/org/bookmarks/controller/CustomerOrderLineController.java"
 			],
@@ -1779,11 +1856,14 @@
 				"main/webapp/WEB-INF/web.xml"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 449d36f... Finisihing
 				"sicon",
 				"main/java/org/bookmarks/controller/StockItemController.java"
 			],
 			[
+=======
+>>>>>>> 924b087... AZ has moved to https, need to adapt
 				"gdc",
 				"main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java"
 			],
