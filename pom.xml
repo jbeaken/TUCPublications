@@ -90,7 +90,7 @@
 
 		<!-- Encryption -->
 		<jasypt.version>1.9.2</jasypt.version>
-		<bouncy.castle.version>1.53</bouncy.castle.version>
+		<bouncy.castle.version>1.54</bouncy.castle.version>
 
 		<!-- Image Manipulation -->
 		<imgscalr.version>4.2</imgscalr.version>
