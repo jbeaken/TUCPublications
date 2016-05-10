@@ -26,13 +26,7 @@ echo "Restoring database...."
 mysql -uroot -p$DB_PASSWORD bookmarks < bm.sql
 echo "....All Done!"
 
-#Restore images
-echo "Restoring files....."
-tar -xjC /home -f paper.files.tar.bz2
-echo "....All Done!"
-
-#Reset passwords
-
+#Shredding
 echo "Shredding..."
 shred bm.sql
 
