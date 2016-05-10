@@ -9,9 +9,9 @@ import java.util.Set;
 import flexjson.JSONSerializer;
 
 public class CustomerOrder {
-	
+
 	private Customer customer;
-	
+
 	//Constructor
 	public CustomerOrder() {
 		customer = new Customer();
@@ -26,7 +26,7 @@ public class CustomerOrder {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
+
 
 	//JSON
     public String toJson() {
@@ -38,7 +38,7 @@ public class CustomerOrder {
 	public void addOrderLine(StockItem stockItem) {
 		OrderLine orderLine = null;
 		Set<OrderLine> orderLines = customer.getOrders();
-		
+
 		//Check not already been added
 		for(OrderLine ol : orderLines) {
 			if(ol.getStockItem().getId().equals(stockItem.getId())) {
@@ -48,21 +48,21 @@ public class CustomerOrder {
 		}
 		if(orderLine == null) {
 			//New stockitem, so create new orderline and add to order
-			orderLine = new OrderLine(); 
-			
-			
+			orderLine = new OrderLine();
+
+
 			orderLine.setStockItem(stockItem);
 			orderLine.setQuantity(1);
-			
+
 			//TO-DO, if second hand (but no OUT_OF_PRINT)
 			orderLine.setSellPrice(stockItem.getSellPrice());
-			
+
 			//Is it second hand
 			if(stockItem.getAvailability() == Availability.OUT_OF_PRINT) {
 				orderLine.setIsSecondHand(true);
 			}
 			orderLine.setPostage(stockItem.getPostage());
-			
+
 			orderLines.add(orderLine);
 		} else {
 			//Already been added, so just increment
@@ -79,51 +79,51 @@ public class CustomerOrder {
 		}
 		customer.getOrders().remove(toRemove);
 	}
-	
+
 	public BigDecimal getTotalPrice() {
 		return getStockPrice().add(getPostage()); //TODO means postage is called twice!
 	}
-	
+
 	public BigDecimal getStockPrice() {
 		BigDecimal stockPrice = new BigDecimal(0);
 		for(OrderLine line : customer.getOrders()) {
 			stockPrice = stockPrice.add(line.getTotalPrice());
 		}
 		return stockPrice;
-	}	
-	
+	}
+
 	public BigDecimal getPostage() {
 
 		boolean isOverseas = getIsOverseas();
 
 		if(isOverseas) {
-			return getStockPrice().multiply(new BigDecimal(0.25));
+			return getStockPrice().multiply(new BigDecimal( 0.25 ));
 		}
-		
+
 		BigDecimal postage = null;
-		
+
 		for(OrderLine ol : customer.getOrders()) {
-			postage = new BigDecimal(1.75).add(ol.getStockItem().getPostage().multiply(new BigDecimal(ol.getQuantity())));
+			postage = new BigDecimal( 2.0 ).add(ol.getStockItem().getPostage().multiply(new BigDecimal(ol.getQuantity())));
 		}
-		
+
 		//Maximum of 6 pounds
 		if(postage.floatValue() > 6) {
 			return new BigDecimal(6);
 		}
-		
+
 		return postage;
 	}
 
 	private boolean getIsOverseas() {
 		Address address = customer.getAddress();
 		String country = address.getCountry();
-		
+
 		if(country == null) return false;
-		
+
 		if(country.equals("United Kingdom")) {
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -133,6 +133,6 @@ public class CustomerOrder {
 				orderLine.setQuantity(quantity);
 			}
 		}
-		
-	}		
+
+	}
 }
