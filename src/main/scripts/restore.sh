@@ -32,9 +32,6 @@ tar -xjC /home -f paper.files.tar.bz2
 echo "....All Done!"
 
 #Reset passwords
-echo "Reseting paswords"
-mysql -uroot -p$DB_PASSWORD paper < /home/git/paper/scripts/sql/resetPassword.sql
-echo "....All Done!"
 
 echo "Shredding..."
 shred bm.sql
