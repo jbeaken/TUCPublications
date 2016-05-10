@@ -4,22 +4,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 	<script>
-		$(function() {
+	$(function() {
 
-		});
+	});
 	</script>
-
 	<style>
 		p.breadcrumb {
 			font-size: 18px;
 			color : red;
 		}
-		span.bold {
-			font-weight: bold;
-			color : red;
-		}
 	</style>
-
 <div class="rows">
 
 				<div class="row">
@@ -31,7 +25,7 @@
 
 							<h1>Create Event For Website</h1>
 							<p class="breadcrumb">Event -> Add Event</p>
-							<p>Make sure <span class="bold">On Website</span> is clicked if event is for website</p>
+							<p>Make sure On Website is clicked if event is for website</p>
 							<p>Website -> Update Events -> This will sync the latest events with website</p>
 					</div>
 

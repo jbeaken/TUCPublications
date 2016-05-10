@@ -27,4 +27,9 @@ public class DocumentationController {
 		return "documentation";
 	}
 
+	@RequestMapping(value="/technical")
+	public String technical(ModelMap modelMap) throws ClientProtocolException, IOException {
+		return "technical";
+	}
+
 }
