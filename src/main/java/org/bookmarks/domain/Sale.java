@@ -152,7 +152,7 @@ public class Sale extends AbstractEntity {
 
 
 
-	}	
+	}
 
 	/** From saleRespository.search (group by)**/
 	public Sale(String title, String isbn, Long sumQuantity, BigDecimal sumSellPrice, String publisherName) {
@@ -389,7 +389,7 @@ public class Sale extends AbstractEntity {
 		setDiscountedPrice(discountedPrice);
 
 		BigDecimal vatAmount =  //Is this vat on sell price or discounted price
-				getSellPrice()
+				discountedPrice
 				.multiply(getStockItem().getVat())
 				.divide(new BigDecimal(100));
 		setVatAmount(vatAmount);

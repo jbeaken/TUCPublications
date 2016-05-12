@@ -49,7 +49,7 @@ public class InvoiceOrderLine extends DiscountedOrderLine {
 		this();
 		setStockItem(stockItem);
 		setSellPrice(getStockItem().getSellPrice());
-		BigDecimal  discount = calculateDiscount(stockItem, customer);
+		BigDecimal discount = calculateDiscount(stockItem, customer);
 		setDiscount(discount);
 		calculate();
 	}
@@ -61,7 +61,7 @@ public class InvoiceOrderLine extends DiscountedOrderLine {
 		setStockItem(stockItem);
 //		setSellPrice(getStockItem().getSellPrice());
 		getSale().setQuantity(customerOrderLine.getAmount());
-		BigDecimal  discount = calculateDiscount(stockItem, customer);
+		BigDecimal discount = calculateDiscount(stockItem, customer);
 		setDiscount(discount);
 	}
 
@@ -70,10 +70,11 @@ public class InvoiceOrderLine extends DiscountedOrderLine {
 				getSellPrice()
 				.multiply(new BigDecimal(100).subtract(getDiscount()))
 				.divide(new BigDecimal(100));
+
 		setDiscountedPrice(discountedPrice);
 
 		BigDecimal vatAmount =  //Is this vat on sell price or discounted price
-				getSellPrice()
+				discountedPrice
 				.multiply(getStockItem().getVat())
 				.divide(new BigDecimal(100));
 //		BigDecimal totalPrice = getDiscountedPrice().multiply(new BigDecimal(getAmount()));
