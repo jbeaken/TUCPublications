@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="en_GB" />
 <style type="text/css">
 thead tr {
 	background-color: #b0bf23;
@@ -18,15 +19,15 @@ tr.tableRowEven,tr.even {
         <div class="row">
           <div class="column w-100-percent">
 				<label>Edit Invoice for</label> ${invoice.customer.fullName}<br/>
-				<label>Current Balance :</label> 
+				<label>Current Balance :</label>
 				<c:if test="${invoice.customer.bookmarksAccount.currentBalance == null}">No Account</c:if>
 				<c:if test="${invoice.customer.bookmarksAccount.currentBalance != null}">&pound;${invoice.customer.bookmarksAccount.currentBalance}</c:if><br/>
 				<label>ID :</label> ${invoice.id} <br/>
 				<label>Customer Type :</label> ${invoice.customer.customerType.displayName}<br/>
-				<label>Delivery Type :</label> ${invoice.deliveryType.displayName}<br/>	
+				<label>Delivery Type :</label> ${invoice.deliveryType.displayName}<br/>
 	  	 </div>
-	  	</div>	
-</div>	
+	  	</div>
+</div>
 <form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/edit" method="post">
 <form:hidden path="id"/>
 <form:hidden path="note"/>
@@ -54,31 +55,31 @@ tr.tableRowEven,tr.even {
 		 		<c:if test="${invoice.deliveryType == 'MAIL'}">
 					<a href="${pageContext.request.contextPath}/invoice/setAsCollection">
 						<button type="button" class="btn btn-primary">Set As Collection</button>
-					</a> 
+					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == true}">
 					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=false">
 						<button class="btn btn-danger" type="button">Set As Unpaid</button>
-					</a> 
+					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == false}">
 					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=true">
 						<button class="btn btn-primary" type="button">Set As Paid</button>
-					</a> 
-				</c:if>					
+					</a>
+				</c:if>
 		 		<c:if test="${invoice.deliveryType == 'COLLECTION'}">
 					<a href="${pageContext.request.contextPath}/invoice/setAsMail">
 						<button type="button" class="btn btn-primary">Set As Mail Delivery</button>
-					</a> 
-				</c:if>			 		
+					</a>
+				</c:if>
 		 		<a href="${pageContext.request.contextPath}/invoice/cancel">
 		 			<button type="button" class="btn btn-primary">Cancel</button>
-		 		</a> 				
+		 		</a>
 	 	 </div>
-	</div>					
+	</div>
 </div>
 </form:form>
-</c:if>		
+</c:if>
 <c:if test="${secondHandPrice != null}">
 <legend>Second Hand</legend>
 <form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/addAdditionalCharges" method="post">
@@ -98,13 +99,13 @@ tr.tableRowEven,tr.even {
 		 				<form:label for="serviceCharge" path="serviceCharge">Service Charge</form:label><br/>
 		 				<form:input for="serviceCharge" path="serviceCharge" id="focus"/>&nbsp;<form:errors path="serviceCharge" />
 			 	 </div>
-			</div>		
+			</div>
 		      <div class="row">
 		          <div class="column w-100-percent">
 		 				<input type="submit" class="btn btn-primary"/>
 			 	 </div>
-			</div>		
-		</div>					
+			</div>
+		</div>
 </form:form>
 </c:if>
 <c:if test="${saleToEdit != null}">
@@ -118,7 +119,7 @@ tr.tableRowEven,tr.even {
 	<form:hidden path="stockItem.isbn"/>
 	<form:hidden path="stockItem.quantityInStock"/>
 	<form:hidden path="stockItem.quantityToKeepInStock"/>
-	<form:hidden path="stockItem.keepInStockLevel"/>	
+	<form:hidden path="stockItem.keepInStockLevel"/>
 	<form:hidden path="sellPrice"/>
 	<form:hidden path="discountHasBeenOverridden"/>
 	<form:hidden path="discount"/>
@@ -139,8 +140,8 @@ tr.tableRowEven,tr.even {
 		          		<br/>
 		 				<input type="submit" class="btn btn-primary"/>
 			 	 </div>
-			</div>		
-		</div>					
+			</div>
+		</div>
 </form:form>
 </c:if>
 <c:if test="${saleToEdit == null && secondHandPrice == null}">
@@ -148,10 +149,10 @@ tr.tableRowEven,tr.even {
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">
-				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/> 
-				<form:input path="stockItem.isbn" id="focus" /> 
+				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/>
+				<form:input path="stockItem.isbn" id="focus" />
 				<form:errors path="stockItem.isbn" />
-				<input type="submit" class="btn btn-primary"/>			
+				<input type="submit" class="btn btn-primary"/>
 	  	 </div>
 	  	</div>
 </div>
@@ -160,8 +161,8 @@ tr.tableRowEven,tr.even {
 <br/>
 </c:if>
 <c:if test="${saleToEdit == null && secondHandPrice == null && saleList != null}">
-	<display:table 
-		name="saleList" 
+	<display:table
+		name="saleList"
 		decorator="org.bookmarks.ui.InvoiceOrderLineDecorator">
 	  <display:column property="stockItem.isbn" title="ISBN"/>
 	  <display:column title="Image">
@@ -170,8 +171,8 @@ tr.tableRowEven,tr.even {
 	    </c:if>
 	    <c:if test="${searchTable.stockItem.imageURL == null}">
 	      No Image
-	    </c:if>    
-	</display:column>	
+	    </c:if>
+	</display:column>
 	  <display:column property="stockItem.title" title="Title"/>
 	  <display:column property="quantity" title="Quantity"/>
 	  <display:column property="vat" title="VAT"/>
@@ -194,6 +195,6 @@ tr.tableRowEven,tr.even {
 	          <div class="column w-10-percent">
 	 				<fmt:formatNumber value="${newBalance}" type="currency" />
 		 	 </div>
-	  </div>  
-</div>	 
+	  </div>
+</div>
 </c:if>

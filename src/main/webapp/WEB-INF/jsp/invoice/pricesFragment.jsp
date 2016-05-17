@@ -1,12 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<fmt:setLocale value="en_GB" scope="application"/>
+<fmt:setLocale value="en_GB" scope="session"/>
 
         <div class="row">
 	          <div class="column w-20-percent">
 	 				<label>2nd Hand :</label>
 		 	 </div>
 	          <div class="column w-10-percent">
-	 				<fmt:formatNumber value="${invoice.secondHandPrice}" type="currency" />
+	 				<fmt:formatNumber value="${invoice.secondHandPrice}" currencyCode="GBP" type="currency" />
 		 	 </div>
 	  </div>
         <div class="row">

@@ -4,12 +4,6 @@ mkdir /home/git
 cd /home/git
 git clone ssh://git@109.109.239.50:2298/home/git/bookmarks bookmarks
 
-# Install git
-apt-get -y install git
-mkdir /home/git
-cd /home/git
-git clone ssh://git@109.109.239.50:2298/home/git/bookmarks bookmarks
-
 # Build (Maven)
 wget www.mirrorservice.org/sites/ftp.apache.org/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar xf apache-maven-3.3.9-bin.tar.gz -C /opt
