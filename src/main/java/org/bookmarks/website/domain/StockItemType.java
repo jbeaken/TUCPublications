@@ -8,6 +8,7 @@ public enum StockItemType {
 	BOOKMARK("Bookmark"),
 	BUST("Bust"),
 	CALENDAR("Calendar"),
+	COASTER("Coaster"),
 	CARD("Card"),
 	CD("CD"),
 	DIARY("Diary"),
