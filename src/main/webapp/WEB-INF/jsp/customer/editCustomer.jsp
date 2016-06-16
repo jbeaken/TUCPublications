@@ -8,7 +8,7 @@
 		  	<form:hidden path="note"/>
 			<form:hidden path="bookmarksAccount.openingBalance"/>
 			<form:hidden path="bookmarksAccount.currentBalance"/>
-			<form:hidden path="bookmarksAccount.comment"/>
+
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">
@@ -92,6 +92,10 @@
 		  <div class="column w-33-percent">
                                         <form:label for="nonBookmarksDiscount" path="nonBookmarksDiscount" cssErrorClass="error">Non Bookmarks Discount</form:label><br/>
                                         <form:input path="nonBookmarksDiscount" /> <form:errors path="nonBookmarksDiscount" />
+		  </div>
+			<div class="column w-33-percent">
+                                        <label>Account Comment</label><br/>
+                                        <form:input path="bookmarksAccount.comment" /> <form:errors path="bookmarksAccount.comment" />
 		  </div>
 	</div>
       <div class="row">
