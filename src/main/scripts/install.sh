@@ -1,9 +1,3 @@
-# Install git
-apt-get -y install git
-mkdir /home/git
-cd /home/git
-git clone ssh://git@109.109.239.50:2298/home/git/bookmarks bookmarks
-
 # Install Java
 # Accept license automatically
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -22,26 +16,26 @@ mkdir /home/git
 git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
 
 # Tomcat
-wget -P /opt http://www.mirror.vorboss.net/apache/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz
-tar  -xzC /opt -f /opt/apache-tomcat-8.0.33.tar.gz
-ln -s /opt/apache-tomcat-8.0.33 /opt/tomcat
-rm -rf /opt/tomcat/webapps/*
-cp /home/git/bookmarks/src/main/scripts/server.xml /opt/tomcat/conf/server.xml
-cp /home/git/bookmarks/src/main/scripts/setenv.sh /opt/tomcat/bin/setenv.sh
+# wget -P /usr/local/share http://www.mirror.vorboss.net/apache/tomcat/tomcat-8/v8.0.33/bin/apache-tomcat-8.0.33.tar.gz
+# tar  -xzf /usr/local/share/apache-tomcat-8.0.33.tar.gz -C /usr/local/share
+# ln -s /usr/local/share/apache-tomcat-8.0.33 /usr/local/share/tomcat
+# rm -rf /usr/local/share/tomcat/webapps/*
+# cp /home/git/bookmarks/src/main/scripts/server.xml /usr/local/share/tomcat/conf/server.xml
+# cp /home/git/bookmarks/src/main/scripts/setenv.sh /usr/local/share/tomcat/bin/setenv.sh
 
 # Maven
-wget -P /opt ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-tar -xzC /opt -f /opt/apache-maven-3.3.9-bin.tar.gz
-ln -s /opt/apache-maven-3.3.9 /opt/maven
+wget -P /usr/local/share ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+tar -xzC /usr/local/share -f /usr/local/share/apache-maven-3.3.9-bin.tar.gz
+ln -s /usr/local/share/apache-maven-3.3.9 /usr/local/share/maven
 
 # Mysql
 apt-get -y install mysql-server
 
 # Download bookmarks database.
-mkdir -p /home/bookmarks/logs
-DAY_OF_WEEK=$(date +"%a")
-FILENAME=$DAY_OF_WEEK
-wget -P /home/bookmarks ftp://u34059913-kevin:obama08elected@217.160.101.49/backup/bm.$FILENAME.sql.gpg
+# mkdir -p /home/bookmarks/logs
+# DAY_OF_WEEK=$(date +"%a")
+# FILENAME=$DAY_OF_WEEK
+# wget -P /home/bookmarks ftp://u34059913-kevin:obama08elected@217.160.101.49/backup/bm.$FILENAME.sql.gpg
 
 # Import bookmarks database
 # THIS REQUIRES THE INFO@BOOKMARKSBOOKSHOP.CO.UK PRIVATE KEY TO BE INSTALLED.
@@ -52,13 +46,13 @@ wget -P /home/bookmarks ftp://u34059913-kevin:obama08elected@217.160.101.49/back
 #rm /home/bookmarks/bm.sql
 
 # Build bookmarks
-mkdir /home/bak
-cp /home/git/bookmarks/src/main/resources/spring/application.dev.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties
-sh /home/git/bookmarks/src/main/scripts/build.sh
+# mkdir /home/bak
+#cp /home/git/bookmarks/src/main/resources/spring/application.dev.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties
+# sh /home/git/bookmarks/src/main/scripts/build.sh
 
 # Tomcat systemd
-cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
-systemctl enable tomcat
+# cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
+# systemctl enable tomcat
 
 # Static ip
 # /etc/network/interfaces

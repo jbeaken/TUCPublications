@@ -8,6 +8,7 @@
 		  	<form:hidden path="note"/>
 			<form:hidden path="bookmarksAccount.openingBalance"/>
 			<form:hidden path="bookmarksAccount.currentBalance"/>
+			<form:hidden path="bookmarksAccount.comment"/>
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">

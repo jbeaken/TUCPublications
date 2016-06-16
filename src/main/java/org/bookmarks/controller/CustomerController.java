@@ -362,6 +362,7 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		customerService.update(customer);
+		
 		if(flow.equals("invoiceSearch") || flow.equals("customerOrderSearch")) {
 			modelMap.addAttribute("closeWindow", "not null");
 			return "closeWindow";

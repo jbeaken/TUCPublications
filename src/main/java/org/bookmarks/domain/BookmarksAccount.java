@@ -11,16 +11,26 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 @Embeddable
 public class BookmarksAccount implements Serializable{
-	
+
 	@NotNull
 	private Boolean sponsor = false;
-	
+
 	@NotNull
 	private Boolean accountHolder = false;
-	
+
 	private Boolean paysInMonthly = false;
-	
-	private BigDecimal currentBalance = new BigDecimal(0);	
+
+	private String comment;
+
+	private BigDecimal currentBalance = new BigDecimal(0);
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	
 	public BigDecimal getOpeningBalance() {
 		return openingBalance;
@@ -31,7 +41,7 @@ public class BookmarksAccount implements Serializable{
 	}
 
 	private BigDecimal amountPaidInMonthly;
-	
+
 	private BigDecimal openingBalance;
 
 	public Boolean getSponsor() {
@@ -74,6 +84,6 @@ public class BookmarksAccount implements Serializable{
 		this.amountPaidInMonthly = amountPaidInMonthly;
 	}
 
- 
+
 
 }

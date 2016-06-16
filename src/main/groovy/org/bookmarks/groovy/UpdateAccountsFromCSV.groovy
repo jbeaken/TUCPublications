@@ -1,7 +1,7 @@
 // From VT :
 // Display Ledger Balances, customers, copy entire report button,
 // Past into libre calc, save as csv, edit filters, delimiter tab
-/// copy to  /home/bookmarks/accounts.csv 
+/// copy to  /home/bookmarks/accounts.csv
 // Run this script
 
 package org.bookmarks.groovy
@@ -27,9 +27,9 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
   def customerName = fields[0]      //This will be customer id, of blank
 	def customerId = fields[1]      //This will be customer id, of blank
 	def currentBalance = fields[2]
-	def monthlyPayment = fields[3]
-	def monthlyPaymentAsFloat = 0
-	def monthlyMatcher  = (monthlyPayment =~ /£\d{1,2}/)
+	def comment = fields[3]
+	def commentAsFloat = 0
+	def monthlyMatcher  = (comment =~ /£\d{1,2}/)
 
   if(!customerId) {println "Invalid id ${customerId}!";return} //Skip nonsense row
 	if(!currentBalance) {println "Invalid current balance ${currentBalance}!";return} //Skip nonsense row
@@ -44,7 +44,7 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
 	if(monthlyMatcher)	{
 		//println "Have regex match " + monthlyMatcher[0]
-		monthlyPaymentAsFloat = Float.parseFloat(monthlyMatcher[0].replace('£', ''))
+		commentAsFloat = Float.parseFloat(monthlyMatcher[0].replace('£', ''))
 	}
 
 
@@ -52,11 +52,11 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 //	println "customerName : " + customerName
 	println "customerID : " + customerId
 	println "currentBalance : " + currentBalance
-	println "monthlyPayment : " + monthlyPayment
-	println "monthlyPaymentAsFloat : " + monthlyPaymentAsFloat
+	println "comment : " + comment
+	println "commentAsFloat : " + commentAsFloat
 	println "currentBalanceAsFloat : " + currentBalanceAsFloat
 
-	sql.executeUpdate('update customer set currentBalance = ?, amountPaidInMonthly = ? where id=?', [(currentBalanceAsFloat), monthlyPaymentAsFloat, customerId])
+	sql.executeUpdate('update customer set currentBalance = ?, amountPaidInMonthly = ?, comment = ? where id=?', [(currentBalanceAsFloat), commentAsFloat, comment, customerId])
 	count++
   //if(count > 4) System.exit(2)
 } //end splitEachLine
