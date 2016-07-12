@@ -22,9 +22,10 @@ println "found ${isbns.size()} img urls"
 
 def missing = []
 isbns.each {
-  File f = new File("/home/bookmarks/images/original${it}.jpg")
+  def isbn = it[0]
+  File f = new File("/home/bookmarks/images/original/${isbn}.jpg")
   if(f.exists()) return
-  missing << it
+  missing << isbn
 }
 
 println missing
