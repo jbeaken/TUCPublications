@@ -119,55 +119,6 @@ LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `customer`
---
-
-DROP TABLE IF EXISTS `customer`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `customer` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `date_created` datetime DEFAULT NULL,
-  `address1` varchar(255) DEFAULT NULL,
-  `address2` varchar(255) DEFAULT NULL,
-  `address3` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `country` varchar(255) DEFAULT NULL,
-  `postcode` varchar(255) DEFAULT NULL,
-  `beans_id` bigint(20) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `home_number` varchar(255) DEFAULT NULL,
-  `mobile_number` varchar(255) DEFAULT NULL,
-  `work_number` varchar(255) DEFAULT NULL,
-  `credit_card1` varchar(255) DEFAULT NULL,
-  `credit_card2` varchar(255) DEFAULT NULL,
-  `credit_card3` varchar(255) DEFAULT NULL,
-  `credit_card4` varchar(255) DEFAULT NULL,
-  `expiry_month` varchar(255) DEFAULT NULL,
-  `expiry_year` varchar(255) DEFAULT NULL,
-  `name_on_card` varchar(255) DEFAULT NULL,
-  `security_code` varchar(255) DEFAULT NULL,
-  `delivery_type` varchar(255) NOT NULL,
-  `first_name` varchar(55) NOT NULL,
-  `has_been_consumed` bit(1) NOT NULL,
-  `last_name` varchar(55) NOT NULL,
-  `payment_type` varchar(255) NOT NULL,
-  `pending_consumption` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `customer`
---
-
-LOCK TABLES `customer` WRITE;
-/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Table structure for table `event`
 --
@@ -202,40 +153,6 @@ CREATE TABLE `event` (
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `order_line`
---
-
-DROP TABLE IF EXISTS `order_line`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `order_line` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `date_created` datetime DEFAULT NULL,
-  `is_second_hand` bit(1) NOT NULL,
-  `postage` decimal(19,2) DEFAULT NULL,
-  `quantity` int(11) NOT NULL,
-  `sell_price` decimal(19,2) NOT NULL,
-  `web_reference` varchar(255) NOT NULL,
-  `customer_id` bigint(20) NOT NULL,
-  `stock_item` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_3o5umo9vljpmas3s0gipm19m6` (`customer_id`),
-  KEY `FK_1ulg0qibm67hamjfx0sm430rd` (`stock_item`),
-  CONSTRAINT `FK_1ulg0qibm67hamjfx0sm430rd` FOREIGN KEY (`stock_item`) REFERENCES `stock_item` (`id`),
-  CONSTRAINT `FK_3o5umo9vljpmas3s0gipm19m6` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `order_line`
---
-
-LOCK TABLES `order_line` WRITE;
-/*!40000 ALTER TABLE `order_line` DISABLE KEYS */;
-/*!40000 ALTER TABLE `order_line` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

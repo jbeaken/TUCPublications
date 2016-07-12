@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <head>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<link href="/bookmarks/resources/js/select2/select2.min.css" rel="stylesheet" />
+<script src="/bookmarks/resources/js/select2/select2.full.min.js"></script>
 
 <script>
 	$(document).ready(function() {
@@ -12,7 +12,7 @@
 	});
 
 	function sellExtra() {
-		var stockItemid =  $('#extras').val() 
+		var stockItemid =  $('#extras').val()
 
 		document.location.href = '${pageContext.request.contextPath}/sale/sellExtra/' + stockItemid
 	}
@@ -27,21 +27,21 @@
 	  	 </div>
 	          <div class="column w-30-percent">
 					<label>Last Sale Price:</label>
-					<h3><fmt:formatNumber type="currency" currencyCode="GBP" value="${sessionScope.lastSale.sellPrice}"/></h3> 
+					<h3><fmt:formatNumber type="currency" currencyCode="GBP" value="${sessionScope.lastSale.sellPrice}"/></h3>
 		  	 </div>
 	  	</div>
 	     <div class="row">
 	          <div class="column w-70-percent">
 					<label>Total Price:</label>
-					<h2><fmt:formatNumber type="currency" currencyCode="GBP" value="${totalPrice}"/></h2> 
+					<h2><fmt:formatNumber type="currency" currencyCode="GBP" value="${totalPrice}"/></h2>
 		  	</div>
 			<c:if test="${sessionScope.event != null}">
 			<div class="column w-30-percent">
 					<label>Selling for event </label><br/>${sessionScope.event.name}
 		  	</div>
-			</c:if> 
-	  </div>	  
-</div>      
+			</c:if>
+	  </div>
+</div>
 <br/>
 
 <form:form modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/sale/sellByISBN" method="post">
@@ -63,23 +63,23 @@
 					  		</c:forEach>
 					 </select>
 			</div>
-	  	</div>	  	
+	  	</div>
     	<div class="row">
           <div class="column w-100-percent">
  				<input type="submit" id="sellStockSubmitButton" class="btn btn-primary" value="Sell"/>
- 				 <c:if test="${lastSale != null}"> 
+ 				 <c:if test="${lastSale != null}">
 	 				<a href="edit?id=${lastSale.id}&flow=search" tabindex="3">
 	 					<button type="button" class="btn btn-warning" id="editLastSaleButton">Edit Last Sale</button>
 	 				</a>
 	 			</c:if>
 				<a href="${pageContext.request.contextPath}/sale/sellSecondHand" tabindex="4">
 	 				<button type="button" id="sellSecondHandButton" class="btn btn-danger">Sell Second Hand</button>
-	 			</a>	 			
+	 			</a>
 	 	 </div>
-	</div>		
-</div>				
+	</div>
+</div>
 </form:form>
-<br/>	
+<br/>
 <p>
 	<display:table name="saleList" decorator="org.bookmarks.ui.SaleDecorator" id="saleList">
 	  <display:column property="stockItem.isbn" title="ISBN" class="isbn"/>
