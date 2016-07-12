@@ -4,9 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:sec="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security
-	http://www.springframework.org/schema/security/spring-security-4.0.xsd
+	http://www.springframework.org/schema/security/spring-security-4.1.xsd
 	http://www.springframework.org/schema/beans
-  http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
 
 
     <authentication-manager>
@@ -20,12 +20,17 @@
 		<beans:beans profile="dev">
 
 	    <http use-expressions="true" disable-url-rewriting="true">
+					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
+
+					<remember-me key="bookmarksbiggles"/>
 				<!--
-					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
-				-->
 					<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
-					<csrf disabled="true"/>
+				-->
+
+					<csrf disabled="false"/>
+
 	        <form-login />
+
 	        <logout />
 	    </http>
 		</beans:beans>
@@ -37,7 +42,7 @@
 					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
 				-->
 					<intercept-url pattern="/**" access="permitAll" requires-channel="https"/>
-		<csrf disabled="true"/>
+					<csrf disabled="true"/>
 	        <form-login />
 	        <logout />
 	    </http>
