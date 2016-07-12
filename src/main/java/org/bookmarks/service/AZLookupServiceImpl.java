@@ -165,8 +165,9 @@ public class AZLookupServiceImpl implements AZLookupService {
 					stockItem.setCategory(new Category(11l)) ;
 				} else if(text.contains("Music")) {
 					stockItem.setCategory(new Category(20l)) ;
-				} else if(text.contains("Philosophy")) {
-					stockItem.setCategory(new Category(45l)) ;
+				} else {
+					//General politics (default)
+					stockItem.setCategory(new Category(13l)) ;
 				}
 
 				//Override
@@ -195,6 +196,10 @@ public class AZLookupServiceImpl implements AZLookupService {
 				}
 				if(text.contains("Women's Studies")) {
 					stockItem.setCategory(new Category(28l)) ;
+					logger.debug("Have selected Women's category");
+				}
+				if(text.contains("Sport")) {
+					stockItem.setCategory(new Category(44l)) ;
 					logger.debug("Have selected Women's category");
 				}
 
