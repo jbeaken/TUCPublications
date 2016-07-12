@@ -27,7 +27,7 @@
 update bookmarks.stockitem set img_url = null where img_url = 'http://g-ecx.images-amazon.com/images/G/02/misc/no-img-lg-uk.gif';
 
 -- Remove empty ebook urls
-update stockitem set ebook_turnaround_url = null where ebook_turnaround_url = "";
+update bookmarks.stockitem set ebook_turnaround_url = null where ebook_turnaround_url = "";
 
 -- Mugs all have postage of 2.25 (2.15 + 1.75base = 4), and 8 pounds on website
 update bookmarks.stockitem set postage = 2.15 where stockitemtype = 'MUG';
