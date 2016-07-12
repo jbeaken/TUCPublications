@@ -171,7 +171,10 @@ public class AZLookupServiceImpl implements AZLookupService {
 				}
 
 				//Override
-				if(text.contains("Ireland")) {
+
+				if(text.contains("Economics")) {
+					stockItem.setCategory(new Category(9l)) ;
+				}if(text.contains("Ireland")) {
 					stockItem.setCategory(new Category(38l)) ;
 				}
 				if(text.contains("China")) {
