@@ -21,16 +21,18 @@ import com.jcraft.jsch.SftpException;
 
 public interface StockItemService extends Service<StockItem> {
 
+	void removeFromExtras(Long id);
+
 	void updateForReorderReview(StockItem stockItem);
 
 	StockItem get(String isbn);
-	
+
 	Collection<StockItem> searchIndex(StockItemSearchBean searchBean);
 
 	void toggleIsForMarxism(Long id, boolean isForMarxism);
 
 	void updateImageFilename(StockItem stockItem);
-	
+
 	void updateQuantityInStock(StockItem stockItem, Long quantityChange);
 
 	void updateQuantityOnOrder(StockItem stockItem, Long amount);
@@ -48,7 +50,7 @@ public interface StockItemService extends Service<StockItem> {
 	void updateImageURL(StockItem stockItem, String url);
 
 	Long getNextID();
-	
+
 	void updateLastReorderReviewDate(StockItem stockItem, Date date);
 
 	void updateForSupplierDelivery(StockItem stockItem);
@@ -82,11 +84,11 @@ public interface StockItemService extends Service<StockItem> {
 	Collection<StockItem> getNoAZPublishers(Integer offset, Integer noOfResults);
 
 	Collection<String> getISBNsWithPagination(Integer offset, Integer noOfResults);
-	
+
 	Collection<StockItem> getStockItemsWithPagination(Integer offset, Integer noOfResults);
 
 	Collection<StockItem> getUnsynchedWithAZAndIsOnWebsite(Integer offset, Integer noOfResults);
-	
+
 	Collection<StockItem> getUnsynchedWithAZ(Integer offset, Integer noOfResults);
 
 	StockItem getFullStockItemByISBNAsNumber(String isbn);

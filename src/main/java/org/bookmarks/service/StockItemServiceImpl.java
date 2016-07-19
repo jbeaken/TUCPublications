@@ -73,32 +73,32 @@ import static org.imgscalr.Scalr.*;
 
 @Service
 public class StockItemServiceImpl extends AbstractService<StockItem> implements StockItemService {
-	
+
 	@Autowired
 	private SupplierOrderLineService supplierOrderLineService;
 
 	@Autowired
 	private AuthorService authorService;
-	
+
 	@Autowired
 	private PublisherService publisherService;
-	
+
 	@Autowired
-	private ChipsService chipsService;	
-	
+	private ChipsService chipsService;
+
 	@Autowired
 	private StaticDataService staticDataService;
-	
+
 	@Value("#{ applicationProperties['imageFileLocation'] }")
 	private String imageFileLocation;
-	
+
 	@Value("#{ applicationProperties['imageLocalURL'] }")
 	private String imageLocalURL;
-	
+
 	@Override
 	public Collection<StockItem> search(SearchBean searchBean) {
 		Collection<StockItem> stockItems =  getRepository().search(searchBean);
-		
+
 		//Get authors
 		for(StockItem si : stockItems) {
 			Collection<Author> authors = authorService.findByStockItem(si);
@@ -106,22 +106,26 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 			si.setAuthors(a);
 		}
 		return stockItems;
-	}	
-	
+	}
+
+	@Override
+	public void removeFromExtras(Long id) {
+		stockItemRepository.removeFromExtras( id );
+	}
 
 	@Override
 	public void saveOrUpdate(StockItem stockItem) {
-		
+
 		prepareStockItemForSaveOrUpdate(stockItem);
-		
-//		stockItem = super.merge(stockItem); 
-		
+
+//		stockItem = super.merge(stockItem);
+
 		super.update(stockItem);
-		
+
 		//TO-DO remove, must persist stockItem before persisting sol
 		supplierOrderLineService.reconcileKeepInStock(stockItem, false);
 	}
-	
+
 	private void prepareGeneratedStockItem(StockItem stockItem) {
 		//Need to make up isbn
 		Long nextID = getNextID();
@@ -143,57 +147,57 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	public void updateImageFilename(StockItem stockItem) {
 		stockItemRepository.updateImageFilename(stockItem);
 	}
-	
+
 	private void prepareStockItemForSaveOrUpdate(StockItem stockItem) {
 
 		stockItem.setIsbnAsNumber(Long.parseLong(stockItem.getIsbn()));
 		stockItem.setOriginalTitle(stockItem.getTitle());
-		
+
 		//Why?? Otherwise get object references an unsaved transient instance - save the transient
 		if(stockItem.getPreferredSupplier() == null || stockItem.getPreferredSupplier().getId() == null) {
-			stockItem.setPreferredSupplier(null); 
+			stockItem.setPreferredSupplier(null);
 		}
-		
+
 		//Postage
 		if(stockItem.getPostage() == null) {
 			if(stockItem.getType() == StockItemType.PAMPHLET) {
 				stockItem.setPostage(new BigDecimal(0.25));
 			} else stockItem.setPostage(new BigDecimal(0.75));
 		}
-		
+
 		//Remove tags from review
-/*		String reviewAsText = stockItem.getReviewAsText();		
+/*		String reviewAsText = stockItem.getReviewAsText();
 		if(reviewAsText != null) {
 			String escapedText = Jsoup.parse(reviewAsText).html();
 			String htmlText = Jsoup.parse(reviewAsText).text();
 			//stockItem.setReviewAsText(reviewAsText);
 		}*/
-		
-		String reviewAsText = stockItem.getReviewAsText();		
+
+		String reviewAsText = stockItem.getReviewAsText();
 		if(reviewAsText == null || reviewAsText.isEmpty()) {
 			stockItem.setReviewAsText(null);
 		}
-		
-		String reviewAsHTML = stockItem.getReviewAsHTML();		
+
+		String reviewAsHTML = stockItem.getReviewAsHTML();
 		if(reviewAsHTML == null || reviewAsHTML.isEmpty()) {
 			stockItem.setReviewAsHTML(null);
-		}		
-		
+		}
+
 		//Sort out images
 		if(stockItem.getImageFilename() != null && stockItem.getImageFilename().isEmpty()) {
 			stockItem.setImageFilename(null);
 		}
 		if(stockItem.getImageURL() != null && stockItem.getImageURL().isEmpty()) {
 			stockItem.setImageURL(null);
-		}		
-		
+		}
+
 		//Binding
 		if(!stockItem.isBook()) {
 			stockItem.setBinding(Binding.OTHER);
 		}
-		
+
 		stockItem.setLastReorderReviewDate(new Date());
-	}	
+	}
 
 	@Autowired
 	private StockItemImageService stockItemImageService;
@@ -201,12 +205,12 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	public void setStockItemRepository(StockItemRepository stockItemRepository) {
 		this.stockItemRepository = stockItemRepository;
 	}
-	
+
 	@Override
 	public Collection<StockItem> searchIndex(StockItemSearchBean searchBean) {
 		return stockItemRepository.searchIndex(searchBean);
 	}
-	
+
 	@Override
 	public void buildIndex() {
 		stockItemRepository.buildIndex();
@@ -214,11 +218,11 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 
 	@Autowired
 	private StockItemRepository stockItemRepository;
-	
+
 	public StockItemServiceImpl() {
 		super();
 	}
-	
+
 	public StockItemServiceImpl(StockItemRepository stockItemRepository) {
 		this();
 		this.stockItemRepository = stockItemRepository;
@@ -237,18 +241,18 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	@Override
 	public void toggleIsForMarxism(Long id, boolean isForMarxism) {
 	}
-	
+
 	@Override
 	public StockItem getByISBNAsNumber(Long isbn) {
 		return stockItemRepository.getByISBNAsNumber(isbn);
 	}
-	
+
 
 	@Override
 	public StockItem getByISBNAsNumber(String isbn) {
 		Long isbnAsNumber = Long.parseLong(isbn);
 		return getByISBNAsNumber(isbnAsNumber);
-	}	
+	}
 
 	@Override
 	public void updateQuantityInStock(StockItem stockItem, Long quantityChange) {
@@ -269,19 +273,19 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 
 	@Override
 	public void updateQuantityOnOrder(StockItem stockItem, Long quantityChange) {
-		stockItemRepository.updateQuantityOnOrder(stockItem, quantityChange);		
+		stockItemRepository.updateQuantityOnOrder(stockItem, quantityChange);
 	}
 
 	@Override
 	public void updateQuantityOnOrderAbsolutely(StockItem stockItem, Long quantityChange) {
-		stockItemRepository.updateQuantityOnOrderAbsolutely(stockItem, quantityChange);		
-	}	
+		stockItemRepository.updateQuantityOnOrderAbsolutely(stockItem, quantityChange);
+	}
 
 	@Override
 	public void updateForSupplierDelivery(StockItem stockItem) {
-		stockItemRepository.updateForSupplierDelivery(stockItem);		
+		stockItemRepository.updateForSupplierDelivery(stockItem);
 	}
-	
+
 	@Override
 	public String getImageURL(StockItem stockItem) {
 		String imageURL = stockItemImageService.getImageURL(stockItem.getIsbn());
@@ -320,7 +324,7 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	@Override
 	public void updateForReorderReview(StockItem stockItem) {
 		stockItemRepository.updateForReorderReview(stockItem);
-	}	
+	}
 
 	@Override
 	public void updatePreferredSupplier(StockItem stockItem, Supplier supplier) {
@@ -328,13 +332,13 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	}
 
 	@Override
-	public void updateQuantities(StockItem stockItem, 
+	public void updateQuantities(StockItem stockItem,
 		    Long quantityInStock,
-			Long quantityOnLoan, 
+			Long quantityOnLoan,
 			Long quantityOnOrder,
 			Long quantityForCustomerOrder,
 			Long quantityReadyForCustomer) {
-			stockItemRepository.updateQuantities(stockItem, quantityInStock, quantityOnLoan, quantityOnOrder, quantityForCustomerOrder, quantityReadyForCustomer);		
+			stockItemRepository.updateQuantities(stockItem, quantityInStock, quantityOnLoan, quantityOnOrder, quantityForCustomerOrder, quantityReadyForCustomer);
 	}
 
 	@Override
@@ -362,18 +366,18 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	@Override
 	public void updateSyncedWithAZ(StockItem si, Boolean false1) {
 		stockItemRepository.updateSyncedWithAZ(si, false);
-		
+
 	}
 
 	@Override
 	public Collection<StockItem> getUnsynchedWithAZAndIsOnWebsite(Integer offset,	Integer noOfResults) {
 		return stockItemRepository.getUnsynchedWithAZAndIsOnWebsite(offset, noOfResults);
 	}
-	
+
 	@Override
 	public Collection<StockItem> getUnsynchedWithAZ(Integer offset,	Integer noOfResults) {
 		return stockItemRepository.getUnsynchedWithAZ(offset, noOfResults);
-	}	
+	}
 
 	/**
 	 * Persist a new stockitem to the db. If putOnWebsite and putImageOnWebsite
@@ -384,25 +388,25 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 		if(stockItem.getGenerateISBN() == true) {
 			prepareGeneratedStockItem(stockItem);
 		} else stockItem.convertToISBN13();
-		
+
 		prepareStockItemForSaveOrUpdate(stockItem);
-		
-		stockItem.setSyncedWithAZ(true); 
-		
+
+		stockItem.setSyncedWithAZ(true);
+
 		//Publisher publisher = publisherService.get(stockItem.getPublisher().getId());
 		//stockItem.setPublisher(publisher);
 //		persistAuthors(stockItem);
 //		persitAZPublisher(stockItem);
 
 		super.save(stockItem);
-		
+
 		//May have added a new publisher
 		staticDataService.resetPublishers();
-		
+
 		//TODO remove, must persist stockItem before persisting sol
 		supplierOrderLineService.reconcileKeepInStock(stockItem, false);
 	}
-	
+
 
 
 	/**
@@ -482,31 +486,31 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	public void saveStickies(List<StockItem> stockItems, StockItemType type) {
 		//Reset stickies
 		stockItemRepository.resetStickies(type);
-		
+
 		//Go through stockitems, saving index as stickyCategory
 		Long index = (long) stockItems.size();
 		for(StockItem si : stockItems) {
 			stockItemRepository.saveSticky(si, index--);
 		}
-		
+
 	}
 
 	@Override
 	public List<StockItem> getBounciesAndStickies() {
 		return stockItemRepository.getBounciesAndStickies();
 	}
-	
+
 	@Override
 	public void saveBouncies(List<StockItem> stockItems) {
 		//Reset bouncies
 		stockItemRepository.resetBouncies();
-		
+
 		//Go through stockitems, saving index as stickyCategory
 		Long index = (long) stockItems.size();
 		for(StockItem si : stockItems) {
 			stockItemRepository.saveBouncy(si, index--);
 		}
-		
+
 //		//Now resize and crop
 //		for(StockItem si : stockItems) {
 //			stockItemRepository.saveBouncy(si, index--);
@@ -515,16 +519,16 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 //				File imageFile = new File(imageFileLocation + File.separator + si.getImageFilename());
 //
 //				image = ImageIO.read(imageFile);
-//				
+//
 //				BufferedImage croppedImage = resize(image, Method.ULTRA_QUALITY, Scalr.Mode.FIT_TO_WIDTH, 107, 160);
 //				croppedImage = Scalr.crop(croppedImage, 107, 160, Scalr.OP_ANTIALIAS);
-//				
+//
 //				File outputFile = new File(imageFileLocation + File.separator + "bouncy" + File.separator + si.getImageFilename());
 //				if (!imageFile.exists()) {
 //					imageFile.createNewFile();
 //				}
 //				ImageIO.write(croppedImage, "jpg", outputFile);
-//				
+//
 //				image.flush(); //Free up resources
 //			} catch (MalformedURLException e) {
 //				e.printStackTrace();
@@ -535,42 +539,42 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	}
 
 	/**
-	 * From displayStockItemUPloadImage.jsp, upload a image, save it to the filesystem, sftp to chips and then inform chips of 
+	 * From displayStockItemUPloadImage.jsp, upload a image, save it to the filesystem, sftp to chips and then inform chips of
 	 * filename information changes.
 	 */
 	@Override
 	public void addImageToStockItem(StockItem stockItem, MultipartFile file) throws IOException, SftpException, JSchException {
 			InputStream is = file.getInputStream();
-			
+
 			//Normally /home/bookmarks/images/orginal/isbn.jpg
 			File originalFile = new File(imageFileLocation + "original" + File.separator + stockItem.getIsbn() + ".jpg");
-			
+
 			OutputStream os = new FileOutputStream(originalFile);
- 
+
 			// if file doesnt exists, then create it
 			if (!originalFile.exists()) {
 				originalFile.createNewFile();
 			}
-			
+
 			//Save file to beans local file system
 			IOUtils.copy(is, os);
-			
+
 			//Resize
 			BufferedImage originalImage = javax.imageio.ImageIO.read(originalFile);
 			BufferedImage resizedImage = resize(originalImage, Method.ULTRA_QUALITY, Mode.FIT_TO_WIDTH, 150, OP_ANTIALIAS);
 			File outputFile = new File(imageFileLocation + "150" + File.separator + stockItem.getIsbn() + ".jpg");
 			javax.imageio.ImageIO.write(resizedImage, "jpg", outputFile); //Save to local filesystem
-			
+
 			stockItem.setImageFilename(stockItem.getIsbn() + ".jpg");
 			stockItem.setImageURL(imageLocalURL + "original" + File.separator + stockItem.getIsbn() + ".jpg");
-			
+
 			//Now sync if necessary
 			if(stockItem.getPutOnWebsite() == true) {
 				chipsService.syncStockItemWithChips(stockItem);
 			}
-			
+
 			//Everything has gone okay, now update stockitem with filename information
-			updateImageFilename(stockItem); //Save to db			
+			updateImageFilename(stockItem); //Save to db
 	}
 
 	@Override
@@ -582,7 +586,7 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	public boolean exists(String isbn) {
 		return stockItemRepository.exists(isbn);
 	}
-	
+
 	@Override
 	public boolean exists(Long id) {
 		return stockItemRepository.exists(id);
@@ -591,8 +595,8 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	@Override
 	public void setIsAvailableAtSuppliers(String isbn, boolean availability) {
 		stockItemRepository.setIsAvailableAtSuppliers(isbn, availability);
-	}	
-	
+	}
+
 	@Override
 	public void setGardnersStockLevel(String isbn, Long noInStock) {
 		stockItemRepository.setGardnersStockLevel(isbn, noInStock);
@@ -601,7 +605,7 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 	@Override
 	public void resetGardnersStockLevel() {
 		stockItemRepository.resetGardnersStockLevel();
-		
+
 	}
 
 	@Override
@@ -618,24 +622,24 @@ public class StockItemServiceImpl extends AbstractService<StockItem> implements 
 //			list.add(si);
 //		}
 		return stockItems;
-		
+
 	}
 
 
 	@Override
 	public void updateNewReleases(Set<String> newReleasesIsbn) {
-		
+
 		stockItemRepository.resetNewReleases();
-		
+
 		for(String isbn : newReleasesIsbn) {
 			stockItemRepository.setNewRelease(isbn, true);
 		}
-		
+
 	}
 
 
 	@Override
 	public Collection<StockItem> getMerchandise() {
 		return stockItemRepository.getMerchandise();
-	}	
+	}
 }

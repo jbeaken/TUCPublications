@@ -16,16 +16,18 @@ import org.bookmarks.report.bean.DailyReportBean;
 
 public interface StockItemRepository extends Repository<StockItem> {
 
+	void removeFromExtras(Long id);
+
 	void updateForReorderReview(StockItem stockItem);
 
 	void updateImageFilename(StockItem stockItem);
 
 	Collection<StockItem> searchIndex(StockItemSearchBean searchBean);
-	
+
 	StockItem get(String isbn);
-	
+
 	Collection<StockItem> getStockItemsBelowKeepInStockLevel();
-	
+
 	void toggleIsForMarxism(Long id, boolean isForMarxism);
 
 	void updateQuantityInStock(StockItem stockItem, Long quantityChange);

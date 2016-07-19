@@ -128,6 +128,17 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		int result = query.executeUpdate();
 	}
 
+  @Override
+	public void removeFromExtras(Long id) {
+    Query query = sessionFactory
+        .getCurrentSession()
+        .createQuery("update StockItem si set isOnExtras = :isOnExtras" +
+            " where si.id = :id")
+        .setParameter("id", id)
+        .setParameter("isOnExtras", false);
+    int result = query.executeUpdate();
+	}
+
 	@Override
 	public void updateTwentyFourteenSales(StockItem stockItem) {
 		Query query = sessionFactory
