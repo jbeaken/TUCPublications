@@ -12,7 +12,7 @@
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="admin" password="1912" authorities="ROLE_ADMIN" />
+                <user name="${user.username}" password="${user.password}" authorities="ROLE_ADMIN" />
             </user-service>
         </authentication-provider>
     </authentication-manager>
