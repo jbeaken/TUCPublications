@@ -21,7 +21,7 @@
 
 				<a href="${pageContext.request.contextPath}/sale/sellAndGoByISBN?isbn=${searchTable.isbn}"><img src="../resources/images/sell.png" title="Sell" /></a>
 
-				<a href="${pageContext.request.contextPath}/stockItem/removeFromExtras/${searchTable.id}"><img src="../resources/images/delete_medium.png" title="Remove" /></a>
+				<a href="${pageContext.request.contextPath}/stock/removeFromExtras/${searchTable.id}"><img src="../resources/images/delete_medium.png" title="Remove" /></a>
 
 			</display:column>
 
