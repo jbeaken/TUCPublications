@@ -135,6 +135,7 @@ CREATE TABLE `event` (
   `end_time` varchar(255) DEFAULT NULL,
   `entrance_price` float DEFAULT NULL,
   `show_author` bit(1) NOT NULL,
+  `show_bookmarks_address` bit(1) NOT NULL,
   `start_date` datetime NOT NULL,
   `start_time` varchar(255) DEFAULT NULL,
   `stockitem_id` bigint(20) DEFAULT NULL,
