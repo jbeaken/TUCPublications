@@ -52,6 +52,7 @@ public class ChipsController extends AbstractBookmarksController {
 		try {
 			chipsService.updateChips();
 		} catch (Exception e) {
+			logger.error("Cannot update chips ", e);
 			addError("Cannot update chips : " + e.getMessage(), modelMap);
 			return "welcome";
 		}
