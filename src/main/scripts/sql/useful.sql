@@ -1,3 +1,11 @@
+-- Delete event sales
+SET @eventId = ???;
+set foreign_key_checks = 0;
+delete from invoice where id in ( select Invoice_id from invoice_sale where sales_id in (select id from sale where event_id = @eventId) );
+delete from invoice_sale where sales_id in (select id from sale where event_id = @eventId);
+delete from sale where event_id = @eventId;
+set foreign_key_checks = 1;
+
 -- copy over stockrecord
 -- Bookmarks publishers, swp, socialist review, merchandise category
 update bookmarks.stockitem b, mb.stockitem mb
