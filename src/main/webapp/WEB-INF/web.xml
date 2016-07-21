@@ -35,12 +35,13 @@
 	<filter-mapping>
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
-	</filter-mapping>		
+	</filter-mapping>
 
 	<filter-mapping>
 		<filter-name>ResponseOverrideFilter</filter-name>
 		<url-pattern>/stock/search</url-pattern>
 		<url-pattern>/customer/search</url-pattern>
+		<url-pattern>/category/search</url-pattern>
 		<url-pattern>/publisher/search</url-pattern>
 		<url-pattern>/supplier/search</url-pattern>
 		<url-pattern>/saleReport/report</url-pattern>
