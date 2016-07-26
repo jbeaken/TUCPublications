@@ -77,6 +77,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/EventController.java",
 			"settings":
 			{
@@ -149,15 +150,21 @@
 				"buffer_size": 797,
 >>>>>>> 7fbef06... Adding expired session check!
 =======
+=======
+>>>>>>> 0e77192... Google fonts
 			"file": "src/main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp",
 			"settings":
 			{
 				"buffer_size": 3553,
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
@@ -191,15 +198,21 @@
 				"buffer_size": 1581,
 >>>>>>> 58d5adc... asdf
 =======
+=======
+>>>>>>> 0e77192... Google fonts
 			"file": "src/main/java/org/bookmarks/controller/SaleController.java",
 			"settings":
 			{
 				"buffer_size": 13170,
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -346,12 +359,17 @@
 >>>>>>> 58d5adc... asdf
 				"line_ending": "Windows"
 =======
+=======
+>>>>>>> 0e77192... Google fonts
 			"contents": "select\n        stockitem0_.id as col_0_0_,\n        stockitem0_.isbn as col_1_0_,\n        stockitem0_.title as col_2_0_,\n        stockitem0_.stockItemType as col_3_0_ \n    from\n        stockitem stockitem0_ \n    where\n        stockitem0_.is_on_extras=1 \n    order by\n        stockitem0_.stockItemType,\n        stockitem0_.title;\n",
 			"settings":
 			{
 				"buffer_size": 328,
 				"line_ending": "Unix"
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 			}
 		},
 		{
@@ -360,11 +378,16 @@
 			{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				"buffer_size": 26348,
+=======
+				"buffer_size": 3806,
+>>>>>>> 0e77192... Google fonts
 				"line_ending": "Windows"
 			}
 		},
 		{
+<<<<<<< HEAD
 			"file": "src/main/java/org/bookmarks/website/domain/ReadingListStockItem.java",
 			"settings":
 			{
@@ -393,6 +416,11 @@
 			"settings":
 			{
 				"buffer_size": 42923,
+=======
+			"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
+			"settings":
+			{
+				"buffer_size": 42923,
 				"line_ending": "Windows"
 			}
 		},
@@ -401,6 +429,30 @@
 			"settings":
 			{
 				"buffer_size": 23896,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
+			"settings":
+			{
+				"buffer_size": 31126,
+>>>>>>> 0e77192... Google fonts
+				"line_ending": "Windows"
+			}
+		},
+		{
+<<<<<<< HEAD
+			"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
+			"settings":
+			{
+				"buffer_size": 23896,
+=======
+			"file": "pom.xml",
+			"settings":
+			{
+				"buffer_size": 14258,
+>>>>>>> 0e77192... Google fonts
 				"line_ending": "Unix"
 			}
 		}
@@ -438,6 +490,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 =======
 =======
@@ -449,6 +502,8 @@
 =======
 =======
 =======
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/StockItemService.java",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/reorderReview/reorderReview.jsp",
@@ -459,7 +514,10 @@
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles-defs.xml",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/CustomerOrderLineController.java",
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/editCustomerOrderLine.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/SupplierReturnLine.java",
@@ -470,24 +528,36 @@
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/bouncies/manageBouncies.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/BounciesController.java",
 		"/home/git/bookmarks/src/main/resources/spring/application.dev.properties",
+<<<<<<< HEAD
 >>>>>>> 58d5adc... asdf
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/ChipsController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/ChipsServiceImpl.java",
 		"/home/git/bookmarks/src/main/resources/logback.xml",
 		"/home/git/bookmarks/src/main/resources/META-INF/persistence.xml",
 		"/home/git/bookmarks/src/main/resources/spring/business-config.xml",
 		"/home/git/bookmarks/pom.xml",
+<<<<<<< HEAD
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockTakeLineController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/comparator/StockTakeComparator.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/StockTakeLine.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/domain/AbstractEntity.java",
+<<<<<<< HEAD
 >>>>>>> 1f13f79... Adding alternate way to drilldown for az
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/stockItem/editStock.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/SaleOrReturnController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/SaleOrReturnServiceImpl.java",
+<<<<<<< HEAD
 >>>>>>> 9668c83... attempt to fix stockitemcomparator
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/saleOrReturn/searchSaleOrReturns.jsp",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchInvoiceDecorator.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchSaleOrReturnDecorator.java",
@@ -496,15 +566,21 @@
 		"/home/git/bookmarks/src/main/groovy/org/bookmarks/groovy/UpdateAccountsFromCSV.groovy",
 		"/home/till/Brain/accounts.csv",
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 63be499... Added calculate price back in
 =======
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/navbar.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/tiles/header.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/calendar/searchEvents.jsp",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/author/search.jsp",
+<<<<<<< HEAD
 >>>>>>> 9230b24... Adding sor delete
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/SearchEventDecorator.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/uploadSales.jsp",
@@ -522,20 +598,27 @@
 		"/home/git/bookmarks/src/main/webapp/resources/ckeditor/config.js",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/service/EventServiceImpl.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java",
+<<<<<<< HEAD
 >>>>>>> 449d36f... Finisihing
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/editEvent.jsp",
 		"/home/git/bookmarks/pom.xml",
+=======
+		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/events/editEvent.jsp",
+>>>>>>> 0e77192... Google fonts
 		"/home/git/puma/pom.xml",
 		"/home/git/bmw/src/main/webapp/WEB-INF/thymeleaf/public/home.html",
 		"/home/git/paper/grails-app/views/article/create.gsp",
 		"/home/git/paper/grails-app/assets/javascripts/ckconfig.js",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/calendar/view.jsp",
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/StockItemController.java",
 		"/home/git/bookmarks/src/main/java/org/bookmarks/controller/EventController.java",
 		"/home/git/bookmarks/src/main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp",
 =======
 >>>>>>> 9230b24... Adding sor delete
+=======
+>>>>>>> 0e77192... Google fonts
 		"/home/git/bookmarks/bookmarks.sublime-workspace",
 		"/home/svn/bmw/src/main/webapp/WEB-INF/thymeleaf/decorator/sidebar.html",
 		"/home/svn/bmw/src/main/webapp/WEB-INF/thymeleaf/public/sponsor.html",
@@ -566,7 +649,11 @@
 	},
 	"find_in_files":
 	{
+<<<<<<< HEAD
 		"height": 93.0,
+=======
+		"height": 0.0,
+>>>>>>> 0e77192... Google fonts
 		"where_history":
 		[
 			""
@@ -584,6 +671,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 			"edit",
@@ -594,12 +682,19 @@
 =======
 =======
 =======
+=======
+			"castle",
+			"drilldow",
+>>>>>>> 0e77192... Google fonts
 			"sellSingleStockItem",
 			"redirect",
 			"extra",
 			"Logger",
 			"<select",
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 			"getLandingPageDocument",
 			"getDrilldownPageDocument",
 			"		\n",
@@ -611,26 +706,38 @@
 			"getDrilldownPageDocument",
 			"getImageUrlFromDocument",
 			"drilldo",
+<<<<<<< HEAD
 >>>>>>> 7fbef06... Adding expired session check!
 			"known_hosts",
 >>>>>>> 1f13f79... Adding alternate way to drilldown for az
+=======
+			"known_hosts",
+>>>>>>> 0e77192... Google fonts
 			"stockTakeComparator",
 			"	\n",
 			"stockTakeComparator",
 			"fillStockTakeLineModel",
 			"stockTakeComparator",
 			"lookUpFromAZ",
+<<<<<<< HEAD
 >>>>>>> 9668c83... attempt to fix stockitemcomparator
 			"edit",
 			"delete",
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+			"edit",
+			"delete",
+>>>>>>> 0e77192... Google fonts
 			"column w-33-percent",
 			"EVent",
 			"List",
 			"BigDecimal",
 			"CSVFormat",
 			"logger",
+<<<<<<< HEAD
 >>>>>>> 449d36f... Finisihing
+=======
+>>>>>>> 0e77192... Google fonts
 			"addSuc",
 			"removeTheAndAnd",
 			"prepare",
@@ -657,7 +764,11 @@
 			"init"
 		],
 		"highlight": true,
+<<<<<<< HEAD
 		"in_selection": true,
+=======
+		"in_selection": false,
+>>>>>>> 0e77192... Google fonts
 		"preserve_case": false,
 		"regex": false,
 		"replace_history":
@@ -679,11 +790,16 @@
 	"groups":
 	[
 		{
+<<<<<<< HEAD
 			"selected": 5,
+=======
+			"selected": 7,
+>>>>>>> 0e77192... Google fonts
 			"sheets":
 			[
 				{
 					"buffer": 0,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -933,6 +1049,9 @@
 =======
 					"file": "src/main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp",
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+					"file": "src/main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp",
+>>>>>>> 0e77192... Google fonts
 					"settings":
 					{
 						"buffer_size": 3553,
@@ -975,6 +1094,7 @@
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1341,12 +1461,17 @@
 						"translation.y": 0.0,
 >>>>>>> 7fbef06... Adding expired session check!
 =======
+=======
+>>>>>>> 0e77192... Google fonts
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 5059.0,
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1357,20 +1482,30 @@
 					{
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 						"buffer_size": 31037,
+=======
+						"buffer_size": 328,
+>>>>>>> 0e77192... Google fonts
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								24757,
 								24757
+=======
+								0,
+								0
+>>>>>>> 0e77192... Google fonts
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Java/Java.tmLanguage",
+<<<<<<< HEAD
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -1383,12 +1518,20 @@
 >>>>>>> 1f13f79... Adding alternate way to drilldown for az
 =======
 						"translation.y": 10849.0,
+=======
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+>>>>>>> 0e77192... Google fonts
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+<<<<<<< HEAD
 					"file": "src/main/resources/spring/application.dev.properties",
 					"settings":
 					{
@@ -1399,46 +1542,78 @@
 =======
 						"buffer_size": 328,
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepository.java",
+					"settings":
+					{
+						"buffer_size": 3806,
+>>>>>>> 0e77192... Google fonts
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								0,
 								0
+=======
+								774,
+								774
+>>>>>>> 0e77192... Google fonts
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 <<<<<<< HEAD
 							"syntax": "Packages/Java/JavaProperties.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+>>>>>>> 0e77192... Google fonts
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 4,
+<<<<<<< HEAD
 					"file": "src/main/java/org/bookmarks/controller/SupplierDeliveryController.java",
 					"settings":
 					{
 						"buffer_size": 26348,
+=======
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
+					"settings":
+					{
+						"buffer_size": 42923,
+>>>>>>> 0e77192... Google fonts
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
 								11546,
 								11546
+=======
+								41022,
+								41022
+>>>>>>> 0e77192... Google fonts
 							]
 						],
 						"settings":
 						{
+<<<<<<< HEAD
 =======
 >>>>>>> 58d5adc... asdf
 							"syntax": "Packages/Java/Java.tmLanguage",
@@ -1447,78 +1622,44 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/main/java/org/bookmarks/repository/StockItemRepository.java",
-					"settings":
-					{
-						"buffer_size": 3806,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								774,
-								774
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
-					"settings":
-					{
-						"buffer_size": 42923,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								41022,
-								41022
-							]
-						],
-						"settings":
-						{
+=======
 							"syntax": "Packages/Java/Java.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 19169.0,
+>>>>>>> 0e77192... Google fonts
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
+<<<<<<< HEAD
+					"buffer": 3,
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepository.java",
+					"settings":
+					{
+						"buffer_size": 3806,
+=======
 					"buffer": 5,
 					"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
 					"settings":
 					{
 						"buffer_size": 23896,
+>>>>>>> 0e77192... Google fonts
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
+<<<<<<< HEAD
+								774,
+								774
+=======
 								23861,
 								23861
+>>>>>>> 0e77192... Google fonts
 							]
 						],
 						"settings":
@@ -1528,6 +1669,98 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+<<<<<<< HEAD
+					"buffer": 4,
+					"file": "src/main/java/org/bookmarks/repository/StockItemRepositoryImpl.java",
+					"settings":
+					{
+						"buffer_size": 42923,
+=======
+					"buffer": 6,
+					"file": "src/main/java/org/bookmarks/service/AZLookupServiceImpl.java",
+					"settings":
+					{
+						"buffer_size": 31126,
+>>>>>>> 0e77192... Google fonts
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+<<<<<<< HEAD
+								41022,
+								41022
+=======
+								8726,
+								8726
+>>>>>>> 0e77192... Google fonts
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+<<<<<<< HEAD
+						"translation.y": 19169.0,
+=======
+						"translation.y": 4243.0,
+>>>>>>> 0e77192... Google fonts
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+<<<<<<< HEAD
+					"buffer": 5,
+					"file": "src/main/java/org/bookmarks/controller/StockItemController.java",
+					"settings":
+					{
+						"buffer_size": 23896,
+=======
+					"buffer": 7,
+					"file": "pom.xml",
+					"settings":
+					{
+						"buffer_size": 14258,
+>>>>>>> 0e77192... Google fonts
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+<<<<<<< HEAD
+								23861,
+								23861
+=======
+								393,
+								393
+>>>>>>> 0e77192... Google fonts
+							]
+						],
+						"settings":
+						{
+<<<<<<< HEAD
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+=======
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 87.0,
+>>>>>>> 0e77192... Google fonts
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1592,6 +1825,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 =======
@@ -1604,6 +1838,12 @@
 =======
 =======
 =======
+=======
+				"azlo",
+				"main/java/org/bookmarks/service/AZLookupServiceImpl.java"
+			],
+			[
+>>>>>>> 0e77192... Google fonts
 				"sicon",
 				"main/java/org/bookmarks/controller/StockItemController.java"
 			],
@@ -1632,7 +1872,10 @@
 				"main/webapp/WEB-INF/jsp/sale/sellStockItem.jsp"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 				"colc",
 				"main/java/org/bookmarks/controller/CustomerOrderLineController.java"
 			],
@@ -1641,7 +1884,10 @@
 				"main/java/org/bookmarks/repository/CustomerOrderLineRepositoryImpl.java"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 4bf6b4e... Fixing by category sale report, now searches not just using dates
+=======
+>>>>>>> 0e77192... Google fonts
 				"tiles",
 				"main/webapp/WEB-INF/tiles-defs.xml"
 			],
@@ -1658,7 +1904,10 @@
 				"main/webapp/WEB-INF/jsp/bouncies/manageBouncies.jsp"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 58d5adc... asdf
+=======
+>>>>>>> 0e77192... Google fonts
 				"readinglist.java",
 				"main/java/org/bookmarks/domain/ReadingList.java"
 			],
@@ -1671,7 +1920,10 @@
 				"main/java/org/bookmarks/controller/SupplierDeliveryController.java"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 6537b95... Removed review from manage bouncies screen
+=======
+>>>>>>> 0e77192... Google fonts
 				"azloo",
 				"main/java/org/bookmarks/service/AZLookupServiceImpl.java"
 			],
@@ -1696,7 +1948,10 @@
 				"main/resources/logback.xml"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 7fbef06... Adding expired session check!
+=======
+>>>>>>> 0e77192... Google fonts
 				"chipsser",
 				"main/java/org/bookmarks/service/ChipsServiceImpl.java"
 			],
@@ -1705,7 +1960,10 @@
 				"main/java/org/bookmarks/controller/ChipsController.java"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 1f13f79... Adding alternate way to drilldown for az
+=======
+>>>>>>> 0e77192... Google fonts
 				"abst",
 				"main/java/org/bookmarks/domain/AbstractEntity.java"
 			],
@@ -1730,7 +1988,10 @@
 				"main/webapp/WEB-INF/jsp/stockItem/editStock.jsp"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 9668c83... attempt to fix stockitemcomparator
+=======
+>>>>>>> 0e77192... Google fonts
 				"searchinvoi",
 				"main/java/org/bookmarks/ui/SearchInvoiceDecorator.java"
 			],
@@ -1760,14 +2021,20 @@
 			],
 			[
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 63be499... Added calculate price back in
 =======
 >>>>>>> db9ff92... Adding getReview to edit screen
+=======
+>>>>>>> 0e77192... Google fonts
 				"searchcust",
 				"main/webapp/WEB-INF/jsp/customerOrderLine/searchCustomerOrderLines.jsp"
 			],
 			[
+<<<<<<< HEAD
 >>>>>>> 18b5828... Updating accounts import
+=======
+>>>>>>> 0e77192... Google fonts
 				"search.jsp",
 				"main/webapp/WEB-INF/jsp/author/search.jsp"
 			],
@@ -1857,6 +2124,7 @@
 			],
 			[
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 449d36f... Finisihing
 				"sicon",
 				"main/java/org/bookmarks/controller/StockItemController.java"
@@ -1864,6 +2132,8 @@
 			[
 =======
 >>>>>>> 924b087... AZ has moved to https, need to adapt
+=======
+>>>>>>> 0e77192... Google fonts
 				"gdc",
 				"main/java/org/bookmarks/ui/comparator/GardnersDeliveryComparator.java"
 			],
