@@ -260,6 +260,23 @@ public class EventController extends AbstractBookmarksController {
 			total = +(s.getQuantity() * s.getSellPrice().floatValue());
 		}
 
+		session.setAttribute("salesForUpload", sales);
+		session.setAttribute("invoicesForUpload", invoiceMap.values());
+		session.setAttribute("eventForUpload", event);
+
+		addSuccess("Have successfully uploaded mini-beans sales totaling " + total + " for " + event.getName(), modelMap);
+
+		return "confirmUploadSales";
+
+	}
+
+	@RequestMapping(value = "/confirmUploadSales", method = RequestMethod.GET)
+	public String confirmUploadSales(HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
+
+		List<Invoice> invoices = (List<Invoice>) session.getAttribute( "invoicesForUpload" );
+		List<Sale> sales = (List<Sale>)session.getAttribute( "salesForUpload" );
+		Event event = (Event)session.getAttribute("eventForUpload");
+
 		// Persist sales
 		for (Sale s : sales) {
 			//Decrements stock level
@@ -267,14 +284,15 @@ public class EventController extends AbstractBookmarksController {
 		}
 
 		// Persist invoices. This will decrement stock as well
-		for (Invoice i : invoiceMap.values()) {
+		for (Invoice i : invoices) {
 			invoiceService.save(i, i.getSales(), null, event);
 		}
 
-		addSuccess("Have successfully uploaded mini-beans sales totaling " + total + " for " + event.getName(), modelMap);
+		//Clear session objects
 
 		return "redirect:/events/search";
 	}
+
 
 	/**
 	 * Text file to upload from mini beans, persist external event sales

@@ -47,7 +47,7 @@
  <definition name="documentation" extends="baseLayout">
       <put-attribute name="title" value="Documentation"/>
       <put-attribute name="body" value="/WEB-INF/jsp/documentation/documentation.jsp"/>
-  </definition>  
+  </definition>
 
 
   <!-- REORDER REVIEW
@@ -420,9 +420,14 @@
       <put-attribute name="body" value="/WEB-INF/jsp/events/viewEvent.jsp"/>
   </definition>
 
-  <definition name="uploadSales" extends="bootstrap3Layout">
+  <definition name="uploadSales" extends="baseLayout">
       <put-attribute name="title" value="Upload Sales"/>
       <put-attribute name="body" value="/WEB-INF/jsp/events/uploadSales.jsp"/>
+  </definition>
+
+  <definition name="confirmUploadSales" extends="baseLayout">
+      <put-attribute name="title" value="Confirm Upload Sales"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/events/confirmUploadSales.jsp"/>
   </definition>
 
   <definition name="viewCalendar" extends="bootstrap3Layout">
