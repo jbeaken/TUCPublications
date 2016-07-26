@@ -6,5 +6,14 @@ def isbns = new File("/home/bookmarks/missing_isbns.csv").text.split(", ")
 
 
 isbns.each {
-  new File('/home/bookmarks/images/original/${it}.jpg').bytes = new File('/home/bookmarks/images/missing/${it}.jpg').bytes
+def filename = "/home/bookmarks/images/missing150/${it}.jpg"
+def original = "/home/bookmarks/images/150/${it}.jpg"
+
+println filename  
+
+def originalfile = new File(original)
+
+if(!originalfile.exists()) return
+
+new File(filename).bytes = new File(original).bytes
 }
