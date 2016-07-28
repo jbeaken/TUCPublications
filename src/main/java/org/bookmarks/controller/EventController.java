@@ -75,6 +75,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.format.number.CurrencyStyleFormatter;
+
 @Controller
 @RequestMapping("/events")
 public class EventController extends AbstractBookmarksController {
@@ -208,10 +210,10 @@ public class EventController extends AbstractBookmarksController {
 			String creationDateStr = record.get(5);
 			String stockItemId = record.get(6);
 
-			System.out.println(creationDateStr);
-			System.out.println(quantity);
-			System.out.println(discount);
-			System.out.println(stockItemId);
+			// System.out.println(creationDateStr);
+			// System.out.println(quantity);
+			// System.out.println(discount);
+			// System.out.println(stockItemId);
 
 			Date creationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(creationDateStr);
 
@@ -257,14 +259,16 @@ public class EventController extends AbstractBookmarksController {
 				throw new BookmarksException("Cannot identify row");
 			}
 
-			total = +(s.getQuantity() * s.getSellPrice().floatValue());
+			total = total + (s.getQuantity() * s.getSellPrice().floatValue());
+			System.out.println( total );
 		}
+		String totalFormatted = new CurrencyStyleFormatter().print( total, java.util.Locale.UK );
 
 		session.setAttribute("salesForUpload", sales);
 		session.setAttribute("invoicesForUpload", invoiceMap.values());
 		session.setAttribute("eventForUpload", event);
 
-		addSuccess("Have successfully uploaded mini-beans sales totaling " + total + " for " + event.getName(), modelMap);
+		addSuccess("Have found sales of value " + totalFormatted + " for " + event.getName() + ". Press confirm to save", modelMap);
 
 		return "confirmUploadSales";
 
@@ -273,7 +277,7 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value = "/confirmUploadSales", method = RequestMethod.GET)
 	public String confirmUploadSales(HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
 
-		List<Invoice> invoices = (List<Invoice>) session.getAttribute( "invoicesForUpload" );
+		Collection<Invoice> invoices = (Collection<Invoice>) session.getAttribute( "invoicesForUpload" );
 		List<Sale> sales = (List<Sale>)session.getAttribute( "salesForUpload" );
 		Event event = (Event)session.getAttribute("eventForUpload");
 

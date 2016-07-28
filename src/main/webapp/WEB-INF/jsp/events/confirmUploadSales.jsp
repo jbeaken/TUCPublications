@@ -12,8 +12,8 @@
 
       <div class="row">
           <div class="column w-33-percent">
-          <c:forEach var="sale" items="${session.salesForUpload}" varStatus="rowCounter">
-              ${sale.stockItem.id}
+          <c:forEach var="sale" items="${sessionScope.salesForUpload}" varStatus="rowCounter">
+              ${sale.stockItem.title}
           </c:forEach>
          </div>
 
@@ -23,7 +23,7 @@
 
         <div class="row">
             <div class="column w-33-percent">
-           <a href="/bookmarks/event/uploadSales" class="btn btn-primary">Upload Sales</a>
+           <a href="${pageContext.request.contextPath}/events/confirmUploadSales" class="btn btn-primary">Confirm</a>
         </div>
     </div>
 
