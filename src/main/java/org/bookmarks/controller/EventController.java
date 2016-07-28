@@ -271,7 +271,6 @@ public class EventController extends AbstractBookmarksController {
 		addSuccess("Have found sales of value " + totalFormatted + " for " + event.getName() + ". Press confirm to save", modelMap);
 
 		return "confirmUploadSales";
-
 	}
 
 	@RequestMapping(value = "/confirmUploadSales", method = RequestMethod.GET)
