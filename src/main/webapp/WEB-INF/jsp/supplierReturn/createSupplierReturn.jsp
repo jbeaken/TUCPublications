@@ -29,11 +29,6 @@
 <form:form modelAttribute="supplierReturnLine" action="../supplierReturn/editSupplierReturnOrderLine" method="post">
   <form:hidden path="id"/>
 	<form:hidden path="stockItem.id"/>
-  <form:hidden path="stockItem.sellPrice"/>
-  <form:hidden path="stockItem.title"/>
-  <form:hidden path="stockItem.isbn"/>
-  <form:hidden path="stockItem.category.name"/>
-  <form:hidden path="stockItem.category.id"/>
 		<div class="rows">
 		  <div class="row">
 
@@ -97,6 +92,6 @@
   					Retail Price : <fmt:formatNumber value="${retailPrice}" type="currency" currencyCode="GBP"/>
   					</c:if>
   					<br/><br/>
-		<button class="btn btn-primary" type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/supplierReturn/create')" id="placeIntoStockButton">Place in stock</button>
+		<button class="btn btn-primary" type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/supplierReturn/create')" id="placeIntoStockButton">Save Supplier Return</button>
 		<a href="${pageContext.request.contextPath}/supplierReturn/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
 </c:if>

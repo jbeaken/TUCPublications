@@ -147,6 +147,10 @@ public class SupplierReturnController extends OrderLineController {
 		Map<Long, SupplierReturnLine> supplierReturnLineMap = (Map<Long, SupplierReturnLine>) session.getAttribute("supplierReturnLinesMap");
 		SupplierReturn supplierReturn = (SupplierReturn) session.getAttribute("supplierReturn");
 
+		//Get stock item
+		StockItem stockItem = stockItemService.get(supplierReturnLine.getStockItem().getId());
+		supplierReturnLine.setStockItem(stockItem);
+
 		//Validate
 		supplierReturnLineValidator.validate(supplierReturnLine, bindingResult);
 		if(bindingResult.hasErrors()) {
@@ -221,7 +225,7 @@ public class SupplierReturnController extends OrderLineController {
 		supplierReturnService.create(supplierReturn);
 
 	  session.removeAttribute("supplierReturnLinesMap");
-		session.removeAttribute("supplierReturn");		
+		session.removeAttribute("supplierReturn");
 
 		return "redirect:displaySearch";
 	}
