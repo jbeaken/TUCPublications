@@ -103,6 +103,8 @@ tr.tableRowEven,tr.even {
 <form:hidden path="customer.bookmarksAccount.currentBalance"/>
 <form:hidden path="customer.bookmarksAccount.accountHolder"/>
 <form:hidden path="customer.bookmarksAccount.amountPaidInMonthly"/>
+<form:hidden path="customer.bookmarksDiscount"/>
+<form:hidden path="customer.nonBookmarksDiscount"/>
 		<div class="rows">
 		      <div class="row">
 		          <div class="column w-50-percent">
