@@ -11,7 +11,7 @@ public class GardnersDeliveryComparator implements Comparator {
 
 		String title1 = prepare(sdl1.getStockItem().getTitle().toLowerCase());
 		String title2 = prepare(sdl2.getStockItem().getTitle().toLowerCase());
-		
+
 		return title1.compareTo(title2);
 	}
 

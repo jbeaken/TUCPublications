@@ -192,8 +192,11 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		}
 
 		//Check a stock with this isbn doesn't already exist
-		StockItem existingStock = stockItemService.getByISBNAsNumber(stockItem.getIsbnAsNumber());
+		logger.info("Checking if stock item with isbn " + stockItem.getIsbn() + " already exists.");
+
+		StockItem existingStock = stockItemService.get(stockItem.getIsbn());
 		if(existingStock != null) {
+			logger.info("Stock item with isbn " + stockItem.getIsbn() + " already exists!");
 			//Abort, and add error message
 			fillStockSearchModel(session, modelMap);
 			addError("ISBN already exists in beans", modelMap);
