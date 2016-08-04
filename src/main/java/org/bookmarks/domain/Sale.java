@@ -304,11 +304,13 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		//Check for overrides
 		if(stockItem.isBookmarksPublication()) { //Bookmarks
 			if(customer.getBookmarksDiscount() != null) {
+				logger.info("This is a bookmarks publication and discount has been overriden");
 				setDiscount(customer.getBookmarksDiscount());
 				return;
 			}
 		} else {
 			if(customer.getNonBookmarksDiscount() != null) {
+				logger.info("This is a non-bookmarks publication and discount has been overriden");
 				setDiscount(customer.getNonBookmarksDiscount());
 				return;
 			}
@@ -387,7 +389,7 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		if(getDiscountHasBeenOverridden() == Boolean.FALSE && calculateDiscount == true) {
 			calculateDiscount(stockItem, invoice);
 		}
-		
+
 		logger.info("In calculate discount for sale");
 		logger.info("StockItem = " + getStockItem().getTitle());
 		logger.info("Discount = " + getDiscount());
