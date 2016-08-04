@@ -19,6 +19,9 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.NumberFormat;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * sellPrice is snap shot of stockItem.sellPrice as later is variable over time
  * discountedPrice is sellPrice * discount
@@ -29,6 +32,8 @@ import org.springframework.format.annotation.NumberFormat;
 @Table(name="sale")
 public class Sale extends AbstractEntity {
 
+@Transient
+private Logger logger = LoggerFactory.getLogger(Sale.class);
 
 	//This is messy!!
 	@Transient //Could argue it should be persisted, on edit it will have to be overriden again
@@ -378,9 +383,14 @@ public class Sale extends AbstractEntity {
 	}
 
 	void calculate(Invoice invoice, boolean calculateDiscount) {
+
 		if(getDiscountHasBeenOverridden() == Boolean.FALSE && calculateDiscount == true) {
 			calculateDiscount(stockItem, invoice);
 		}
+		
+		logger.info("In calculate discount for sale");
+		logger.info("StockItem = " + getStockItem().getTitle());
+		logger.info("Discount = " + getDiscount());
 
 		BigDecimal discountedPrice =
 				getSellPrice()
@@ -393,6 +403,14 @@ public class Sale extends AbstractEntity {
 				.multiply(getStockItem().getVat())
 				.divide(new BigDecimal(100));
 		setVatAmount(vatAmount);
+
+		if(logger.isDebugEnabled()) {
+			logger.debug("In calculate discount for sale");
+			logger.debug("StockItem = " + getStockItem().getTitle());
+			logger.debug("Discount = " + getDiscount());
+			logger.debug("VAT amount = " + getVatAmount());
+			logger.debug("Discounted Price = " + getDiscountedPrice());
+		}
 //		price = price.setScale(2, BigDecimal.ROUND_HALF_DOWN);
 	}
 

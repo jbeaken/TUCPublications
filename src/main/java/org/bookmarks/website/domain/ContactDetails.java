@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
 @Embeddable
-public class ContactDetails {
+public class ContactDetails implements java.io.Serializable {
 
 	@Email @NotNull private String email;
 	

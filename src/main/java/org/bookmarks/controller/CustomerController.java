@@ -160,8 +160,6 @@ public class CustomerController extends AbstractBookmarksController {
 			//
 		}
 
-		logger.info("id " + customerSearchBean.getCustomer().getId() );
-
 		Collection<Customer> customers = customerService.search(customerSearchBean);
 
 		//Don't like, fix for shitty export
@@ -362,7 +360,7 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		customerService.update(customer);
-		
+
 		if(flow.equals("invoiceSearch") || flow.equals("customerOrderSearch")) {
 			modelMap.addAttribute("closeWindow", "not null");
 			return "closeWindow";
