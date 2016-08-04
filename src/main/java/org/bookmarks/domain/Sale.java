@@ -392,6 +392,7 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 
 		logger.info("In calculate discount for sale");
 		logger.info("StockItem = " + getStockItem().getTitle());
+		logger.info("Publisher = " + getStockItem().getPublisher().getId());
 		logger.info("Discount = " + getDiscount());
 
 		BigDecimal discountedPrice =
