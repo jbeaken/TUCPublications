@@ -194,13 +194,13 @@ CREATE TABLE `reading_list_stock_items` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date_created` datetime DEFAULT NULL,
   `position` bigint(20) DEFAULT NULL,
-  `readinglist_id` bigint(20) DEFAULT NULL,
-  `stockitem_id` bigint(20) DEFAULT NULL,
+  `reading_list` bigint(20) DEFAULT NULL,
+  `stock_items` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_6v5o4xqyfnmvvig74m5ajud30` (`readinglist_id`),
-  KEY `FK_8wunn4eyqjd4ijbn70fab3a24` (`stockitem_id`),
-  CONSTRAINT `FK_8wunn4eyqjd4ijbn70fab3a24` FOREIGN KEY (`stockitem_id`) REFERENCES `stock_item` (`id`),
-  CONSTRAINT `FK_6v5o4xqyfnmvvig74m5ajud30` FOREIGN KEY (`readinglist_id`) REFERENCES `reading_list` (`id`)
+  KEY `FK_6v5o4xqyfnmvvig74m5ajud30` (`reading_list`),
+  KEY `FK_8wunn4eyqjd4ijbn70fab3a24` (`stock_items`),
+  CONSTRAINT `FK_8wunn4eyqjd4ijbn70fab3a24` FOREIGN KEY (`stock_items`) REFERENCES `stock_item` (`id`),
+  CONSTRAINT `FK_6v5o4xqyfnmvvig74m5ajud30` FOREIGN KEY (`reading_list`) REFERENCES `reading_list` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

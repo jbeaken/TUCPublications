@@ -172,7 +172,7 @@ delete rl.* from bookmarks.reading_list_stockitem rl left join bookmarks.stockit
 -- Only copy across reading lists on website
 INSERT INTO bmw.reading_list (id, name, is_on_website, is_on_sidebar) select id, name, is_on_website, is_on_sidebar from bookmarks.reading_list brl;
 
-INSERT INTO bmw.reading_list_stock_items (stockitem_id, readinglist_id, position)
+INSERT INTO bmw.reading_list_stock_items (stock_items, reading_list, position)
 	select rlsi.stockItems_id, rlsi.reading_list_id, rlsi.stockItem_idx from bookmarks.reading_list_stockitem rlsi
 	join bookmarks.reading_list brl  on brl.id = rlsi.reading_list_id;
 
