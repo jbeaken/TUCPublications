@@ -184,13 +184,13 @@ LOCK TABLES `reading_list` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `reading_list_stock_item`
+-- Table structure for table `reading_list_stock_items`
 --
 
-DROP TABLE IF EXISTS `reading_list_stock_item`;
+DROP TABLE IF EXISTS `reading_list_stock_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `reading_list_stock_item` (
+CREATE TABLE `reading_list_stock_items` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date_created` datetime DEFAULT NULL,
   `position` bigint(20) DEFAULT NULL,
@@ -205,12 +205,12 @@ CREATE TABLE `reading_list_stock_item` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `reading_list_stock_item`
+-- Dumping data for table `reading_list_stock_items`
 --
 
-LOCK TABLES `reading_list_stock_item` WRITE;
-/*!40000 ALTER TABLE `reading_list_stock_item` DISABLE KEYS */;
-/*!40000 ALTER TABLE `reading_list_stock_item` ENABLE KEYS */;
+LOCK TABLES `reading_list_stock_items` WRITE;
+/*!40000 ALTER TABLE `reading_list_stock_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reading_list_stock_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
