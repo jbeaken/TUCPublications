@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -234,6 +236,8 @@ public class SaleController extends AbstractBookmarksController {
 
 		//Put into sale map
 		saleMap.put(sale.getId(), sale);
+
+		logger.info( "Successfully sold " + ToStringBuilder.reflectionToString(sale) );
 
 		return sale;
 	}

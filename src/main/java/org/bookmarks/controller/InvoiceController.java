@@ -53,12 +53,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	private Logger logger = LoggerFactory.getLogger(InvoiceController.class);
 
 	/**
-	 * From createInvoice.jsp addStock
-	 * @param stockItemSearchBean
-	 * @param request
-	 * @param modelMap
-	 * @param session
-	 * @return
+	 * From createInvoice.jsp 
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/searchStockItems")
@@ -567,13 +562,15 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("orderLineMap", saleMap);
 		session.removeAttribute("isEditInvoice");
 
-		logger.debug("Starting initialisation of invoice for " + customer.getFullName());
+		logger.info("Starting initialisation of invoice for " + customer.getFullName());
 
 		//Check if customer has an account, otherwise warn must be paid or a proforma
 		if(customer.getBookmarksAccount().getAccountHolder() == false) {
-			addInfo("Customer is not an account holder, either edit customer and check account box, or 'set at paid' if you are certain customer has paid", modelMap);
+			logger.info(customer.getFullName() + " is not an account holder");
+			addInfo(customer.getFullName() + " is not an account holder, either edit customer and check account box, or 'set at paid' if you are certain customer has paid", modelMap);
 		} else if(customer.getBookmarksAccount().getCurrentBalance().floatValue() < 0) {
-			addError("Customer is not in credit! Do not save this invoice without approval!", modelMap);
+			logger.info(customer.getFullName() + " is not in credit");
+			addError(customer.getFullName() + " is not in credit! Do not save this invoice without approval!", modelMap);
 		}
 
 		//Place into model

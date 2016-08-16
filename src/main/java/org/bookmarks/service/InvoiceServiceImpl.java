@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.bookmarks.website.domain.Address;
 import org.bookmarks.controller.InvoiceSearchBean;
 import org.bookmarks.domain.Customer;
@@ -53,6 +56,8 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 
 	@Value("#{ applicationProperties['vatNumber'] }")
 	private String vatNumber;
+
+	private Logger logger = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
 	@Override
 	public Invoice get(Invoice e) {
@@ -107,7 +112,11 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 			sale = new Sale(stockItem, invoice);
 			orderLineMap.put(stockItem.getId(), sale);
 		}
+
 		invoice.calculate(orderLineMap.values(), true);
+
+
+		logger.info("Have added " + stockItem.getId() + " : " + stockItem.getTitle() + " to invoice");
 	}
 
 

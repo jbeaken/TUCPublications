@@ -390,10 +390,13 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 			calculateDiscount(stockItem, invoice);
 		}
 
-		logger.info("In calculate discount for sale");
 		logger.info("StockItem = " + getStockItem().getTitle());
+<<<<<<< HEAD
 		
 		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher().getId() ));
+=======
+		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher() .getId() ));
+>>>>>>> e4121ef... Adding logging to invoice creation
 		logger.info("Discount = " + getDiscount());
 
 		BigDecimal discountedPrice =
