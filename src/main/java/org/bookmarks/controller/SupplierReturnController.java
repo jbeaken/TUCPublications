@@ -83,6 +83,14 @@ public class SupplierReturnController extends OrderLineController {
 		return search(supplierReturnSearchBean, request, session, modelMap);
 	}
 
+	@RequestMapping(value="/searchFromSession")
+	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
+		SupplierReturnSearchBean supplierReturnSearchBean = (SupplierReturnSearchBean) session.getAttribute("supplierReturnSearchBean");
+		supplierReturnSearchBean.isFromSession(true);
+		modelMap.addAttribute(supplierReturnSearchBean);
+		return search(supplierReturnSearchBean, request, session, modelMap);
+	}
+
 	@RequestMapping(value="/search")
 	public String search(SupplierReturnSearchBean supplierReturnSearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		setPaginationFromRequest(supplierReturnSearchBean, request);
@@ -95,7 +103,7 @@ public class SupplierReturnController extends OrderLineController {
 		modelMap.addAttribute("searchResultCount", supplierReturnSearchBean.getSearchResultCount());
 
 		//Save for return later
-		session.setAttribute("savedSearchBean", supplierReturnSearchBean);
+		session.setAttribute("supplierReturnSearchBean", supplierReturnSearchBean);
 		return "searchSupplierReturns";
 	}
 

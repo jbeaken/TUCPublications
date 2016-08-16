@@ -17,38 +17,44 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ChipsOrdersManager extends AbstractScheduler {
-	
+
 	@Autowired private EmailService emailService;
-	
+
 	@Autowired private ChipsService chipsService;
-	
+
 	@Autowired private CustomerOrderService customerOrderService;
-	
+
 	@Autowired	private Environment environment;
-	
+
 	private Logger logger = LoggerFactory.getLogger(ChipsOrdersManager.class);
 
 	//Every 30 mins past the hour
 	@Scheduled(cron = "0 30 * * * ?")
 	public void process() throws ClientProtocolException, IOException {
-		
+
 		if(isProduction() == false) return; //Should only run in production
-		
+
 		List<Customer> chipsCustomers = null;
-		
+
 		try {
 			chipsCustomers = chipsService.getOrders();
 		} catch (Exception e) {
-			logger.error("Cannot get orders", e);
+			logger.error("Cannot get orders from chips", e);
 		}
+<<<<<<< HEAD
+=======
+
+		if(chipsCustomers == null) {
+			logger.info("No orders to process, exiting...");
+			return;
+		}
+>>>>>>> 1978e06... Fixing session search for supplier returns
 
 		try {
 			customerOrderService.saveChipsOrders(chipsCustomers);
 		} catch (Exception e) {
 			logger.error("Cannot save orders", e);
 		}
-
-		logger.info("Have retrieved " + chipsCustomers.size() + " orders from chips");
 	}
 
 }

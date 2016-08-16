@@ -277,6 +277,7 @@ public class ChipsServiceImpl implements ChipsService {
 		//Serialise using bookmarks domain object
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		String jsonStockItem = jsonSerializer.include("authors").serialize(stockItem);
+<<<<<<< HEAD
 		
 		logger.info(jsonStockItem);
 		
@@ -304,6 +305,16 @@ public class ChipsServiceImpl implements ChipsService {
 		*/
  		httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 		
+=======
+
+		logger.debug(jsonStockItem);
+
+		// Now post up to chips
+		CloseableHttpClient httpclient = getHttpClient();
+
+		HttpPost httpPost = getHttpPost("/website/syncStockItemFromBeansWithJson", "jsonStockItem", jsonStockItem);
+
+>>>>>>> 1978e06... Fixing session search for supplier returns
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 
 		StatusLine status = response.getStatusLine();
@@ -621,7 +632,9 @@ public class ChipsServiceImpl implements ChipsService {
 		
 =======
 
-		logger.info("Sending json " + eventsAsJson);
+		if(logger.ifDebugEnabled()) {
+			logger.info("Sending json " + eventsAsJson);
+		}
 
 		CloseableHttpClient httpclient = getHttpClient();
 
