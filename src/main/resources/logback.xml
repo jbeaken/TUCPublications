@@ -39,8 +39,14 @@
 
 >>>>>>> aa4a49e... Added spring security
         <logger name="org.hibernate" level="INFO" />
+<<<<<<< HEAD
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="DEBUG" />
         <logger name="org.bookmarks.controller.AuthorController" level="DEBUG" />
+=======
+        <logger name="org.bookmarks" level="INFO" />
+        <logger name="org.bookmarks.service.AZLookupServiceImpl" level="INFO" />
+        <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
+>>>>>>> a6bbbcb... Cleaning up debugging
         <logger name="org.springframework" level="INFO" />
         <logger name="org.springframework.security" level="INFO" />
 

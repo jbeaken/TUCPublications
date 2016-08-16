@@ -531,7 +531,7 @@ private void getPriceAndAvailability(Document doc, StockItem stockItem) {
 	} else {
 		//Try something else, this should replace above at some stage
 		priceSection = doc.select("span#listPriceValue").first();
-		logger.info(doc.text());
+		logger.debug(doc.text());
 		logger.debug(priceSection.html());
 
 		String azprice = doc.select("span#actualPriceValue").text();

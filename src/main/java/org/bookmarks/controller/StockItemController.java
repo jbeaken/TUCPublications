@@ -246,7 +246,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 				addError("Have added stock, but not been able to put on chips: " + e.getMessage(), modelMap);
 			}
 		} else {
-			addWarning("Have successfully added " + stockItem.getTitle() + ", put has not been put on website", modelMap);
+			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website", modelMap);
 		}
 
 		modelMap.addAttribute(stockItem);
