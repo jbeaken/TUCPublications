@@ -135,6 +135,8 @@ tr.tableRowEven,tr.even {
 	<form:hidden path="stockItem.keepInStockLevel"/>
 	<form:hidden path="stockItem.title"/>
 	<form:hidden path="stockItem.isbn"/>
+	<form:hidden path="stockItem.publisher.id"/>
+	<form:hidden path="stockItem.publisher.name"/>
 	<form:hidden path="discountHasBeenOverridden"/>
 	<form:hidden path="discount"/>
 	<form:hidden path="discountedPrice"/>

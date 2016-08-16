@@ -53,7 +53,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	private Logger logger = LoggerFactory.getLogger(InvoiceController.class);
 
 	/**
-	 * From createInvoice.jsp 
+	 * From createInvoice.jsp
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/searchStockItems")
@@ -108,7 +108,10 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	}
 
 	private void fillModel(Invoice invoice,	Map<Long, Sale> saleMap, ModelMap modelMap, boolean calculateDiscount) {
-		invoice.calculate(saleMap.values(), calculateDiscount); //Not necessary all the time, but what the hell;
+		logger.debug("In fillModel");
+		
+		invoice.calculate(saleMap.values(), calculateDiscount);
+
 		if(!invoice.getIsProforma()) {
 			if(invoice.getCustomer().getBookmarksAccount() != null && invoice.getCustomer().getBookmarksAccount().getCurrentBalance() != null) {
 				modelMap.addAttribute("newBalance", invoice.getCustomer().getBookmarksAccount().getCurrentBalance().subtract(invoice.getTotalPrice()));
@@ -450,7 +453,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		}
 		session.setAttribute("invoice", invoice);
 
-		invoice.calculate(saleMap.values(), true);
+		//invoice.calculate(saleMap.values(), true);
 		fillModel(invoice, saleMap, modelMap);
 
 		if(session.getAttribute("isEditInvoice") != null) {
@@ -532,8 +535,9 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		saleMap.remove(id);
 
-		invoice.calculate(saleMap.values(), true);
+		//invoice.calculate(saleMap.values(), true);
 		fillModel(invoice, saleMap, modelMap);
+
 		modelMap.addAttribute(new StockItemSearchBean());
 
 		if(session.getAttribute("isEditInvoice") != null) {
@@ -562,7 +566,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("orderLineMap", saleMap);
 		session.removeAttribute("isEditInvoice");
 
-		logger.info("Starting initialisation of invoice for " + customer.getFullName());
+		logger.info("Starting initialisation of invoice for " + customer.getId() + " : " + customer.getFullName());
 
 		//Check if customer has an account, otherwise warn must be paid or a proforma
 		if(customer.getBookmarksAccount().getAccountHolder() == false) {
@@ -577,6 +581,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		fillModel(invoice, saleMap, modelMap);
 
 		logger.info("Successfully initiated invoice for " + customer.getFullName());
+
 		return "createInvoice";
 	}
 

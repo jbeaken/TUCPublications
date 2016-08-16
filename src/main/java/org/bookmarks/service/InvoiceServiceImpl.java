@@ -113,10 +113,9 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 			orderLineMap.put(stockItem.getId(), sale);
 		}
 
-		invoice.calculate(orderLineMap.values(), true);
+		// invoice.calculate(orderLineMap.values(), true);
 
-
-		logger.info("Have added " + stockItem.getId() + " : " + stockItem.getTitle() + " to invoice");
+		logger.info("Adding to invoice - " + stockItem.getId() + " : " + stockItem.getTitle() );
 	}
 
 
@@ -137,7 +136,7 @@ public class InvoiceServiceImpl extends AbstractService<Invoice> implements Invo
 			}
 			orderLineMap.put(stockItem.getId(), sale);
 		}
-		invoice.calculate(orderLineMap.values(), true);
+		// invoice.calculate(orderLineMap.values(), true);
 	}
 
 

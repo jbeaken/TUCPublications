@@ -189,7 +189,7 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		}
 //		calculateDiscount(stockItem, invoice);
 		setVat(stockItem.getVat());
-		calculate(invoice, true);
+		//calculate(invoice, true);
 	}
 
 
@@ -389,14 +389,18 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		if(getDiscountHasBeenOverridden() == Boolean.FALSE && calculateDiscount == true) {
 			calculateDiscount(stockItem, invoice);
 		}
-
+		
 		logger.info("StockItem = " + getStockItem().getTitle());
+<<<<<<< HEAD
 <<<<<<< HEAD
 		
 		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher().getId() ));
 =======
 		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher() .getId() ));
 >>>>>>> e4121ef... Adding logging to invoice creation
+=======
+		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher().getId() + " : " + getStockItem().getPublisher().getName() ));
+>>>>>>> d0a2049... Adding logging to invoice creation
 		logger.info("Discount = " + getDiscount());
 
 		BigDecimal discountedPrice =

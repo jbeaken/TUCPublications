@@ -3,7 +3,11 @@
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
                 <encoder>
                         <pattern>
+<<<<<<< HEAD
                                 %d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+=======
+                                %d{HH:mm:ss} %-5level %logger{0} - %msg%n
+>>>>>>> d0a2049... Adding logging to invoice creation
                         </pattern>
                 </encoder>
         </appender>
@@ -12,7 +16,7 @@
                 class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>/home/bookmarks/log/bookmarks.log</file>
                 <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-                        <Pattern>%d{yyyy-MM-dd_HH:mm:ss.SSS} [%thread] %-5level %logger{36} -
+                        <Pattern>%d{MM-dd_HH:mm:ss} %-5level %logger{5} -
                                 %msg%n
                         </Pattern>
                 </encoder>
@@ -46,7 +50,11 @@
         <logger name="org.bookmarks" level="INFO" />
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="INFO" />
         <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
+<<<<<<< HEAD
 >>>>>>> a6bbbcb... Cleaning up debugging
+=======
+        <logger name="org.bookmarks.controller.InvoiceController" level="DEBUG" />
+>>>>>>> d0a2049... Adding logging to invoice creation
         <logger name="org.springframework" level="INFO" />
         <logger name="org.springframework.security" level="INFO" />
 
