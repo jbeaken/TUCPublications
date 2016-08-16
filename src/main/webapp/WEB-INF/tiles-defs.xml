@@ -437,28 +437,28 @@
 
  <!-- AUTHOR -->
 
-  <definition name="editAuthor" extends="bootstrap3Layout">
+  <definition name="editAuthor" extends="baseLayout">
       <put-attribute name="title" value="Edit Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/edit.jsp"/>
   </definition>
 
-  <definition name="addAuthor" extends="bootstrap3Layout">
+  <definition name="addAuthor" extends="baseLayout">
       <put-attribute name="title" value="Add Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/add.jsp"/>
   </definition>
 
-  <definition name="searchAuthors" extends="bootstrap3Layout">
+  <definition name="searchAuthors" extends="baseLayout">
       <put-attribute name="title" value="Search Authors"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/search.jsp"/>
   </definition>
 
-  <definition name="moveAndDelete" extends="bootstrap3Layout">
+  <definition name="moveAndDelete" extends="baseLayout">
       <put-attribute name="title" value="View Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/moveAndDelete.jsp"/>
   </definition>
 
 
-  <definition name="viewAuthor" extends="bootstrap3Layout">
+  <definition name="viewAuthor" extends="baseLayout">
       <put-attribute name="title" value="View Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/view.jsp"/>
   </definition>
@@ -529,7 +529,7 @@
       <put-attribute name="body" value="/WEB-INF/jsp/sale/sellStockItem.jsp"/>
   </definition>
 
-  <definition name="displayExtras" extends="bootstrap3Layout">
+  <definition name="displayExtras" extends="baseLayout">
       <put-attribute name="title" value="Sell Extras"/>
       <put-attribute name="body" value="/WEB-INF/jsp/sale/displayExtras.jsp"/>
   </definition>
