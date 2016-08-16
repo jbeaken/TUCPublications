@@ -51,10 +51,14 @@
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="INFO" />
         <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> a6bbbcb... Cleaning up debugging
 =======
         <logger name="org.bookmarks.controller.InvoiceController" level="DEBUG" />
 >>>>>>> d0a2049... Adding logging to invoice creation
+=======
+        <logger name="org.bookmarks.controller.InvoiceController" level="INFO" />
+>>>>>>> c258bd0... Removing debug level from logback
         <logger name="org.springframework" level="INFO" />
         <logger name="org.springframework.security" level="INFO" />
 
