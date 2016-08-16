@@ -16,15 +16,22 @@
                 class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>/home/bookmarks/log/bookmarks.log</file>
                 <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-                        <pattern>
+                        <Pattern>
                                 %d{MM-dd_HH:mm:ss} %-5level %logger{5} - %msg%n
-                        </pattern>
+                        </Pattern>
                 </encoder>
 
                 <triggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
                         <MaxFileSize>200MB</MaxFileSize>
                 </triggeringPolicy>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                        <FileNamePattern>${catalina.base}/logs/testproject.%i.log.zip</FileNamePattern>
+                        <MinIndex>1</MinIndex>
+                        <MaxIndex>10</MaxIndex>
+                </rollingPolicy>
+
         </appender>
 <<<<<<< HEAD
         
