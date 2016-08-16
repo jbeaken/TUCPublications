@@ -430,7 +430,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		logger.info("Successfully created order for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
 		logger.info( ReflectionToStringBuilder.toString(customerOrder) );
-		logger.info("********************");
+
 		//Redirect to search from session
 		session.setAttribute("customerOrderSearchBean", new CustomerOrderLineSearchBean(customerOrder.getCustomer()));
 		return "redirect:/customerOrderLine/searchFromSession";

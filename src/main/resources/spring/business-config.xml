@@ -36,8 +36,13 @@
 	    <property name="javaMailProperties">
 	        <props>
 	            <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+<<<<<<< HEAD
 				<prop key="mail.debug">true</prop> 
 	           <prop key="mail.smtp.auth">true</prop>   
+=======
+				<prop key="mail.debug">false</prop>
+	           <prop key="mail.smtp.auth">true</prop>
+>>>>>>> 8832261... Adding logging to customer order
 	            <!-- Use TLS to encrypt communication with SMTP server -->
 	            <prop key="mail.smtp.starttls.enable">true</prop>                    
 	        </props>
@@ -58,7 +63,7 @@
 	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
 	    <property name="maxUploadSize" value="-1" />
-	</bean>	
+	</bean>
 
 	<bean id="emailService" class="org.bookmarks.service.EmailServiceImpl">
       <property name="mailSender" ref="mailSender"/>
