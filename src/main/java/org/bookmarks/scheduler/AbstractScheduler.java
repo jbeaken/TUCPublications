@@ -30,10 +30,10 @@ public abstract class AbstractScheduler {
 		    }
 
 		    if(profile.equals("prod")) {
-					logger.info("Current active profile : " + profile);
+					logger.debug("Current active profile : " + profile);
 		    	return true;
 		    }
-				
+
 		    throw new BookmarksException("Invalid active profile : " + profile);
 		}
 

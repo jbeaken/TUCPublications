@@ -27,6 +27,7 @@ public class SupplierReturnRepositoryImpl extends AbstractRepository<SupplierRet
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
 		return new StringBuffer("select new SupplierReturn(sd.id, sd.status, sd.creationDate, sd.dateSentToSupplier, sd.returnsNumber, sd.supplier.name, sup.telephone1, sup.supplierAccount.accountNumber, count(sdl)) from SupplierReturn as sd "
 						+ "left join sd.supplierReturnLine sdl "
+            + "left join sdl.stockItem si "
 						+ "join sd.supplier sup ");
     }
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
