@@ -319,7 +319,7 @@ public class CustomerOrderLineController extends OrderLineController {
 		
 		
 
-		logger.info("About to edit customer order line " + customerOrderLine.getId());
+		logger.info("About to edit customer order line " + customerOrderLine.getId() + " with status " + customerOrderLine.getStatus());
 		logger.info(ReflectionToStringBuilder.toString( customerOrderLine ));
 
 		return "editCustomerOrderLine";
@@ -336,6 +336,7 @@ public class CustomerOrderLineController extends OrderLineController {
 	public String edit(@Valid CustomerOrderLine customerOrderLine, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		//Validate
 		customerOrderLineValidator.validate(customerOrderLine, bindingResult);
+
 		if(bindingResult.hasErrors()) {
 			modelMap.addAttribute(PaymentType.values());
 			modelMap.addAttribute(Source.values());
@@ -358,7 +359,11 @@ public class CustomerOrderLineController extends OrderLineController {
 		customerOrderLineService.update(customerOrderLine);
 		modelMap.addAttribute(customerOrderLine);
 
-		return searchFromSession(session, request, modelMap);
+		logger.info("Edited customer order line " + customerOrderLine.getId() + " new status " + customerOrderLine.getStatus());
+		logger.info(ReflectionToStringBuilder.toString( customerOrderLine ));
+
+		return "redirect:searchFromSession";
+		//return searchFromSession(session, request, modelMap);
 	}
 
 
@@ -565,13 +570,19 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
+		
 		CustomerOrderLineSearchBean customerOrderLineSearchBean = (CustomerOrderLineSearchBean) session.getAttribute("customerOrderSearchBean");
+
 		if(customerOrderLineSearchBean == null) return "sessionExpired";
 		
 		HttpServletRequest sessionRequest = (HttpServletRequest) session.getAttribute("request");
+
 		if(sessionRequest == null) { sessionRequest = request;}
+
 		customerOrderLineSearchBean.isFromSession(true);
+
 		modelMap.addAttribute(customerOrderLineSearchBean);
+		
 		return search(customerOrderLineSearchBean, null, session, sessionRequest, modelMap);
 	}
 
