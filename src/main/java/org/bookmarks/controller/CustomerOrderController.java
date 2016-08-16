@@ -1,5 +1,7 @@
 package org.bookmarks.controller;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -373,7 +375,6 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		//Two options, from id or from session
 		CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
 
-
 		modelMap.addAttribute(customerOrder);
 		modelMap.addAttribute(customerOrder.getCustomer());
 		modelMap.addAttribute(customerOrder.getCustomerOrderline());
@@ -428,10 +429,11 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		session.setAttribute("success", "Successfully created order for " + customerOrder.getCustomer().getFullName());
 
 		logger.info("Successfully created order for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
-
+		logger.info( ReflectionToStringBuilder.toString(customerOrder) );
+		logger.info("********************");
 		//Redirect to search from session
 		session.setAttribute("customerOrderSearchBean", new CustomerOrderLineSearchBean(customerOrder.getCustomer()));
-		return "redirect:/customerOrderLine/searchFromSession"; //maybe add bookmarks/col/sfs
+		return "redirect:/customerOrderLine/searchFromSession";
 	}
 
 	@Override
