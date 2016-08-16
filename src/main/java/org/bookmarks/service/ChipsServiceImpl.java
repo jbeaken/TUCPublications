@@ -632,7 +632,7 @@ public class ChipsServiceImpl implements ChipsService {
 		
 =======
 
-		if(logger.ifDebugEnabled()) {
+		if(logger.isDebugEnabled()) {
 			logger.info("Sending json " + eventsAsJson);
 		}
 
