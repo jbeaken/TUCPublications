@@ -1,5 +1,7 @@
 package org.bookmarks.controller;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -319,7 +321,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 		logger.info("About to edit customer order line " + customerOrderLine.getId());
 		logger.info(ReflectionToStringBuilder.toString( customerOrderLine ));
-		
+
 		return "editCustomerOrderLine";
 	}
 
