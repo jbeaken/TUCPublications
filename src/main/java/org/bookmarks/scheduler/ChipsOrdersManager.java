@@ -42,7 +42,10 @@ public class ChipsOrdersManager extends AbstractScheduler {
 			logger.error("Cannot get orders from chips", e);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 1f51618... Fixing session search for supplier deliveries
 
 		if(chipsCustomers == null) {
 			logger.info("No orders to process, exiting...");

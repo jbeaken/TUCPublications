@@ -278,6 +278,7 @@ public class ChipsServiceImpl implements ChipsService {
 		JSONSerializer jsonSerializer = new JSONSerializer();
 		String jsonStockItem = jsonSerializer.include("authors").serialize(stockItem);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		logger.info(jsonStockItem);
 		
@@ -306,6 +307,8 @@ public class ChipsServiceImpl implements ChipsService {
  		httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 		
 =======
+=======
+>>>>>>> 1f51618... Fixing session search for supplier deliveries
 
 		logger.debug(jsonStockItem);
 
@@ -615,6 +618,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		String eventsAsJson = serializer.serialize(events);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
@@ -633,6 +637,10 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 
 		if(logger.isDebugEnabled()) {
+=======
+
+		if(logger.ifDebugEnabled()) {
+>>>>>>> 1f51618... Fixing session search for supplier deliveries
 			logger.info("Sending json " + eventsAsJson);
 		}
 
