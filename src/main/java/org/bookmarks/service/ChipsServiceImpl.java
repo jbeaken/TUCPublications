@@ -117,7 +117,7 @@ public class ChipsServiceImpl implements ChipsService {
 	@Autowired
 	private Environment environment;
 
-	final static Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class);
 
 	private HttpHost target;
 
@@ -473,7 +473,10 @@ public class ChipsServiceImpl implements ChipsService {
 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
 
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
-		logger.info("Have retrived " + chipsCustomers.size() + " chips orders");
+		logger.info("Have retrived " + chipsCustomers.size() + " chips customer orders");
+		for(Customer c : chipsCustomers) {
+
+		}
 
 >>>>>>> fc67d45... Adding showHome
 		return chipsCustomers;

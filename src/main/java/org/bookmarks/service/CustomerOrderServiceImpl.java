@@ -24,6 +24,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 @Transactional
 public class CustomerOrderServiceImpl implements CustomerOrderService {
@@ -40,8 +43,12 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
+<<<<<<< HEAD
 	@Value("#{ applicationProperties['thingy'] }")
 	private String passwd;
+=======
+	private final Logger logger = LoggerFactory.getLogger(CustomerOrderServiceImpl.class);
+>>>>>>> a420287... Adding logging to customer order
 
 	@Override
 	public CustomerOrder selectCustomer(Long id) {
@@ -374,6 +381,12 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 				beansOl.setAddress(chipsCustomer.getAddress());
 
 				beansCustomer.getCustomerOrderLines().add(beansOl);
+
+				logger.info("******");
+				logger.info("StockItem : " + stockItem.getTitle());
+				logger.info("Quantity : " + beansOl.getAmount());
+				logger.info("Web ref : " + beansOl.getWebReference());
+				logger.info("******");
 
 			}
 

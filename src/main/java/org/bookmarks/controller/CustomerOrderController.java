@@ -50,23 +50,29 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private AZLookupService azLookupService;
-	
+
 	@Autowired
 	private StockItemValidator stockItemValidator;
 
 	@Autowired
 	private CustomerOrderValidator customerOrderValidator;
+<<<<<<< HEAD
 	
+=======
+
+	private Logger logger = LoggerFactory.getLogger(CustomerOrderController.class);
+
+>>>>>>> a420287... Adding logging to customer order
 	@Autowired
 	private EmailService emailService;
 
 
 	@Autowired
 	private StockItemService stockItemService;
-	
+
 	/**
 	 * Get stuff from session
 	 * @param id
@@ -82,7 +88,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		fillModelForAddStock(customerOrder, customerOrderLineMap, session, modelMap);
 
 		return "selectStockItemsForCustomerOrder";
-	}	
+	}
 
 	/**
 	 * Most likely coming from search customer screen, about to display initial
@@ -106,6 +112,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		fillModelForAddStock(customerOrder, customerOrderLineMap, session, modelMap);
 
 		addInfo("Add stock items to customer order, when complete click proceed to checkout", modelMap);
+
+		logger.info("Sucessfully initialised customer order creation for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
+
 		return "selectStockItemsForCustomerOrder";
 	}
 
@@ -139,17 +148,19 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		return "createCustomerOrder";
 	}
-	
+
 	@RequestMapping(value="/cancel")
 	public String cancel(HttpSession session, ModelMap modelMap) {
 
+		CustomerOrder customerOrder = (CustomerOrder) session.getAttribute("customerOrder");
+
 		session.removeAttribute("customerOrder");
 		session.removeAttribute("customerOrderLineMap");
-		
-		addInfo("Cancelled", modelMap);
-		
+
+		logger.info("Cancelled creating order for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
+
 		return "welcome";
-	}	
+	}
 
 	@RequestMapping(value="/searchStockItems")
 	public String searchStockItems(StockItemSearchBean stockItemSearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -176,6 +187,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 				customerOrderLineMap.put(stockItem.getId(), new CustomerOrderLine(stockItem));
 			}
 			addInfo("Stock item added to order, add more stock or go to check out", modelMap);
+			logger.info("Added stock item to customer order : " + stockItem.getTitle());
 		} else if(stockItems.size() > 1){
 			addWarning("More than one result found, select correct one by clicking A", modelMap);
 			modelMap.addAttribute(stockItems);
@@ -188,7 +200,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 				modelMap.addAttribute(stockItemSearchBean);
 				return "selectStockItemsForCustomerOrder";
 			}
-			
+
 			errorMessage = stockItemValidator.validateISBN(isbn);
 			if(errorMessage != null) { //Cannot do isbn lookup
 				addError(errorMessage, modelMap);
@@ -196,7 +208,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 				modelMap.addAttribute(stockItemSearchBean);
 				return "selectStockItemsForCustomerOrder";
 			}
-			
+
 			//Lookup isbn and send to stock/addStock.jsp
 			StockItem stockItem = null;
 			try {
@@ -209,22 +221,24 @@ public class CustomerOrderController extends AbstractBookmarksController {
 				stockItem = new StockItem();
 				stockItem.setIsbn(isbn);
 				addInfo("Cannot find isbn at AZ, please add manually", modelMap);
-			} 
-			
+				logger.info("Cannot find stock item, needs to be added manually");
+			}
+
 			//This should link to stockItemController.displayAdd
 			fillStockSearchModel(session, modelMap);
+
 			modelMap.addAttribute(stockItem);
 			modelMap.addAttribute("focusId", "category.id");
 			session.setAttribute("flow", "customerOrder");
 
-			return "addStock";			
+			return "addStock";
 		}
 
 		fillModelForAddStock(customerOrder, customerOrderLineMap, session, modelMap);
 
 		return "selectStockItemsForCustomerOrder";
 	}
-	
+
 	private void fillModelForAddStock(CustomerOrder customerOrder, Map<Long, CustomerOrderLine> customerOrderLineMap, HttpSession session, ModelMap modelMap) {
 		modelMap.addAttribute(new StockItemSearchBean());
 		modelMap.addAttribute(getCategories(session));
@@ -378,9 +392,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		//Validator
 		customerOrderValidator.validate(customerOrder, bindingResult);
-		
+
 		Customer customer = customerOrder.getCustomer();
-		
+
     	if(customerOrderLineMap.values().isEmpty() && (customerOrder.getNote() == null || customerOrder.getNote().trim().isEmpty())) {
     		addError("If the order has no stock items, it is a research order, please add a note describing what should be ordered, or add stock.", modelMap);
 		    modelMap.addAttribute(customerOrder);
@@ -400,18 +414,21 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		//Persist customer order
 		customerOrderService.save(customerOrder, customerOrderLineMap.values());
-		
+
 		//Update email
 		if(!customer.getContactDetails().getEmail().trim().isEmpty()) {
 			customerService.updateEmail(customerOrder.getCustomer());
 		}
-		
+
 		//Send confirmation email
 		emailService.sendCustomerOrderConfirmationEmail(customerOrder);
 
 		//Clean up session
 		session.removeAttribute("customerOrderLineMap");
 		session.setAttribute("success", "Successfully created order for " + customerOrder.getCustomer().getFullName());
+
+		logger.info("Successfully created order for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
+
 		//Redirect to search from session
 		session.setAttribute("customerOrderSearchBean", new CustomerOrderLineSearchBean(customerOrder.getCustomer()));
 		return "redirect:/customerOrderLine/searchFromSession"; //maybe add bookmarks/col/sfs
