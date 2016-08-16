@@ -389,6 +389,7 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		if(getDiscountHasBeenOverridden() == Boolean.FALSE && calculateDiscount == true) {
 			calculateDiscount(stockItem, invoice);
 		}
+<<<<<<< HEAD
 		
 		logger.info("StockItem = " + getStockItem().getTitle());
 <<<<<<< HEAD
@@ -402,6 +403,13 @@ private Logger logger = LoggerFactory.getLogger(Sale.class);
 		logger.info("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher().getId() + " : " + getStockItem().getPublisher().getName() ));
 >>>>>>> d0a2049... Adding logging to invoice creation
 		logger.info("Discount = " + getDiscount());
+=======
+		if(logger.isDebugEnabled()) {
+			logger.debug("StockItem = " + getStockItem().getTitle());
+			logger.debug("Publisher = " + (getStockItem().getPublisher()  == null ? null : getStockItem().getPublisher().getId() + " : " + getStockItem().getPublisher().getName() ));
+			logger.debug("Discount = " + getDiscount());
+		}
+>>>>>>> 5631701... Changing sale discount logging level to debug
 
 		BigDecimal discountedPrice =
 				getSellPrice()
