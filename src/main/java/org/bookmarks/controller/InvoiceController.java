@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.bookmarks.controller.validation.InvoiceValidator;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrderLine;
@@ -40,12 +43,14 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 	@Autowired
 	private InvoiceService invoiceService;
-	
+
 	@Autowired
 	private InvoiceValidator invoiceValidator;
-	
+
 	@Value("#{applicationProperties['vatNumber']}")
-	private String vatNumber;	
+	private String vatNumber;
+
+	private Logger logger = LoggerFactory.getLogger(InvoiceController.class);
 
 	/**
 	 * From createInvoice.jsp addStock
@@ -102,7 +107,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		}
 		return "createInvoice";
 	}
-	
+
 	private void fillModel(Invoice invoice,	Map<Long, Sale> saleMap, ModelMap modelMap) {
 		fillModel(invoice, saleMap, modelMap, true);
 	}
@@ -130,8 +135,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Map<Long, CustomerOrderLine> customerOrderLineMapForInvoice = (Map<Long, CustomerOrderLine>) session.getAttribute("customerOrderLineMapForInvoice");
 
 		//Need a validator
-		if(invoice.getPaid() == false 
-				&& invoice.getCustomer().getBookmarksAccount().getAccountHolder() == false 
+		if(invoice.getPaid() == false
+				&& invoice.getCustomer().getBookmarksAccount().getAccountHolder() == false
 				&& invoice.getIsProforma() == false) {
 			fillModel(invoice, saleMap, modelMap, false); //Already been calculated
 			modelMap.addAttribute(new StockItemSearchBean());
@@ -159,14 +164,17 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.removeAttribute("orderLineMap");
 		session.removeAttribute("customerOrderLineMapForInvoice");
 		session.removeAttribute("invoice");
-		
+		session.removeAttribute("isEditInvoice");
+		session.removeAttribute("originalInvoicePrice");
+
 		InvoiceSearchBean invoiceSearchBean = new InvoiceSearchBean();
 		invoiceSearchBean.getInvoice().setCustomer(invoice.getCustomer());
 		invoiceSearchBean.setSortOrder("DESC");
 		invoiceSearchBean.setSortColumn("i.id");
 		session.setAttribute("invoiceSearchBean", invoiceSearchBean);
-		
-		addSuccess("Invoice for " + invoice.getCustomer().getFullName() + " successful", modelMap);
+
+		addSuccess("Invoice successfully created for " + invoice.getCustomer().getFullName() + " successful", modelMap);
+		logger.info("Invoice successfully created for " + invoice.getCustomer().getFullName());
 		return "redirect:searchFromSession";
 	}
 
@@ -176,7 +184,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//Place into session
 		Invoice invoice = invoiceService.get(id);
-		
+
 		for(Sale sale : invoice.getSales()) {
 			sale.setDiscountHasBeenOverridden(true);
 			saleMap.put(sale.getStockItem().getId(), sale);
@@ -190,13 +198,15 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		fillModel(invoice, saleMap, modelMap, false);
 		return "editInvoice";
 	}
-	
+
 	@RequestMapping(value="/setAsPaid", method=RequestMethod.GET)
 	public String setAsPaid(boolean paid, HttpSession session, ModelMap modelMap) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
-		
+
 		invoice.setPaid(paid);
+
+		logger.info("Have set paid flag to " + paid);
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap, false);
@@ -204,65 +214,67 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			return "editInvoice";
 		}
 		return "createInvoice";
-	}	
-	
+	}
+
 	@RequestMapping(value="/setAsProforma", method=RequestMethod.GET)
 	public String setAsProforma(boolean isProforma, HttpSession session, ModelMap modelMap) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
-		
+
 		invoice.setIsProforma(isProforma);
-		
+
 		//Place into model
 		fillModel(invoice, saleMap, modelMap, false);
 		return "createInvoice";
-	}	
-	
-	
+	}
+
+
 	@RequestMapping(value="/setAsUpdateStock", method=RequestMethod.GET)
 	public String setUpdateStock(boolean updateStock, HttpSession session, ModelMap modelMap) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
-		
+
 		invoice.setUpdateStock(updateStock);
-		
+
 		//Place into model
 		fillModel(invoice, saleMap, modelMap, false);
 		return "createInvoice";
-	}	
-	
+	}
+
 //	@RequestMapping(value="/redoStockItemQuantity", method=RequestMethod.GET)
 //	public String redoStockItemQuantity(Long id, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 //		Invoice invoice = invoiceService.get(id);
-//		
+//
 //		for(Sale sale : invoice.getSales()) {
 //			stockItemService.updateQuantities(sale.getStockItem(), sale.getQuantity() * -1, null, null, null, null);
 //		}
-//		
+//
 //		return searchFromSession(session, request, modelMap);
-//	}	
+//	}
 
 	@RequestMapping(value="/setAsCollection", method=RequestMethod.GET)
 	public String setAsCollection(Long id, ModelMap modelMap, HttpSession session) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
-		
+
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 		invoice.setDeliveryType(DeliveryType.COLLECTION);
+
+		logger.info("Have set invoice delivery flag to " + DeliveryType.COLLECTION);
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap);
 		return "createInvoice";
 	}
-	
+
 	public String raiseCustomerOrderInvoice(HttpSession session, ModelMap modelMap) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
-		
+
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap);
 		return "createInvoice";
-	}	
+	}
 
 
 	@RequestMapping(value="/setAsMail", method=RequestMethod.GET)
@@ -270,6 +282,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 		invoice.setDeliveryType(DeliveryType.MAIL);
+
+		logger.info("Have set invoice delivery flag to " + DeliveryType.MAIL);
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap);
@@ -292,7 +306,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	@RequestMapping(value="/view", method=RequestMethod.GET)
 	public String view(Long id, String flow, Long customerOrderLineId, HttpSession session, ModelMap modelMap) {
 		Invoice invoice = invoiceService.get(id);
-		
+
 		//if refresh, still need invoice in session, how to get around it?
 		modelMap.addAttribute(invoice);
 		modelMap.addAttribute("flow", flow);
@@ -360,7 +374,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.removeAttribute("originalInvoicePrice");
 
 		addSuccess("Invoice has been edited", modelMap);
-		
+
 		return searchFromSession(session, request, modelMap);
 	}
 
@@ -428,10 +442,10 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			modelMap.addAttribute("secondHandPrice", invoice.getSecondHandPrice());
 			if(session.getAttribute("isEditInvoice") != null) {
 				return "editInvoice";
-			}			
+			}
 		    return "createInvoice";
 		}
-		
+
 		//Quick fix, if either are null, set to 0
 		if(invoice.getSecondHandPrice() == null) {
 			invoice.setSecondHandPrice(new BigDecimal(0));
@@ -490,7 +504,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			sale.setDiscountHasBeenOverridden(Boolean.TRUE);
 			sale.setDiscount(sale.getNewDiscount());
 		}
-		
+
 			//Validate
 //		invoiceOrderLineValidator.validate(sale, bindingResult);
 		if(bindingResult.hasErrors()) {
@@ -548,11 +562,13 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//Place into session
 		Invoice invoice = invoiceService.getNewInvoice(customerId);
+		Customer customer = invoice.getCustomer();
 		session.setAttribute("invoice", invoice);
 		session.setAttribute("orderLineMap", saleMap);
 		session.removeAttribute("isEditInvoice");
-		
-		Customer customer = invoice.getCustomer();
+
+		logger.debug("Starting initialisation of invoice for " + customer.getFullName());
+
 		//Check if customer has an account, otherwise warn must be paid or a proforma
 		if(customer.getBookmarksAccount().getAccountHolder() == false) {
 			addInfo("Customer is not an account holder, either edit customer and check account box, or 'set at paid' if you are certain customer has paid", modelMap);
@@ -562,6 +578,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap);
+
+		logger.info("Successfully initiated invoice for " + customer.getFullName());
 		return "createInvoice";
 	}
 
@@ -577,7 +595,6 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 
-
 		//Place into model
 		fillModel(invoice, saleMap, modelMap);
 		modelMap.addAttribute(new StockItemSearchBean());
@@ -586,13 +603,17 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 	@RequestMapping(value="/cancel")
 	public String cancel(ModelMap modelMap, HttpServletRequest request, HttpSession session) {
+		Invoice invoice = (Invoice) session.getAttribute("invoice");
+
 		session.removeAttribute("invoice");
 		session.removeAttribute("orderLineMap");
 		if(session.getAttribute("customerOrder") == null)  {
 			session.removeAttribute("customerOrderLineMapForInvoice");
 		}
 		session.removeAttribute("isEditInvoice");
-		session.removeAttribute("originalInvoicePrice");		
+		session.removeAttribute("originalInvoicePrice");
+
+		logger.info("User has cancelled invoice for " + invoice.getCustomer().getFullName());
 		return search(new InvoiceSearchBean(), request, session, modelMap);
 	}
 
