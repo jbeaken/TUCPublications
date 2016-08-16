@@ -34,6 +34,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.bookmarks.exceptions.BookmarksException;
+
 @Controller
 @RequestMapping("/invoice")
 public class InvoiceController extends AbstractBookmarksController<Invoice> {
@@ -154,7 +156,18 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		}
 
 		Event event = (Event) session.getAttribute("event");
-		invoiceService.save(invoice, saleMap.values(), customerOrderLineMapForInvoice, event);
+
+		try {
+			invoiceService.save(invoice, saleMap.values(), customerOrderLineMapForInvoice, event);
+		} catch(BookmarksException e) {
+			fillModel(invoice, saleMap, modelMap, false); //Already been calculated
+			modelMap.addAttribute(new StockItemSearchBean());
+			addInfo("Cannot save. Reason is : " + e.getMessage(), modelMap);
+			if(session.getAttribute("isEditInvoice") != null) {
+				return "editInvoice";
+			}
+			return "createInvoice";
+		}
 
 		modelMap.addAttribute(invoice);
 		modelMap.addAttribute(saleMap.values());
