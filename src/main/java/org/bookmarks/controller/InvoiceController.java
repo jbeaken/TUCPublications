@@ -109,7 +109,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 	private void fillModel(Invoice invoice,	Map<Long, Sale> saleMap, ModelMap modelMap, boolean calculateDiscount) {
 		logger.debug("In fillModel");
-		
+
 		invoice.calculate(saleMap.values(), calculateDiscount);
 
 		if(!invoice.getIsProforma()) {
@@ -575,6 +575,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		} else if(customer.getBookmarksAccount().getCurrentBalance().floatValue() < 0) {
 			logger.info(customer.getFullName() + " is not in credit");
 			addError(customer.getFullName() + " is not in credit! Do not save this invoice without approval!", modelMap);
+		} else {
+			logger.info(customer.getFullName() + " has balance " + customer.getBookmarksAccount().getCurrentBalance().floatValue());
 		}
 
 		//Place into model

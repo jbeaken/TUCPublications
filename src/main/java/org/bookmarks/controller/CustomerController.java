@@ -321,6 +321,10 @@ public class CustomerController extends AbstractBookmarksController {
 
 			redirectAttributes.addFlashAttribute("info", "Success! There can be only one");
 
+			logger.info("Successfully merged customers");
+			logger.info("Kept : " + + customerToKeep.getId() + " : " + customerToKeep.getFullName());
+			logger.info("Discarded : " + + customerToDiscard.getId() + " : " + customerToDiscard.getFullName());
+
 			customerService.merge(customerToKeep, customerToDiscard);
 
 			return "redirect:/";
@@ -334,6 +338,8 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		customerService.save(customer);
+
+		logger.info("Successfully added customer - " + customer.getId() + " : " + customer.getFullName());
 
 		CustomerSearchBean csb = new CustomerSearchBean();
 		csb.setCustomer(customer);
@@ -360,6 +366,8 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		customerService.update(customer);
+
+		logger.info("Successfully edited customer - " + customer.getId() + " : " + customer.getFullName());
 
 		if(flow.equals("invoiceSearch") || flow.equals("customerOrderSearch")) {
 			modelMap.addAttribute("closeWindow", "not null");
@@ -456,9 +464,11 @@ public class CustomerController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
-	public String displayEdit(Long id, String flow, ModelMap modelMap) {
+	public String edit(Long id, String flow, ModelMap modelMap) {
 
 		Customer customer = customerService.get(id);
+
+		logger.info("About to edit customer " + customer.getId() + " : " + customer.getFullName());
 
 		modelMap.addAttribute(customer);
 		modelMap.addAttribute("flow", flow);
