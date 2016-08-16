@@ -317,6 +317,9 @@ public class CustomerOrderLineController extends OrderLineController {
 		
 		
 
+		logger.info("About to edit customer order line " + customerOrderLine.getId());
+		logger.info(ReflectionToStringBuilder.toString( customerOrderLine ));
+		
 		return "editCustomerOrderLine";
 	}
 
