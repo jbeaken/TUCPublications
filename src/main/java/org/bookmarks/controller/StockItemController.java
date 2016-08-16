@@ -167,6 +167,9 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 //	@Transactional
 	public String add(StockItem stockItem, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
+
+		logger.info("Attempting to add stock item " + stockItem.getIsbn() + " : " + stockItem.getTitle());
+
 		StockItem sessionStockItem = (StockItem) session.getAttribute("sessionStockItem");
 		if(sessionStockItem == null) {
 			return "sessionExpired";
@@ -191,12 +194,9 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		    return "addStock";
 		}
 
-		//Check a stock with this isbn doesn't already exist
-		logger.info("Checking if stock item with isbn " + stockItem.getIsbn() + " already exists.");
-
 		StockItem existingStock = stockItemService.get(stockItem.getIsbn());
 		if(existingStock != null) {
-			logger.info("Stock item with isbn " + stockItem.getIsbn() + " already exists!");
+			logger.info("Stock item with isbn " + stockItem.getIsbn() + " already exists!! Aborting!");
 			//Abort, and add error message
 			fillStockSearchModel(session, modelMap);
 			addError("ISBN already exists in beans", modelMap);
@@ -258,19 +258,8 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 
 		session.removeAttribute("sessionStockItem");
 
-//
-//		String result = add(stockItem, bindingResult, session, request, modelMap);
-//		if(result.equals("addStock")) {
-//			return result;
-//		}
-//
-//		if(result.equals("createSupplierDelivery") || result.equals("selectStockItemsForCustomerOrder")) {
-//			return result;
-//		}
-//		StockItemSearchBean stockItemSearchBean = new StockItemSearchBean();
-//		stockItemSearchBean.getStockItem().setIsbn(stockItem.getIsbn());
-//
-//		return search(stockItemSearchBean, session, request, modelMap);
+		logger.info("Successfully added");
+
 		return search(stockItemSearchBean, session, request, modelMap);
 	}
 
