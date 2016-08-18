@@ -10,6 +10,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 import org.bookmarks.controller.bean.ReorderReviewStockItemBean;
 import org.bookmarks.controller.validation.StockItemValidator;
 import org.bookmarks.domain.Availablity;
@@ -610,6 +612,9 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 
 		session.setAttribute("sessionStockItem", stockItem);
 		session.setAttribute("flow", flow);
+
+		logger.info("About to edit : {}", stockItem);
+
 		return "editStock";
 	}
 
@@ -660,10 +665,13 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		try {
 			chipsService.syncStockItemWithChips(stockItem);
 		} catch (Exception e) {
+			logger.info("Successfully edited : {} but haven been unable to sync with website {}", stockItem,  e.getMessage());
 			logger.error("Cannot sync stockitem after edit ", e);
 			addWarning("Have successfully edited, but haven been unable to update website : " + e.getMessage(), modelMap);
 		  return "welcome";
 		}
+
+		logger.info("Successfully edited : {}", stockItem);
 
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";

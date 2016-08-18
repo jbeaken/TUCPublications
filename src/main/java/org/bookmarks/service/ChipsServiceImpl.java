@@ -195,8 +195,12 @@ public class ChipsServiceImpl implements ChipsService {
 		
 		if(!isProduction()) {
 			logger.info("Not uploading image as this isn't production");
+<<<<<<< HEAD
 			//Don't do it!
 			//return;
+=======
+			return;
+>>>>>>> ed4726e... Adding logging to edit stockitem
 		}
 		
 		Session session = null;

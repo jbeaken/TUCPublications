@@ -8,7 +8,7 @@ import org.bookmarks.domain.StockItemSales;
 import org.bookmarks.domain.SupplierDelivery;
 import org.bookmarks.domain.SupplierDeliveryLine;
 
-public class MonthlySaleReportBean {
+public class MonthlySaleReportBean implements java.io.Serializable {
 
 	public MonthlySaleReportBean() {
 		super();
@@ -17,25 +17,25 @@ public class MonthlySaleReportBean {
 	private Collection<Date> lastSaleDates;
 
 	private Collection<Sale> lastSales;
-	
+
 	private Integer currentYear;
-	
+
 	private Collection<StockItemSales> sales;
-	
+
 	private Collection<SupplierDeliveryLine> lastSupplierDeliveryLines;
 
 	private SupplierDeliveryLine lastSupplierDeliveryLine;
 
 	private SupplierDelivery lastSupplierDelivery;
 
-	
+
 	public SupplierDeliveryLine getLastSupplierDeliveryLine() {
 		return lastSupplierDeliveryLine;
 	}
 
 	public void setLastSupplierDeliveryLine(SupplierDeliveryLine lastSupplierDeliveryLine) {
 		this.lastSupplierDeliveryLine = lastSupplierDeliveryLine;
-	}	
+	}
 
 	public SupplierDelivery getLastSupplierDelivery() {
 		return lastSupplierDelivery;
@@ -43,15 +43,15 @@ public class MonthlySaleReportBean {
 
 	public void setLastSupplierDelivery(SupplierDelivery lastSupplierDelivery) {
 		this.lastSupplierDelivery = lastSupplierDelivery;
-	}		
-	
+	}
+
 	public Collection<Date> getLastSaleDates() {
 		return lastSaleDates;
 	}
 
 	public void setLastSaleDates(Collection<Date> lastSaleDates) {
 		this.lastSaleDates = lastSaleDates;
-	}	
+	}
 
 	public Collection<Sale> getLastSales() {
 		return lastSales;
@@ -83,5 +83,5 @@ public class MonthlySaleReportBean {
 
 	public void setCurrentYear(Integer currentYear) {
 		this.currentYear = currentYear;
-	}	
-}	
+	}
+}

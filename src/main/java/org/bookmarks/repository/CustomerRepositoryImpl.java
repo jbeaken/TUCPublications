@@ -51,7 +51,6 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		QueryBuilder queryBuilder = new QueryBuilder();
 
 		//Build query
-    System.out.println(customerSearchBean.getCustomerId());
 		if(customerSearchBean.getCustomerId() != null) {
 			queryBuilder.append(customerSearchBean.getCustomerId(), "c.id");
 		} else {
@@ -77,9 +76,6 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		}
 
 		query.append(queryBuilder.getQuery());
-
-    System.out.println( queryBuilder.getQuery() );
-
 	}
 
   @Override

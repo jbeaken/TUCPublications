@@ -15,18 +15,18 @@ import org.bookmarks.domain.Event;
 import org.bookmarks.domain.SupplierOrderLine;
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class ReorderReviewStockItemBean {
+public class ReorderReviewStockItemBean implements java.io.Serializable {
 
 	public ReorderReviewStockItemBean() {
 		super();
 	}
-	
+
 	private StockItem stockItem;
-	
+
 	private MonthlySaleReportBean monthlySaleReportBean;
 
 	private SupplierOrderLine supplierOrderLine;
-	
+
 	public MonthlySaleReportBean getMonthlySaleReportBean() {
 		return monthlySaleReportBean;
 	}
@@ -36,9 +36,9 @@ public class ReorderReviewStockItemBean {
 	}
 
 	private boolean populated = false;
-	
+
 	private boolean processed = false;
-	
+
 	public boolean isProcessed() {
 		return processed;
 	}
@@ -48,9 +48,9 @@ public class ReorderReviewStockItemBean {
 	}
 
 	private Long originalSupplierOrderAmount;
-	
+
 	private Supplier originalSupplier;
-	
+
 	public Supplier getOriginalSupplier() {
 		return originalSupplier;
 	}
@@ -98,4 +98,4 @@ public class ReorderReviewStockItemBean {
 	public void setStockItem(StockItem stockItem) {
 		this.stockItem = stockItem;
 	}
-}	
+}

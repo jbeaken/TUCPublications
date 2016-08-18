@@ -753,7 +753,7 @@ public class StockItem extends AbstractEntity {
 	}
 
 	public String toString() {
-		return getId() + " " + getIsbn() + " " + getTitle() + " " + getAuthorsToString();
+		return getId() + " : " + getIsbn() + " : " + getTitle() + " : " + getAuthorsToString() + " " + getSellPrice() + " " + getType();
 	}
 
 	private String getAuthorsToString() {

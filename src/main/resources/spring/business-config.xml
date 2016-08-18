@@ -258,6 +258,7 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>	
 =======
@@ -266,6 +267,9 @@
 >>>>>>> 67b7d81... Fixing az robot detection
 =======
 				<prop key="hibernate.show_sql">true</prop>
+=======
+				<prop key="hibernate.show_sql">false</prop>
+>>>>>>> ed4726e... Adding logging to edit stockitem
 				<prop key="hibernate.format_sql">true</prop>
 >>>>>>> d1bea6f... Fixed binging error for dates
 			</props>

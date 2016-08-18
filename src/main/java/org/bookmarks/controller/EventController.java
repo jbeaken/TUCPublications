@@ -1,5 +1,7 @@
 package org.bookmarks.controller;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -181,7 +183,7 @@ public class EventController extends AbstractBookmarksController {
 
 		float total = 0;
 
-		logger.info("Uploading sales for new Event " + event.getName());
+		logger.info("Uploading sales for new Event " + ReflectionToStringBuilder.toString(event));
 
 		if (fileName.indexOf(".csv") == -1) {
 			addError("The file must be a csv file ", modelMap);
@@ -377,17 +379,22 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value = "/delete")
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String delete(Long id, HttpServletRequest request, ModelMap modelMap) {
-		Event event = new Event();
-		event.setId(id);
+
+		Event event = eventService.get(id);
+
 		try {
 			eventService.delete(event);
-			addSuccess("Event has been deleted", modelMap);
+			addSuccess("Event " + event.getName() + " has been deleted", modelMap);
 		} catch (Exception e) {
 			e.printStackTrace();
-			addError("Cannot delete, most probably because event has sales attached.", modelMap);
+			addError("Cannot delete event, most probably because sales have been attached.", modelMap);
 		}
+
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		modelMap.addAttribute("eventSearchBean", eventSearchBean);
+
+		logger.info("Deleted event : {}", event.getName());
+
 		return search(eventSearchBean, request, modelMap);
 	}
 <<<<<<< HEAD
@@ -463,6 +470,7 @@ public class EventController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(@Valid Event event, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+
 		if (event.getStockItem().getIsbn().trim().equals("")) {
 			event.setStockItem(null);
 		} else {
@@ -501,6 +509,9 @@ public class EventController extends AbstractBookmarksController {
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		eventSearchBean.getEvent().setName(event.getName());
 		session.setAttribute("searchBean", eventSearchBean);
+
+		logger.info("Added event : {}", ReflectionToStringBuilder.toString(event));
+
 		return "redirect:searchFromSession";
 	}
 
@@ -608,6 +619,9 @@ public class EventController extends AbstractBookmarksController {
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		eventSearchBean.getEvent().setName(event.getName());
 		session.setAttribute("searchBean", eventSearchBean);
+
+		logger.info("Edited event : " + event.getName());
+
 		return "redirect:searchFromSession";
 	}
 
