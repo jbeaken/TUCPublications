@@ -51,8 +51,9 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		QueryBuilder queryBuilder = new QueryBuilder();
 
 		//Build query
-		if(c.getId() != null) {
-			queryBuilder.append(c, "c.id");
+    System.out.println(customerSearchBean.getCustomerId());
+		if(customerSearchBean.getCustomerId() != null) {
+			queryBuilder.append(customerSearchBean.getCustomerId(), "c.id");
 		} else {
 			queryBuilder.append(ba.getSponsor(), "c.bookmarksAccount.sponsor");
 			queryBuilder.append(ba.getPaysInMonthly(), "c.bookmarksAccount.paysInMonthly");
@@ -76,6 +77,8 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		}
 
 		query.append(queryBuilder.getQuery());
+
+    System.out.println( queryBuilder.getQuery() );
 
 	}
 

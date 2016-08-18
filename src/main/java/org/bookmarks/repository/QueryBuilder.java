@@ -169,8 +169,16 @@ public class QueryBuilder {
 			}
 	}
 
+	public void append(Long id, String property) {
+		if(whereAlreadyAppended) {
+			query.append(" and " + property + " = " + id);
+		} else {
+			query.append(" where " + property + " = " + id);
+			whereAlreadyAppended = true;
+		}
+	}
+
 	public void append(AbstractEntity e, String property) {
-		System.out.println("id " + e.getId());
 		if(e != null && e.getId() != null) {
 			if(whereAlreadyAppended) {
 				query.append(" and " + property + " = " + e.getId());

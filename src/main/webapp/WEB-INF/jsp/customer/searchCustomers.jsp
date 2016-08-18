@@ -68,8 +68,8 @@
 				 <form:label for="customer.bookmarksAccount.paysInMonthly" path="customer.bookmarksAccount.paysInMonthly" cssErrorClass="error">Pays In Monthly</form:label>
 		  </div>
 			<div class="column w-33-percent">
-				 <form:label for="customer.id" path="customer.id" cssErrorClass="error">ID</form:label><br/>
-				 <form:input path="customer.id" /> <form:errors path="customer.id" />
+				 <form:label for="customerId" path="customerId" cssErrorClass="error">ID</form:label><br/>
+				 <form:input path="customerId" /> <form:errors path="customerId" />
  		 </div>
 		</div><!-- /row -->
 		<div class="row">
