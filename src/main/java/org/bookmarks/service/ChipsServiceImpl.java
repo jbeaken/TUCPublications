@@ -202,7 +202,16 @@ public class ChipsServiceImpl implements ChipsService {
 			return;
 >>>>>>> ed4726e... Adding logging to edit stockitem
 		}
+<<<<<<< HEAD
 		
+=======
+
+		logger.info("Uploading image {}", imageFileLocation + "original" + File.separator + stockItem.getImageFilename());
+		logger.info("sftpUsername {}", sftpUsername);
+		logger.info("sftpHost {}", sftpHost);
+		logger.info("port {}", 2298);
+
+>>>>>>> d383330... ADding logging
 		Session session = null;
 		
 		try {
