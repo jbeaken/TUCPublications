@@ -423,14 +423,19 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		//Send confirmation email
 <<<<<<< HEAD
+<<<<<<< HEAD
 		emailService.sendCustomerOrderConfirmationEmail(customerOrder);
 =======
 		if(customerOrder.getCustomer().getContactDetails().getEmail() != null) {
+=======
+		String email = customerOrder.getCustomer().getContactDetails().getEmail();
+		if(email != null) {
+>>>>>>> a6766fc... Added debug and check for blank email
 			try {
 				emailService.sendCustomerOrderConfirmationEmail(customerOrder);
 				logger.info("Successfully sent confirmation email");
 			} catch (Exception e) {
-				logger.error("Cannot sent confirmation email", e);
+				logger.error("Cannot send confirmation email to " + email, e);
 			}
 		} else {
 			logger.info("Cannot send confirmation email as customer has no email address");

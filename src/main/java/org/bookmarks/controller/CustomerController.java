@@ -332,10 +332,13 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid Customer customer, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
+		
 		//Check for errors
 		if(bindingResult.hasErrors()){
 			return "addCustomer";
 		}
+
+		if(customer.getContactDetails().getEmail().isEmpty()) customer.getContactDetails().setEmail( null );
 
 		customerService.save(customer);
 
