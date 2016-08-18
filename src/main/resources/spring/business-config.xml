@@ -218,6 +218,7 @@
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>	
@@ -226,6 +227,9 @@
 =======
 				<prop key="hibernate.hbm2ddl.auto">validate</prop>
 >>>>>>> 72a0302... Type verify -> validate
+=======
+				<prop key="hibernate.hbm2ddl.auto">verify</prop>
+>>>>>>> ddc6765... Removing validate from hdml
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>
 >>>>>>> 67b7d81... Fixing az robot detection
