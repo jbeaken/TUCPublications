@@ -422,7 +422,20 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		}
 
 		//Send confirmation email
+<<<<<<< HEAD
 		emailService.sendCustomerOrderConfirmationEmail(customerOrder);
+=======
+		if(customerOrder.getCustomer().getContactDetails().getEmail() != null) {
+			try {
+				emailService.sendCustomerOrderConfirmationEmail(customerOrder);
+				logger.info("Successfully sent confirmation email");
+			} catch (Exception e) {
+				logger.error("Cannot sent confirmation email", e);
+			}
+		} else {
+			logger.info("Cannot send confirmation email as customer has no email address");
+		}
+>>>>>>> d851794... Suppressing error to log if email is null for customer order confirmation
 
 		//Clean up session
 		session.removeAttribute("customerOrderLineMap");
