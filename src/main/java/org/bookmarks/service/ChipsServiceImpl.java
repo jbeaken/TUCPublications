@@ -206,10 +206,11 @@ public class ChipsServiceImpl implements ChipsService {
 		
 =======
 
-		logger.info("Uploading image {}", imageFileLocation + "original" + File.separator + stockItem.getImageFilename());
-		logger.info("sftpUsername {}", sftpUsername);
-		logger.info("sftpHost {}", sftpHost);
-		logger.info("port {}", 2298);
+		String filename = imageFileLocation + "original" + File.separator + stockItem.getImageFilename();
+
+		logger.info("Attempting to upload image {} to host {}", filename, sftpHost);
+		logger.debug("Username {}", sftpUsername);
+		logger.debug("port {}", 2298);
 
 >>>>>>> d383330... ADding logging
 		Session session = null;
@@ -225,8 +226,14 @@ public class ChipsServiceImpl implements ChipsService {
 			jsch.setKnownHosts(knownHostsFilename);
 >>>>>>> f35c91c... Chaning location of known hosts
 
+<<<<<<< HEAD
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
 			// non-interactive version. Relies in host key being in known-hosts file
+=======
+			session = jsch.getSession(sftpUsername, sftpHost, 2298);
+			// non-interactive version. Relies in host key being in known-hosts
+			// file
+>>>>>>> 88dbf5a... ADding logging
 			session.setPassword( sftpPassword );
 
 			session.connect();
@@ -236,8 +243,13 @@ public class ChipsServiceImpl implements ChipsService {
 
 			ChannelSftp sftpChannel = (ChannelSftp) channel;
 
+<<<<<<< HEAD
 			//SFTP up original file
 			File originalFile = new File(imageFileLocation + "original" + File.separator + stockItem.getImageFilename());
+=======
+			// SFTP up original file
+			File originalFile = new File( filename );
+>>>>>>> 88dbf5a... ADding logging
 			InputStream in = FileUtils.openInputStream(originalFile);
 			
 			sftpChannel.put(in, "/images/original/" + stockItem.getImageFilename(), ChannelSftp.OVERWRITE);
@@ -249,7 +261,14 @@ public class ChipsServiceImpl implements ChipsService {
 			sftpChannel.put(inThumbnail, "/images/150/" + stockItem.getImageFilename(), ChannelSftp.OVERWRITE);			
 
 			sftpChannel.exit();
+<<<<<<< HEAD
 		} catch(Exception e) {
+=======
+
+			logger.info("(Image upload successful)");
+
+		} catch (Exception e) {
+>>>>>>> 88dbf5a... ADding logging
 			logger.error("FTP error", e);
 		} finally {
 			if(session != null) session.disconnect();
@@ -258,9 +277,17 @@ public class ChipsServiceImpl implements ChipsService {
 	
 	@Override
 	public void syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException {
+<<<<<<< HEAD
 		 
 		//First upload image if necessary
 		if(stockItem.getPutImageOnWebsite() && stockItem.getImageFilename() != null && !stockItem.getImageFilename().isEmpty()) {
+=======
+
+		logger.info("Attempting to sync stockitem with chips");
+
+		// First upload image if necessary
+		if (stockItem.getPutImageOnWebsite() && stockItem.getImageFilename() != null && !stockItem.getImageFilename().isEmpty()) {
+>>>>>>> 88dbf5a... ADding logging
 			uploadImageToChips(stockItem);
 		}
 		
@@ -338,15 +365,29 @@ public class ChipsServiceImpl implements ChipsService {
 		checkStatus(status);
 
 		try {
+<<<<<<< HEAD
 		    HttpEntity entity = response.getEntity();
 		    String returnCode = EntityUtils.toString(entity);
 		    //if(EntityUtils.toString(entity) != "success") throw new BookmarksException("Cannot update chips with filename information for stockitem " + stockItem.getId());
 		    EntityUtils.consume(entity);
 		    // do something useful with the response body
 		    // and ensure it is fully consumed
+=======
+			HttpEntity entity = response.getEntity();
+			String returnCode = EntityUtils.toString(entity);
+			// if(EntityUtils.toString(entity) != "success") throw new
+			// BookmarksException("Cannot update chips with filename information for stockitem "
+			// + stockItem.getId());
+			EntityUtils.consume(entity);
+			// do something useful with the response body
+			// and ensure it is fully consumed
+
+>>>>>>> 88dbf5a... ADding logging
 		} finally {
 		    response.close();
 		}
+
+		logger.info("Successfully synced with chips");
 	}
 	
 	@Override
