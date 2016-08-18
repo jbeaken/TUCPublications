@@ -45,10 +45,11 @@ public class ChipsController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerOrderService customerOrderService;
 
-	 final static Logger logger = LoggerFactory.getLogger(ChipsController.class);
+	final static Logger logger = LoggerFactory.getLogger(ChipsController.class);
 
 	@RequestMapping(value="/updateChips", method=RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {
+		logger.info("Attempting to update chips");
 		try {
 			chipsService.updateChips();
 		} catch (Exception e) {
@@ -57,12 +58,14 @@ public class ChipsController extends AbstractBookmarksController {
 			return "welcome";
 		}
 		addSuccess("Have updated chips", modelMap);
+		logger.info("Successfully updated chips!");
 		return "welcome";
 	}
 
 
 	@RequestMapping(value="/updateEvents", method=RequestMethod.GET)
 	public String updateEvents(HttpSession session, ModelMap modelMap) {
+		logger.info("Attempting to update events on chips");
 		try {
 			chipsService.updateEvents();
 		} catch (Exception e) {
@@ -71,33 +74,25 @@ public class ChipsController extends AbstractBookmarksController {
 			return "welcome";
 		}
 		addSuccess("Have updated events", modelMap);
+		logger.info("Successfully updated events on chips!");
 		return "welcome";
 	}
 
 	@RequestMapping(value="/updateReadingLists", method=RequestMethod.GET)
 	public String updateReadingLists(HttpSession session, ModelMap modelMap) {
+		logger.info("Attempting to update reading lists on chips");
 		try {
 			chipsService.updateReadingLists();
 		} catch (Exception e) {
 			addError("Cannot update reading lists : " + e.getMessage(), modelMap);
 			return "welcome";
 		}
+
 		addSuccess("Have updated reading lists", modelMap);
+		logger.info("Successfully updated reading lists on chips!");
+
 		return "welcome";
 	}
-	/*
-	@RequestMapping(value="/evictAll", method=RequestMethod.GET)
-	public String evictAll(HttpSession session, ModelMap modelMap) {
-		try {
-			chipsService.evictAll();
-		} catch (Exception e) {
-			addError("Cannot reset chips : " + e.getMessage(), modelMap);
-			return "welcome";
-		}
-		addSuccess("Have reset beans", modelMap);
-		return "welcome";
-	}
-	*/
 
 	@RequestMapping(value="/uploadBrochure", method=RequestMethod.GET)
 	public String uploadBrochure(Long id, HttpSession session, ModelMap modelMap) {
@@ -107,24 +102,22 @@ public class ChipsController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/uploadBrochure", method=RequestMethod.POST)
 	public String uploadBrochure(	StockItem stockItem, HttpSession session, ModelMap modelMap) {
+		logger.info("Attempting to upload brouchure");
 
 		MultipartFile file = stockItem.getFile();
 		String fileName = file.getOriginalFilename();
 		Long fileSize = file.getSize();
-//		String extension = ".jpg";
-//		if(fileName.indexOf(".gif") != -1) extension = ".gif";
-//		if(fileName.indexOf(".png") != -1) extension = ".png";
 
 		if(fileName.indexOf(".pdf") == -1 && fileName.indexOf(".jpeg") == -1) {
+			logger.error("Brouchure filename {} is not a pdf", fileName);
 			addError("Can only upload pdfs", modelMap);
 			modelMap.addAttribute(stockItem);
 			return "displayUploadBrochure";
 		}
 
-
-
 		if(fileSize < 50000) {
 			addError("File too small!", modelMap);
+			logger.error("Brouchure file is too small {}", fileSize);
 			modelMap.addAttribute(stockItem);
 			return "displayUploadBrochure";
 		}
@@ -137,6 +130,7 @@ public class ChipsController extends AbstractBookmarksController {
 			modelMap.addAttribute(stockItem);
 			return "displayUploadBrochure";
 		}
+		logger.info("Successfully uploaded brochure!");
 
 		addSuccess("Have successfully uploaded brochure ", modelMap);
 		return "welcome";
