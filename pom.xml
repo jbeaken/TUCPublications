@@ -833,7 +833,7 @@
 			<version>${hibernate.validator.version}</version>
 		</dependency>
 
-		<!-- Connect pool using org.apache.commons.dbcp.BasicDataSource 	-->
+		<!-- Connect pool using org.apache.commons.dbcp.BasicDataSource 	
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -845,6 +845,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+    <version>2.4.2</version>
+</dependency>		
 
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -854,6 +859,14 @@
 <<<<<<< HEAD
 >>>>>>> aa4d072... Removing csv dependecies from pom
 =======
+
+		-->
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-dbcp2</artifactId>
+    <version>2.1.1</version>
+</dependency>
+
 
 
 >>>>>>> d3fdae2... adding conf tomcat files
