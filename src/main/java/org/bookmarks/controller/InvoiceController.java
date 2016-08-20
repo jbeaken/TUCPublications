@@ -201,6 +201,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		addSuccess("Invoice successfully created for " + customer.getFullName(), modelMap);
 		
 		logger.info("Invoice successfully created for {}", customer.getFullName());
+		logger.info("*****************************");
 		
 		if(customer.getBookmarksAccount().getAccountHolder() == true) {
 			logger.info("New Balance : {}", customer.getBookmarksAccount().getCurrentBalance());
@@ -601,7 +602,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("invoice", invoice);
 		session.setAttribute("orderLineMap", saleMap);
 		session.removeAttribute("isEditInvoice");
-		logger.info("*************");
+		logger.info("*****************************");
 		logger.info("Starting initialisation of invoice for " + customer.getId() + " : " + customer.getFullName());
 
 		//Check if customer has an account, otherwise warn must be paid or a proforma
