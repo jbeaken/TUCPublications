@@ -215,6 +215,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//Place into session
 		Invoice invoice = invoiceService.get(id);
+		Customer customer = invoice.getCustomer();
 
 		for(Sale sale : invoice.getSales()) {
 			sale.setDiscountHasBeenOverridden(true);
@@ -224,6 +225,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("orderLineMap", saleMap);
 		session.setAttribute("isEditInvoice", true);
 		session.setAttribute("originalInvoicePrice", invoice.getTotalPrice());
+		
+		logger.info("Initialisation of edit invoice for {}", customer);
 
 		//Place into model
 		fillModel(invoice, saleMap, modelMap, false);
@@ -409,6 +412,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.removeAttribute("originalInvoicePrice");
 
 		addSuccess("Invoice has been edited", modelMap);
+		
+		logger.info("Edit oft invoice for {} successful", invoice.getCustomer());
 
 		return searchFromSession(session, request, modelMap);
 	}
@@ -492,6 +497,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//invoice.calculate(saleMap.values(), true);
 		fillModel(invoice, saleMap, modelMap);
+		
+		logger.info("Adding additional charges for {}. Second Hand : {}, Service Charge {}", invoice.getCustomer(), invoice.getSecondHandPrice(), invoice.getServiceCharge());
 
 		if(session.getAttribute("isEditInvoice") != null) {
 			return "editInvoice";

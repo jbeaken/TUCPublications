@@ -312,4 +312,8 @@ public class Customer extends AbstractEntity {
 	public void setLeftDate(Date leftDate) {
 		this.leftDate = leftDate;
 	}
+	@Override
+	public String toString() {
+		return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", getId()=" + getId() + "]";
+	}
 }
