@@ -72,8 +72,7 @@ public class Author extends AbstractEntity {
 	   return true;
 	}
 
-	// default implementation provided by NetBeans
-	public int hashcode() {
+	public int hashCode() {
 	    int hash = 3;
 
 	    hash = 47 * hash + ((getName() != null) ? getName().hashCode() : 0);

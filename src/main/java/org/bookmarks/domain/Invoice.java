@@ -216,10 +216,10 @@ public class Invoice extends AbstractEntity {
 		customerOrderLines.add(customerOrderLine);
 	}
 
-	public void setInvoiceOrderLines(Collection<InvoiceOrderLine> invoiceOrderLines) {
-		Set<InvoiceOrderLine> set = new HashSet<InvoiceOrderLine>(invoiceOrderLines);
-		setInvoiceOrderLines(set);
-	}
+//	public void setInvoiceOrderLines(Set<InvoiceOrderLine> invoiceOrderLines) {
+////		Set<InvoiceOrderLine> set = new HashSet<InvoiceOrderLine>(invoiceOrderLines);
+////		this.invoiceOrderLines = invoiceOrderLines;
+//	}
 
 	public void setCustomerOrderLines(
 			Collection<CustomerOrderLine> customerOrderLines) {

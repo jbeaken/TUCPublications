@@ -13,8 +13,6 @@ import org.springframework.format.number.CurrencyFormatter;
 import org.springframework.format.number.PercentFormatter;
 
 public class InvoiceOrderLineDecorator extends SearchStockItemsDecorator {
-	protected CurrencyFormatter currencyFormatter = new CurrencyFormatter();
-	protected PercentFormatter percentFormatter = new PercentFormatter();
 	
 	public String getLink()	{
         Sale sale = (Sale)getCurrentRowObject();

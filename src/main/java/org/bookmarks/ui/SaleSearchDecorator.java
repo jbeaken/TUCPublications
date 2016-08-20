@@ -15,8 +15,6 @@ import org.springframework.format.datetime.DateFormatter;
 
 public class SaleSearchDecorator extends AbstractBookmarksTableDecorator {
 	
-	protected DateFormatter dateFormatter = new DateFormatter("dd/MM/yy HH:mm");
-	
 	public String getLink() {
 	    Sale sale = (Sale)getCurrentRowObject();
 	    return 	showDelete(sale) + showEdit(sale);
@@ -24,7 +22,7 @@ public class SaleSearchDecorator extends AbstractBookmarksTableDecorator {
 	
 	public String getCreationDate() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return dateFormatter.print(sale.getCreationDate(), Locale.UK);
+		return dateTimeFormatter.print(sale.getCreationDate(), Locale.UK);
 	}
 	
 	public String getTotalPrice() {

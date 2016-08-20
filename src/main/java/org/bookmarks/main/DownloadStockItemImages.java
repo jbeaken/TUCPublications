@@ -33,7 +33,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class DownloadStockItemImages extends AbstractSpringBooter {
 	
-	static Logger logger = LoggerFactory.getLogger(DownloadStockItemImages.class);
+	static final Logger logger = LoggerFactory.getLogger(DownloadStockItemImages.class);
 	
 	static boolean resize = false;
 	

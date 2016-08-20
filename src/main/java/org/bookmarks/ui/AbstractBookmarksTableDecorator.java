@@ -20,13 +20,15 @@ import org.displaytag.decorator.TableDecorator;
 import org.displaytag.model.TableModel;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.number.CurrencyFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
 
 public abstract class AbstractBookmarksTableDecorator extends TableDecorator {
 	
 //	protected DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy");
 	protected DateFormatter dateFormatter = new DateFormatter("dd/MMM/yyyy");
 	protected DateFormatter shortDateFormatter = new DateFormatter("dd/MM/yy");
-	protected CurrencyFormatter currencyFormatter = new CurrencyFormatter();
+	protected DateFormatter dateTimeFormatter = new DateFormatter("dd/MM/yy HH:mm");
+	protected CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
 	protected String contextPath; 
 	
 	public void init(PageContext pageContext, Object decorated, TableModel tableModel) {

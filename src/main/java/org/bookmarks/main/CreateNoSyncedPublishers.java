@@ -22,7 +22,7 @@ public class CreateNoSyncedPublishers extends AbstractSpringBooter {
 	
 //	private static SessionFactory sessionFactory = getSessionFactory();	
 	
-	static Logger logger = LoggerFactory.getLogger(CreateNoSyncedPublishers.class);
+	static final Logger logger = LoggerFactory.getLogger(CreateNoSyncedPublishers.class);
 	
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = getApplicationContext();

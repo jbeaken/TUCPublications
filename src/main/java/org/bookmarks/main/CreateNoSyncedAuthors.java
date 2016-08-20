@@ -27,7 +27,7 @@ public class CreateNoSyncedAuthors extends AbstractSpringBooter {
 	
 //	private static SessionFactory sessionFactory = getSessionFactory();	
 	
-	static Logger logger = LoggerFactory.getLogger(CreateNoSyncedAuthors.class);
+	static final Logger logger = LoggerFactory.getLogger(CreateNoSyncedAuthors.class);
 	
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = getApplicationContext();

@@ -42,7 +42,7 @@ public class SyncWithAZ extends AbstractSpringBooter {
 	private static boolean downloadImagesFromAZ = false;
 	
 	
-	static Logger logger = LoggerFactory.getLogger(SyncWithAZ.class);
+	static final Logger logger = LoggerFactory.getLogger(SyncWithAZ.class);
 	
 	public static void main(String[] args) {
 		ApplicationContext applicationContext = getApplicationContext();

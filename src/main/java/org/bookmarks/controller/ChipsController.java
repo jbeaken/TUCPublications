@@ -45,7 +45,7 @@ public class ChipsController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerOrderService customerOrderService;
 
-	final static Logger logger = LoggerFactory.getLogger(ChipsController.class);
+	final Logger logger = LoggerFactory.getLogger(ChipsController.class);
 
 	@RequestMapping(value="/updateChips", method=RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {

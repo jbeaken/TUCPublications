@@ -1,21 +1,12 @@
 package org.bookmarks.ui;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import org.bookmarks.website.domain.Address;
-import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.Sale;
-import org.bookmarks.domain.StockItem;
-import org.bookmarks.domain.TelephoneDirectory;
-import org.displaytag.decorator.TableDecorator;
-import org.springframework.format.datetime.DateFormatter;
 
 public class SaleReportDecorator extends AbstractBookmarksTableDecorator {
 	
-	protected DateFormatter dateFormatter = new DateFormatter("dd/MM/yy HH:mm");
 	
 	public String getLink() {
 	    Sale sale = (Sale)getCurrentRowObject();
@@ -25,7 +16,7 @@ public class SaleReportDecorator extends AbstractBookmarksTableDecorator {
 	
 	public String getCreationDate() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return dateFormatter.print(sale.getCreationDate(), Locale.UK);
+		return dateTimeFormatter.print(sale.getCreationDate(), Locale.UK);
 	}
 	
 	public String getTotalPrice() {

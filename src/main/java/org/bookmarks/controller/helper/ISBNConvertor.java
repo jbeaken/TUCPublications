@@ -2,7 +2,7 @@ package org.bookmarks.controller.helper;
 
 public class ISBNConvertor {
 
-	  private static String CheckDigits = new String("0123456789X0");
+	  private final static String CheckDigits = "0123456789X0";
 
 	  /////////////// Change a character to its integer value ///////
 	  static int CharToInt(char a) {
