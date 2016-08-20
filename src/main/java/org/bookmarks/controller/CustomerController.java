@@ -38,9 +38,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,6 +75,11 @@ public class CustomerController extends AbstractBookmarksController {
 	private Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	private static final String postcodeLookupKey = "BH89-YF22-ZU91-EE62";
+	
+	@InitBinder(value="customer")
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}	
 
 
 	@Autowired
@@ -338,7 +346,7 @@ public class CustomerController extends AbstractBookmarksController {
 			return "addCustomer";
 		}
 
-		if(customer.getContactDetails().getEmail().isEmpty()) customer.getContactDetails().setEmail( null );
+		//if(customer.getContactDetails().getEmail().isEmpty()) customer.getContactDetails().setEmail( null );
 
 		customerService.save(customer);
 
