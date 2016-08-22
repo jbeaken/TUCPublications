@@ -23,11 +23,11 @@
 
                 <triggeringPolicy
                         class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                        <MaxFileSize>200MB</MaxFileSize>
+                        <MaxFileSize>20MB</MaxFileSize>
                 </triggeringPolicy>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                        <FileNamePattern>${catalina.base}/logs/testproject.%i.log.zip</FileNamePattern>
+                        <FileNamePattern>/home/bookmarks/log/bookmarks.%i.log.zip</FileNamePattern>
                         <MinIndex>1</MinIndex>
                         <MaxIndex>10</MaxIndex>
                 </rollingPolicy>
