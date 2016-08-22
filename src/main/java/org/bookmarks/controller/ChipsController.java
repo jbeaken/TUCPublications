@@ -204,6 +204,7 @@ public class ChipsController extends AbstractBookmarksController {
 	@RequestMapping(value="/getOrders")
 	public String getOrders(ModelMap modelMap) {
 
+		logger.info("User request for getOrders started");
 		List<Customer> chipsCustomers;
 <<<<<<< HEAD
 =======
