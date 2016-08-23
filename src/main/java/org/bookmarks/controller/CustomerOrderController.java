@@ -115,7 +115,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		addInfo("Add stock items to customer order, when complete click proceed to checkout", modelMap);
 
-		logger.info("Sucessfully initialised customer order creation for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
+		logger.info("Successfully initialised customer order creation for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
 
 		return "selectStockItemsForCustomerOrder";
 	}
@@ -429,6 +429,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		if(customerOrder.getCustomer().getContactDetails().getEmail() != null) {
 =======
 		String email = customerOrder.getCustomer().getContactDetails().getEmail();
+		logger.debug("Email for customer order is '{}'", email);
 		if(email != null) {
 >>>>>>> a6766fc... Added debug and check for blank email
 			try {
