@@ -54,6 +54,7 @@ public class DailyReport extends AbstractScheduler {
 		buffer.append("Total sales from web : "  + NumberFormat.getInstance().format(dailyReportBean.getWebOrderTotal().doubleValue()) + "\n\n");
 		
 		Integer pissedOffLevel = 0;
+		
 	    pissedOffLevel += appendStatus(buffer, CustomerOrderLineStatus.READY_TO_POST, 0);
 	    pissedOffLevel += appendStatus(buffer, CustomerOrderLineStatus.OUT_OF_STOCK, 0);
 		appendStatus(buffer, CustomerOrderLineStatus.ON_ORDER, 5);
@@ -64,7 +65,13 @@ public class DailyReport extends AbstractScheduler {
 		
 		String emotion = getBeansEmotion(pissedOffLevel);
 		
-		logger.info("Sending daily report");
+		logger.info("--------------------------------");
+		logger.info("Sending daily report : {}", emotion);
+		logger.info("No. of items in database : "  + dailyReportBean.getNoOfItemsInDatabase() + "\n");
+		logger.info("No. of items on website : "  + dailyReportBean.getNoOfItemsOnWebsite() + "\n");
+		logger.info("No. of items with images : "  + dailyReportBean.getNoOfItemsWithImages() + "\n");
+		logger.info("Total sales from web : "  + NumberFormat.getInstance().format(dailyReportBean.getWebOrderTotal().doubleValue()) + "\n\n");
+		logger.info("--------------------------------");
 		
 		emailService.sendDailyReport(emotion, buffer.toString());
 	}

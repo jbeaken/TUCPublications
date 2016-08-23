@@ -527,7 +527,7 @@ public class ChipsServiceImpl implements ChipsService {
 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
 
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
-		logger.info("Have retrived " + chipsCustomers.size() + " chips customer orders");
+		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
 		for(Customer c : chipsCustomers) {
 
 		}
