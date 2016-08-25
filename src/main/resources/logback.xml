@@ -59,7 +59,11 @@
 >>>>>>> d0a2049... Adding logging to invoice creation
 =======
         <logger name="org.bookmarks.controller.InvoiceController" level="INFO" />
+<<<<<<< HEAD
 >>>>>>> c258bd0... Removing debug level from logback
+=======
+        <logger name="org.bookmarks.controller.CustomerOrderController" level="DEBUG" />
+>>>>>>> ca1f0a3... Added debug to customerorder controller
         <logger name="org.springframework" level="INFO" />
         <logger name="org.springframework.security" level="INFO" />
 
