@@ -6,6 +6,16 @@ public class ScraperISBNHolder {
 	
 	private String categoryName;
 
+	public ScraperISBNHolder() {
+		super();
+	}
+
+	public ScraperISBNHolder(String isbn, String categoryName) {
+		this();
+		this.categoryName = categoryName;
+		this.isbn = isbn;
+	}
+
 	public String getIsbn() {
 		return isbn;
 	}

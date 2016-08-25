@@ -10,6 +10,7 @@ import org.bookmarks.domain.Publisher;
 import org.bookmarks.service.AZLookupService;
 import org.bookmarks.service.PublisherService;
 import org.bookmarks.service.StockItemService;
+import org.bookmarks.bean.ScraperISBNHolder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,53 +22,93 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.IntStream;
+
 @Component
 public class ZedWebScraper extends WebScraper {
 	
 	private Logger logger = LoggerFactory.getLogger(ZedWebScraper.class);
 	
-	private String base = "http://www.zedbooks.co.uk";
+	private String base = "http://www.zedbooks.net/shop/books/";
 
 	/**
 	 * Every day at 11pm
+	 * Page 1 : https://www.zedbooks.net/shop/books
+	 * Page 2 : https://www.zedbooks.net/shop/books/page/2/
+	 * Up to page 30 as of August 2016, 
 	 */
 	@Override
 	@Scheduled(cron = "0 0 23 * * SAT")
 	public void scrape() throws Exception {
 			
-			if(isProduction() == false) return; //Should only run in production
+			if(isProduction() == false) {
+				logger.info("Aborting scraping Zed!! Not production");
+				return; //Should only run in production
+			}
 		
-			logger.info("Scraping Zed!!");
-			logger.info("Search Url : " + base);
-			
-			Document doc = Jsoup.connect(base).userAgent("Mozilla").timeout(136000).get();
-			 
-			Elements categories = doc.select("span.field-content a[href^=/subjects/]");
-			
 			WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Zed");
-			
-			
-			//Now cycle through categories
-			for(Element e : categories) {
-				String href = e.attr("href");
-				
-				String categoryName = e.text();
-				if(categoryName.isEmpty()) continue;
-				
-				String drilldownURL = base + href;
-				
-				//Have url of form /books/subject/ - ignore these
-				logger.info("Category name : " + categoryName);
-				
-				Set<String> isbnSet = getIsbnList(drilldownURL);
+			Set<ScraperISBNHolder> isbnSet = new HashSet<ScraperISBNHolder>();
 
-				persist(isbnSet, categoryName, webScraperResultBean);
+			logger.info("Scraping Zed!!");
+
+			IntStream.rangeClosed(1, 40).forEach(i ->  {
+				logger.debug("Scraping page {}", i);
+				try {
+				Document doc = Jsoup.connect( "https://www.zedbooks.net/shop/books/page/" + i ).userAgent("Mozilla").timeout(136000).get();
 				
-			} //End for
+			
+			
+			
+
+			// logger.debug(doc.text());
+			 
+			Elements titles = doc.select("article.item a");
+
+			logger.info("Have found {} titles", titles.size());
+			
+			
+			
+			
+			
+				//Now cycle through categories
+				for(Element e : titles) {
+					String href = e.attr("href");
+
+					logger.debug("Have title href " + href);
+
+					doc = Jsoup.connect( href ).userAgent("Mozilla").timeout(136000).get();
+
+					Elements options = doc.select("option[data-format=Paperback]");
+
+					logger.debug("Have options " + options.toString());
+
+					String isbn = options.attr("data-isbn");
+
+					logger.debug("ISBN = " + options.attr("data-isbn"));
+
+					isbnSet.add( new ScraperISBNHolder(isbn, null) );
+					
+					// String categoryName = e.text();
+					// if(categoryName.isEmpty()) continue;
+					
+					// String drilldownURL = base + href;
+					
+					// //Have url of form /books/subject/ - ignore these
+					// logger.info("Category name : " + categoryName);
+					
+					
+				} //End for
+			} catch(Exception e) {
+				logger.error("Cannot get page {}", i);
+			}
+
+			});
+
+			persist(isbnSet, webScraperResultBean);
 			
 			log(webScraperResultBean);
 			
-			sendEmail(webScraperResultBean);
+			// sendEmail(webScraperResultBean);
 	}
 	
 

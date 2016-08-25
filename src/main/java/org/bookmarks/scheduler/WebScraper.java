@@ -90,6 +90,7 @@ public abstract class WebScraper extends AbstractScheduler {
 			}
 
 			boolean exists = stockItemService.exists(isbn);
+			
 			if(exists) {
 				logger.info(isbn + " already exists in database!");
 				continue;
@@ -129,7 +130,7 @@ public abstract class WebScraper extends AbstractScheduler {
 
 			//Sync with chips
 			try {
-				chipsService.syncStockItemWithChips(si);
+				// chipsService.syncStockItemWithChips(si);
 				logger.info("Have successfully added " + si.getTitle() + " to chips");
 			} catch (Exception e) {
 				logger.error("Cannot sync with chips: " + si.getIsbn() + " - " + si.getTitle(), e);
@@ -148,14 +149,14 @@ public abstract class WebScraper extends AbstractScheduler {
 
 		//Persist
 		for(String isbn : isbnSet) {
-			logger.info("Checking existence of " + isbn);
+
 			if(isbn.length() != 10 && isbn.length() != 13) {
-				logger.info("Invalid length of isbn!");
+				logger.info("Invalid length of isbn {}", isbn);
 				continue;
 			}
 			boolean exists = stockItemService.exists(isbn);
 			if(exists) {
-				logger.info("Already exists in database!");
+				logger.debug("{} already exists in database! Skipping", isbn);
 				continue;
 			}
 			StockItem si = null;
@@ -164,25 +165,30 @@ public abstract class WebScraper extends AbstractScheduler {
 			} catch (Exception e) {
 				logger.error("Cannot lookup", e);
 			}
+
 			if(si == null ) {
-				logger.info("Cannot lookup at az for " + isbn);
+				logger.info("Cannot lookup at az isbn {} ", isbn);
 				stockItemsNotOnAz.add(isbn);
 				continue;
 			}
+
 			if(si.getPublisherPrice() == null) {
-				logger.info("Cannot get publisher price for " + si.getTitle());
+				logger.info("Cannot get publisher price for {}", si);
 				stockItemsFailed.add(si);
 				continue;
 			}
+
 			//Category can be set by lookup
 			if(si.getCategory() == null) {
 				//It hasn't been, set to default (Politics)
 				si.setCategory(category);
 			}
+
 			si.setQuantityToKeepInStock(0l);
 //			if( si.getPublisher() == null) {
 //				si.setPublisher(webScraperResultBean.getPublisher());
 //			}
+
 			si.setIsStaffPick(false);
 
 			stockItemService.create(si);
@@ -191,7 +197,7 @@ public abstract class WebScraper extends AbstractScheduler {
 
 			//Sync with chips
 			try {
-				chipsService.syncStockItemWithChips(si);
+				//chipsService.syncStockItemWithChips(si);
 				logger.info("Have successfully added " + si.getTitle() + " to chips");
 			} catch (Exception e) {
 				logger.error("Cannot sync with chips: " + si.getIsbn() + " - " + si.getTitle(), e);
@@ -202,13 +208,13 @@ public abstract class WebScraper extends AbstractScheduler {
 
 	protected void log(WebScraperResultBean webScraperResultBean) {
 		for(StockItem si : webScraperResultBean.getStockItemsAdded()) {
-			logger.info("Have added " + si.getTitle());
+			logger.info("Have added {}", si);
 		}
 		for(StockItem si : webScraperResultBean.getStockItemsFailed()) {
-			logger.info("Failed " + si.getIsbn() + " "+ si.getTitle());
+			logger.info("Failed {}" , si);
 		}
 		for(String si : webScraperResultBean.getStockItemsNotOnAz()) {
-			logger.info("Not on AZ " + si);
+			logger.info("Not on AZ ", si);
 		}
 	}
 

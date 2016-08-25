@@ -510,12 +510,18 @@ public class ChipsServiceImpl implements ChipsService {
 
 >>>>>>> fc67d45... Adding showHome
 		try {
+<<<<<<< HEAD
 		    System.out.println(response.getStatusLine());
 		    HttpEntity entity = response.getEntity();
 		    jsonCustomers = EntityUtils.toString(entity);
 		    EntityUtils.consume(entity);
 		    // do something useful with the response body
 		    // and ensure it is fully consumed
+=======
+			HttpEntity entity = response.getEntity();
+			jsonCustomers = EntityUtils.toString(entity);
+			EntityUtils.consume(entity);
+>>>>>>> 1494835... Got zed scrapper scraping
 		} finally {
 		    response.close();
 		}
