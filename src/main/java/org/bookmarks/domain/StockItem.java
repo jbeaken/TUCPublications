@@ -29,6 +29,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -177,10 +178,12 @@ public class StockItem extends AbstractEntity {
 	private Boolean generateISBN = Boolean.FALSE;
 
 
-	@Column(name="review_as_html", columnDefinition="text")
+	@Column(name="review_as_html")
+	@Type(type="text")
     private String reviewAsHTML;
 
 	@Column(name="review_as_text")
+	@Type(type="text")
     private String reviewAsText;
 
 	@Column(name="has_newer_edition")
