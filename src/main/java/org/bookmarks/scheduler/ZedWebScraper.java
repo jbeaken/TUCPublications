@@ -52,25 +52,17 @@ public class ZedWebScraper extends WebScraper {
 			logger.info("Scraping Zed!!");
 
 			IntStream.rangeClosed(1, 40).forEach(i ->  {
-				logger.debug("Scraping page {}", i);
+
 				try {
 				Document doc = Jsoup.connect( "https://www.zedbooks.net/shop/books/page/" + i ).userAgent("Mozilla").timeout(136000).get();
 				
-			
-			
-			
-
-			// logger.debug(doc.text());
+				logger.debug(doc.text());
 			 
-			Elements titles = doc.select("article.item a");
+				Elements titles = doc.select("article.item a");
 
-			logger.info("Have found {} titles", titles.size());
+				logger.info("Have found {} titles on page {}", titles.size(), i);
 			
-			
-			
-			
-			
-				//Now cycle through categories
+				//Now cycle through titles
 				for(Element e : titles) {
 					String href = e.attr("href");
 
@@ -99,7 +91,7 @@ public class ZedWebScraper extends WebScraper {
 					
 				} //End for
 			} catch(Exception e) {
-				logger.error("Cannot get page {}", i);
+				logger.error("Cannot get page {}", i, e);
 			}
 
 			});
