@@ -53,11 +53,15 @@
         <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> a6bbbcb... Cleaning up debugging
 =======
         <logger name="org.bookmarks.controller.InvoiceController" level="DEBUG" />
 >>>>>>> d0a2049... Adding logging to invoice creation
 =======
+=======
+        <logger name="org.bookmarks.controller.CustomerOrderController" level="DEBUG" />
+>>>>>>> 4883163... Debug email in customer order
         <logger name="org.bookmarks.controller.InvoiceController" level="INFO" />
 <<<<<<< HEAD
 >>>>>>> c258bd0... Removing debug level from logback
@@ -86,3 +90,4 @@
         </root>
 
 </configuration>
+

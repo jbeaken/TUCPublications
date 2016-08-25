@@ -92,7 +92,7 @@ public abstract class WebScraper extends AbstractScheduler {
 			boolean exists = stockItemService.exists(isbn);
 			
 			if(exists) {
-				logger.info(isbn + " already exists in database!");
+				logger.debug(isbn + " already exists in database!");
 				continue;
 			}
 
@@ -130,7 +130,7 @@ public abstract class WebScraper extends AbstractScheduler {
 
 			//Sync with chips
 			try {
-				// chipsService.syncStockItemWithChips(si);
+				chipsService.syncStockItemWithChips(si);
 				logger.info("Have successfully added " + si.getTitle() + " to chips");
 			} catch (Exception e) {
 				logger.error("Cannot sync with chips: " + si.getIsbn() + " - " + si.getTitle(), e);
@@ -197,7 +197,7 @@ public abstract class WebScraper extends AbstractScheduler {
 
 			//Sync with chips
 			try {
-				//chipsService.syncStockItemWithChips(si);
+				chipsService.syncStockItemWithChips(si);
 				logger.info("Have successfully added " + si.getTitle() + " to chips");
 			} catch (Exception e) {
 				logger.error("Cannot sync with chips: " + si.getIsbn() + " - " + si.getTitle(), e);

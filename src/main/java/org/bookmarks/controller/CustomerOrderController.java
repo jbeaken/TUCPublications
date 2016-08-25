@@ -102,9 +102,10 @@ public class CustomerOrderController extends AbstractBookmarksController {
 	 */
 	@RequestMapping(value="/init")
 	public String init(Long customerId, HttpSession session, ModelMap modelMap) {
-		//Initialise a new customer order into session, replace previous order if necessary
+		
 		CustomerOrder customerOrder = customerOrderService.selectCustomer(customerId);
 
+		//Container for customer order lines
 		Map<Long , CustomerOrderLine> customerOrderLineMap = new HashMap<Long, CustomerOrderLine>();
 
 		session.setAttribute("customerOrder", customerOrder);
@@ -115,7 +116,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		addInfo("Add stock items to customer order, when complete click proceed to checkout", modelMap);
 
-		logger.info("Successfully initialised customer order creation for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
+		logger.info("Successfully initialised customer order creation for {} " + customerOrder.getCustomer());
+		logger.debug("Email : {}", customerOrder.getCustomer().getContactDetails().getEmail());
+		logger.debug("Customer : {}", customerOrder.getCustomer());
 
 		return "selectStockItemsForCustomerOrder";
 	}
