@@ -400,6 +400,8 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 	public String getImage(StockItem stockItem, BindingResult bindingResult, String flow, HttpSession session, ModelMap modelMap) {
 		String result = "editStock";
 
+		logger.info("About to getImage for : {}", stockItem);
+
 		//Check validity of isbn
 		stockItemValidator.validateISBN(stockItem, bindingResult, "isbn");
 		if(bindingResult.hasErrors()) {
@@ -431,6 +433,9 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		}
 
 		addSuccess("Have successfully got image for " + stockItem.getTitle(), modelMap);
+
+		logger.info("Got image {} for stock item {}", stockItem.getImageFilename(), stockItem);
+
 		return "welcome";
 	}
 
@@ -582,6 +587,8 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		//Get stock item to view and place into request map
 		StockItem stockItem = stockItemService.get(id);
 
+		logger.debug("About to view : {}", stockItem);
+
 		//Get binding options
 		fillStockSearchModel(session, modelMap);
 		modelMap.addAttribute(stockItem);
@@ -595,10 +602,12 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		stockItemService.toggleIsForMarxism(id, isForMarxism);
 
 		//This is an Ajax call return appropriate image to display
+
 		if(isForMarxism) {
 			return "image1";
 		} else return "image2";
 	}
+
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Long id, String flow, HttpSession session, ModelMap modelMap) {
 		//Get stock item to edit and place into request map
@@ -613,7 +622,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		session.setAttribute("sessionStockItem", stockItem);
 		session.setAttribute("flow", flow);
 
-		logger.info("About to edit : {}", stockItem);
+		logger.debug("About to edit : {}", stockItem);
 
 		return "editStock";
 	}
