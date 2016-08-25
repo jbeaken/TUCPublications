@@ -265,11 +265,15 @@ public class ChipsServiceImpl implements ChipsService {
 		} catch(Exception e) {
 =======
 
-			logger.info("(Image upload successful)");
+			logger.info("Image upload successful");
 
 		} catch (Exception e) {
+<<<<<<< HEAD
 >>>>>>> 88dbf5a... ADding logging
 			logger.error("FTP error", e);
+=======
+			logger.error("Image upload failed!", e);
+>>>>>>> 2192327... Formatting and better logging
 		} finally {
 			if(session != null) session.disconnect();
 		}
@@ -438,6 +442,7 @@ public class ChipsServiceImpl implements ChipsService {
 	
 	@Override
 	public void updateChips() throws ClientProtocolException, IOException {
+		
 		Collection<StockItem> stockItems = stockItemService.getBounciesAndStickies();
 		Collection<StockItem> strippedStockItems = new ArrayList<StockItem>();
 		
