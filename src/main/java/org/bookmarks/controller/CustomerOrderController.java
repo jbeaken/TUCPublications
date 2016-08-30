@@ -36,6 +36,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 
 @Controller
 @RequestMapping(value="/customerOrder")
@@ -75,6 +79,11 @@ public class CustomerOrderController extends AbstractBookmarksController {
 	@Autowired
 	private StockItemService stockItemService;
 
+	@InitBinder(value="customerOrder")
+	public void initBinder(WebDataBinder webDataBinder) {
+		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	}
+
 	/**
 	 * Get stuff from session
 	 * @param id
@@ -102,8 +111,14 @@ public class CustomerOrderController extends AbstractBookmarksController {
 	 */
 	@RequestMapping(value="/init")
 	public String init(Long customerId, HttpSession session, ModelMap modelMap) {
-		
-		CustomerOrder customerOrder = customerOrderService.selectCustomer(customerId);
+
+		// First get customer
+		Customer customer = customerService.get( customerId );
+
+		// Create customer order
+		CustomerOrder customerOrder = new CustomerOrder();
+		customerOrder.setCustomer(customer);
+
 
 		//Container for customer order lines
 		Map<Long , CustomerOrderLine> customerOrderLineMap = new HashMap<Long, CustomerOrderLine>();
