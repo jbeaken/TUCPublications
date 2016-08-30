@@ -434,12 +434,11 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		//Persist customer order
 		customerOrderService.save(customerOrder, customerOrderLineMap.values());
 
-		//Update email
-		if(!customer.getContactDetails().getEmail().trim().isEmpty()) {
-			customerService.updateEmail(customerOrder.getCustomer());
-		}
+		String email =customer.getContactDetails().getEmail();
 
+		
 		//Send confirmation email
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		emailService.sendCustomerOrderConfirmationEmail(customerOrder);
@@ -447,9 +446,18 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		if(customerOrder.getCustomer().getContactDetails().getEmail() != null) {
 =======
 		String email = customerOrder.getCustomer().getContactDetails().getEmail();
+=======
+		
+>>>>>>> 7742430... After adding stringtrimmer, check for null is needed, adding
 		logger.debug("Email for customer order is '{}'", email);
+
 		if(email != null) {
+<<<<<<< HEAD
 >>>>>>> a6766fc... Added debug and check for blank email
+=======
+			//could have been updated in order screen
+			customerService.updateEmail(customerOrder.getCustomer());
+>>>>>>> 7742430... After adding stringtrimmer, check for null is needed, adding
 			try {
 				emailService.sendCustomerOrderConfirmationEmail(customerOrder);
 				logger.info("Successfully sent confirmation email");
