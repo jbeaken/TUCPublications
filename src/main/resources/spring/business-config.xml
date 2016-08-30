@@ -27,6 +27,7 @@
 		http://www.springframework.org/schema/util/spring-util-3.2.xsd
 		http://www.springframework.org/schema/task 
 		http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+<<<<<<< HEAD
   
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	  <property name="host" value="auth.smtp.1and1.co.uk"/>
@@ -58,6 +59,8 @@
 =======
 	    </property>
 	</bean>
+=======
+>>>>>>> 565e5ed... Externalised email properties
 
 	<bean id="filterMultipartResolver"
 	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -193,6 +196,22 @@
     
 <beans profile="prod,mini-beans">
 
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  <property name="host" value="auth.smtp.1and1.co.uk"/>
+	  <property name="port" value="587"/>
+	    <property name="username" value="${email.username}" />
+	    <property name="password" value="${email.password}" />
+	    <property name="javaMailProperties">
+	        <props>
+	            <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.debug">false</prop>
+	           <prop key="mail.smtp.auth">true</prop>
+	            <!-- Use TLS to encrypt communication with SMTP server -->
+	            <prop key="mail.smtp.starttls.enable">true</prop>
+	        </props>
+	    </property>
+	</bean>
+
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 	    <property name="url" value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8"/>
@@ -244,10 +263,26 @@
 	</bean>		
 	
 	<util:properties id="applicationProperties"	location="classpath:spring/application.prod.properties" />
-	
+
 </beans>
 
 <beans profile="dev">
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="auth.smtp.1and1.co.uk"/>
+		<property name="port" value="587"/>
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+			<property name="javaMailProperties">
+					<props>
+							<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.debug">false</prop>
+						 <prop key="mail.smtp.auth">true</prop>
+							<!-- Use TLS to encrypt communication with SMTP server -->
+							<prop key="mail.smtp.starttls.enable">true</prop>
+					</props>
+			</property>
+	</bean>
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -319,8 +354,29 @@
 				<prop key="hibernate.format_sql">true</prop>	
 			</props>
 		</property>
+<<<<<<< HEAD
 	</bean>		
 	
+=======
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="auth.smtp.1and1.co.uk"/>
+		<property name="port" value="587"/>
+		<property name="username" value="${email.username}" />
+		<property name="password" value="${email.password}" />
+			<property name="javaMailProperties">
+					<props>
+							<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+				<prop key="mail.debug">false</prop>
+						 <prop key="mail.smtp.auth">true</prop>
+							<!-- Use TLS to encrypt communication with SMTP server -->
+							<prop key="mail.smtp.starttls.enable">true</prop>
+					</props>
+			</property>
+	</bean>
+
+>>>>>>> 565e5ed... Externalised email properties
 	<util:properties id="applicationProperties"	location="classpath:spring/application.dev.properties" />
 	
 </beans>
