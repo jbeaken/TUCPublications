@@ -133,7 +133,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	public String save(@Valid Invoice invoice, BindingResult bindingResult, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Map<Long, CustomerOrderLine> customerOrderLineMapForInvoice = (Map<Long, CustomerOrderLine>) session.getAttribute("customerOrderLineMapForInvoice");
-		
+
 		Customer customer = invoice.getCustomer();
 
 		//Need a validator
@@ -141,17 +141,17 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 				&& customer.getBookmarksAccount().getAccountHolder() == false
 				&& invoice.getIsProforma() == false) {
 			fillModel(invoice, saleMap, modelMap, false); //Already been calculated
-			
+
 			modelMap.addAttribute(new StockItemSearchBean());
-			
+
 			addInfo("Customer " + customer.getFullName() + " does not have an account and invoice is unpaid!", modelMap);
-			
+
 			logger.info("Customer {} does not have an account and invoice is unpaid! Not saving!", customer.getFullName());
-			
+
 			if(session.getAttribute("isEditInvoice") != null) {
 				return "editInvoice";
 			}
-			
+
 			return "createInvoice";
 		}
 		if(bindingResult.hasErrors()) {
@@ -168,15 +168,15 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		try {
 			invoiceService.save(invoice, saleMap.values(), customerOrderLineMapForInvoice, event);
 		} catch(BookmarksException e) {
-			
+
 			fillModel(invoice, saleMap, modelMap, false); //Already been calculated
-			
+
 			modelMap.addAttribute(new StockItemSearchBean());
-			
+
 			addInfo("Cannot save. Reason is : " + e.getMessage(), modelMap);
-			
+
 			logger.error("Cannot save invoice", e);
-			
+
 			if(session.getAttribute("isEditInvoice") != null) {
 				return "editInvoice";
 			}
@@ -199,13 +199,14 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("invoiceSearchBean", invoiceSearchBean);
 
 		addSuccess("Invoice successfully created for " + customer.getFullName(), modelMap);
-		
-		logger.info("Invoice successfully created for {}", customer.getFullName());
-		logger.info("*****************************");
-		
+
 		if(customer.getBookmarksAccount().getAccountHolder() == true) {
 			logger.info("New Balance : {}", customer.getBookmarksAccount().getCurrentBalance());
 		}
+
+		logger.info("Invoice successfully created for {}", customer.getFullName());
+		logger.info("*****************************");
+
 		return "redirect:searchFromSession";
 	}
 
@@ -225,7 +226,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.setAttribute("orderLineMap", saleMap);
 		session.setAttribute("isEditInvoice", true);
 		session.setAttribute("originalInvoicePrice", invoice.getTotalPrice());
-		
+
 		logger.info("Initialisation of edit invoice for {}", customer);
 
 		//Place into model
@@ -256,7 +257,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 
 		invoice.setIsProforma(isProforma);
-		
+
 		logger.info("Have set isProforma flag to " + isProforma);
 
 		//Place into model
@@ -271,7 +272,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Invoice invoice = (Invoice) session.getAttribute("invoice");
 
 		invoice.setUpdateStock(updateStock);
-		
+
 		logger.info("Have set updateStock flag to " + updateStock);
 
 		//Place into model
@@ -412,7 +413,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		session.removeAttribute("originalInvoicePrice");
 
 		addSuccess("Invoice has been edited", modelMap);
-		
+
 		logger.info("Edit oft invoice for {} successful", invoice.getCustomer());
 
 		return searchFromSession(session, request, modelMap);
@@ -497,7 +498,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		//invoice.calculate(saleMap.values(), true);
 		fillModel(invoice, saleMap, modelMap);
-		
+
 		logger.info("Adding additional charges for {}. Second Hand : {}, Service Charge {}", invoice.getCustomer(), invoice.getSecondHandPrice(), invoice.getServiceCharge());
 
 		if(session.getAttribute("isEditInvoice") != null) {
