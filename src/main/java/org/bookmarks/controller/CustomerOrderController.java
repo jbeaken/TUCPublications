@@ -471,6 +471,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		//Clean up session
 		session.removeAttribute("customerOrderLineMap");
+		session.removeAttribute("customerOrder");
 		session.setAttribute("success", "Successfully created order for " + customerOrder.getCustomer().getFullName());
 
 		logger.info("Successfully created order for - " + customerOrder.getCustomer().getId() + " : " + customerOrder.getCustomer().getFullName());
