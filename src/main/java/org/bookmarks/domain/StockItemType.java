@@ -16,6 +16,7 @@ public enum StockItemType {
 	EDIBLE("Edible"),
 	FRIDGE_MAGNET("Fridge Magnet"),
 	GAME("Game"),
+	MIRROR("Mirror"),	
 	MISC("Misc"),	
 	MUG("Mug"),
 	MARXISM_CD("Marxism CD"),
