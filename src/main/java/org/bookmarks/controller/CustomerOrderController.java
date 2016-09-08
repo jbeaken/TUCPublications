@@ -132,7 +132,12 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		addInfo("Add stock items to customer order, when complete click proceed to checkout", modelMap);
 
 		logger.info("Successfully initialised customer order creation for {} " + customerOrder.getCustomer());
-		logger.debug("Email : {}", customerOrder.getCustomer().getContactDetails().getEmail());
+		if(customerOrder.getCustomer().getContactDetails() != null) {
+			logger.info("Customer has email");
+			logger.debug("Email : {}", customerOrder.getCustomer().getContactDetails().getEmail());
+		} else {
+			logger.info("No contact details given");
+		}
 		logger.debug("Customer : {}", customerOrder.getCustomer());
 
 		return "selectStockItemsForCustomerOrder";
