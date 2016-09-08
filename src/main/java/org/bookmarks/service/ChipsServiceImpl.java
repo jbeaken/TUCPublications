@@ -223,8 +223,13 @@ public class ChipsServiceImpl implements ChipsService {
 			jsch.setKnownHosts( knownHostsFilename );
 =======
 			String knownHostsFilename = "/root/.ssh/known_hosts";
+<<<<<<< HEAD
 			jsch.setKnownHosts(knownHostsFilename);
 >>>>>>> f35c91c... Chaning location of known hosts
+=======
+			jsch.setKnownHosts( knownHostsFilename );
+			jsch.addIdentity( "/root/.ssh/id_rsa.pub" );
+>>>>>>> 1e478db... Added shh key for sftp
 
 <<<<<<< HEAD
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
@@ -233,8 +238,12 @@ public class ChipsServiceImpl implements ChipsService {
 			session = jsch.getSession(sftpUsername, sftpHost, 2298);
 			// non-interactive version. Relies in host key being in known-hosts
 			// file
+<<<<<<< HEAD
 >>>>>>> 88dbf5a... ADding logging
 			session.setPassword( sftpPassword );
+=======
+		//	session.setPassword( sftpPassword );
+>>>>>>> 1e478db... Added shh key for sftp
 
 			session.connect();
 
@@ -269,11 +278,15 @@ public class ChipsServiceImpl implements ChipsService {
 
 		} catch (Exception e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 88dbf5a... ADding logging
 			logger.error("FTP error", e);
 =======
 			logger.error("Image upload failed!", e);
 >>>>>>> 2192327... Formatting and better logging
+=======
+			logger.error("JSCH error. Image upload failed!", e);
+>>>>>>> 1e478db... Added shh key for sftp
 		} finally {
 			if(session != null) session.disconnect();
 		}
