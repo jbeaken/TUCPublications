@@ -1,27 +1,27 @@
-# Make sure only root can run our script
+# Make sure root
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
 
 # Install Java, accept license automatically
-#echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 
 # Install java 8
-#echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-#echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
-#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-#apt-get update
-#apt-get -y install oracle-java8-installer
-#apt-get install oracle-java8-set-default
+echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
+echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
+apt-get update
+apt-get -y install oracle-java8-installer
+apt-get install oracle-java8-set-default
 
 # Git (requires password entry)
-#apt-get -y install git
-#mkdir /home/git
-#git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
+apt-get -y install git
+mkdir /home/git
+git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
 
 # back up
-#mkdir /home/bak
+mkdir /home/bak
 
 # Maven
 wget ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
@@ -29,19 +29,19 @@ tar -xf apache-maven-3.3.9-bin.tar.gz -C /usr/local/share
 ln -s /usr/local/share/apache-maven-3.3.9 /usr/local/share/maven
 
 # Mysql
-#apt-get -y install mysql-server
+apt-get -y install mysql-server
 
 # Tomcat
 wget mirror.vorboss.net/apache/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
 tar xf apache-tomcat-8.5.5.tar.gz -C /usr/local/share
 ln -s /usr/local/share/apache-tomcat-8.5.5 /usr/local/share/tomcat
 rm -rf /usr/local/share/tomcat/webapps/*
-cp /home/git/bookmarks/src/main/scripts/server.xml /usr/local/share/tomcat/conf/server.xml
-cp /home/git/bookmarks/src/main/scripts/setenv.sh /usr/local/share/tomcat/bin/setenv.sh
+cp /home/git/bookmarks/src/main/etc/conf/server.xml /usr/local/share/tomcat/conf/server.xml
+cp /home/git/bookmarks/src/main/etc/conf/setenv-dev.sh /usr/local/share/tomcat/bin/setenv.sh
 chgrp tomcat -R /usr/local/share/apache-tomcat-8.5.5
 
 # Tomcat systemd
-cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
+cp /home/git/bookmarks/src/main/etc/install/tomcat.service /lib/systemd/system/
 systemctl enable tomcat
 
 # Write to path
@@ -51,7 +51,7 @@ echo "PATH=$PATH:/usr/local/share/maven/bin" >> /etc/environment
 
 # Build bookmarks
 cd /home/git/bookmarks
-ln -s /home/git/bookmarks/src/main/scripts/build.sh /home/git/bookmarks/build.sh
+ln -s /home/git/bookmarks/src/main/build/build.sh /home/git/bookmarks/build.sh
 sh build.sh
 
 
