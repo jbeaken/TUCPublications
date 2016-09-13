@@ -5,8 +5,8 @@ After=syslog.target network.target
 [Service]
 Type=forking
 User=root
-ExecStart=/opt/tomcat/bin/startup.sh 
-ExecStop=/opt/tomcat/bin/shutdown.sh
+ExecStart=/usr/local/share/tomcat/bin/startup.sh 
+ExecStop=/usr/local/share/shutdown.sh
 
 [Install]
 WantedBy=multi-user.target
