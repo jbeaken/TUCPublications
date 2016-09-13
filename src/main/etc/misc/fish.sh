@@ -6,8 +6,8 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-apt-add-repository ppa:fish-shell/release-2
+apt-add-repository -y ppa:fish-shell/release-2
 apt-get update
-apt-get install fish
+apt-get -y install fish
 
 chsh -s /usr/bin/fish
