@@ -232,12 +232,16 @@ public class ChipsServiceImpl implements ChipsService {
 <<<<<<< HEAD
 =======
 			jsch.setKnownHosts( "/root/.ssh/known_hosts" );
+<<<<<<< HEAD
 >>>>>>> daac66b... Adding customer search option merge
 			jsch.addIdentity( "/root/.ssh/id_rsa.pub" );
 >>>>>>> 1e478db... Added shh key for sftp
 =======
 			jsch.addIdentity( "/root/.ssh/id_rsa" );
 >>>>>>> 0fc7bb9... Adding idneity
+=======
+			jsch.addIdentity( "/root/.ssh/id_rsa" );
+>>>>>>> f7fb51f... Using private key for sftp, not public
 
 <<<<<<< HEAD
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
