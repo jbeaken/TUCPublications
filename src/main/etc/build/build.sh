@@ -3,20 +3,21 @@
 
 # Make sure only root can run our script
 if [ "$(id -u)" = "0" ]; then
-   echo "This script must not be run as root" 1>&2
+   echo "Do not run as sudo, valid command is : sh build.sh" 1>&2
    exit 1
 fi
 
 # Get latest from repository
 git pull
-
-if [ "$1" = "1" ]; then 
+if [ "$?" = "1" ]; then
+	echo "git error, aborting!" 
 	exit 1
 fi
 
 # Clean and build
 mvn clean package
-if [ "$1" = "1" ]; then
+if [ "$?" = "1" ]; then
+	echo "maven error, aborting!"
         exit 1
 fi
 
