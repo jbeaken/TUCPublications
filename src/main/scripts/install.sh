@@ -1,5 +1,11 @@
-# Install Java
-# Accept license automatically
+
+# Make sure only root can run our script
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+# Install Java, accept license automatically
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 
 # Install java 8
@@ -23,6 +29,9 @@ git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
 # cp /home/git/bookmarks/src/main/scripts/server.xml /usr/local/share/tomcat/conf/server.xml
 # cp /home/git/bookmarks/src/main/scripts/setenv.sh /usr/local/share/tomcat/bin/setenv.sh
 
+# back up
+mkdir /home/bak
+
 # Maven
 wget -P /usr/local/share ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
 tar -xzC /usr/local/share -f /usr/local/share/apache-maven-3.3.9-bin.tar.gz
@@ -30,6 +39,31 @@ ln -s /usr/local/share/apache-maven-3.3.9 /usr/local/share/maven
 
 # Mysql
 apt-get -y install mysql-server
+
+# Tomcat
+wget mirror.vorboss.net/apache/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
+
+tar xf apache-tomcat-8.5.5.tar.gz -C /opt
+ln -s /usr/local/share/apache-tomcat-8.5.5 /usr/local/share/tomcat
+
+rm -rf /usr/local/sharetomcat/webapps/*
+cp /home/git/bookmarks/src/main/scripts/server.xml /usr/local/share/tomcat/conf/server.xml
+cp /home/git/bookmarks/src/main/scripts/setenv.sh /usr/local/share/tomcat/bin/setenv.sh
+
+# Tomcat systemd
+cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
+systemctl enable tomcat
+
+# Write to path
+echo "PATH=$PATH:/usr/local/share/maven/bin" >> /etc/environment
+. /etc/environment
+
+# Build bookmarks
+cd /home/git/bookmarks
+ln -s /home/git/bookmarks/src/main/scripts/install.sh /home/git/bookmarks/install.sh
+sh install.sh
+
+
 
 # Download bookmarks database.
 # mkdir -p /home/bookmarks/logs
