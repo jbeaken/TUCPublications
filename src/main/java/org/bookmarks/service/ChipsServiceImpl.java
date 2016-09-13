@@ -229,11 +229,15 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> f35c91c... Chaning location of known hosts
 =======
 			jsch.setKnownHosts( knownHostsFilename );
+<<<<<<< HEAD
 =======
 			jsch.setKnownHosts( "/root/.ssh/known_hosts" );
 >>>>>>> daac66b... Adding customer search option merge
 			jsch.addIdentity( "/root/.ssh/id_rsa.pub" );
 >>>>>>> 1e478db... Added shh key for sftp
+=======
+			jsch.addIdentity( "/root/.ssh/id_rsa" );
+>>>>>>> 0fc7bb9... Adding idneity
 
 <<<<<<< HEAD
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
