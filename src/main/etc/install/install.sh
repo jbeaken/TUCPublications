@@ -20,8 +20,9 @@ apt-get -y install git
 mkdir /home/git
 git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
 
-# back up
+# Directories
 mkdir /home/bak
+mkdir -p /home/bookmarks/logs
 
 # Maven
 wget ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
@@ -38,7 +39,8 @@ ln -s /usr/local/share/apache-tomcat-8.5.5 /usr/local/share/tomcat
 rm -rf /usr/local/share/tomcat/webapps/*
 cp /home/git/bookmarks/src/main/etc/conf/server.xml /usr/local/share/tomcat/conf/server.xml
 cp /home/git/bookmarks/src/main/etc/conf/setenv-dev.sh /usr/local/share/tomcat/bin/setenv.sh
-chgrp tomcat -R /usr/local/share/apache-tomcat-8.5.5
+useradd -u 220 -r -s /bin/false tomcat
+chown tomcat:tomcat -R /usr/local/share/apache-tomcat-8.5.5
 
 # Tomcat systemd
 cp /home/git/bookmarks/src/main/etc/install/tomcat.service /lib/systemd/system/
@@ -54,10 +56,6 @@ cd /home/git/bookmarks
 ln -s /home/git/bookmarks/src/main/build/build.sh /home/git/bookmarks/build.sh
 sh build.sh
 
-
-
-# Download bookmarks database.
-# mkdir -p /home/bookmarks/logs
 # DAY_OF_WEEK=$(date +"%a")
 # FILENAME=$DAY_OF_WEEK
 # wget -P /home/bookmarks ftp://u34059913-kevin:obama08elected@217.160.101.49/backup/bm.$FILENAME.sql.gpg
