@@ -35,7 +35,7 @@
 	    </http>
 		</beans:beans>
 
-		<beans:beans profile="prod">
+		<beans:beans profile="prod,mini-beans">
 
 	    <http use-expressions="true" disable-url-rewriting="true">
 				<!--

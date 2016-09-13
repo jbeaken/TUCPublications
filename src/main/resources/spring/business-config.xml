@@ -193,8 +193,13 @@
     </bean>
     
     <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager"/>
+<<<<<<< HEAD
     
 <beans profile="prod,mini-beans">
+=======
+
+<beans profile="prod">
+>>>>>>> 359ccd1... Adding minibeans profile to config
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	  <property name="host" value="auth.smtp.1and1.co.uk"/>
@@ -266,7 +271,7 @@
 
 </beans>
 
-<beans profile="dev">
+<beans profile="dev,mini-beans">
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="auth.smtp.1and1.co.uk"/>
