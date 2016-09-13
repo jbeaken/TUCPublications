@@ -118,8 +118,8 @@
 <a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}"><img src="../resources/images/saleOrReturn.png" title="Sale or return" /></a>
 <a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}" target="_blank"><img src="../resources/images/credit.png" title="Add Credit" /></a>
 <a href="displayEditNote?id=${searchTable.id}" target="_blank"><img src="../resources/images/note.png" title="Add note" /></a>
-<a href="mergeFromSearchToKeep?id=${searchTable.id}" target="_blank"><img src="../resources/images/note.png" title="Merge And Keep" /></a>
-<a href="mergeFromSearchToDiscard?id=${searchTable.id}" target="_blank"><img src="../resources/images/note.png" title="Merge And Discard" /></a>
+<a href="mergeFromSearchToKeep?id=${searchTable.id}" target="_blank"><img src="../resources/images/order.png" title="Merge And Keep" /></a>
+<a href="mergeFromSearchToDiscard?id=${searchTable.id}" target="_blank"><img src="../resources/images/write_medium.png" title="Merge And Discard" /></a>
                       </display:column>
                       <!--
 					  	<div class="btn-group">
