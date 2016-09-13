@@ -282,6 +282,37 @@ public class CustomerController extends AbstractBookmarksController {
 	}
 
 
+	@RequestMapping(value="/mergeFromSearchToKeep", method=RequestMethod.GET)
+	public String mergeFromSearchToKeep(Long id, ModelMap modelMap) {
+
+		Customer customerToKeep = customerService.get( id );
+		CustomerMergeFormObject customerMergeFormObject = new CustomerMergeFormObject();
+		customerMergeFormObject.setCustomerToKeep( customerToKeep );
+
+		modelMap.addAttribute(customerMergeFormObject);
+
+		addInfo("Please enter id of customers to discard", modelMap);
+
+		return "mergeCustomer";
+	}	
+
+	@RequestMapping(value="/mergeFromSearchToDiscard", method=RequestMethod.GET)
+	public String mergeFromSearchToDiscard(Long id, ModelMap modelMap) {
+
+		Customer customerToKeep = customerService.get( id );
+		CustomerMergeFormObject customerMergeFormObject = new CustomerMergeFormObject();
+		customerMergeFormObject.setCustomerToDiscard( customerToKeep );
+
+		modelMap.addAttribute(customerMergeFormObject);
+
+		addInfo("Please enter id of customers to keep", modelMap);
+
+		return "mergeCustomer";
+	}	
+
+	
+
+
 		@RequestMapping(value="/merge", method=RequestMethod.POST)
 		@Transactional
 		public String merge(@Valid CustomerMergeFormObject customerMergeFormObject, BindingResult bindingResult, ModelMap modelMap) {

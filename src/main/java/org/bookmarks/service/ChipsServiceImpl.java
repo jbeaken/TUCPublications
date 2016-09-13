@@ -219,6 +219,7 @@ public class ChipsServiceImpl implements ChipsService {
 			JSch jsch = new JSch();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 			String knownHostsFilename = "/home/hal/.ssh/known_hosts";
 			jsch.setKnownHosts( knownHostsFilename );
 =======
@@ -228,6 +229,9 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> f35c91c... Chaning location of known hosts
 =======
 			jsch.setKnownHosts( knownHostsFilename );
+=======
+			jsch.setKnownHosts( "/root/.ssh/known_hosts" );
+>>>>>>> daac66b... Adding customer search option merge
 			jsch.addIdentity( "/root/.ssh/id_rsa.pub" );
 >>>>>>> 1e478db... Added shh key for sftp
 
@@ -236,12 +240,18 @@ public class ChipsServiceImpl implements ChipsService {
 			// non-interactive version. Relies in host key being in known-hosts file
 =======
 			session = jsch.getSession(sftpUsername, sftpHost, 2298);
+<<<<<<< HEAD
 			// non-interactive version. Relies in host key being in known-hosts
 			// file
 <<<<<<< HEAD
 >>>>>>> 88dbf5a... ADding logging
 			session.setPassword( sftpPassword );
 =======
+=======
+			// non-interactive version. Relies in host key being in known-hosts file
+
+			//Now using ssh keys (see addIdentity)
+>>>>>>> daac66b... Adding customer search option merge
 		//	session.setPassword( sftpPassword );
 >>>>>>> 1e478db... Added shh key for sftp
 
