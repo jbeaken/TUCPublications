@@ -33,13 +33,12 @@ ln -s /usr/local/share/apache-maven-3.3.9 /usr/local/share/maven
 
 # Tomcat
 wget mirror.vorboss.net/apache/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
-
 tar xf apache-tomcat-8.5.5.tar.gz -C /usr/local/share
 ln -s /usr/local/share/apache-tomcat-8.5.5 /usr/local/share/tomcat
-
 rm -rf /usr/local/share/tomcat/webapps/*
 cp /home/git/bookmarks/src/main/scripts/server.xml /usr/local/share/tomcat/conf/server.xml
 cp /home/git/bookmarks/src/main/scripts/setenv.sh /usr/local/share/tomcat/bin/setenv.sh
+chgrp tomcat -R /usr/local/share/apache-tomcat-8.5.5
 
 # Tomcat systemd
 cp /home/git/bookmarks/src/main/scripts/tomcat.service /lib/systemd/system/
