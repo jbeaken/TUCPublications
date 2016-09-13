@@ -13,4 +13,9 @@ target/
 .classpath
 ip*
 bm.sql*
+<<<<<<< HEAD
 >>>>>>> a53eb52... Removing bower
+=======
+build.sh
+
+>>>>>>> c009ed9... Improving build script
