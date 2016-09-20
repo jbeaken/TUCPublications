@@ -15,11 +15,6 @@ apt-get update
 apt-get -y install oracle-java8-installer
 apt-get install oracle-java8-set-default
 
-# Git (requires password entry)
-apt-get -y install git
-mkdir /home/git
-git clone ssh://git@109.109.239.50:2298/home/git/bookmarks /home/git/bookmarks
-
 # Directories
 mkdir /home/bak
 mkdir -p /home/bookmarks/logs
@@ -51,10 +46,19 @@ cp /etc/environment /etc/environment.bak
 echo "PATH=$PATH:/usr/local/share/maven/bin" >> /etc/environment
 . /etc/environment
 
+# Permissions for git
+chown bookmarks:bookmarks -R /home/git
+
 # Build bookmarks
 cd /home/git/bookmarks
 ln -s /home/git/bookmarks/src/main/build/build.sh /home/git/bookmarks/build.sh
 sh build.sh
+
+# Build bookmarks database
+gpg -d /home/git/bookmarks/src/main/etc/gpg/password.gpg > /home/bookmarks/password
+ln -s /home/git/bookmarks/src/main/etc/backup/restore.sh /home/bookmarks/restore.sh
+DAY_OF_WEEK=$(date +"%a")
+sh /home/bookmarks/restore.sh $DAY_OF_WEEK
 
 # DAY_OF_WEEK=$(date +"%a")
 # FILENAME=$DAY_OF_WEEK
