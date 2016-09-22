@@ -49,25 +49,27 @@
                                         <form:input path="address.postcode" /> <form:errors path="address.postcode" />
 	 	 </div>
 
-		  <div class="column w-33-percent">
-                                        <form:label for="contactDetails.homeNumber" path="contactDetails.homeNumber" cssErrorClass="error">Mobile</form:label><br/>
-                                        <form:input path="contactDetails.homeNumber" /> <form:errors path="contactDetails.homeNumber" />
-		  </div>
+          <div class="column w-33-percent">
+                                        <form:label for="address.country" path="address.country" cssErrorClass="error">Country</form:label><br/>
+                                        <form:input path="address.country" /> <form:errors path="address.postcode" />
+	 	 </div>
+
+
+
 	</div>
 	<div class="row">
+
+		  <div class="column w-33-percent">
+                                        <form:label for="contactDetails.homeNumber" path="contactDetails.homeNumber" cssErrorClass="error">Home</form:label><br/>
+                                        <form:input path="contactDetails.homeNumber" /> <form:errors path="contactDetails.homeNumber" />
+		  </div>		
 		  <div class="column w-33-percent">
                                         <form:label for="contactDetails.workNumber" path="contactDetails.workNumber" cssErrorClass="error">Work</form:label><br/>
                                         <form:input path="contactDetails.workNumber" /> <form:errors path="contactDetails.workNumber" />
 		  </div>
 		  <div class="column w-33-percent">
-                                        <form:label for="contactDetails.mobileNumber" path="contactDetails.mobileNumber" cssErrorClass="error">Home</form:label><br/>
+                                        <form:label for="contactDetails.mobileNumber" path="contactDetails.mobileNumber" cssErrorClass="error">Mobile</form:label><br/>
                                         <form:input path="contactDetails.mobileNumber" /> <form:errors path="contactDetails.mobileNumber" />
-		  </div>
-		  <div class="column w-33-percent">
-                                        <form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
-                                           <form:select path="customerType">
-  											<form:options items="${customerTypeList}" itemLabel="displayName"/>
-										</form:select>
 		  </div>
 	</div>
       <div class="row">
@@ -80,9 +82,12 @@
                                         <form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
 	 	 </div>
 		  <div class="column w-33-percent">
-										<form:label for="id" path="id" cssErrorClass="error">ID</form:label><br/>
-                                        ${customer.id}
-	 	 </div>
+                                        <form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
+                                           <form:select path="customerType">
+  											<form:options items="${customerTypeList}" itemLabel="displayName"/>
+										</form:select>
+		  </div>	 	 
+
 	</div>
 	<div class="row">
 		  <div class="column w-33-percent">
@@ -107,6 +112,8 @@
 				 <form:label for="bookmarksAccount.sponsor" path="bookmarksAccount.sponsor" cssErrorClass="error">Sponsor</form:label>
                  <form:checkbox path="bookmarksAccount.paysInMonthly" />
 				 <form:label for="bookmarksAccount.paysInMonthly" path="bookmarksAccount.paysInMonthly" cssErrorClass="error">Pays In Monthly</form:label>
+
+				<form:label for="id" path="id" cssErrorClass="error">ID</form:label> ${customer.id}
 		  </div>
 	</div>
       <div class="row">

@@ -38,14 +38,15 @@
 	           <form:label for="address.postcode" path="address.postcode" cssErrorClass="error">Postcode</form:label><br/>
 	           <form:input id="postcode" path="address.postcode" /> <form:errors path="address.postcode" />                  
 	 	 </div>
+          <div class="column w-33-percent">
+                                        <form:label for="address.country" path="address.country" cssErrorClass="error">Country</form:label><br/>
+                                        <form:input path="address.country" /> <form:errors path="address.postcode" />
+	 	 </div>	 	 
 		  <div class="column w-33-percent">
                <form:label for="contactDetails.email" path="contactDetails.email" cssErrorClass="error">Email</form:label><br/>
                <form:input path="contactDetails.email" /> <form:errors path="contactDetails.email" />                        
 		  </div>
-		  <div class="column w-33-percent">
-               <form:label for="contactDetails.homeNumber" path="contactDetails.homeNumber" cssErrorClass="error">Mobile</form:label><br/>
-               <form:input path="contactDetails.homeNumber" /> <form:errors path="contactDetails.homeNumber" />                        
-		  </div>
+
 	</div>	
 	<div class="row">
 		  <div class="column w-33-percent">
@@ -53,15 +54,14 @@
                                         <form:input path="contactDetails.workNumber" /> <form:errors path="contactDetails.workNumber" />                        
 		  </div>
 		  <div class="column w-33-percent">
-                                        <form:label for="contactDetails.mobileNumber" path="contactDetails.mobileNumber" cssErrorClass="error">Home</form:label><br/>
+                                        <form:label for="contactDetails.mobileNumber" path="contactDetails.mobileNumber" cssErrorClass="error">Mobile</form:label><br/>
                                         <form:input path="contactDetails.mobileNumber" /> <form:errors path="contactDetails.mobileNumber" />                        
-		  </div>	
+		  </div>
 		  <div class="column w-33-percent">
-                                        <form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
-                                           <form:select path="customerType">
-  											<form:options items="${customerTypeList}" itemLabel="displayName"/>
-										</form:select>                        
-		  </div>			  	  		  	
+               <form:label for="contactDetails.homeNumber" path="contactDetails.homeNumber" cssErrorClass="error">Home</form:label><br/>
+               <form:input path="contactDetails.homeNumber" /> <form:errors path="contactDetails.homeNumber" />                        
+		  </div>		  	
+			  	  		  	
 	</div>
 	<div class="row">
 		  <div class="column w-33-percent">
@@ -72,6 +72,12 @@
                                         <form:label for="nonBookmarksDiscount" path="nonBookmarksDiscount" cssErrorClass="error">Non Bookmarks Discount</form:label><br/>
                                         <form:input path="nonBookmarksDiscount" /> <form:errors path="nonBookmarksDiscount" />                        
 		  </div>	
+		  <div class="column w-33-percent">
+                                        <form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
+                                           <form:select path="customerType">
+  											<form:options items="${customerTypeList}" itemLabel="displayName"/>
+										</form:select>                        
+		  </div>		  
 			  	  		  	
 	</div>			
       <div class="row">
