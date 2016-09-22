@@ -51,10 +51,8 @@
 
           <div class="column w-33-percent">
                                         <form:label for="address.country" path="address.country" cssErrorClass="error">Country</form:label><br/>
-                                        <form:input path="address.country" /> <form:errors path="address.postcode" />
+                                        <form:input path="address.country" /> <form:errors path="address.country" />
 	 	 </div>
-
-
 
 	</div>
 	<div class="row">
