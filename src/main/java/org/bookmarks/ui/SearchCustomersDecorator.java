@@ -124,7 +124,7 @@ public class SearchCustomersDecorator extends AbstractBookmarksTableDecorator {
 	
 	protected String getFullAddress(Customer customer) {
 		Address address = customer.getAddress();
-		if(address.getAddress1() == null) return "No address supplied";
+		if(address == null || address.getAddress1() == null) return "No address supplied";
 		if(address.getAddress1().isEmpty() 
 				&& address.getAddress2().isEmpty() 
 				&& address.getAddress3().isEmpty() 
