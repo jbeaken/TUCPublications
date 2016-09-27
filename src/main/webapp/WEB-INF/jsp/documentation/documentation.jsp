@@ -44,7 +44,7 @@
 							<p>To start the stock take, click <button type="button" class="btn btn-danger">Reset Stock Take</button></p>
 							<p>This will reset record, so only do once at the start of each stock take</p>
 							<p>Now scan all isbns into the stock take screen</p>
-							<p>Once all isbns of all books are scanned, you transfer the stock take to the actual real record by clicking <button type="button" class="btn btn-danger">Transfer Stock Take</button>
+							<p>Once all isbns of all books are scanned, you transfer the stock take to the actual real record by clicking <button type="button" class="btn btn-danger">Update Stock Record</button>
 							<p>Only do the transfer once you are ready as it's hard to reverse</p>
 					</div>
 
