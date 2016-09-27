@@ -90,8 +90,8 @@ public class StockTakeLineController extends AbstractBookmarksController {
 	 *
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/save", method=RequestMethod.POST)
-	public String save(StockItemSearchBean stockItemSearchBean, HttpServletRequest request, ModelMap modelMap, HttpSession session) {
+	@RequestMapping(value = "/addToStockTake", method=RequestMethod.POST)
+	public String addToStockTake(StockItemSearchBean stockItemSearchBean, HttpServletRequest request, ModelMap modelMap, HttpSession session) {
 
 		Map<Long, StockTakeLine> stockTakeMap = (Map<Long, StockTakeLine>) session.getAttribute("stockTakeMap");
 
@@ -147,6 +147,7 @@ public class StockTakeLineController extends AbstractBookmarksController {
 			stockTakeLine.setCreationDate(new Date());
 		}
 
+<<<<<<< HEAD
 		if(stockTakeMap.size() > 50) {
 			List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
 
@@ -161,9 +162,21 @@ public class StockTakeLineController extends AbstractBookmarksController {
 			//stockTakeMap.clear();
 		}
 
+=======
+		if(stockTakeMap.size() > 20) {
+			//Remove access
+			//Sort by update Date
+			List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
+			Collections.sort(list, (s1, s2) -> {
+				return s2.getDateOfUpdate().compareTo(s1.getDateOfUpdate());
+			});
+			stockTakeMap.clear();
+		}
+
+		stockTakeLine.setDateOfUpdate(new Date());
+>>>>>>> 996b89d... Fixed up stocktake, pre dump of hashmap
 		stockTakeLineService.saveOrUpdate(stockTakeLine);
 		stockTakeMap.put(stockTakeLine.getId(), stockTakeLine);
-
 
 		fillStockTakeLineModel(stockTakeMap, session, modelMap);
 
@@ -219,7 +232,9 @@ public class StockTakeLineController extends AbstractBookmarksController {
 		StockTakeLine stockTakeLineToIncrement = stockTakeLineService.get(stockTakeLine.getId());
 
 		stockTakeLineToIncrement.setQuantity(stockTakeLineToIncrement.getQuantity() + stockTakeLine.getAmountToIncrement());
+
 		//Update
+		stockTakeLineToIncrement.setDateOfUpdate(new Date());
 		stockTakeLineService.update(stockTakeLineToIncrement);
 
 		stockTakeMap.put(stockTakeLineToIncrement.getId(), stockTakeLineToIncrement);
@@ -303,7 +318,9 @@ public class StockTakeLineController extends AbstractBookmarksController {
 
 		List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
 
-		Collections.sort(list, (s1, s2) -> s1.getCreationDate().compareTo(s2.getCreationDate()) );
+		Collections.sort(list, (s1, s2) -> {
+			return s2.getDateOfUpdate().compareTo(s1.getDateOfUpdate());
+		});
 
 		modelMap.addAttribute(list);
 	}

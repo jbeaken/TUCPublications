@@ -47,11 +47,21 @@ public class StockTakeLine extends AbstractEntity {
 	@OneToOne
 	private StockItem stockItem;
 
+	private Date dateOfUpdate;
+
 	@NotNull
 	private Long quantity;
 
 	@Transient
 	private Long amountToIncrement = 0l;
+
+	public Date getDateOfUpdate() {
+		return dateOfUpdate;
+	}
+
+	public void setDateOfUpdate(Date dateOfUpdate) {
+		this.dateOfUpdate = dateOfUpdate;
+	}
 
 	public Long getAmountToIncrement() {
 		return amountToIncrement;
@@ -85,11 +95,11 @@ public class StockTakeLine extends AbstractEntity {
 				return true;
 			return false;
 		}
-		
+
 		if(this.getId().equals(that.getId())) return true;
 		return false;
 	}
-	
+
 	@Override
     public int hashCode() {
         if (getId() != null) {

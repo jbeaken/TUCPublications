@@ -308,6 +308,7 @@
 				<prop key="hibernate.connection.charSet">UTF-8</prop>		
 		        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -318,6 +319,9 @@
 =======
 				<prop key="hibernate.hbm2ddl.auto">validate</prop>
 >>>>>>> da48c9a... Add type = text for review as text so ensuring validate hbm2ddl passes
+=======
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+>>>>>>> 996b89d... Fixed up stocktake, pre dump of hashmap
 				<prop key="hibernate.show_sql">false</prop>
 				<prop key="hibernate.format_sql">false</prop>
 >>>>>>> 67b7d81... Fixing az robot detection
