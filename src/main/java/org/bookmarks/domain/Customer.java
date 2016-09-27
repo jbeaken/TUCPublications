@@ -26,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name="customer")
 public class Customer extends AbstractEntity {
-	
+
 	@DateTimeFormat(style="S-")
 	@Column(name="joinedDate")
 	private Date joinedDate = new Date();
@@ -40,15 +40,15 @@ public class Customer extends AbstractEntity {
 
 	@DateTimeFormat(style="S-")
 	private Date lastRegisterdDate= new Date();
-	
+
 	@DateTimeFormat(style="S-")
 	@Column(name="leftDate")
 	private Date leftDate= new Date();
-	
+
 	@Embedded
 	@Valid
 	private Address address;
-	
+
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "address1", column = @Column(name = "webaddress1")),
@@ -57,10 +57,10 @@ public class Customer extends AbstractEntity {
 		@AttributeOverride(name = "city", column = @Column(name = "webcity")),
 		@AttributeOverride(name = "postcode", column = @Column(name = "webpostcode")),
 		@AttributeOverride(name = "country", column = @Column(name = "webcountry"))
-			
+
 	})
 	private Address webAddress;
-	
+
 	@Embedded
 	private BookmarksAccount bookmarksAccount;
 
@@ -68,26 +68,33 @@ public class Customer extends AbstractEntity {
 	@Size(min=1, max = 55)
 	@Column(name="firstName")
 	private String firstName;
-	
+
 	@NotNull
 	@Size(min=1, max = 55)
 	@Column(name="lastName")
 	private String lastName;
+<<<<<<< HEAD
 	
 	@Embedded
 	private CreditCard creditCard;
 	
+=======
+
+//	@Embedded
+//	private CreditCard creditCard;
+
+>>>>>>> 6f480c9... Fixing no address bug
 	public Customer(Long customerId) {
 		setId(customerId);
 	}
 
 	@NotNull
-	@Embedded	
+	@Embedded
 	private ContactDetails contactDetails;
-	
+
 	@Transient
 	private BigDecimal creditAmount;
-	
+
 	public BigDecimal getCreditAmount() {
 		return creditAmount;
 	}
@@ -100,11 +107,11 @@ public class Customer extends AbstractEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name="customerType")
 	private CustomerType customerType = CustomerType.CUSTOMER;
-	
+
 	private BigDecimal bookmarksDiscount;
 
 	private BigDecimal nonBookmarksDiscount;
-	
+
 	public Customer() {
 		super();
 		address = new Address();
@@ -120,7 +127,7 @@ public class Customer extends AbstractEntity {
 			getContactDetails().setMobileNumber(mobile);
 			getContactDetails().setWorkNumber(work);
 	}
-	
+
 	//From AutoComplete
 	//new Customer(c.id, c.firstName, c.surname, c.address.postcode)
 	public Customer(Long id, String firstName, String lastName, String postcode) {
@@ -140,15 +147,15 @@ public class Customer extends AbstractEntity {
 		setLastName(lastName);
 		getBookmarksAccount().setAccountHolder(accountHolder);
 	}
-	
+
 	public CustomerType getCustomerType() {
 		return customerType;
 	}
-	
+
 	public void setCustomerType(CustomerType customerType) {
 		this.customerType = customerType;
 	}
-	
+
 	public BigDecimal getBookmarksDiscount() {
 		return bookmarksDiscount;
 	}
@@ -184,7 +191,7 @@ public class Customer extends AbstractEntity {
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
 	}
-	
+
 	public String getFullAddress() {
 		StringBuffer buffer = new StringBuffer();
 		Address address = getAddress();
@@ -205,10 +212,13 @@ public class Customer extends AbstractEntity {
 		}
 		return buffer.toString();
 	}
-	
+
 	public String getFullAddressWithBreaks() {
 		StringBuffer buffer = new StringBuffer();
 		Address address = getAddress();
+
+		if(address == null) return "No address supplied";
+
 		if(address.getAddress1() != null && !address.getAddress1().isEmpty()) {
 			buffer.append(address.getAddress1());
 		}
@@ -227,7 +237,7 @@ public class Customer extends AbstractEntity {
 		if(buffer.length() == 0) return "No address supplied";
 		return buffer.toString();
 	}
-	
+
 	public String getFullPhoneNumber() {
 		StringBuffer buffer = new StringBuffer();
 		ContactDetails contactDetails = getContactDetails();
@@ -242,7 +252,7 @@ public class Customer extends AbstractEntity {
 		}
 		return buffer.toString();
 	}
-	
+
 	public String getFullPhoneNumberWithBreaks() {
 		StringBuffer buffer = new StringBuffer();
 		ContactDetails contactDetails = getContactDetails();
@@ -257,19 +267,19 @@ public class Customer extends AbstractEntity {
 			buffer.append("<br/>Work: " + contactDetails.getWorkNumber());
 		}
 		return buffer.toString();
-	}	
-	
+	}
+
 	@OneToMany
 	private Set<CustomerOrderLine> CustomerOrderLines;
-	
+
 	public BookmarksAccount getBookmarksAccount() {
 		return bookmarksAccount;
 	}
 
 	public void setBookmarksAccount(BookmarksAccount bookmarksAccount) {
 		this.bookmarksAccount = bookmarksAccount;
-	}	
-	 
+	}
+
 	public Set<CustomerOrderLine> getCustomerOrderLines() {
 		return CustomerOrderLines;
 	}
@@ -293,7 +303,7 @@ public class Customer extends AbstractEntity {
 	}
 	public void setAddress(Address address) {
 		this.address = address;
-	}	
+	}
 	public Date getJoinedDate() {
 		return joinedDate;
 	}
