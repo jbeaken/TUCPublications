@@ -13,20 +13,20 @@ public class StockTakeLineServiceImpl extends AbstractService<StockTakeLine> imp
 
 	@Autowired
 	private StockTakeLineRepository stockTakeLineRepository;
-	
+
 	@Override
 	public Repository<StockTakeLine> getRepository() {
 		return stockTakeLineRepository;
 	}
-	
+
 	@Override
 	public StockTakeLine getByStockItemId(Long id) {
 		return stockTakeLineRepository.getByStockItemId(id);
 	}
 
 	@Override
-	public void commit(boolean resetQuantityInStock) {
-		stockTakeLineRepository.commit(resetQuantityInStock);
+	public void commit(Boolean resetQuantityInStock,  Boolean includeBookmarks, Boolean includeMerchandise) {
+		stockTakeLineRepository.commit( resetQuantityInStock, includeBookmarks, includeMerchandise );
 	}
 
 	@Override

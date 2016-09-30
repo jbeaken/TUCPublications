@@ -7,8 +7,8 @@ public interface StockTakeLineService extends Service<StockTakeLine>{
 
 	StockTakeLine getByStockItemId(Long id);
 
-	void commit(boolean resetQuantityInStock);
+	void commit(Boolean resetQuantityInStock,  Boolean includeBookmarks, Boolean includeMerchandise);
 
 	void reset();
-	
+
 }

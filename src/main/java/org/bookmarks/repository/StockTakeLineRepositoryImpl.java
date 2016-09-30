@@ -21,8 +21,8 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
-    
+
+
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
     	return new StringBuffer("select new StockTakeLine(stl.id, stl.quantity, s.isbn, s.title) " +
     			"from StockTakeLine as stl " +
@@ -31,9 +31,9 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
 		return new StringBuffer("select count(stl) from StockTakeLine as stl " +
 				"left join stl.stockItem as s");
-	}    
-	
-    
+	}
+
+
 	@Override
 	public void appendWhere(StringBuffer query, SearchBean searchBean) {
 		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean) searchBean;
@@ -41,7 +41,7 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 		whereAlreadyAppended = appendIsbn(stockItemSearchBean, query);
 		whereAlreadyAppended = appendTitle(stockItemSearchBean, query, whereAlreadyAppended);
 	}
-	
+
 	private boolean appendTitle(StockItemSearchBean stockItemSearchBean,
 			StringBuffer query, boolean whereAlreadyAppended) {
 		String title = escapeText(stockItemSearchBean.getStockItem().getTitle().trim());
@@ -54,7 +54,7 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 		}
 		return whereAlreadyAppended;
 	}
-	
+
 	private boolean appendIsbn(StockItemSearchBean stockItemSearchBean, StringBuffer query) {
 		String isbn = stockItemSearchBean.getStockItem().getIsbn();
 		if(!isbn.isEmpty()) {
@@ -62,11 +62,11 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 				query.append(" where s.isbnAsNumber = " + isbn);
 			} else {
 				query.append(" where s.isbn like '%" + isbn + "'");
-			} 
+			}
 			return true;
 		}
 		return false;
-	}	
+	}
 
 
 
@@ -92,27 +92,29 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 
 
 	@Override
-	public void commit(boolean resetQuantityInStock) {
+	public void commit(Boolean resetQuantityInStock,  Boolean includeBookmarks, Boolean includeMerchandise) {
 		Query query = null;
 
 		if(resetQuantityInStock) { //Reset quantity in stock if necessary, but not for bookmarks publications
 			query = sessionFactory
 					.getCurrentSession()
 					.createQuery("update StockItem si set si.quantityInStock = 0 "
-							+ "where si.publisher.id not in (725,729) "
-							+ "and si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
-			query.executeUpdate();			
+							// + "where si.publisher.id not in (725,729) "
+							// + "and si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
+              // + "where si.publisher.id not in (725,729) "
+							+ "where si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
+
+			query.executeUpdate();
 		}
 
 		//Update any stock referenced by a StockTakeLine
-		//Except bookmarks, redwords publisher
-		//And merchandies
+		//Except bookmarks, redwords publisher and merchandise
 		query = sessionFactory
 				.getCurrentSession()
 				.createSQLQuery("update stockitem si, StockTakeLine stl " +
 						"set si.quantityInStock = stl.quantity " +
-						"where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
-						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
+						// "where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
+						"where si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
 		query.executeUpdate();
 	}
 

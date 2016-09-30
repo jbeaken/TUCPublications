@@ -8,7 +8,7 @@ public interface StockTakeLineRepository extends Repository<StockTakeLine>{
 
 	StockTakeLine getByStockItemId(Long id);
 
-	void commit(boolean reset);
+	void commit(Boolean resetQuantityInStock,  Boolean includeBookmarks, Boolean includeMerchandise);
 
 	void reset();
 }

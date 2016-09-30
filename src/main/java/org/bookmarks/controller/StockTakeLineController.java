@@ -28,6 +28,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Controller
 @RequestMapping(value="/stockTakeLine")
 public class StockTakeLineController extends AbstractBookmarksController {
@@ -37,6 +40,8 @@ public class StockTakeLineController extends AbstractBookmarksController {
 
 	@Autowired
 	private StockItemService stockItemService;
+
+	private Logger logger = LoggerFactory.getLogger(StockTakeLineController.class);
 
 
 	@RequestMapping(value="/search")
@@ -298,9 +303,13 @@ public class StockTakeLineController extends AbstractBookmarksController {
 	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/commit", method=RequestMethod.GET)
-	public String commit(ModelMap modelMap, HttpSession session) {
+	public String commit(ModelMap modelMap, Boolean includeBookmarks, Boolean includeMerchandise, HttpSession session) {
 
-		stockTakeLineService.commit(true);
+		logger.info("About to commit stock take : includeBookmarks : {}, includeMerchandise : {}", includeBookmarks, includeMerchandise);
+
+		stockTakeLineService.commit(true, includeBookmarks, includeMerchandise);
+
+		logger.info("Stock update successful!!");
 
 		session.removeAttribute("stockTakeMap");
 
