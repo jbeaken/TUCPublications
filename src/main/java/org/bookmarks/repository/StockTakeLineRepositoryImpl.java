@@ -114,7 +114,8 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 				.createSQLQuery("update stockitem si, StockTakeLine stl " +
 						"set si.quantityInStock = stl.quantity " +
 						// "where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
-						"where si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
+						"where si.id = stl.stockItem_id " + // and si.publisher_id not in (725,729) " +
+						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
 		query.executeUpdate();
 	}
 
