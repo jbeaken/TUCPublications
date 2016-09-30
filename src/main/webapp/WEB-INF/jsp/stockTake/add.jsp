@@ -65,7 +65,6 @@
       <div class="row">
           <div class="column w-100-percent">
 	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/reset')">Reset Stock Record</button>&nbsp;&nbsp;
-	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=false')">Update Stock Record (Inc bookmarks)</button>
-	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=false&includeMerchandise=false')">Update Stock Record(Exc bookmarks)</button>
+	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=false')">Update Stock Record (Inc. bookmarks Exc. Merchandise)</button>
 	 	 </div>
 	</div>

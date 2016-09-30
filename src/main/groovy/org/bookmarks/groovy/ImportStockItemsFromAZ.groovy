@@ -11,7 +11,7 @@ import org.bookmarks.domain.StockItem
 
 import groovy.sql.Sql
 @GrabConfig(systemClassLoader=true)
-//@Grab('mysql:mysql-connector-java:5.1.19')
+//@Grab('mysql:mysql-connector-java:5.1.39')
 //@Grab('ch.qos.logback:logback-classic:1.0.13')
 //@Grab('org.jsoup:jsoup:1.7.2')
 	def service = new AZLookupServiceImpl()

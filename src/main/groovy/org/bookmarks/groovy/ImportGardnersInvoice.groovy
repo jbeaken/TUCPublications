@@ -3,7 +3,7 @@ package org.bookmarks.groovy
 
 import groovy.sql.Sql
 @GrabConfig(systemClassLoader=true)
-@Grab('mysql:mysql-connector-java:5.1.31')
+@Grab('mysql:mysql-connector-java:5.1.39')
 
 def bookmarks = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admin", "com.mysql.jdbc.Driver")
 

@@ -1,7 +1,7 @@
 package org.bookmarks.groovy
 
 @Grapes([
-  @Grab('mysql:mysql-connector-java:5.1.35'),
+  @Grab('mysql:mysql-connector-java:5.1.39'),
   @Grab('org.bouncycastle:bcprov-jdk15on:1.53'),
   @Grab('org.jasypt:jasypt:1.9.2'),
   @GrabConfig(systemClassLoader=true)

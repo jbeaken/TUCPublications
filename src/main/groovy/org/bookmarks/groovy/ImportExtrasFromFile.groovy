@@ -6,7 +6,7 @@ import groovy.sql.Sql;
 import groovy.grape.Grape;
 
 //Load the mysql driver
-Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.31', classLoader: this.class.classLoader.rootLoader)
+Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.39', classLoader: this.class.classLoader.rootLoader)
 this.class.classLoader.getURLs().each{ 
   ClassLoader.systemClassLoader.addURL(it); 
 }

@@ -6,7 +6,7 @@ import groovy.grape.Grape;
 //select count(*) from stockitem si left join stockitem_author sia on si.id = sia.stockitem_id	where sia.stockitem_id is null;
 //update stockitem si set si.is_synced_with_az = false where si.id not in (select stockitem_id from stockitem_author);
 //Load the mysql driver
-Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.19', classLoader: this.class.classLoader.rootLoader)
+Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.39', classLoader: this.class.classLoader.rootLoader)
 this.class.classLoader.getURLs().each{ 
   ClassLoader.systemClassLoader.addURL(it); 
 }
