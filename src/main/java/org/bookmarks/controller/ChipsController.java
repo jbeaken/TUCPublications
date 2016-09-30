@@ -205,6 +205,7 @@ public class ChipsController extends AbstractBookmarksController {
 	public String getOrders(ModelMap modelMap) {
 
 		logger.info("User request for getOrders started");
+
 		List<Customer> chipsCustomers;
 <<<<<<< HEAD
 =======
@@ -235,6 +236,7 @@ public class ChipsController extends AbstractBookmarksController {
 
 		addSuccess("Have retrieved " + chipsCustomers.size() + " orders from chips" , modelMap);
 
+		logger.info("User request for getOrders started");
 		modelMap.addAttribute(chipsCustomers);
 
 		return "chipsTransferReport";
