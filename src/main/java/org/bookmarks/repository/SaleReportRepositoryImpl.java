@@ -113,7 +113,8 @@ public class SaleReportRepositoryImpl implements SaleReportRepository {
 						"from StockItem si " +
 						"join si.publisher p " +
 						"group by p " +
-						"having sum(si.quantityInStock) > 0");
+						"having sum(si.quantityInStock) > 0 " +
+						"order by p.name ");
 		return query.list();
 	}
 
