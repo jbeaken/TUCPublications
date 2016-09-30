@@ -17,7 +17,7 @@ def count = 0
 
 
 
-new File("/srv/samba/share/bookmarks.csv").splitEachLine("\t") {fields ->
+new File("/srv/samba/share/redwords.csv").splitEachLine("\t") {fields ->
 //new File("/home/till/Brain/bookmarks.csv").splitEachLine("\t") {fields ->
 	def isbn = fields[0]
 	def title = fields[1]      
@@ -42,7 +42,7 @@ new File("/srv/samba/share/bookmarks.csv").splitEachLine("\t") {fields ->
 
 	count = count + total
 	
-	//sql.executeUpdate('update stockitem set quantityInStock = quantityInStock + ? where id = ?', [total, id[0]])
+	sql.executeUpdate('update stockitem set quantityInStock = quantityInStock + ? where id = ?', [total, id[0]])
 }
 
 println "Have updated ${count} rows"
