@@ -147,9 +147,20 @@ public class StockTakeLineController extends AbstractBookmarksController {
 			stockTakeLine.setCreationDate(new Date());
 		}
 
-		if(stockTakeMap.size() > 20) {
-			stockTakeMap.clear();
+		if(stockTakeMap.size() > 50) {
+			List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
+
+			Collections.sort(list, (s1, s2) -> s1.getCreationDate().compareTo(s2.getCreationDate()) );
+
+			list = list.subList(0, 20);
+			stockTakeMap = new HashMap<Long, StockTakeLine>();
+			for(StockTakeLine line : list) {
+				stockTakeMap.put(line.getId(), line);
+			}
+			session.setAttribute("stockTakeMap", stockTakeMap);
+			//stockTakeMap.clear();
 		}
+
 		stockTakeLineService.saveOrUpdate(stockTakeLine);
 		stockTakeMap.put(stockTakeLine.getId(), stockTakeLine);
 
