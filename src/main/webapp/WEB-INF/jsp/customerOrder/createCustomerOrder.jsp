@@ -6,7 +6,7 @@
 <head>
 	<script>
 		function saveCustomerOrder() {
-			
+
 			if($('#email').val() == '') {
 				var r = confirm("Customer email is empty! Are you sure you want to save without an email?");
 				if (r == true) {
@@ -14,7 +14,7 @@
 				    return;
 				}
 			}
-			
+
 			submitForm('${pageContext.request.contextPath}/customerOrder/create');
 		}
 	</script>
@@ -27,6 +27,12 @@
 	<form:hidden path="customer.id" />
 	<form:hidden path="customer.firstName" />
 	<form:hidden path="customer.lastName" />
+	<form:hidden path="customer.address.address1" />
+	<form:hidden path="customer.address.address2" />
+	<form:hidden path="customer.address.address1" />
+	<form:hidden path="customer.address.city" />
+	<form:hidden path="customer.address.postcode" />
+	<form:hidden path="customer.address.country" />
 	<div class="rows">
 	        <div class="row">
 	          <div class="column w-33-percent">
@@ -35,7 +41,7 @@
 						<form:option value="" label="Select One"/>
 						<form:options items="${paymentTypeList}" itemLabel="displayName"/>
 					</form:select>
-					<form:errors path="paymentType" />				
+					<form:errors path="paymentType" />
 		  	 </div>
 			  <div class="column w-33-percent">
 				    <form:label for="deliveryType" path="deliveryType" class="smallCaps" cssErrorClass="error">Delivery Type</form:label><br/>
@@ -50,13 +56,13 @@
 						<form:option value="" label="Select One"/>
 						<form:options items="${sourceList}" itemLabel="displayName"/>
 					</form:select>
-		  	</div>				  			
+		  	</div>
 	      </div>
 	</div>
 	<div class="rows" id="creditCardDetails">
 	        <div class="row">
 	          <div class="column w-33-percent">
-					<form:label path="creditCard.creditCard1" cssErrorClass="error">Credit Card</form:label><br/> 
+					<form:label path="creditCard.creditCard1" cssErrorClass="error">Credit Card</form:label><br/>
 					<form:input path="creditCard.creditCard1" size="3" maxlength="4"/><form:errors path="creditCard.creditCard1" />
 					<form:input path="creditCard.creditCard2" size="3" maxlength="4"/><form:errors path="creditCard.creditCard2" />
 					<form:input path="creditCard.creditCard3" size="3" maxlength="4"/><form:errors path="creditCard.creditCard3" />
@@ -70,39 +76,39 @@
 			  <div class="column w-33-percent">
 					<form:label	for="creditCard.securityCode" path="creditCard.securityCode" cssErrorClass="error">Security Code</form:label><br/>
 					<form:input path="creditCard.securityCode" size="3" maxlength="3"/><form:errors path="creditCard.securityCode" />
-		  	</div>		
+		  	</div>
 	      </div>
 	</div>
 	<div class="rows" id="creditCardDetails">
 	        <div class="row">
 	          <div class="column w-33-percent">
-					<form:label path="customer.contactDetails.email" cssErrorClass="error">Email</form:label><br/> 
+					<form:label path="customer.contactDetails.email" cssErrorClass="error">Email</form:label><br/>
 					<form:input path="customer.contactDetails.email" id="email" type="email"/><form:errors path="creditCard.securityCode" />
 		 	 </div>
 	          <div class="column w-33-percent">
 		  	 </div>
 			  <div class="column w-33-percent">
-		  	</div>		
+		  	</div>
 	      </div>
-	</div>	
+	</div>
 	<div class="rows">
 	        <div class="row">
 	          <div class="column w-100-percent">
-					<form:label	for="note" path="note" cssErrorClass="error">Note</form:label><br/> 
+					<form:label	for="note" path="note" cssErrorClass="error">Note</form:label><br/>
 					<form:textarea path="note" cols="90" rows="8"/><form:errors path="note" />
 		 	 </div>
 	      </div>
 	        <div class="row">
-	          <div class="column w-100-percent"> 
+	          <div class="column w-100-percent">
 	          		<br/>
 					<button type="button" class="btn btn-danger" id="createCustomerOrderButton" onclick="javascript:saveCustomerOrder()">Create Order</button>
 					<button type="button" id="gotoAddStockToCustomerOrderButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customerOrder/addStock')" class="btn btn-primary">Add stock</button>
 					<a href="${pageContext.request.contextPath}/customerOrder/cancel" class="btn btn-success">Cancel</a>
-		 	 </div> 
+		 	 </div>
 	      </div>
 	</div>
 </form:form>
-				
+
 			<c:if test="${customerOrderLineList != null}">
 	          		<br/>
 	          		<br/>
@@ -115,4 +121,4 @@
 					  <display:column sortable="true" property="stockItem.quantityInStock" title="In Stock"/>
 					  <display:column sortable="true" property="amount" title="Amount"/>
   					</display:table>
-			</c:if>		
+			</c:if>

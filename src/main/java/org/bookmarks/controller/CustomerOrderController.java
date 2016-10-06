@@ -410,7 +410,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 	}
 
 
-	@RequestMapping(value="/create")
+	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public String create(@Valid CustomerOrder customerOrder, BindingResult bindingResult,  HttpSession session, ModelMap modelMap) {
 		Map<Long , CustomerOrderLine> customerOrderLineMap = (Map<Long, CustomerOrderLine>) session.getAttribute("customerOrderLineMap");
 
@@ -441,8 +441,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 		String email =customer.getContactDetails().getEmail();
 
-		
+
 		//Send confirmation email
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -454,6 +455,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 =======
 		
 >>>>>>> 7742430... After adding stringtrimmer, check for null is needed, adding
+=======
+
+>>>>>>> 9b496e6... Fixing transfer of customer address to customer order line
 		logger.debug("Email for customer order is '{}'", email);
 
 		if(email != null) {
