@@ -21,8 +21,8 @@
 		$('#customerId').val(''); //clear customer id
 		$('#customerAutoComplete').focus();
 	});
-	function printLabels() {
-		$('form#customerForm').attr("action", '${pageContext.request.contextPath}/customer/printLabels');
+	function printLabels(noOfLabels) {
+		$('form#customerForm').attr("action", '${pageContext.request.contextPath}/customer/printLabels/' + noOfLabels);
 		$('form#customerForm').submit();
 		$('form#customerForm').attr("action", '${pageContext.request.contextPath}/customer/search');
 	}
@@ -79,7 +79,8 @@
 	 					<button type="button" class="btn btn-primary">Reset</button>
 	 				</a>
 	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addCustomerFromSearch')">Add Customer</button>
-	 				<button type="button" class="btn btn-success" onclick="javascript:printLabels()">Print Labels</button>
+	 				<button type="button" class="btn btn-success" onclick="javascript:printLabels( 12 )">Print Labels (12)</button>
+					<button type="button" class="btn btn-success" onclick="javascript:printLabels( 16 )">Print Labels (16)</button>
 	 	 </div>
 	</div>
 </div>

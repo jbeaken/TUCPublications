@@ -34,6 +34,7 @@ import org.bookmarks.controller.bean.CustomerMergeFormObject;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,11 +76,11 @@ public class CustomerController extends AbstractBookmarksController {
 	private Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	private static final String postcodeLookupKey = "BH89-YF22-ZU91-EE62";
-	
+
 	@InitBinder(value="customer")
 	public void initBinder(WebDataBinder webDataBinder) {
 		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-	}	
+	}
 
 
 	@Autowired
@@ -294,7 +295,7 @@ public class CustomerController extends AbstractBookmarksController {
 		addInfo("Please enter id of customers to discard", modelMap);
 
 		return "mergeCustomer";
-	}	
+	}
 
 	@RequestMapping(value="/mergeFromSearchToDiscard", method=RequestMethod.GET)
 	public String mergeFromSearchToDiscard(Long id, ModelMap modelMap) {
@@ -308,9 +309,9 @@ public class CustomerController extends AbstractBookmarksController {
 		addInfo("Please enter id of customers to keep", modelMap);
 
 		return "mergeCustomer";
-	}	
+	}
 
-	
+
 
 
 		@RequestMapping(value="/merge", method=RequestMethod.POST)
@@ -371,7 +372,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid Customer customer, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
+
 		//Check for errors
 		if(bindingResult.hasErrors()){
 			return "addCustomer";
@@ -419,12 +420,22 @@ public class CustomerController extends AbstractBookmarksController {
 		return searchFromSession(session, request, modelMap);
 	}
 
-	@RequestMapping(value="/printLabels")
-	public @ResponseBody void printLabels(@ModelAttribute CustomerSearchBean customerSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws DocumentException {
+	@RequestMapping(value="/printLabels/{noOfLabels}")
+	public @ResponseBody void printLabels(@ModelAttribute CustomerSearchBean customerSearchBean, @PathVariable("noOfLabels") Integer noOfLabels, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws DocumentException {
+
+		//Page variables
+		float fixedHeight = 125f;
+		float marginTop = 0f;
+		float marginLeft = 10f;
+
+		if( noOfLabels == 16) {
+			fixedHeight = 96f;
+			marginTop = 45f;
+		}
 
 		setPaginationFromRequest(customerSearchBean, request);
 
-		customerSearchBean.setExport(true); //Override
+		customerSearchBean.setExport(true); //No pagination
 
 		Collection<Customer> customers = customerService.search(customerSearchBean);
 
@@ -437,7 +448,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 		//doc.setPageSize(PageSize.A4);
-		doc.setMargins(0, 0, 0, 0);
+		doc.setMargins(marginLeft, 0, marginTop, 0);
 //		doc.setMarginMirroring(true);
 
 		PdfPTable table = new PdfPTable(2);
@@ -468,7 +479,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 		    	 PdfPCell cell = new PdfPCell (new Phrase(labelText.toString(), DOC_FONT));
 		    	 cell.setBorder(Rectangle.NO_BORDER);
-		    	 cell.setFixedHeight(125f);
+		    	 cell.setFixedHeight( fixedHeight );
 
 //		         cell.setNoWrap(true);
 
