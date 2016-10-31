@@ -15,11 +15,15 @@ public class CustomerOrderValidator implements Validator {
 
 	    public void validate(Object target, Errors errors) {
 	    	final CustomerOrder customerOrder = (CustomerOrder) target;
-	    	
+
 	    	//If payment is by credit card, check details
 	    	//TO-DO check only numbers are used and year and date are valid and in future
 	    	CreditCard creditCard = customerOrder.getCreditCard();
 	    	if(customerOrder.getPaymentType() == PaymentType.CREDIT_CARD) {
+					if(creditCard == null || creditCard.getCreditCard1() == null) {
+						errors.rejectValue("creditCard.creditCard1", "typeMismatch", "invalid");
+						return;
+					}
 	    		if(creditCard.getCreditCard1().length() > 4 ||
 	    				creditCard.getCreditCard1().length() < 4)
 	    			errors.rejectValue("creditCard.creditCard1", "typeMismatch", "invalid");
