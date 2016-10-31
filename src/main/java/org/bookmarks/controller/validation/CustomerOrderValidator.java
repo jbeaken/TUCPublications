@@ -20,29 +20,26 @@ public class CustomerOrderValidator implements Validator {
 	    	//TO-DO check only numbers are used and year and date are valid and in future
 	    	CreditCard creditCard = customerOrder.getCreditCard();
 	    	if(customerOrder.getPaymentType() == PaymentType.CREDIT_CARD) {
-					if(creditCard == null || creditCard.getCreditCard1() == null) {
-						errors.rejectValue("creditCard.creditCard1", "typeMismatch", "invalid");
-						return;
-					}
-	    		if(creditCard.getCreditCard1().length() > 4 ||
+
+	    		if(creditCard.getCreditCard1() == null || creditCard.getCreditCard1().length() > 4 ||
 	    				creditCard.getCreditCard1().length() < 4)
 	    			errors.rejectValue("creditCard.creditCard1", "typeMismatch", "invalid");
-	    		if(creditCard.getCreditCard2().length() > 4 ||
+	    		if(creditCard.getCreditCard2() == null || creditCard.getCreditCard2().length() > 4 ||
 	    				creditCard.getCreditCard2().length() < 4)
 	    			errors.rejectValue("creditCard.creditCard2", "typeMismatch", "invalid");
-	    		if(creditCard.getCreditCard3().length() > 4 ||
+	    		if(creditCard.getCreditCard3() == null || creditCard.getCreditCard3().length() > 4 ||
 	    				creditCard.getCreditCard3().length() < 4)
 	    			errors.rejectValue("creditCard.creditCard3", "typeMismatch", "invalid");
-	    		if(creditCard.getCreditCard4().length() > 4 ||
+	    		if(creditCard.getCreditCard4() == null || creditCard.getCreditCard4().length() > 4 ||
 	    				creditCard.getCreditCard4().length() < 4)
 	    			errors.rejectValue("creditCard.creditCard4", "typeMismatch", "invalid");
-	    		if(creditCard.getExpiryMonth().length() > 2 ||
+	    		if(creditCard.getExpiryMonth() == null || creditCard.getExpiryMonth().length() > 2 ||
 	    				creditCard.getExpiryMonth().length() < 2)
 	    			errors.rejectValue("creditCard.expiryMonth", "typeMismatch", "invalid");
-	    		if(creditCard.getExpiryYear().length() > 2 ||
+	    		if(creditCard.getExpiryYear() == null || creditCard.getExpiryYear().length() > 2 ||
 	    				creditCard.getExpiryYear().length() < 2)
 	    			errors.rejectValue("creditCard.expiryYear", "typeMismatch", "invalid");
-	    		if(creditCard.getSecurityCode().length() > 3 ||
+	    		if(creditCard.getSecurityCode() == null ||creditCard.getSecurityCode().length() > 3 ||
 	    				creditCard.getSecurityCode().length() < 3)
 	    			errors.rejectValue("creditCard.securityCode", "typeMismatch", "invalid");
 	    	}
