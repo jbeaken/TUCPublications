@@ -47,5 +47,5 @@ public class CustomerOrderValidator implements Validator {
 			if(customerOrder.getDeliveryType() == DeliveryType.MAIL && customerOrder.getPaymentType() == PaymentType.CASH) {
 				errors.rejectValue("paymentType", "cashWithMailorder", "Cannot have cash payment with mail order delivery.");
 			}
-	    }
+	  }
 }

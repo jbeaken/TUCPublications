@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.bookmarks.domain.AbstractEntity;
 import org.bookmarks.domain.CustomerType;
 import org.bookmarks.domain.ReadingList;
@@ -30,15 +33,17 @@ public class ReadingListController extends AbstractStickyController {
 
 	@Autowired
 	private ReadingListService readingListService;
-	
+
 	@Autowired
-	private StockItemService stockItemService;	
-	
+	private StockItemService stockItemService;
+
+	private Logger logger = LoggerFactory.getLogger(ReadingListController.class);
+
 	@RequestMapping(value="/search")
 	public String search(ReadingListSearchBean readingListSearchBean, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
+
 		if(readingListSearchBean == null) readingListSearchBean = new ReadingListSearchBean();
-		
+
 		if(readingListSearchBean.isFromSession() == false) { //Pagination etc. already set
 			setPaginationFromRequest(readingListSearchBean, request);
 		} else {
@@ -63,28 +68,28 @@ public class ReadingListController extends AbstractStickyController {
 		modelMap.addAttribute(new ReadingListSearchBean());
 		return search(new ReadingListSearchBean(), session, request, modelMap);
 	}
-	
+
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Long id, ModelMap modelMap) {
 		ReadingList readingList = readingListService.get(id);
 		modelMap.addAttribute(readingList);
 		return "editReadingList";
-	}	
-	
+	}
+
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
 	public String edit(@Valid ReadingList readingList, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		ReadingList db = readingListService.get(readingList.getId());
-		
+
 		db.setName(readingList.getName());
 		db.setIsOnWebsite(readingList.getIsOnWebsite());
 		db.setIsOnSidebar(readingList.getIsOnSidebar());
-		
+
 		readingListService.update(db);
-		
+
 		addSuccess("Have saved reading list " + db.getName(), modelMap);
 		return searchFromSession(session, request, modelMap);
-	}		
-	
+	}
+
 
 //	@RequestMapping(value="/delete", method=RequestMethod.GET)
 //	public String delete(Long id, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
@@ -94,28 +99,28 @@ public class ReadingListController extends AbstractStickyController {
 //		modelMap.addAttribute(new ReadingListSearchBean());
 //		modelMap.addAttribute("searchResultCount", 10);  //WHY? Not needed in displaySearch in CustomerController
 //		return searchFromSession(session, request, modelMap);
-//	}	
+//	}
 
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		ReadingListSearchBean readingListSearchBean = (ReadingListSearchBean) session.getAttribute("searchBean");
-		
+
 		if(readingListSearchBean == null) readingListSearchBean = new ReadingListSearchBean(); else readingListSearchBean.isFromSession(true);
-		
+
 		modelMap.addAttribute(readingListSearchBean);
-		
+
 		return search(readingListSearchBean, session, request, modelMap);
 	}
-	
+
 	@RequestMapping(value="/delete")
 	public String delete(ReadingList readingList, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
+
 		readingListService.delete(readingList);
-		
+
 		addSuccess("Have successfully deleted " + readingList.getName(), modelMap);
-		
+
 		return searchFromSession(session, request, modelMap);
-	}	
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid ReadingList readingList, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -123,7 +128,7 @@ public class ReadingListController extends AbstractStickyController {
 		if(bindingResult.hasErrors()){
 			return "addReadingList";
 		}
-		
+
 		try {
 			readingListService.save(readingList);
 		} catch (Exception e) {
@@ -131,11 +136,11 @@ public class ReadingListController extends AbstractStickyController {
 			modelMap.addAttribute(readingList);
 			return "addReadingList";
 		}
-		
+
 		ReadingListSearchBean searchBean = new ReadingListSearchBean();
 		searchBean.setReadingList(readingList);
 		session.setAttribute("searchBean", searchBean);
-		
+
 		return "redirect:searchFromSession";
 	}
 
@@ -146,69 +151,70 @@ public class ReadingListController extends AbstractStickyController {
 	}
 
 
-	/*	
+	/*
 	@RequestMapping(value="/selectReadingList", method=RequestMethod.GET)
 	public String selectReadingList(String isbn, HttpSession session, ModelMap modelMap) {
 		Collection<ReadingList> readingLists = readingListService.getAllSorted("name", true);
-		
+
 		ReadingList readingList = new ReadingList();
-		
+
 		modelMap.addAttribute(readingLists);
 		modelMap.addAttribute(readingList);
-		
+
 		addSuccess("Select Reading List ", modelMap);
-		
+
 		return "selectReadingList";
-	}	
-	
+	}
+
 	@RequestMapping(value="/selectReadingList", method=RequestMethod.POST)
 	public String selectReadingList(ReadingList readingList, HttpSession session, ModelMap modelMap) {
 		StockItem stockItem = stockItemService.getByISBNAsNumber(readingList.getIsbn());
-		
+
 		readingList = readingListService.get(readingList.getId());
 		readingList.add(stockItem);
-		
+
 		session.setAttribute("readingList", readingList);
 		addSuccess("Added but not saved", modelMap);
-		
+
 		return "manageReadingList";
-	}*/	
-	
+	}*/
+
 	@RequestMapping(value="/manage", method=RequestMethod.GET)
 	public String manage(Long id, HttpSession session, ModelMap modelMap) {
-		
+
 		ReadingList readingList = readingListService.get(id);
-		
+		logger.info("About to manage readling {}, no of stock items {}", readingList.getName(), readingList.getStockItems().size() );
+
 		modelMap.addAttribute(new StockItem());
-		
+
 		session.setAttribute("stickies", readingList.getStockItems());
 		session.setAttribute("readingList", readingList);
-		
+
 		return "manageReadingList";
-	}		
-	
-	
+	}
+
+
 	@RequestMapping(value="/save", method=RequestMethod.GET)
 	public String save(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
+
 		ReadingList readingList = (ReadingList) session.getAttribute("readingList");
 		List<StockItem> stickies = (List<StockItem>) session.getAttribute("stickies");
 		if(readingList == null) {
 			return "sessionExpired";
 		}
-		
+
 		readingList.setStockItems(stickies);
-		
+
 		readingListService.update(readingList);
-		
+
 		addSuccess("Saved " + readingList.getName(), modelMap);
-		
+
 		session.removeAttribute("readingList");
 		session.removeAttribute("stickies");
-		
+
 		return searchFromSession(session, request, modelMap);
-	}	
-	
+	}
+
 	@Override
 	public Service getService() {
 		return readingListService;
@@ -223,5 +229,5 @@ public class ReadingListController extends AbstractStickyController {
 	protected List<StockItem> getStickies(Long id) {
 		ReadingList readingList = readingListService.get(id);
 		return readingList.getStockItems();
-	}	
+	}
 }

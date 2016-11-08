@@ -9,32 +9,32 @@
 	        <div class="row">
 	          <div class="column w-33-percent">
 					<form:label	for="isbn" path="isbn">ISBN</form:label><br/>
-					<form:input path="isbn" required="required" autofocus="autofocus"/>			
-					
+					<form:input path="isbn" required="required" autofocus="autofocus"/>
+
 		  	 </div>
 		  	</div>
 	      <div class="row">
 	          <div class="column w-33-percent">
-	 				<input type="submit" class="btn btn-primary" value="Add ISBN to Reading List"/> 
-	 				<a class="btn btn-danger" href="${pageContext.request.contextPath}/readingList/save">Save Reading List</a> 
-		 	 </div>		 	 
-		</div>		
-	</div>		
+	 				<input type="submit" class="btn btn-primary" value="Add ISBN to Reading List"/>
+	 				<a class="btn btn-danger" href="${pageContext.request.contextPath}/readingList/save">Save Reading List</a>
+		 	 </div>
+		</div>
+	</div>
 </form:form>
 		<br/>
-		<display:table name="sessionScope.stickies" 
-			   requestURI="search" 
-			   sort="external" 
+		<display:table name="sessionScope.stickies"
+			   requestURI="search"
+			   sort="external"
 			   export="true"
-			   id="searchTable">		
+			   id="searchTable">
 					  <display:column title="Image">
 					    <c:if test="${searchTable.imageURL != null}">
 					      <img src="${searchTable.imageURL}" style="max-width : 80%"/>
 					    </c:if>
 					    <c:if test="${searchTable.imageURL == null}">
 					      No Image
-					    </c:if>    
-					</display:column>		
+					    </c:if>
+					</display:column>
 					  <display:column property="id" title="ID"/>
 					  <display:column property="isbn" title="ISBN"/>
 					  <display:column property="title" title="Title"/>
@@ -48,10 +48,9 @@
 						    <li><a href="${pageContext.request.contextPath}/readingList/moveUp?index=${searchTable_rowNum - 1}">Move Up</a></li>
 						    <li><a href="${pageContext.request.contextPath}/readingList/moveDown?index=${searchTable_rowNum - 1}">Move Down</a></li>
 						    <li><a href="${pageContext.request.contextPath}/readingList/remove?index=${searchTable_rowNum - 1}">Remove</a></li>
-						    <li class="divider"></li>						   
-						    <li><a href="${pageContext.request.contextPath}/stock/edit?id=${searchTable.id}&flow=readingList"  target="_blank"">Edit Stock</a></li>
+						    <li class="divider"></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/edit?id=${searchTable.id}&flow=readingList"  target="_blank">Edit Stock</a></li>
 						  </ul>
 						</div>
-					  </display:column>								  
+					  </display:column>
   		</display:table>
-
