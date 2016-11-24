@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+<fmt:setLocale value="en_GB"/>
 		<form:form modelAttribute="customer" action="edit?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
 		  	<form:hidden path="creationDate"/>
@@ -60,7 +61,7 @@
 		  <div class="column w-33-percent">
                 <form:label for="contactDetails.homeNumber" path="contactDetails.homeNumber" cssErrorClass="error">Home</form:label><br/>
                 <form:input path="contactDetails.homeNumber" /> <form:errors path="contactDetails.homeNumber" />
-		  </div>		
+		  </div>
 		  <div class="column w-33-percent">
                 <form:label for="contactDetails.workNumber" path="contactDetails.workNumber" cssErrorClass="error">Work</form:label><br/>
                 <form:input path="contactDetails.workNumber" /> <form:errors path="contactDetails.workNumber" />
@@ -72,7 +73,8 @@
 	</div>
       <div class="row">
 		<div class="column w-33-percent">
-			<form:label for="bookmarksAccount.currentBalance" path="bookmarksAccount.currentBalance">Current Balance</form:label><br/>&pound;${customer.bookmarksAccount.currentBalance}
+			<form:label for="bookmarksAccount.currentBalance" path="bookmarksAccount.currentBalance">Current Balance</form:label><br/>
+			&pound;<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${customer.bookmarksAccount.currentBalance}" />
 		</div>
 		<div class="column w-33-percent">
                                         <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
@@ -83,7 +85,7 @@
                                            <form:select path="customerType">
   											<form:options items="${customerTypeList}" itemLabel="displayName"/>
 										</form:select>
-		  </div>	 	 
+		  </div>
 
 	</div>
 	<div class="row">
