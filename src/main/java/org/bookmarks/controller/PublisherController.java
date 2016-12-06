@@ -28,7 +28,7 @@ public class PublisherController extends AbstractBookmarksController {
 
 	@Autowired
 	private PublisherService publisherService;
-	
+
 	@Autowired
 	private SupplierService supplierService;
 
@@ -46,7 +46,7 @@ public class PublisherController extends AbstractBookmarksController {
 		//System.out.println(json);
 		return json;
 	}
-	
+
 	@RequestMapping(value="/search")
 	public String search(PublisherSearchBean publisherSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		setPaginationFromRequest(publisherSearchBean, request);
@@ -54,6 +54,9 @@ public class PublisherController extends AbstractBookmarksController {
 		Collection<Publisher> publishers = publisherService.search(publisherSearchBean);
 
 		session.setAttribute("searchBean", publisherSearchBean);
+
+		//Don't like, fix for shitty export
+		setPageSize(publisherSearchBean, modelMap, publishers.size());
 
 		modelMap.addAttribute(publishers);
 		modelMap.addAttribute("searchResultCount", publisherSearchBean.getSearchResultCount());
@@ -74,41 +77,41 @@ public class PublisherController extends AbstractBookmarksController {
 		modelMap.addAttribute(publisherSearchBean);
 		return search(publisherSearchBean, null, session, request, modelMap);
 	}
-	
+
 	@RequestMapping(value="/add", method=RequestMethod.GET)
 	public String add(String flow, HttpSession session, ModelMap modelMap) {
 		modelMap.addAttribute(new Publisher());
 		modelMap.addAttribute(getSuppliers());
-		
+
 		modelMap.addAttribute("flow", flow);
-		
+
 		return "addPublisher";
-	}	
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid Publisher publisher, BindingResult bindingResult, String flow, HttpSession session, ModelMap modelMap) {
-		
+
 		Publisher exists = publisherService.getByName(publisher.getName());
 		if(exists != null) {
 			bindingResult.addError(new ObjectError("publisher", "This publisher already exists"));
 		}
-		
+
 		//Check for errors
 		if(bindingResult.hasErrors()){
 			addError(bindingResult.getAllErrors(), modelMap);
 			modelMap.addAttribute(getSuppliers());
 			return "addPublisher";
 		}
-		
+
 		Supplier supplier = supplierService.get(publisher.getSupplier().getId());
 		publisher.setSupplier(supplier);
-		
+
 		publisherService.save(publisher);
-		
+
 		staticDataService.resetPublishers();
-		
+
 		addSuccess("Have successfully added publisher", modelMap);
-		
+
 		if(flow != null && (flow.equals("addStock") || flow.equals("editStock"))) {
 			StockItem stockItem = (StockItem) session.getAttribute("sessionStockItem");
 			if(stockItem == null) {
@@ -119,36 +122,36 @@ public class PublisherController extends AbstractBookmarksController {
 			modelMap.addAttribute(stockItem);
 			return flow; //Either addStock or editStock
 		}
-		
+
 		return "viewPublisher";
 	}
-	
+
 	@RequestMapping(value="/addAndCreateSupplier", method=RequestMethod.POST)
 	public String addAndCreateSupplier(@Valid Publisher publisher, String flow, BindingResult bindingResult, HttpSession session, ModelMap modelMap) {
 		Supplier exists = supplierService.getByName(publisher.getName());
 		if(exists != null) {
 			bindingResult.addError(new ObjectError("supplier", "This supplier already exists"));
 		}
-		
+
 		//Check for errors
 		if(bindingResult.hasErrors()){
 			addError(bindingResult.getAllErrors(), modelMap);
 			modelMap.addAttribute(getSuppliers());
 			return "addPublisher";
 		}
-		
+
 		Supplier supplier = new Supplier(publisher);
-		
+
 		supplierService.save(supplier);
-		
+
 		publisher.setSupplier(supplier);
-		
+
 		String result = add(publisher, bindingResult, flow, session, modelMap);
-		
+
 		if(result.equals("addPublisher")) return result; //error has occured
-		
+
 		staticDataService.resetSuppliers();
-		
+
 		return result;
 	}
 
@@ -161,13 +164,13 @@ public class PublisherController extends AbstractBookmarksController {
 			modelMap.addAttribute(getSuppliers());
 			return "editPublisher";
 		}
-		
+
 		Supplier supplier = supplierService.get(publisher.getSupplier().getId());
 		publisher.setSupplier(supplier);
-		
+
 		publisherService.update(publisher);
 		staticDataService.resetPublishers();
-		
+
 		if(flow !=null & flow.equals("editStock")) {
 			modelMap.addAttribute("closeWindow", "not null");
 			return "closeWindow";
@@ -177,8 +180,8 @@ public class PublisherController extends AbstractBookmarksController {
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String displayEdit(Long id, String flow, ModelMap modelMap) {
-		Publisher publisher = publisherService.get(id); 
-		
+		Publisher publisher = publisherService.get(id);
+
 		modelMap.addAttribute(publisher);
 		modelMap.addAttribute(getSuppliers());
 		modelMap.addAttribute("flow", flow);
