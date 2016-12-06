@@ -71,23 +71,27 @@
                 <form:input path="contactDetails.mobileNumber" /> <form:errors path="contactDetails.mobileNumber" />
 		  </div>
 	</div>
-      <div class="row">
+	
+  <div class="row">
 		<div class="column w-33-percent">
 			<form:label for="bookmarksAccount.currentBalance" path="bookmarksAccount.currentBalance">Current Balance</form:label><br/>
 			&pound;<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${customer.bookmarksAccount.currentBalance}" />
 		</div>
+
 		<div class="column w-33-percent">
-                                        <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
-                                        <form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
+          <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
+          <form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
 	 	 </div>
+
 		  <div class="column w-33-percent">
-                                        <form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
-                                           <form:select path="customerType">
-  											<form:options items="${customerTypeList}" itemLabel="displayName"/>
-										</form:select>
+	    	<form:label for="customerType" path="customerType" cssErrorClass="error">Customer Type</form:label><br/>
+				<form:select path="customerType">
+  				<form:options items="${customerTypeList}" itemLabel="displayName"/>
+				</form:select>
 		  </div>
 
 	</div>
+
 	<div class="row">
 		  <div class="column w-33-percent">
                                         <form:label for="bookmarksDiscount" path="bookmarksDiscount" cssErrorClass="error">Bookmarks Discount</form:label><br/>

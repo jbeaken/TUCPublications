@@ -471,6 +471,7 @@ public class CustomerController extends AbstractBookmarksController {
 		    	 if(a.getAddress1() != null && !a.getAddress1().trim().isEmpty()) labelText.append(a.getAddress1() + nl);
 		    	 if(a.getAddress2() != null && !a.getAddress2().trim().isEmpty()) labelText.append(a.getAddress2() + nl);
 		    	 if(a.getAddress3() != null && !a.getAddress3().trim().isEmpty()) labelText.append(a.getAddress3() + nl);
+					 if(a.getCity() != null && !a.getCity().trim().isEmpty()) labelText.append(a.getCity() + nl);
 		    	 if(a.getPostcode() != null && !a.getPostcode().trim().isEmpty()) labelText.append(a.getPostcode() + nl);
 //		    	 logger.info(labelText.toString());
 		    	// pl.add(labelText.toString());//, "45140-8778");  //regular label with postnet barcode
@@ -502,7 +503,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 
 		 response.setContentType("application/pdf");
-		 response.setHeader("Content-Disposition","attachment; filename=\"ringAround.pdf\"");
+		 response.setHeader("Content-Disposition","attachment; filename=\"labels.pdf\"");
 		 response.setContentLength(baos.size());
 
 		 OutputStream os = response.getOutputStream();
