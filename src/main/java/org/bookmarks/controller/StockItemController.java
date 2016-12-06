@@ -130,7 +130,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 	}
 
 
-	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String delete(StockItem stockItem, HttpSession session, ModelMap modelMap) {
 		stockItem = stockItemService.get(stockItem.getId());
 		stockItemService.delete(stockItem);
