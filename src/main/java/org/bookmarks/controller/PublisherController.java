@@ -36,14 +36,20 @@ public class PublisherController extends AbstractBookmarksController {
 	@RequestMapping(value="/autoCompletePublisherName", method=RequestMethod.GET)
 	public String autoCompletePublisherName(String term, HttpServletRequest request, ModelMap modelMap) {
 		Collection<Publisher> publishers = publisherService.getForAutoComplete(term);
+
 		StringBuffer buffer = new StringBuffer("[ ");
+
 		for(Publisher p : publishers) {
 			buffer.append(" { \"label\": \"" + p.getName() + "\", \"value\": \"" + p.getId() + "\" }");
 			buffer.append(", ");
 		}
+
 		String json = buffer.toString();
+
 		json = json.substring(0, json.length() - 2) + "  ]";
+
 		//System.out.println(json);
+
 		return json;
 	}
 

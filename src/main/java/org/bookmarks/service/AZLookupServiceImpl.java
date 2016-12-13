@@ -117,7 +117,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 		//Now use drilldown
 		doc = getDrilldownPageDocument(doc);
 		//check if haven't been replaced by newer edition
-		Element newerEdition = doc.select("div#ob-replacement_feature_div").first();;
+		Element newerEdition = doc.select("div#ob-replacement_feature_div").first();
 		if(newerEdition != null) {
 			stockItem.setHasNewerEdition(true);
 		}
@@ -153,13 +153,13 @@ public class AZLookupServiceImpl implements AZLookupService {
 			Elements elements = doc.select("div.bucket");
 			for(Element e : elements) {
 				Element h2 = e.select("h2").first();
-				
+
 				if(h2 == null || !h2.text().equals("Look for similar items by category")) {
 					continue;
 				}
 				Elements li = e.select("ul li");
 				String text = li.text();
-				
+
 				logger.debug("Category text : " + li.text());
 
 				if(text.contains("Poetry")) {
@@ -186,7 +186,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 				if(text.contains("Africa")) {
 					stockItem.setCategory(new Category(4l)) ;
 					logger.debug("Have selected Africa category");
-				}				
+				}
 				if(text.contains("Middle East")) {
 					stockItem.setCategory(new Category(42l)) ;
 					logger.debug("Have selected Middle East category");
