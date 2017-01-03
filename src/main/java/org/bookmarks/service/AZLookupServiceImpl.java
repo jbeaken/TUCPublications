@@ -143,6 +143,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 		getCategory(doc, stockItem);
 
 		stockItem.setIsOnAZ(true);
+
 		stockItem.setSyncedWithAZ(true);
 
 		return stockItem;
@@ -151,6 +152,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 	private void getCategory(Document doc, StockItem stockItem) {
 		try {
 			Elements elements = doc.select("div.bucket");
+			
 			for(Element e : elements) {
 				Element h2 = e.select("h2").first();
 
