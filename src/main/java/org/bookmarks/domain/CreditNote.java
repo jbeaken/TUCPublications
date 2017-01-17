@@ -2,14 +2,23 @@ package org.bookmarks.domain;
 
 import java.math.BigDecimal;
 
+import org.springframework.web.multipart.MultipartFile;
+
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
+import javax.persistence.Transient;
+
 @Entity
 public class CreditNote extends AbstractEntity {
 	
 	@NotNull
 	private BigDecimal amount;
+
+	//For upload of sales csv
+	@Transient private MultipartFile file;
 	
 	@ManyToOne
 	@NotNull	
@@ -45,4 +54,12 @@ public class CreditNote extends AbstractEntity {
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
+	
+	public MultipartFile getFile() {
+		return file;
+	}
+	
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}	
 }

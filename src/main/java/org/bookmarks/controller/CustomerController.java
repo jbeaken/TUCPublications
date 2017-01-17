@@ -9,6 +9,19 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.csv.CSVPrinter;
+
+import java.util.GregorianCalendar;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+
+import java.io.Reader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +36,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
+import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.CustomerType;
@@ -35,6 +49,8 @@ import org.bookmarks.controller.bean.CustomerMergeFormObject;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +101,69 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@Autowired
 	private InvoiceController invoiceController;
+
+	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
+	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
+		modelMap.addAttribute("creditNote", new CreditNote());		
+		return "uploadAccountsFromTSB";
+	}	
+
+/**
+	 * Text file to upload from mini beans, for extennal event 1) CSV file
+	 * contains with sales, followed by invoice sales. 2) Create event 3) Create
+	 * sales and invoices
+	 **/
+	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.POST)
+	public String uploadAccountsFromTSB(CreditNote creditNote, HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
+
+		MultipartFile file = creditNote.getFile();
+		String fileName = file.getOriginalFilename();
+		Long fileSize = file.getSize();
+
+		float total = 0;
+
+		logger.info("Uploading customer accounts ");
+
+		if (fileName.indexOf(".csv") == -1) {
+			addError("The file must be a csv file ", modelMap);
+			return "uploadSales";
+		}
+
+		if (fileSize > 100000) {
+			addError("File too big! Size is " + (fileSize / 1000) + " Kb", modelMap);
+			return "uploadSales";
+		}
+
+		Reader reader = new InputStreamReader(file.getInputStream());
+		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
+
+
+		for (CSVRecord record : records) {
+
+			Date transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse( record.get(0) );
+			String transactionType = record.get(1);
+			String sortCode = record.get(2);
+			String accountNumber = record.get(3);
+			String details = record.get(4);
+			
+
+			//System.out.println( record );
+			System.out.println( details );
+
+			
+
+
+		}
+
+		// String totalFormatted = new CurrencyStyleFormatter().print( total, java.util.Locale.UK );
+
+		// session.setAttribute("invoicesForUpload", invoiceMap.values());
+
+		addSuccess("Have found sales of value Press confirm to save", modelMap);
+
+		return "confirmUploadAccounts";
+	}
+
 
 	@RequestMapping(value="/lookupPostcode", method=RequestMethod.GET)
 	public @ResponseBody String lookupPostcode(String postcode) {
