@@ -137,6 +137,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Reader reader = new InputStreamReader(file.getInputStream());
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
 
+		List<CreditNote> creditNoteList = new ArrayList<>();
 
 		for (CSVRecord record : records) {
 
@@ -147,6 +148,10 @@ public class CustomerController extends AbstractBookmarksController {
 			String details = record.get(4);
 			String amount = record.get(6);
 
+			//Exception for IS book
+			if(details.startsWith( "I S BOOKS LTD" ) || details.startsWith( "TO 30932900089719" )) {
+				continue;
+			}
 
 			//System.out.println( record );
 			System.out.println( "**********************" );
@@ -158,8 +163,8 @@ public class CustomerController extends AbstractBookmarksController {
 			if(details.contains("\"")) {
 				details = record.get(4) + record.get(5);
 				amount = record.get(7);
-
 			}
+
 				System.out.println( details );
 				System.out.println( amount );
 
@@ -168,13 +173,13 @@ public class CustomerController extends AbstractBookmarksController {
 				CreditNote cn = new CreditNote();
 				cn.setDate(transactionDate);
 				cn.setAmount(new BigDecimal(amount));
+				cn.setDetails( details );
 				cn.setTransactionType(TransactionType.TFR);
-				customerService.debitAccount( cn );
+
+				creditNoteList.add( cn );
 			}
-		// String totalFormatted = new CurrencyStyleFormatter().print( total, java.util.Locale.UK );
 
-		// session.setAttribute("invoicesForUpload", invoiceMap.values());
-
+		session.setAttribute("creditNoteList", creditNoteList);
 		addSuccess("Have found sales of value Press confirm to save", modelMap);
 
 		return "confirmUploadAccounts";
