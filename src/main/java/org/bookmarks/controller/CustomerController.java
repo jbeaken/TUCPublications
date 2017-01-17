@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 import java.math.BigDecimal;
@@ -102,6 +104,20 @@ public class CustomerController extends AbstractBookmarksController {
 	@Autowired
 	private InvoiceController invoiceController;
 
+	@RequestMapping(value = "/match", method = RequestMethod.GET)
+	public String match(Long customerId, String details, ModelMap modelMap, HttpSession session) throws IOException {
+		Customer customer = customerService.get( customerId );
+		
+		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
+		CreditNote cn = creditNoteMap.get( details );
+
+		cn.setCustomer( customer );
+
+		addSuccess("Matched!", modelMap);
+
+		return "confirmUploadAccounts";
+	}	
+
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
 	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
 		modelMap.addAttribute("creditNote", new CreditNote());
@@ -137,7 +153,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Reader reader = new InputStreamReader(file.getInputStream());
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
 
-		List<CreditNote> creditNoteList = new ArrayList<>();
+		Map<String, CreditNote> creditNoteMap = new HashMap<>();
 
 		for (CSVRecord record : records) {
 
@@ -176,10 +192,10 @@ public class CustomerController extends AbstractBookmarksController {
 				cn.setDetails( details );
 				cn.setTransactionType(TransactionType.TFR);
 
-				creditNoteList.add( cn );
+				creditNoteMap.put(details, cn);
 			}
 
-		session.setAttribute("creditNoteList", creditNoteList);
+		session.setAttribute("creditNoteMap", creditNoteMap);
 		addSuccess("Have found sales of value Press confirm to save", modelMap);
 
 		return "confirmUploadAccounts";

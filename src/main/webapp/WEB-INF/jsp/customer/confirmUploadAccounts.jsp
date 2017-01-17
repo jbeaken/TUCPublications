@@ -24,6 +24,7 @@
 
 	function match(details) {
 			alert( $('#customerId').val() + " " + details);
+      window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&details=" + details;
 	}
 </script>
 <h1>Upload bank credits from TSB</h1>
@@ -41,7 +42,7 @@
     		</div>
       </div>
 
-         <display:table name="sessionScope.creditNoteList"
+         <display:table name="sessionScope.creditNoteMap"
             requestURI="search"
             decorator="org.bookmarks.ui.SearchCustomersDecorator"
             sort="external"
@@ -57,6 +58,7 @@
                    <display:column property="date" title="Date" />
                    <display:column property="amount" title="Amount" />
                    <display:column property="details" title="Reference"/>
+                   <display:column property="customer.id" title="Customer"/>
                    <display:column>
                      <button onclick="javascript:match('${searchTable.details}')" class="btn btn-danger">Match</button>
                    </display:column>
