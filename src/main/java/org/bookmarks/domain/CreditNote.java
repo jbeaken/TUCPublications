@@ -1,10 +1,9 @@
 package org.bookmarks.domain;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
-
-
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -13,15 +12,19 @@ import javax.persistence.Transient;
 
 @Entity
 public class CreditNote extends AbstractEntity {
-	
+
 	@NotNull
 	private BigDecimal amount;
 
+	private Date date;
+
+	private TransactionType transactionType;
+
 	//For upload of sales csv
 	@Transient private MultipartFile file;
-	
+
 	@ManyToOne
-	@NotNull	
+	@NotNull
 	private Customer customer;
 
 	public Customer getCustomer() {
@@ -54,12 +57,28 @@ public class CreditNote extends AbstractEntity {
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
-	
+
 	public MultipartFile getFile() {
 		return file;
 	}
-	
+
 	public void setFile(MultipartFile file) {
 		this.file = file;
-	}	
+	}
+
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public TransactionType getTransactionType() {
+		return transactionType;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
+	}
 }

@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
+import java.math.BigDecimal;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
@@ -36,10 +36,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
-import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.CustomerType;
+import org.bookmarks.domain.TransactionType;
 import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
@@ -104,9 +104,9 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
 	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
-		modelMap.addAttribute("creditNote", new CreditNote());		
+		modelMap.addAttribute("creditNote", new CreditNote());
 		return "uploadAccountsFromTSB";
-	}	
+	}
 
 /**
 	 * Text file to upload from mini beans, for extennal event 1) CSV file
@@ -145,16 +145,32 @@ public class CustomerController extends AbstractBookmarksController {
 			String sortCode = record.get(2);
 			String accountNumber = record.get(3);
 			String details = record.get(4);
-			
+			String amount = record.get(6);
+
 
 			//System.out.println( record );
-			System.out.println( details );
+			System.out.println( "**********************" );
+			System.out.println( transactionDate );
+			// System.out.println( transactionType );
+			// System.out.println( sortCode );
+			// System.out.println( accountNumber );
 
-			
+			if(details.contains("\"")) {
+				details = record.get(4) + record.get(5);
+				amount = record.get(7);
 
+			}
+				System.out.println( details );
+				System.out.println( amount );
 
-		}
+				//Get customer
 
+				CreditNote cn = new CreditNote();
+				cn.setDate(transactionDate);
+				cn.setAmount(new BigDecimal(amount));
+				cn.setTransactionType(TransactionType.TFR);
+				customerService.debitAccount( cn );
+			}
 		// String totalFormatted = new CurrencyStyleFormatter().print( total, java.util.Locale.UK );
 
 		// session.setAttribute("invoicesForUpload", invoiceMap.values());
