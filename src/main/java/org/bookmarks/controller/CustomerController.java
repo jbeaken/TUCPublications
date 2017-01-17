@@ -100,9 +100,31 @@ public class CustomerController extends AbstractBookmarksController {
 		webDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
-
 	@Autowired
 	private InvoiceController invoiceController;
+
+	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
+	public String saveAccountsFromTSB(ModelMap modelMap, HttpSession session) throws IOException {
+		
+		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
+
+		for(CreditNote creditNote : creditNoteMap.values()) {
+			if(creditNote.getCustomer() == null) {
+
+				addError("Please match customer " + creditNote.getDetails(), modelMap);
+
+				return "confirmUploadAccounts";
+			}
+		}
+
+		for(CreditNote creditNote : creditNoteMap.values()) {
+			customerService.debitAccount( creditNote );
+		}		
+
+		addSuccess("All Saved!", modelMap);
+
+		return "confirmUploadAccounts";
+	}	
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String details, ModelMap modelMap, HttpSession session) throws IOException {

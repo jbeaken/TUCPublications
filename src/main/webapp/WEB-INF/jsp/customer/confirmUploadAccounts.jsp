@@ -46,23 +46,28 @@
          <display:table name="sessionScope.creditNoteMap"
             requestURI="search"
             decorator="org.bookmarks.ui.SearchCustomersDecorator"
-            sort="external"
-            defaultsort="2"
-            defaultorder="ascending"
             export="true"
             size="${sessionScope.creditNoteList.size()}"
             id="searchTable">
-    <display:setProperty name="export.pdf" value="true" />
-    <display:setProperty name="export.xml" value="false" />
-    <display:setProperty name="export.pdf.filename" value="customer.pdf"/>
-    <display:setProperty name="export.csv.filename" value="customer.txt"/>
-                   <display:column property="date" title="Date" />
-                   <display:column property="amount" title="Amount" />
-                   <display:column property="details" title="Reference"/>
-                   <display:column property="customer.fullName" title="Customer"/>
-                   <display:column>
-                     <button onclick="javascript:match('${searchTable.details}')" class="btn btn-danger">Match</button>
+                    <display:setProperty name="export.pdf" value="true" />
+                    <display:setProperty name="export.xml" value="false" />
+                    <display:setProperty name="export.pdf.filename" value="customer.pdf"/>
+                    <display:setProperty name="export.csv.filename" value="customer.txt"/>
+                    <display:column property="date" title="Date" />
+                    <display:column property="amount" title="Amount" />
+                    <display:column property="details" title="Reference"/>
+                    <display:column property="customer.fullName" title="Customer"/>
+                    <display:column>
+                          <button onclick="javascript:match('${searchTable.details}')" class="btn btn-danger">Match</button>
                    </display:column>
-                   </display:table>
+          </display:table>
 
   </div>
+
+      <div class="rows">
+            <div class="row">
+              <div class="column w-33-percent">
+                  <a href="/bookmarks/customer/saveAccountsFromTSB" class="btn btn-danger">Save</a>
+              </div>
+        </div>
+      </div>
