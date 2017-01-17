@@ -107,7 +107,7 @@ public class CustomerController extends AbstractBookmarksController {
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String details, ModelMap modelMap, HttpSession session) throws IOException {
 		Customer customer = customerService.get( customerId );
-		
+
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get( details );
 
@@ -116,7 +116,7 @@ public class CustomerController extends AbstractBookmarksController {
 		addSuccess("Matched!", modelMap);
 
 		return "confirmUploadAccounts";
-	}	
+	}
 
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
 	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
@@ -178,6 +178,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 			if(details.contains("\"")) {
 				details = record.get(4) + record.get(5);
+				details = details.replace("\"", "");
 				amount = record.get(7);
 			}
 
