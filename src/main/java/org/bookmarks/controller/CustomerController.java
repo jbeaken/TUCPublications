@@ -148,8 +148,13 @@ public class CustomerController extends AbstractBookmarksController {
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get( transactionDescription );
 
+		if(cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched")) {
+				addError("Cannot match this row", modelMap);
+				return "confirmUploadAccounts";
+		}		
+
 		cn.setCustomer( customer );
-		cn.setStatus( "matched" );
+		cn.setStatus( "Potential Match" );
 
 		addSuccess("Matched!", modelMap);
 
@@ -244,9 +249,9 @@ public class CustomerController extends AbstractBookmarksController {
 			Customer matchedCustomer = customerService.findMatchedCustomer( tsbMatch );
 
 			if(matchedCustomer == null) {
-				cn.setStatus( "unmatched" );
+				cn.setStatus( "Unmatched" );
 			} else {
-				cn.setStatus( "matched" );
+				cn.setStatus( "Matched" );
 			}
 
 			//Check that this transaction hasn't already been processed
@@ -254,7 +259,7 @@ public class CustomerController extends AbstractBookmarksController {
 			if(matchedCreditNote != null) {
 				creditNote.setStatus("Already Processed");
 			}			
-			
+
 			// System.out.println( "**********************" );
 			// System.out.println( transactionDate );
 			// System.out.println( transactionType );
