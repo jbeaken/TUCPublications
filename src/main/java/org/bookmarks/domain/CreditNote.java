@@ -22,9 +22,9 @@ public class CreditNote extends AbstractEntity {
 
 	private String transactionReference;
 
-	private String details;
+	private String transactionDescription;
 
-	private String status;
+	@Transient private String status;
 
 	//For upload of sales csv
 	@Transient private MultipartFile file;
@@ -56,12 +56,12 @@ public class CreditNote extends AbstractEntity {
 		setCustomer(customer);
 	}
 
-	public String getDetails() {
-		return details;
+	public String getTransactionDescription() {
+		return transactionDescription;
 	}
 
-	public void setDetails(String details) {
-		this.details = details;
+	public void setTransactionDescription(String transactionDescription) {
+		this.transactionDescription = transactionDescription;
 	}
 	public BigDecimal getAmount() {
 		return amount;

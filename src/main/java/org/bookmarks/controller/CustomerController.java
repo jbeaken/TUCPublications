@@ -51,6 +51,7 @@ import org.bookmarks.domain.TransactionType;
 import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
+import org.bookmarks.repository.AccountRepository;
 import org.bookmarks.website.domain.Address;
 import org.bookmarks.controller.bean.CustomerMergeFormObject;
 
@@ -97,6 +98,9 @@ public class CustomerController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerOrderController customerOrderController;
 
+	@Autowired
+	private AccountRepository accountRepository;
+
 	private Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	private static final String postcodeLookupKey = "BH89-YF22-ZU91-EE62";
@@ -117,14 +121,14 @@ public class CustomerController extends AbstractBookmarksController {
 		for(CreditNote creditNote : creditNoteMap.values()) {
 			if(creditNote.getCustomer() == null) {
 
-				addError("Please match customer " + creditNote.getDetails(), modelMap);
+				addError("Please match customer " + creditNote.getTransactionDescription(), modelMap);
 
 				return "confirmUploadAccounts";
 			}
 		}
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
-			customerService.debitAccount( creditNote );
+			accountRepository.saveCreditNote( creditNote );
 		}
 
 		addSuccess("All Saved!", modelMap);
@@ -133,11 +137,11 @@ public class CustomerController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
-	public String match(Long customerId, String details, ModelMap modelMap, HttpSession session) throws IOException {
+	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
 		Customer customer = customerService.get( customerId );
 
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
-		CreditNote cn = creditNoteMap.get( details );
+		CreditNote cn = creditNoteMap.get( transactionDescription );
 
 		cn.setCustomer( customer );
 		cn.setStatus( "matched" );
@@ -192,23 +196,23 @@ public class CustomerController extends AbstractBookmarksController {
 			String transactionType = record.get(1);
 			String sortCode = record.get(2);
 			String accountNumber = record.get(3);
-			String details = record.get(4);
+			String transactionDescription = record.get(4);
 			String amount = record.get(6);
 			String transactionReference =  null;
 
 			//Exception for transfers from club account to main bank account
-			if(details.startsWith( "I S BOOKS LTD" ) || details.startsWith( "TO 30932900089719" )) {
+			if(transactionDescription.startsWith( "I S BOOKS LTD" ) || transactionDescription.startsWith( "TO 30932900089719" )) {
 				continue;
 			}
 
-			//Sort out double quotes in details
-			if(details.contains("\"")) {
-				details = record.get(4) + record.get(5);
-				details = details.replace("\"", "");
+			//Sort out double quotes in transactionDescription
+			if(transactionDescription.contains("\"")) {
+				transactionDescription = record.get(4) + record.get(5);
+				transactionDescription = transactionDescription.replace("\"", "");
 				amount = record.get(7);
 			}
 
-			String tsbMatch = details;
+			String tsbMatch = transactionDescription;
 
 			//Find transcation reference (SO do not have one)
 			if(!transactionType.equals( "SO" )) {
@@ -217,18 +221,18 @@ public class CustomerController extends AbstractBookmarksController {
 				// Create a Pattern object
 				Pattern r = Pattern.compile(pattern);
 
-				Matcher m = r.matcher(details);
+				Matcher m = r.matcher(transactionDescription);
 				if (m.find( )) {
 						transactionReference = m.group(0);
 						System.out.println("transactionReference : " + transactionReference );
 
 				 } else {
-						addError("Could not find transcation reference in " + details, modelMap);
+						addError("Could not find transcation reference in " + transactionDescription, modelMap);
 						return "confirmUploadAccounts";
 				 }
 
-				int indexOfTransactionReference = details.indexOf( transactionReference );
-				tsbMatch = details.substring( 0, indexOfTransactionReference );
+				int indexOfTransactionReference = transactionDescription.indexOf( transactionReference );
+				tsbMatch = transactionDescription.substring( 0, indexOfTransactionReference );
 			}
 
 			//Find customer match if possible
@@ -250,18 +254,18 @@ public class CustomerController extends AbstractBookmarksController {
 
 				System.out.println( tsbMatch );
 				// System.out.println( amount );
-				details = tsbMatch;
+				transactionDescription = tsbMatch;
 				//Get customer
 
 
 				cn.setDate(transactionDate);
 				cn.setAmount(new BigDecimal(amount));
-				cn.setDetails( details );
+				cn.setTransactionDescription( transactionDescription );
 				cn.setTransactionType(TransactionType.TFR);
 				cn.setTransactionReference( transactionReference );
 
 
-				creditNoteMap.put(details, cn);
+				creditNoteMap.put(transactionDescription, cn);
 			}
 
 		session.setAttribute("creditNoteMap", creditNoteMap);
