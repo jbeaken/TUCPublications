@@ -20,6 +20,8 @@ public class CreditNote extends AbstractEntity {
 
 	private TransactionType transactionType;
 
+	private String transactionReference;
+
 	private String details;
 
 	//For upload of sales csv
@@ -73,6 +75,14 @@ public class CreditNote extends AbstractEntity {
 
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+
+	public void setTransactionReference(String transactionReference) {
+		this.transactionReference = transactionReference;
+	}
+
+	public String getTransactionReference() {
+		return transactionReference;
 	}
 
 	public void setTransactionType(TransactionType transactionType) {

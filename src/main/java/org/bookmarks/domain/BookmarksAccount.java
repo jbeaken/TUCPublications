@@ -18,11 +18,21 @@ public class BookmarksAccount implements Serializable{
 	@NotNull
 	private Boolean accountHolder = false;
 
+	private String tsbMatch;
+
 	private Boolean paysInMonthly = false;
 
 	private String comment;
 
 	private BigDecimal currentBalance = new BigDecimal(0);
+
+	public String getTsbMatch() {
+		return tsbMatch;
+	}
+
+	public void setTsbMatch(String tsbMatch) {
+		this.tsbMatch = tsbMatch;
+	}
 
 	public String getComment() {
 		return comment;
@@ -31,7 +41,7 @@ public class BookmarksAccount implements Serializable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+
 	public BigDecimal getOpeningBalance() {
 		return openingBalance;
 	}

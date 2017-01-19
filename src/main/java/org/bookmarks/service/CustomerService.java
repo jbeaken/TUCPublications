@@ -27,4 +27,6 @@ public interface CustomerService extends Service<Customer>{
 
 	void merge(Customer customerToKeep, Customer customeroDiscard);
 
+	Customer findMatchedCustomer(String match);
+
 }

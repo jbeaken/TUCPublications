@@ -3,6 +3,10 @@ package org.bookmarks.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -10,7 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.Set;
+
 import java.math.BigDecimal;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
@@ -105,7 +111,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
 	public String saveAccountsFromTSB(ModelMap modelMap, HttpSession session) throws IOException {
-		
+
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
@@ -119,12 +125,12 @@ public class CustomerController extends AbstractBookmarksController {
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
 			customerService.debitAccount( creditNote );
-		}		
+		}
 
 		addSuccess("All Saved!", modelMap);
 
 		return "confirmUploadAccounts";
-	}	
+	}
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String details, ModelMap modelMap, HttpSession session) throws IOException {
@@ -164,12 +170,12 @@ public class CustomerController extends AbstractBookmarksController {
 
 		if (fileName.indexOf(".csv") == -1) {
 			addError("The file must be a csv file ", modelMap);
-			return "uploadSales";
+			return "confirmUploadAccounts";
 		}
 
 		if (fileSize > 100000) {
 			addError("File too big! Size is " + (fileSize / 1000) + " Kb", modelMap);
-			return "uploadSales";
+			return "confirmUploadAccounts";
 		}
 
 		Reader reader = new InputStreamReader(file.getInputStream());
@@ -185,28 +191,57 @@ public class CustomerController extends AbstractBookmarksController {
 			String accountNumber = record.get(3);
 			String details = record.get(4);
 			String amount = record.get(6);
+			String transactionReference =  null;
 
-			//Exception for IS book
+			//Exception for transfers from club account to main bank account
 			if(details.startsWith( "I S BOOKS LTD" ) || details.startsWith( "TO 30932900089719" )) {
 				continue;
 			}
 
-			//System.out.println( record );
-			System.out.println( "**********************" );
-			System.out.println( transactionDate );
-			// System.out.println( transactionType );
-			// System.out.println( sortCode );
-			// System.out.println( accountNumber );
-
+			//Sort out double quotes in details
 			if(details.contains("\"")) {
 				details = record.get(4) + record.get(5);
 				details = details.replace("\"", "");
 				amount = record.get(7);
 			}
 
-				System.out.println( details );
-				System.out.println( amount );
+			String tsbMatch = details;
 
+			//Find transcation reference (SO do not have one)
+			if(!transactionType.equals( "SO" )) {
+				String pattern = "[A-Z0-9]{16}";
+
+				// Create a Pattern object
+				Pattern r = Pattern.compile(pattern);
+
+				Matcher m = r.matcher(details);
+				if (m.find( )) {
+						transactionReference = m.group(0);
+						System.out.println("transactionReference : " + transactionReference );
+
+				 } else {
+						addError("Could not find transcation reference in " + details, modelMap);
+						return "confirmUploadAccounts";
+				 }
+				//Find match if possible
+				int indexOfTransactionReference = details.indexOf( transactionReference );
+				tsbMatch = details.substring( 0, indexOfTransactionReference );
+			}
+
+			// Customer matchedCustomer = customerService.findMatchedCustomer( tsbMatch );
+
+			//System.out.println( record );
+			// System.out.println( "**********************" );
+			// System.out.println( transactionDate );
+			// System.out.println( transactionType );
+			// System.out.println( sortCode );
+			// System.out.println( accountNumber );
+
+
+
+				System.out.println( tsbMatch );
+				// System.out.println( amount );
+				details = tsbMatch;
 				//Get customer
 
 				CreditNote cn = new CreditNote();
@@ -214,6 +249,7 @@ public class CustomerController extends AbstractBookmarksController {
 				cn.setAmount(new BigDecimal(amount));
 				cn.setDetails( details );
 				cn.setTransactionType(TransactionType.TFR);
+				cn.setTransactionReference( transactionReference );
 
 				creditNoteMap.put(details, cn);
 			}

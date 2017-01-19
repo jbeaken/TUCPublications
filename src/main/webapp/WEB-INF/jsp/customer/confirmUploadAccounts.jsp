@@ -55,7 +55,8 @@
                     <display:setProperty name="export.csv.filename" value="customer.txt"/>
                     <display:column property="date" title="Date" />
                     <display:column property="amount" title="Amount" />
-                    <display:column property="details" title="Reference"/>
+                    <display:column property="details" title="Match"/>
+										<display:column property="transactionReference" title="Reference"/>
                     <display:column property="customer.fullName" title="Customer"/>
                     <display:column>
                           <button onclick="javascript:match('${searchTable.details}')" class="btn btn-danger">Match</button>

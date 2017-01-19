@@ -32,6 +32,11 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	}
 
 	@Override
+	public Customer findMatchedCustomer(String match) {
+		return 	customerRepository.findMatchedCustomer(match);
+	}
+
+	@Override
 	public void merge(Customer customerToKeep, Customer customerToDiscard) {
 		customerRepository.merge(customerToKeep, customerToDiscard);
 	}
