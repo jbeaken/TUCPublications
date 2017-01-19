@@ -29,6 +29,15 @@ public class AccountRepository {
 		// 		.setParameter("name", name);
 	}
 
+	public CreditNote getCreditNote(String transactionDescription) {
+		Query query = sessionFactory
+				.getCurrentSession()
+				.createQuery("select cn from CreditNote cn a where transactionDescription = :transactionDescription")
+				.setParameter("transactionDescription", transactionDescription);
+
+				return (CreditNote) query.uniqueResult();
+	}
+
 	// @Override
 	// public Collection<Author> findByNameLike(String name) {
 	// 	Query query = sessionFactory

@@ -128,6 +128,11 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
+
+			if(creditNote.getStatus().equals("Already Processed")) {
+				continue;
+			}
+
 			accountRepository.saveCreditNote( creditNote );
 		}
 
@@ -243,7 +248,13 @@ public class CustomerController extends AbstractBookmarksController {
 			} else {
 				cn.setStatus( "matched" );
 			}
-			//System.out.println( record );
+
+			//Check that this transaction hasn't already been processed
+			CreditNote matchedCreditNote = accountRepository.getCreditNote( transactionDescription );
+			if(matchedCreditNote != null) {
+				creditNote.setStatus("Already Processed");
+			}			
+			
 			// System.out.println( "**********************" );
 			// System.out.println( transactionDate );
 			// System.out.println( transactionType );
