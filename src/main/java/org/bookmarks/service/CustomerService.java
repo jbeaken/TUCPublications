@@ -17,7 +17,7 @@ public interface CustomerService extends Service<Customer>{
 
 	void debitAccount(CreditNote creditNote);
 
-	Collection<Customer> getForAutoComplete(String term);
+	Collection<Customer> getForAutoComplete(String term, Boolean accountHolders);
 
 	void updateCreditCard(CreditCard creditCard, Customer customer);
 

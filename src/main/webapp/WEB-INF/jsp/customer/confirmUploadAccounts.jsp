@@ -5,7 +5,7 @@
 <script>
 	$(function() {
 		$("#customerAutoComplete").autocomplete( {
-			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname",
+			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname?accountHolders=true",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#customerAutoComplete").val(ui.item.label);
@@ -32,15 +32,10 @@
 <input type="hidden" id="customerId"/>
 
     <div class="rows">
-            <div class="row">
-              <div class="column w-33-percent">
-    					<div class="demo">
-    						<div class="ui-widget">
-    							<label>Customer</label>
+    				<div class="demo">
+    							<label>Customer To Match</label>
     							<input type="text" id="customerAutoComplete"/>
-    						</div>
-    					</div>
-    		</div>
+    				</div>
       </div>
 
          <display:table name="sessionScope.creditNoteMap"
@@ -54,6 +49,7 @@
                     <display:setProperty name="export.pdf.filename" value="customer.pdf"/>
                     <display:setProperty name="export.csv.filename" value="customer.txt"/>
                     <display:column property="date" title="Date" />
+										<display:column property="status" title="Status" />
                     <display:column property="amount" title="Amount" />
                     <display:column property="details" title="Match"/>
 										<display:column property="transactionReference" title="Reference"/>

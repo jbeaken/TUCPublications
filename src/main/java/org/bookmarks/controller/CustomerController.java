@@ -140,6 +140,7 @@ public class CustomerController extends AbstractBookmarksController {
 		CreditNote cn = creditNoteMap.get( details );
 
 		cn.setCustomer( customer );
+		cn.setStatus( "matched" );
 
 		addSuccess("Matched!", modelMap);
 
@@ -185,6 +186,8 @@ public class CustomerController extends AbstractBookmarksController {
 
 		for (CSVRecord record : records) {
 
+			CreditNote cn = new CreditNote();
+
 			Date transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse( record.get(0) );
 			String transactionType = record.get(1);
 			String sortCode = record.get(2);
@@ -223,13 +226,19 @@ public class CustomerController extends AbstractBookmarksController {
 						addError("Could not find transcation reference in " + details, modelMap);
 						return "confirmUploadAccounts";
 				 }
-				//Find match if possible
+
 				int indexOfTransactionReference = details.indexOf( transactionReference );
 				tsbMatch = details.substring( 0, indexOfTransactionReference );
 			}
 
-			// Customer matchedCustomer = customerService.findMatchedCustomer( tsbMatch );
+			//Find customer match if possible
+			Customer matchedCustomer = customerService.findMatchedCustomer( tsbMatch );
 
+			if(matchedCustomer == null) {
+				cn.setStatus( "unmatched" );
+			} else {
+				cn.setStatus( "matched" );
+			}
 			//System.out.println( record );
 			// System.out.println( "**********************" );
 			// System.out.println( transactionDate );
@@ -244,12 +253,13 @@ public class CustomerController extends AbstractBookmarksController {
 				details = tsbMatch;
 				//Get customer
 
-				CreditNote cn = new CreditNote();
+
 				cn.setDate(transactionDate);
 				cn.setAmount(new BigDecimal(amount));
 				cn.setDetails( details );
 				cn.setTransactionType(TransactionType.TFR);
 				cn.setTransactionReference( transactionReference );
+
 
 				creditNoteMap.put(details, cn);
 			}
@@ -370,9 +380,12 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@ResponseBody
 	@RequestMapping(value="/autoCompleteSurname", method=RequestMethod.GET)
-	public String autoCompleteSurname(String term, HttpServletRequest request, ModelMap modelMap) {
-		Collection<Customer> customers = customerService.getForAutoComplete(term);
+	public String autoCompleteSurname(String term, Boolean accountHolders, HttpServletRequest request, ModelMap modelMap) {
+
+		Collection<Customer> customers = customerService.getForAutoComplete(term, accountHolders);
+
 		StringBuffer buffer = new StringBuffer("[ ");
+
 		for(Customer c : customers) {
 			String postcode = c.getAddress().getPostcode();
 			buffer.append(" { \"label\": \"" + c.getLastName() + ", " + c.getFirstName() + " " + (postcode != null ? postcode : "") + "\", \"value\": \"" + c.getId() + "\" }");

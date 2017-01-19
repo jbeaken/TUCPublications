@@ -81,8 +81,8 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 
 
 	@Override
-	public Collection<Customer> getForAutoComplete(String startOfSurname) {
-		return customerRepository.getForAutoComplete(startOfSurname);
+	public Collection<Customer> getForAutoComplete(String startOfSurname, Boolean accountHolders) {
+		return customerRepository.getForAutoComplete(startOfSurname, accountHolders);
 	}
 
 

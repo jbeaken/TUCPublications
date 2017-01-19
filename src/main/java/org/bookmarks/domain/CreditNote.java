@@ -24,6 +24,8 @@ public class CreditNote extends AbstractEntity {
 
 	private String details;
 
+	private String status;
+
 	//For upload of sales csv
 	@Transient private MultipartFile file;
 
@@ -71,6 +73,14 @@ public class CreditNote extends AbstractEntity {
 
 	public MultipartFile getFile() {
 		return file;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public void setFile(MultipartFile file) {

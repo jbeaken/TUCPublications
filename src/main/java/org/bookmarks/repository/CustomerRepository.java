@@ -13,7 +13,7 @@ public interface CustomerRepository extends Repository<Customer>{
 
 	void debitAccount(Customer customer, BigDecimal amountChange);
 
-	Collection<Customer> getForAutoComplete(String startOfSurname);
+	Collection<Customer> getForAutoComplete(String startOfSurname, Boolean accountHolders);
 
 	void updateCreditCard(CreditCard creditCard, Customer customer);
 
