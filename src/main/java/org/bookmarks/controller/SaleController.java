@@ -372,6 +372,7 @@ public class SaleController extends AbstractBookmarksController {
 		Map<Long, Sale> saleMap =  new HashMap<Long, Sale>();
 
 		session.setAttribute("saleMap", saleMap);
+		session.removeAttribute("lastSale");
 
 		//Put into model
 		fillSaleModel(saleMap, session, modelMap, new StockItemSearchBean());
@@ -392,7 +393,7 @@ public class SaleController extends AbstractBookmarksController {
 		for(Sale s : saleMap.values()) {
 			total = total.add(s.getTotalPrice());
 		}
-		modelMap.addAttribute("totalPrice", total);
+		if (total.compareTo(BigDecimal.ZERO) != 0) modelMap.addAttribute("totalPrice", total);
 
 		Collection<StockItem> extras = stockItemService.getExtras();
 		modelMap.put("extras", extras);

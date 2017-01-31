@@ -35,13 +35,18 @@
           <div class="column w-70-percent title">
 			${sessionScope.lastSale.stockItem.title}
 	  	 </div>
-	          <div class="column w-30-percent">
-				<div class="lastSalePrice">&pound;<fmt:formatNumber pattern="#.##" value="${sessionScope.lastSale.sellPrice}"/></div>
-		  	 </div>
+	  	 	<c:if test="${sessionScope.lastSale.sellPrice != null}">
+	          	<div class="column w-30-percent">
+					<div class="lastSalePrice">&pound;<fmt:formatNumber pattern="#.##" value="${sessionScope.lastSale.sellPrice}"/></div>
+		  		</div>
+		  	</c:if>
 	  	</div>
 	     <div class="row">
+
 	          <div class="column w-70-percent">
+	          	<c:if test="${totalPrice != null}">
 					<span class="totalSalePrice">TOTAL : &pound;<fmt:formatNumber pattern="#.##" value="${totalPrice}"/></span>
+				</c:if>
 		  	</div>
 			<c:if test="${sessionScope.event != null}">
 			<div class="column w-30-percent">
