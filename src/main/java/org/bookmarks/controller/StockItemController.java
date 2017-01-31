@@ -225,6 +225,19 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 
 		String flow = (String) session.getAttribute("flow");
 
+		//Sync with website?
+		if(stockItem.getPutOnWebsite() == true) {
+			try {
+				chipsService.syncStockItemWithChips(stockItem);
+				addSuccess("Have successfully added " + stockItem.getTitle() + " and put on website", modelMap);
+			} catch (Exception e) {
+				addError("Have added stock, but not been able to put on chips: " + e.getMessage(), modelMap);
+			}
+		} else {
+			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website", modelMap);
+		}		
+
+		//Depending on flow, redirect
 		if(flow != null && flow.equals("supplierDelivery")) {
 			SupplierDeliverySearchBean supplierDeliverySearchBean = new SupplierDeliverySearchBean();
 			supplierDeliverySearchBean.getStockItem().setIsbn(stockItem.getIsbn());
@@ -237,18 +250,6 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 			stockItemSearchBean.getStockItem().setIsbn(stockItem.getIsbn());
 			session.removeAttribute("flow");
 			return customerOrderController.searchStockItems(stockItemSearchBean, request, session, modelMap);
-		}
-
-		//Sync with website?
-		if(stockItem.getPutOnWebsite() == true) {
-			try {
-				chipsService.syncStockItemWithChips(stockItem);
-				addSuccess("Have successfully added " + stockItem.getTitle() + " and put on website", modelMap);
-			} catch (Exception e) {
-				addError("Have added stock, but not been able to put on chips: " + e.getMessage(), modelMap);
-			}
-		} else {
-			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website", modelMap);
 		}
 
 		modelMap.addAttribute(stockItem);
