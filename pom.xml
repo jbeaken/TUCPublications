@@ -718,7 +718,7 @@
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.6</version>
 		</dependency>		
 >>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
 
