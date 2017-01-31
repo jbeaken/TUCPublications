@@ -39,9 +39,9 @@
         <logger name="org.hibernate.type" level="INFO" /> 
 =======
 
-        <logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
         <logger name="org.hibernate.type" level="INFO" />
 
+<<<<<<< HEAD
 >>>>>>> aa4a49e... Added spring security
         <logger name="org.hibernate" level="INFO" />
 <<<<<<< HEAD
@@ -49,6 +49,16 @@
         <logger name="org.bookmarks.controller.AuthorController" level="DEBUG" />
 =======
         <logger name="org.bookmarks" level="INFO" />
+=======
+        <if condition='property("spring.profiles.active").contains("prod")'>
+              <logger name="org.bookmarks" level="INFO" />
+        </if>
+        <if condition='property("spring.profiles.active").contains("dev")'>
+              <logger name="org.bookmarks" level="DEBUG" />
+        </if>
+
+        <logger name="org.hibernate" level="INFO" />
+>>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
         <logger name="org.bookmarks.service.AZLookupServiceImpl" level="INFO" />
         <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
 <<<<<<< HEAD
@@ -90,4 +100,3 @@
         </root>
 
 </configuration>
-

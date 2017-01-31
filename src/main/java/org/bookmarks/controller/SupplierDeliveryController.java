@@ -500,6 +500,8 @@ public class SupplierDeliveryController extends OrderLineController {
 		Enumeration<String> enumeration = request.getParameterNames();
 		while(enumeration.hasMoreElements()) {
 			String pName = enumeration.nextElement();
+			logger.debug("enumeration.hasMoreElements() : have param " + pName);
+			if(pName.equals("_csrf")) continue;
 			Long customerOrderLineId = Long.parseLong(pName);
 			String[] amountArray = request.getParameterValues(customerOrderLineId.toString());
 			Long amount = 0l;

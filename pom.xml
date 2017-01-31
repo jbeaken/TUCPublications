@@ -668,6 +668,7 @@
 			<version>1.6.2</version>
 		</dependency>
 <<<<<<< HEAD
+<<<<<<< HEAD
         -->
         
         <!-- Connect pool using org.apache.commons.dbcp.BasicDataSource -->
@@ -713,6 +714,13 @@
         </dependency>        
 =======
 =======
+=======
+		<dependency>
+			<groupId>org.codehaus.janino</groupId>
+			<artifactId>janino</artifactId>
+			<version>3.0.0</version>
+		</dependency>		
+>>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
 
 		<!-- Aspect J -->
 >>>>>>> d3fdae2... adding conf tomcat files
@@ -893,7 +901,7 @@
 		</dependency>
 
 
-		<!-- <dependency> <groupId>net.sf.opencsv</groupId> <artifactId>opencsv</artifactId> 
+		<!-- <dependency> <groupId>net.sf.opencsv</groupId> <artifactId>opencsv</artifactId>
 			<version>2.0</version> </dependency> -->
 		<dependency>
 <<<<<<< HEAD
@@ -1149,12 +1157,12 @@
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.8</version>
 				<executions>
-					<!-- <execution> <id>copy</id> <phase>package</phase> <goals> <goal>copy</goal> 
-						</goals> <configuration> <artifactItems> <artifactItem> <groupId>[ groupId 
-						]</groupId> <artifactId>[ artifactId ]</artifactId> <version>[ version ]</version> 
-						<type>[ packaging ]</type> <classifier> [classifier - optional] </classifier> 
-						<overWrite>[ true or false ]</overWrite> <outputDirectory>[ output directory 
-						]</outputDirectory> <destFileName>[ filename ]</destFileName> </artifactItem> 
+					<!-- <execution> <id>copy</id> <phase>package</phase> <goals> <goal>copy</goal>
+						</goals> <configuration> <artifactItems> <artifactItem> <groupId>[ groupId
+						]</groupId> <artifactId>[ artifactId ]</artifactId> <version>[ version ]</version>
+						<type>[ packaging ]</type> <classifier> [classifier - optional] </classifier>
+						<overWrite>[ true or false ]</overWrite> <outputDirectory>[ output directory
+						]</outputDirectory> <destFileName>[ filename ]</destFileName> </artifactItem>
 						</artifactItems> </configuration> </execution> -->
 				</executions>
 			</plugin>
