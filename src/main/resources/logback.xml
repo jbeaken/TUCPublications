@@ -27,10 +27,10 @@
                 </triggeringPolicy>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                        <FileNamePattern>/home/bookmarks/log/bookmarks.%i.log.zip</FileNamePattern>
-                        <MinIndex>1</MinIndex>
-                        <MaxIndex>10</MaxIndex>
-                </rollingPolicy>
+            <FileNamePattern>/home/bookmarks/log/bookmarks.%i.log.zip</FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>10</MaxIndex>
+        </rollingPolicy>
 
         </appender>
 <<<<<<< HEAD
@@ -39,6 +39,7 @@
         <logger name="org.hibernate.type" level="INFO" /> 
 =======
 
+<<<<<<< HEAD
         <logger name="org.hibernate.type" level="INFO" />
 
 <<<<<<< HEAD
@@ -50,12 +51,15 @@
 =======
         <logger name="org.bookmarks" level="INFO" />
 =======
+=======
+>>>>>>> a2330fa... Added debug
         <if condition='property("spring.profiles.active").contains("prod")'>
-              <logger name="org.bookmarks" level="INFO" />
+              <property name="APP_LOG_LEVEL" value="INFO"/>
         </if>
         <if condition='property("spring.profiles.active").contains("dev")'>
-              <logger name="org.bookmarks" level="DEBUG" />
+              <property name="APP_LOG_LEVEL" value="DEBUG"/>
         </if>
+<<<<<<< HEAD
 
         <logger name="org.hibernate" level="INFO" />
 >>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
@@ -84,6 +88,10 @@
 <<<<<<< HEAD
 =======
         <logger name="org.apache.http" level="INFO" />
+=======
+        
+        <logger name="org.bookmarks" level="${APP_LOG_LEVEL}" />
+>>>>>>> a2330fa... Added debug
 
 <<<<<<< HEAD
 <<<<<<< HEAD

@@ -586,6 +586,8 @@ public class SupplierDeliveryController extends OrderLineController {
 	@RequestMapping(value="/selectSupplier", method=RequestMethod.GET)
 	public String selectSupplier(ModelMap modelMap, HttpSession session) {
 
+		logger.info("Initialisation of supplier delivery");
+
 		SupplierDelivery supplierDelivery = (SupplierDelivery) session.getAttribute("supplierDelivery");
 
 		if(supplierDelivery != null) {
@@ -603,9 +605,14 @@ public class SupplierDeliveryController extends OrderLineController {
 
 	@RequestMapping(value="/cancel", method=RequestMethod.GET)
 	public String cancel(ModelMap modelMap, HttpSession session) {
+
+		logger.info("Cancelled supplier delivery");
+
 		session.removeAttribute("supplierDelivery");
 		session.removeAttribute("supplierDeliveryLinesMap");
+		
 		addSuccess("Have Cancelled Supplier Delivery", modelMap);
+
 		return "welome";
 	}
 
