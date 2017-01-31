@@ -18,22 +18,30 @@
 	}
 </script>
 
+<style type="text/css">
+	div.lastSalePrice, span.totalSalePrice  {
+		font-size: 50px;
+		color : black;
+	}
+	div.title {
+		font-size: 20px;
+	}
+</style>
+
 </head>
 
 <div class="rows">
         <div class="row">
-          <div class="column w-70-percent">
-				<strong>${sessionScope.lastSale.stockItem.title}</strong>
+          <div class="column w-70-percent title">
+			${sessionScope.lastSale.stockItem.title}
 	  	 </div>
 	          <div class="column w-30-percent">
-					<label>Last Sale Price:</label>
-					<h3><fmt:formatNumber type="currency" currencyCode="GBP" value="${sessionScope.lastSale.sellPrice}"/></h3>
+				<div class="lastSalePrice">&pound;<fmt:formatNumber pattern="#.##" value="${sessionScope.lastSale.sellPrice}"/></div>
 		  	 </div>
 	  	</div>
 	     <div class="row">
 	          <div class="column w-70-percent">
-					<label>Total Price:</label>
-					<h2><fmt:formatNumber type="currency" currencyCode="GBP" value="${totalPrice}"/></h2>
+					<span class="totalSalePrice">TOTAL : &pound;<fmt:formatNumber pattern="#.##" value="${totalPrice}"/></span>
 		  	</div>
 			<c:if test="${sessionScope.event != null}">
 			<div class="column w-30-percent">
