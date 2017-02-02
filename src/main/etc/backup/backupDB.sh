@@ -1,4 +1,5 @@
 #!/bin/bash
+. ./password
 
 DAY_OF_WEEK=$(date +"%a")
 DAY_OF_MONTH=$(date +"%d")
@@ -15,7 +16,7 @@ else
    FILENAME=$DAY_OF_WEEK
 fi
 echo $FILENAME
-/usr/bin/mysqldump  -u root -ppassword bookmarks --add-drop-database --result-file=/home/bookmarks/bm.sql
+/usr/bin/mysqldump  -u root -p$DB_PASSWORD bookmarks --add-drop-database --result-file=/home/bookmarks/bm.sql
 
 echo "...finished! Uploading to backup server.."
 
@@ -23,7 +24,7 @@ echo "...finished! Uploading to backup server.."
 gpg --encrypt --recipient info@bookmarksbookshop.co.uk --trust-model always --output /home/bookmarks/bm.$FILENAME.sql.gpg /home/bookmarks/bm.sql
 
 # Upload
-wput -nc -u /home/bookmarks/bm.$FILENAME.sql.gpg ftp://u73194415-7wandX3:EDE7%25pvy3H@s468164439.websitehome.co.uk/bookmarks/bm.$FILENAME.sql.gpg
+wput -nc -u /home/bookmarks/bm.$FILENAME.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$FILENAME.sql.gpg
 
 echo "Shredding documents..."
 #shred /home/bookmarks/bm.sql
