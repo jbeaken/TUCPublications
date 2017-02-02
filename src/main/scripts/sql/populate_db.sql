@@ -113,7 +113,7 @@ always_in_stock,
 available_at_suppliers,
 ebook_alternate_url,
 ebook_turnaround_url
-from bookmarks.stockitem si where si.put_on_website = true;
+from bookmarks.stockitem si where si.put_on_website = true and si.availability != 'OUT_OF_PRINT';
 
 -- Update Parent category
 update bmw.stock_item si, bmw.category c set si.parent_category_id = c.parent_id where c.id = si.category_id;

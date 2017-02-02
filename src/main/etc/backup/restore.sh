@@ -10,7 +10,7 @@ echo Restoring backup with timestamp $1
 . ./password
 
 #download SQL
-wget -O bm.sql.gpg ftp://u73194415-7wandX3:$PASSWORD@s468164439.websitehome.co.uk/bookmarks/bm.$1.sql.gpg
+wget -O bm.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$1.sql.gpg
 
 if [ $? -ne 0 ]
   then
