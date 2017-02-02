@@ -1,10 +1,13 @@
 ## Synopsis
 
-Code base for Bookmarks Bookshop internal system codename 'BEANS'
+Code base for Bookmarks Bookshop internal system codename 'BEANS'. 
 
 ## Installation
 
-Provide code examples and explanations of how to get the project.
+A pom.xml is provided
+
+run :
+mvn clean prod war
 
 
 ## Contributors
