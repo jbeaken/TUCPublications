@@ -151,7 +151,7 @@ public class CustomerController extends AbstractBookmarksController {
 		if(cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched")) {
 				addError("Cannot match this row", modelMap);
 				return "confirmUploadAccounts";
-		}		
+		}
 
 		cn.setCustomer( customer );
 		cn.setStatus( "Potential Match" );
@@ -258,7 +258,7 @@ public class CustomerController extends AbstractBookmarksController {
 			CreditNote matchedCreditNote = accountRepository.getCreditNote( transactionDescription );
 			if(matchedCreditNote != null) {
 				creditNote.setStatus("Already Processed");
-			}			
+			}
 
 			// System.out.println( "**********************" );
 			// System.out.println( transactionDate );

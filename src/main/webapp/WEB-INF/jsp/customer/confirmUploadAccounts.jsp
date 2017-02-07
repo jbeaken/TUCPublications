@@ -22,10 +22,10 @@
 		$('#customerAutoComplete').focus();
 	});
 
-	function match(details) {
+	function match( transactionDescription ) {
 		 var customerId = $('#customerId').val();
-			alert( customerId + " " + details);
-      window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&details=" + encodeURI(details);
+			alert( customerId + " " + transactionDescription);
+      window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 </script>
 <h1>Upload bank credits from TSB</h1>
@@ -51,11 +51,11 @@
                     <display:column property="date" title="Date" />
 										<display:column property="status" title="Status" />
                     <display:column property="amount" title="Amount" />
-                    <display:column property="details" title="Match"/>
+                    <display:column property="transactionDescription" title="Match"/>
 										<display:column property="transactionReference" title="Reference"/>
                     <display:column property="customer.fullName" title="Customer"/>
                     <display:column>
-                          <button onclick="javascript:match('${searchTable.details}')" class="btn btn-danger">Match</button>
+                          <button onclick="javascript:match('${searchTable.transactionDescription}')" class="btn btn-danger">Match</button>
                    </display:column>
           </display:table>
 

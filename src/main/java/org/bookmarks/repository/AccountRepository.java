@@ -32,7 +32,7 @@ public class AccountRepository {
 	public CreditNote getCreditNote(String transactionDescription) {
 		Query query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select cn from CreditNote cn a where transactionDescription = :transactionDescription")
+				.createQuery("select cn from CreditNote cn where transactionDescription = :transactionDescription")
 				.setParameter("transactionDescription", transactionDescription);
 
 				return (CreditNote) query.uniqueResult();
