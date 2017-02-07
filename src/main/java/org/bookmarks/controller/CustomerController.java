@@ -116,7 +116,7 @@ public class CustomerController extends AbstractBookmarksController {
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
 	public String saveAccountsFromTSB(ModelMap modelMap, HttpSession session) throws IOException {
 
-		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>)session.getAttribute("creditNoteMap");
+		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
 			if(creditNote.getCustomer() == null) {
