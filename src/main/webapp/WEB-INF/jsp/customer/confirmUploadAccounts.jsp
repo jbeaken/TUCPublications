@@ -23,9 +23,9 @@
 	});
 
 	function match( transactionDescription ) {
-		 var customerId = $('#customerId').val();
-			alert( customerId + " " + transactionDescription);
-      window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+		var customerId = $('#customerId').val();
+		//alert( customerId + " " + transactionDescription);
+      	window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 </script>
 <h1>Upload bank credits from TSB</h1>
@@ -38,11 +38,11 @@
     				</div>
       </div>
 
-         <display:table name="sessionScope.creditNoteMap"
+         <display:table name="creditNoteList"
             requestURI="search"
             decorator="org.bookmarks.ui.SearchCustomersDecorator"
             export="true"
-            size="${sessionScope.creditNoteList.size()}"
+            size="${creditNoteList.size()}"
             id="searchTable">
                     <display:setProperty name="export.pdf" value="true" />
                     <display:setProperty name="export.xml" value="false" />
@@ -51,7 +51,7 @@
                     <display:column property="date" title="Date" />
 										<display:column property="status" title="Status" />
                     <display:column property="amount" title="Amount" />
-                    <display:column property="transactionDescription" title="Match"/>
+                    <display:column property="transactionDescription" title="Description"/>
 										<display:column property="transactionReference" title="Reference"/>
                     <display:column property="customer.fullName" title="Customer"/>
                     <display:column>
