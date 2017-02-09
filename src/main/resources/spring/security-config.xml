@@ -20,10 +20,10 @@
 		<beans:beans profile="dev">
 
 	    <http use-expressions="true" disable-url-rewriting="true">
+				<!--
 					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
 
 					<remember-me key="bookmarksBigGles"/>
-				<!--
 					<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
 				-->
 

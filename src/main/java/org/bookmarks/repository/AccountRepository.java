@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class AccountRepository {
 
     private SessionFactory sessionFactory;
+    
+    @Autowired
+    private CreditNoteRepository creditNoteRepository;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -22,18 +25,24 @@ public class AccountRepository {
     }
 
 
-	public void saveCreditNote(CreditNote creditNote) {
-		// Query query = sessionFactory
-		// 		.getCurrentSession()
-		// 		.createQuery("select a from Author a where name = :name")
-		// 		.setParameter("name", name);
+	public void processCreditNote(CreditNote creditNote) {
+		//Update customer to match
+		 Query query = sessionFactory
+		 		.getCurrentSession()
+		 		.createQuery("update Customer c set c.bookmarksAccount.tsbMatch = :tsbMatch where c.id = :id")
+		 		.setParameter("tsbMatch", creditNote.getTransactionDescription())
+		 		.setParameter("id", creditNote.getCustomer().getId());
+		 query.executeUpdate();
+		 
+		 //Now credit creditNote
+		 creditNoteRepository.save( creditNote );
 	}
 
-	public CreditNote getCreditNote(String transactionDescription) {
+	public CreditNote getCreditNote(String transactionReference) {
 		Query query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select cn from CreditNote cn where transactionDescription = :transactionDescription")
-				.setParameter("transactionDescription", transactionDescription);
+				.createQuery("select cn from CreditNote cn where transactionReference = :transactionReference")
+				.setParameter("transactionReference", transactionReference);
 
 				return (CreditNote) query.uniqueResult();
 	}
