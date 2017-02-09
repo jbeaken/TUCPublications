@@ -148,11 +148,11 @@ public class CustomerController extends AbstractBookmarksController {
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
-		
+
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
-		
+
 		Customer customer = customerService.get(customerId);
-		
+
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
@@ -165,7 +165,7 @@ public class CustomerController extends AbstractBookmarksController {
 		cn.setStatus("Potential Match");
 
 		addSuccess("Matched!", modelMap);
-		
+
 		populateCreditNoteModel(creditNoteMap, modelMap);
 
 		return "confirmUploadAccounts";
@@ -191,6 +191,9 @@ public class CustomerController extends AbstractBookmarksController {
 		Long fileSize = file.getSize();
 
 		float total = 0;
+		int count = 0;
+		String message = "Successfully uploaded bank text file from TSB!";
+		boolean allMatched = true;
 
 		logger.info("Uploading customer accounts ");
 
@@ -233,9 +236,9 @@ public class CustomerController extends AbstractBookmarksController {
 				transactionDescription = transactionDescription.replace("\"", "");
 				amount = record.get(7);
 			}
-			
+
 			// Sort out ampersand in transactionDescription
-			transactionDescription = transactionDescription.replace("&",  "");
+			transactionDescription = transactionDescription.replace("&", "");
 
 			String tsbMatch = transactionDescription;
 
@@ -249,7 +252,7 @@ public class CustomerController extends AbstractBookmarksController {
 				Matcher m = r.matcher(transactionDescription);
 				if (m.find()) {
 					transactionReference = m.group(0);
-					System.out.println("transactionReference : " + transactionReference);
+					logger.debug("transactionReference : " + transactionReference);
 
 				} else {
 					addError("Could not find transaction reference in " + transactionDescription, modelMap);
@@ -266,6 +269,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 			if (matchedCustomer == null) {
 				cn.setStatus("Unmatched");
+				allMatched = false;
 			} else {
 				cn.setStatus("Matched");
 				cn.setCustomer(matchedCustomer);
@@ -285,16 +289,18 @@ public class CustomerController extends AbstractBookmarksController {
 				cn.setStatus("Already Processed");
 			}
 
-			// System.out.println( "**********************" );
-			// System.out.println( transactionDate );
-			// System.out.println( transactionType );
-			// System.out.println( sortCode );
-			// System.out.println( accountNumber );
+			if (logger.isDebugEnabled()) {
+				logger.debug("**********************");
+				logger.debug("" + transactionDate);
+				logger.debug(transactionType);
+				logger.debug(sortCode);
+				logger.debug(accountNumber);
 
-			// System.out.println( tsbMatch );
-			// System.out.println( amount );
+				logger.debug(tsbMatch);
+				logger.debug(amount);
+			}
+
 			transactionDescription = tsbMatch;
-			// Get customer
 
 			cn.setDate(transactionDate);
 			cn.setAmount(new BigDecimal(amount));
@@ -303,19 +309,32 @@ public class CustomerController extends AbstractBookmarksController {
 			cn.setTransactionReference(transactionReference);
 
 			creditNoteMap.put(transactionDescription, cn);
+
+			total += cn.getAmount().floatValue();
+			count++;
 		}
 
 		session.setAttribute("creditNoteMap", creditNoteMap);
-		populateCreditNoteModel(creditNoteMap, modelMap);
 
-		addSuccess("Have found sales of value Press confirm to save", modelMap);
+		populateCreditNoteModel(creditNoteMap, modelMap);
+		
+		if(allMatched == true){
+			message += ". All matched!";
+		}
+
+		if (count == 150) {
+			addWarning("Upload from bank text file successful! Have got " + count
+					+ " lines. There may be more lines!! Check paper statements", modelMap);
+		} else {
+			addSuccess("Upload from bank text file successful! Have got " + count + " lines.", modelMap);
+		}
 
 		return "confirmUploadAccounts";
 	}
 
 	private void populateCreditNoteModel(Map<String, CreditNote> creditNoteMap, ModelMap modelMap) {
 		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream()
-				.sorted((p1, p2) -> p1.getStatus().compareTo(p2.getStatus())).collect(Collectors.toList()));
+				.sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
 
 	}
 
