@@ -472,6 +472,34 @@
       <put-attribute name="title" value="View Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/view.jsp"/>
   </definition>
+  
+ <!-- CREDIT NOTE -->
+
+  <definition name="editCreditNote" extends="baseLayout">
+      <put-attribute name="title" value="Edit CreditNote"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/creditNote/edit.jsp"/>
+  </definition>
+
+  <definition name="addCreditNote" extends="baseLayout">
+      <put-attribute name="title" value="Add CreditNote"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/creditNote/add.jsp"/>
+  </definition>
+
+  <definition name="searchCreditNotes" extends="baseLayout">
+      <put-attribute name="title" value="Search CreditNotes"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/creditNote/search.jsp"/>
+  </definition>
+
+  <definition name="moveAndDelete" extends="baseLayout">
+      <put-attribute name="title" value="View CreditNote"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/creditNote/moveAndDelete.jsp"/>
+  </definition>
+
+
+  <definition name="viewCreditNote" extends="baseLayout">
+      <put-attribute name="title" value="View CreditNote"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/creditNote/view.jsp"/>
+  </definition>  
 
 
   <!-- Supplier Delivery -->

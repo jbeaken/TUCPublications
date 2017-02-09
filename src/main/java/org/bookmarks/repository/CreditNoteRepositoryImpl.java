@@ -41,6 +41,19 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
+	
+	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
+    	return new StringBuffer("select cn from CreditNote as cn");
+    }
+
+	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
+		return new StringBuffer("select count(cn) from CreditNote as cn");
+	}
+	
+	protected String getDefaultSortColumn() {
+		return "cn.date";
+	}		
+	
 
 	@Override
 	public Collection<CreditNote> getCreditNotes(
