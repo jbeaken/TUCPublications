@@ -1,5 +1,6 @@
 package org.bookmarks.controller;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,94 +33,6 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	
 	private Logger logger = LoggerFactory.getLogger(CreditNoteController.class);
 	
-//	@ResponseBody
-//	@RequestMapping(value="/addCreditNote", method=RequestMethod.GET)
-//	public String addCreditNote(String name, HttpSession session) {
-//		logger.debug("Adding " + name + " to stock item as new creditNote");
-//		
-//		StockItem stockItem = (StockItem) session.getAttribute("sessionStockItem");
-//		
-//		if(stockItem == null) {
-//			//Session timeout
-//			return "failure"; 
-//		}
-//		 
-//		CreditNote exists = creditNoteService.findByName(name);
-//		if(exists != null) {
-//			logger.debug("CreditNote already exists");
-//			return "CreditNote already exists";
-//		}
-//		
-//		CreditNote creditNote = new CreditNote();
-//		creditNote.setName(name);
-////		creditNoteService.save(creditNote);
-//		
-//		stockItem.getCreditNotes().add(creditNote);
-//		logger.debug("Have added creditNote " + creditNote.getName() + " to " + stockItem.getTitle());
-//		
-//		return getCreditNoteTable(stockItem);
-//	}		
-	
-//	@ResponseBody
-//	@RequestMapping(value="/removeCreditNote", method=RequestMethod.GET)
-//	public String removeCreditNote(String name, HttpSession session, ModelMap modelMap) {
-//
-//		StockItem stockItem = (StockItem) session.getAttribute("sessionStockItem");
-//		
-//		if(stockItem == null) {
-//			//Session timeout
-//			return "failure";  
-//		}
-//		
-//		CreditNote toRemove = null;
-//		for(CreditNote a : stockItem.getCreditNotes()) {
-//			if(a.getName().equals(name)) {
-//				toRemove = a;
-//			}
-//		}
-//		stockItem.getCreditNotes().remove(toRemove);
-//		
-//		return getCreditNoteTable(stockItem);
-//	}	
-	
-//	@ResponseBody
-//    @RequestMapping(value="/addCreditNoteToStock", method=RequestMethod.GET)
-//	public String addCreditNoteToStock(Long creditNoteId, HttpSession session) {
-//		StockItem stockItem = (StockItem) session.getAttribute("sessionStockItem");
-//		if(stockItem == null) {
-//			//Session timeout
-//			return "failure";
-//		}
-//		
-//		CreditNote creditNote = creditNoteService.get(creditNoteId);
-//		stockItem.getCreditNotes().add(creditNote);
-//
-//		return getCreditNoteTable(stockItem);
-//	}
-	
-//	@ResponseBody
-//    @RequestMapping(value="/loadCreditNoteTable", method=RequestMethod.GET)
-//	public String loadCreditNoteTable(HttpSession session) {
-//		StockItem stockItem = (StockItem) session.getAttribute("sessionStockItem");
-//		if(stockItem == null) {
-//			//Session timeout
-//			return "failure";
-//		}
-//		
-//		return getCreditNoteTable(stockItem);
-//	}	
-	
-//	private String getCreditNoteTable(StockItem stockItem) {
-//		String table = "<table><th>CreditNote</th><th>Actions</th>";
-//		for(CreditNote a : stockItem.getCreditNotes()) {
-//			table = table + "<tr><td>" + a.getTransactionDescription() + "</td><td><a onclick=\"javascript:removeCreditNote('" + a.getTransactionDescription() + "')\"> Delete</a></td></tr>";
-//		}
-//		table = table + "</table>";  
-//		
-//		logger.debug(table);
-//		
-//		return table;
-//	}
 
 	@RequestMapping(value="/search")
 	public String search(CreditNoteSearchBean creditNoteSearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -131,6 +44,12 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		}
 
 		Collection<CreditNote> creditNoteList = creditNoteService.search(creditNoteSearchBean);
+		
+		//Now reconcile
+		BigDecimal clubAccountOutgoings = creditNoteService.getOutgoings();
+		BigDecimal clubAccountIncomings = creditNoteService.getIncomings();
+		
+		BigDecimal clubAccountBalance = clubAccountOutgoings.add(clubAccountIncomings);
 
 		//Don't like, fix for shitty export
 		setPageSize(creditNoteSearchBean, modelMap, creditNoteList.size());
@@ -139,13 +58,15 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
 
 		modelMap.addAttribute("creditNoteList", creditNoteList);
+		modelMap.addAttribute("clubAccountOutgoings", clubAccountOutgoings);
+		modelMap.addAttribute("clubAccountIncomings", clubAccountIncomings);
+		modelMap.addAttribute("clubAccountBalance", clubAccountBalance);
 		modelMap.addAttribute("searchResultCount", creditNoteSearchBean.getSearchResultCount());
 		
 		return "searchCreditNotes";
 	}
 
 	
-
 	@RequestMapping(value="/displaySearch", method=RequestMethod.GET)
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();

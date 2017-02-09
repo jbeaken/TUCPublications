@@ -25,6 +25,8 @@ public class CreditNote extends AbstractEntity {
 	private String transactionDescription;
 
 	@Transient private String status;
+	
+	@Transient private boolean isClubAccount;
 
 	//For upload of sales csv
 	@Transient private MultipartFile file;
@@ -109,5 +111,13 @@ public class CreditNote extends AbstractEntity {
 
 	public Date getDate() {
 		return date;
+	}
+
+	public boolean isClubAccount() {
+		return isClubAccount;
+	}
+
+	public void setClubAccount(boolean isClubAccount) {
+		this.isClubAccount = isClubAccount;
 	}
 }

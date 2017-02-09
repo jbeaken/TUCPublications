@@ -12,7 +12,12 @@ import org.bookmarks.domain.CustomerOrder;
 
 public interface CreditNoteRepository extends Repository<CreditNote>{
 
+
 	Collection<CreditNote> getCreditNotes(CustomerReportBean customerReportBean);
+
+	BigDecimal getOutgoings();
+
+	BigDecimal getIncomings();
 
 	
 }

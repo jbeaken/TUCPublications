@@ -10,5 +10,9 @@ import org.bookmarks.domain.CustomerOrder;
 
 public interface CreditNoteService extends Service<CreditNote>{
 
+	BigDecimal getOutgoings();
+
+	BigDecimal getIncomings();
+
 
 }

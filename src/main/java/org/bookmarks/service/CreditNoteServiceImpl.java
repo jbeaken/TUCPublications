@@ -27,4 +27,16 @@ public class CreditNoteServiceImpl extends AbstractService<CreditNote> implement
 		return creditNoteRepository;
 	}
 
+
+	@Override
+	public BigDecimal getOutgoings() {
+		return creditNoteRepository.getOutgoings();
+	}
+
+
+	@Override
+	public BigDecimal getIncomings() {
+		return creditNoteRepository.getIncomings();
+	}
+
 }

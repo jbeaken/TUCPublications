@@ -66,4 +66,18 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 		query.setParameter("endDate", customerReportBean.getEndDate());
 		return query.list();
 	}
+
+	@Override
+	public BigDecimal getOutgoings() {
+		Query query = sessionFactory.getCurrentSession().createQuery("select sum(amount) from CreditNote cn " +
+				"where cn.customer.id = 31245");
+		return (BigDecimal) query.uniqueResult();
+	}
+
+	@Override
+	public BigDecimal getIncomings() {
+		Query query = sessionFactory.getCurrentSession().createQuery("select sum(amount) from CreditNote cn " +
+				"where cn.customer.id != 31245");
+		return (BigDecimal) query.uniqueResult();
+	}
 }

@@ -119,15 +119,19 @@ public class CustomerController extends AbstractBookmarksController {
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
-			if(creditNote.getCustomer() == null) {
-
-				addError("Please match customer " + creditNote.getTransactionDescription(), modelMap);
-
-				return "confirmUploadAccounts";
-			}
+//			if(creditNote.getCustomer() == null) {
+//
+//				addError("Please match customer " + creditNote.getTransactionDescription(), modelMap);
+//
+//				return "confirmUploadAccounts";
+//			}
 		}
 
 		for(CreditNote creditNote : creditNoteMap.values()) {
+			
+			if(creditNote.getStatus().equals("Unmatched")) {
+				continue;
+			}			
 
 			if(creditNote.getStatus().equals("Already Processed")) {
 				continue;
@@ -212,7 +216,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 			//Exception for transfers from club account to main bank account
 			if(transactionDescription.startsWith( "I S BOOKS LTD" ) || transactionDescription.startsWith( "TO 30932900089719" )) {
-				continue;
+				cn.setClubAccount(true);
 			}
 
 			//Sort out double quotes in transactionDescription
@@ -224,8 +228,8 @@ public class CustomerController extends AbstractBookmarksController {
 
 			String tsbMatch = transactionDescription;
 
-			//Find transcation reference (SO do not have one)
-			if(!transactionType.equals( "SO" )) {
+			//Find transcation reference (SO and club account do not have one)
+			if(!transactionType.equals( "SO" ) && cn.isClubAccount() == false) {
 				String pattern = "[A-Z0-9]{16}";
 
 				// Create a Pattern object
@@ -237,7 +241,7 @@ public class CustomerController extends AbstractBookmarksController {
 						System.out.println("transactionReference : " + transactionReference );
 
 				 } else {
-						addError("Could not find transcation reference in " + transactionDescription, modelMap);
+						addError("Could not find transaction reference in " + transactionDescription, modelMap);
 						return "confirmUploadAccounts";
 				 }
 
@@ -254,6 +258,14 @@ public class CustomerController extends AbstractBookmarksController {
 				cn.setStatus( "Matched" );
 				cn.setCustomer(matchedCustomer);
 			}
+			
+			if(cn.isClubAccount()) {
+				cn.setStatus("Club Account");
+				amount = "-" + record.get(5);
+				transactionReference = record.get(0) + amount;
+				Customer clubAccountCustomer = customerService.get( 31245l );
+				cn.setCustomer(clubAccountCustomer);
+			}
 
 			//Check that this transaction hasn't already been processed
 			CreditNote matchedCreditNote = accountRepository.getCreditNote( transactionReference );
@@ -269,7 +281,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 
 
-				System.out.println( tsbMatch );
+//				System.out.println( tsbMatch );
 				// System.out.println( amount );
 				transactionDescription = tsbMatch;
 				//Get customer
