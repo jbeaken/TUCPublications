@@ -22,10 +22,14 @@
 		$('#customerAutoComplete').focus();
 	});
 
-	function match( priority, transactionDescription ) {
+	function match( transactionDescription ) {
 		var customerId = $('#customerId').val();
+		if(customerId == "") {
+			alert("Please select customer first")
+			return
+		}
 		//alert( customerId + " " + transactionDescription);
-		window.location.href = "/bookmarks/customer/match?priority=" + priority + "&customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+		window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 
 </script>
@@ -62,10 +66,9 @@
               </button>
                <ul class="dropdown-menu" role="menu">
                 <li>                    
-                  <a onclick="javascript:match(1, '${searchTable.transactionDescription}')">Primary Match</a>
+                  <a onclick="javascript:match('${searchTable.transactionDescription}')">Match</a>
                 </li>
                 <li>                    
-                  <a onclick="javascript:match(2, '${searchTable.transactionDescription}')">Secondary Match</a>
                 </li>                                  
                </ul>
 

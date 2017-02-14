@@ -28,7 +28,7 @@ public class AccountRepository {
 	public void processCreditNote(CreditNote creditNote) {
 		Query query = null;
 		
-		if(creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
+		if(creditNote.getStatus().equals("Primary Matched") || creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
 			 query = sessionFactory
 		 		.getCurrentSession()
 		 		.createQuery("update Customer c set c.bookmarksAccount.tsbMatch = :tsbMatch where c.id = :id")
@@ -36,7 +36,7 @@ public class AccountRepository {
 		 		.setParameter("id", creditNote.getCustomer().getId());
 		 }
 
-		if(creditNote.getStatus().equals("Potential Secondary Match")) {
+		if(creditNote.getStatus().equals("Secondary Matched") || creditNote.getStatus().equals("Potential Secondary Match")) {
 			 query = sessionFactory
 		 		.getCurrentSession()
 		 		.createQuery("update Customer c set c.bookmarksAccount.tsbMatchSecondary = :tsbMatch where c.id = :id")

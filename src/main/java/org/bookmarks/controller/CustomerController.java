@@ -145,24 +145,24 @@ public class CustomerController extends AbstractBookmarksController {
 		return "confirmUploadAccounts";
 	}
 
-@RequestMapping(value = "/matchSecondary", method = RequestMethod.GET)
-	public String matchSecondary(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
+	@RequestMapping(value = "/selectMatch", method = RequestMethod.GET)
+	public String selectMatch(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
 
-		logger.debug("Finding secondary match for " + customerId + " transactionDescription : " + transactionDescription);
+		logger.debug("Have selected " + priority + " match for " + customerId + " transactionDescription : " + transactionDescription);
 
 		Customer customer = customerService.get(customerId);
 
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
-		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
-			addError("Cannot match this row", modelMap);
-			return "confirmUploadAccounts";
-		}
-
 		cn.setCustomer(customer);
-		cn.setStatus("Potential Secondary Match");
+		
+		if(priority == 1) {
+			cn.setStatus("Potential Primary Match");
+		} else if(priority == 2) {
+			cn.setStatus("Potential Secondary Match");
+		}
 
 		addSuccess("Secondary Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
 
@@ -174,29 +174,35 @@ public class CustomerController extends AbstractBookmarksController {
 	
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
-	public String match(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
+	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
 
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
+		
+		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
+		CreditNote cn = creditNoteMap.get(transactionDescription);		
 
 		Customer customer = customerService.get(customerId);
-
-		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
-		CreditNote cn = creditNoteMap.get(transactionDescription);
-
+		
 		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
-			addError("Cannot match this row", modelMap);
+			addError("Cannot match this row as has status " + cn.getStatus(), modelMap);
 			return "confirmUploadAccounts";
-		}
+		}		
+		
+		//Check if customer is already matched
+		if( customer.getBookmarksAccount().getTsbMatch() != null ) {
+			logger.debug("Customer already has primary match");
+			addInfo("This customer already has a primary match. Either overwrite or select as a secondary match", modelMap);
+			modelMap.addAttribute("customer", customer);
+			modelMap.addAttribute("transactionDescription", transactionDescription);
+			return "selectMatch";
+		}		
 
+		//Primary match
 		cn.setCustomer(customer);
-		if(priority == 1) {
-			cn.setStatus("Potential Primary Match");
-		} else if(priority == 2) {
-			cn.setStatus("Potential Secondary Match");
-		}
+		cn.setStatus("Potential Primary Match");
 
-		addSuccess("Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
+		addSuccess("Primary match for " + customer.getFullName() + " to " + transactionDescription, modelMap);
 
 		populateCreditNoteModel(creditNoteMap, modelMap);
 
@@ -267,11 +273,12 @@ public class CustomerController extends AbstractBookmarksController {
 				transactionDescription = record.get(4) + record.get(5);
 				transactionDescription = transactionDescription.replace("\"", "");
 				amount = record.get(7);
-			}
+			} 
 
 			// Sort out ampersand and single quote in transactionDescription
 			transactionDescription = transactionDescription.replace("&", "");
 			transactionDescription = transactionDescription.replace("'", "");
+			transactionDescription = transactionDescription.trim();
 
 			String tsbMatch = transactionDescription;
 
@@ -294,7 +301,7 @@ public class CustomerController extends AbstractBookmarksController {
 				}
 
 				int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
-				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference);
+				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();
 			}
 			
 
@@ -327,16 +334,10 @@ public class CustomerController extends AbstractBookmarksController {
 				cn.setCustomer(clubAccountCustomer);
 			}
 
+			// Check that this transaction hasn't already been processed
+			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
 			
-			
-			if( !cn.getStatus().contains("Unmatched") ) {
-				
-				// Check that this transaction hasn't already been processed
-				CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
-				
-				if(matchedCreditNote != null) cn.setStatus("Already Processed");
-			}
-
+			if(matchedCreditNote != null) cn.setStatus("Already Processed");
 			
 
 			if (logger.isDebugEnabled()) {
