@@ -156,7 +156,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
-		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched") || cn.getStatus().equals("Secondary Matched")) {
+		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
 			addError("Cannot match this row", modelMap);
 			return "confirmUploadAccounts";
 		}
@@ -174,7 +174,7 @@ public class CustomerController extends AbstractBookmarksController {
 	
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
-	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
+	public String match(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
 
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
@@ -184,13 +184,17 @@ public class CustomerController extends AbstractBookmarksController {
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
-		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched") || cn.getStatus().equals("Secondary Matched")) {
+		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
 			addError("Cannot match this row", modelMap);
 			return "confirmUploadAccounts";
 		}
 
 		cn.setCustomer(customer);
-		cn.setStatus("Potential Match");
+		if(priority == 1) {
+			cn.setStatus("Potential Primary Match");
+		} else if(priority == 2) {
+			cn.setStatus("Potential Secondary Match");
+		}
 
 		addSuccess("Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
 
@@ -271,7 +275,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 			String tsbMatch = transactionDescription;
 
-			// Find transcation reference (SO and club account do not have one)
+			// Find transaction reference (SO and club account do not have one)
 			if (!transactionType.equals("SO") && cn.isClubAccount() == false) {
 				String pattern = "[A-Z0-9]{16}";
 
@@ -292,6 +296,7 @@ public class CustomerController extends AbstractBookmarksController {
 				int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
 				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference);
 			}
+			
 
 			// Find customer match if possible
 			Customer matchedCustomer = customerService.findMatchedCustomer(tsbMatch);
@@ -306,23 +311,33 @@ public class CustomerController extends AbstractBookmarksController {
 					cn.setCustomer(matchedCustomer);
 				}
 			} else {
-				cn.setStatus("Matched");
+				cn.setStatus("Primary Matched");
 				cn.setCustomer(matchedCustomer);
 			}
 
+			if (transactionType.equals("SO") ) {
+				transactionReference = record.get(0) + "-SO-" + transactionDescription;
+			}
+			
 			if (cn.isClubAccount()) {
 				cn.setStatus("Club Account");
 				amount = "-" + record.get(5);
-				transactionReference = record.get(0) + amount;
+				transactionReference = record.get(0) + "-CLUB-" + amount;
 				Customer clubAccountCustomer = customerService.get(31245l);
 				cn.setCustomer(clubAccountCustomer);
 			}
 
-			// Check that this transaction hasn't already been processed
-			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
-			if (matchedCreditNote != null) {
-				cn.setStatus("Already Processed");
+			
+			
+			if( !cn.getStatus().contains("Unmatched") ) {
+				
+				// Check that this transaction hasn't already been processed
+				CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
+				
+				if(matchedCreditNote != null) cn.setStatus("Already Processed");
 			}
+
+			
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");

@@ -22,17 +22,12 @@
 		$('#customerAutoComplete').focus();
 	});
 
-	function match( transactionDescription ) {
+	function match( priority, transactionDescription ) {
 		var customerId = $('#customerId').val();
 		//alert( customerId + " " + transactionDescription);
-      	window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+		window.location.href = "/bookmarks/customer/match?priority=" + priority + "&customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 
-  function matchSecondary( transactionDescription ) {
-    var customerId = $('#customerId').val();
-    //alert( customerId + " " + transactionDescription);
-        window.location.href = "/bookmarks/customer/matchSecondary?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
-  }  
 </script>
 <h1>Upload bank credits from TSB</h1>
 <input type="hidden" id="customerId"/>
@@ -67,10 +62,10 @@
               </button>
                <ul class="dropdown-menu" role="menu">
                 <li>                    
-                  <a onclick="javascript:match('${searchTable.transactionDescription}')">Match</a>
+                  <a onclick="javascript:match(1, '${searchTable.transactionDescription}')">Primary Match</a>
                 </li>
                 <li>                    
-                  <a onclick="javascript:matchSecondary('${searchTable.transactionDescription}')">Match</a>
+                  <a onclick="javascript:match(2, '${searchTable.transactionDescription}')">Secondary Match</a>
                 </li>                                  
                </ul>
 

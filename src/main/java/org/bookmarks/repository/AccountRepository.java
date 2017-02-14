@@ -28,7 +28,7 @@ public class AccountRepository {
 	public void processCreditNote(CreditNote creditNote) {
 		Query query = null;
 		
-		if(creditNote.getStatus().equals("Potential Match")) {
+		if(creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
 			 query = sessionFactory
 		 		.getCurrentSession()
 		 		.createQuery("update Customer c set c.bookmarksAccount.tsbMatch = :tsbMatch where c.id = :id")
@@ -57,6 +57,17 @@ public class AccountRepository {
 				.getCurrentSession()
 				.createQuery("select cn from CreditNote cn where transactionReference = :transactionReference")
 				.setParameter("transactionReference", transactionReference);
+
+				return (CreditNote) query.uniqueResult();
+	}
+
+
+	public CreditNote getSOCreditNote(CreditNote cn) {
+		Query query = sessionFactory
+				.getCurrentSession()
+				.createQuery("select cn from CreditNote cn where c = :customer and cn.date = :date")
+				.setParameter("customer", cn.getCustomer())
+				.setParameter("date", cn.getDate());
 
 				return (CreditNote) query.uniqueResult();
 	}
