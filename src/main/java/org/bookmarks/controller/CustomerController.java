@@ -145,6 +145,34 @@ public class CustomerController extends AbstractBookmarksController {
 		return "confirmUploadAccounts";
 	}
 
+@RequestMapping(value = "/matchSecondary", method = RequestMethod.GET)
+	public String matchSecondary(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
+			throws IOException {
+
+		logger.debug("Finding secondary match for " + customerId + " transactionDescription : " + transactionDescription);
+
+		Customer customer = customerService.get(customerId);
+
+		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
+		CreditNote cn = creditNoteMap.get(transactionDescription);
+
+		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched") || cn.getStatus().equals("Secondary Matched")) {
+			addError("Cannot match this row", modelMap);
+			return "confirmUploadAccounts";
+		}
+
+		cn.setCustomer(customer);
+		cn.setStatus("Potential Secondary Match");
+
+		addSuccess("Secondary Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
+
+		populateCreditNoteModel(creditNoteMap, modelMap);
+
+		return "confirmUploadAccounts";
+	}	
+
+	
+
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
@@ -156,7 +184,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
-		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched")) {
+		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Matched") || cn.getStatus().equals("Secondary Matched")) {
 			addError("Cannot match this row", modelMap);
 			return "confirmUploadAccounts";
 		}
@@ -164,7 +192,7 @@ public class CustomerController extends AbstractBookmarksController {
 		cn.setCustomer(customer);
 		cn.setStatus("Potential Match");
 
-		addSuccess("Matched!", modelMap);
+		addSuccess("Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
 
 		populateCreditNoteModel(creditNoteMap, modelMap);
 
@@ -269,8 +297,14 @@ public class CustomerController extends AbstractBookmarksController {
 			Customer matchedCustomer = customerService.findMatchedCustomer(tsbMatch);
 
 			if (matchedCustomer == null) {
-				cn.setStatus("Unmatched");
-				allMatched = false;
+				matchedCustomer = customerService.findSecondaryMatchedCustomer(tsbMatch);
+				if (matchedCustomer == null) {
+					cn.setStatus("Unmatched");
+					allMatched = false;
+				} else {
+					cn.setStatus("Secondary Matched");
+					cn.setCustomer(matchedCustomer);
+				}
 			} else {
 				cn.setStatus("Matched");
 				cn.setCustomer(matchedCustomer);

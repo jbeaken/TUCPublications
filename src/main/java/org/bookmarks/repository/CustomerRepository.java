@@ -26,4 +26,6 @@ public interface CustomerRepository extends Repository<Customer>{
 	void merge(Customer customerToKeep, Customer customerToDiscard);
 
 	Customer findMatchedCustomer(String match);
+
+	Customer findSecondaryMatchedCustomer(String match);
 }

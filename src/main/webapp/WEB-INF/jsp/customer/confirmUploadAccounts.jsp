@@ -27,6 +27,12 @@
 		//alert( customerId + " " + transactionDescription);
       	window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
+
+  function matchSecondary( transactionDescription ) {
+    var customerId = $('#customerId').val();
+    //alert( customerId + " " + transactionDescription);
+        window.location.href = "/bookmarks/customer/matchSecondary?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+  }  
 </script>
 <h1>Upload bank credits from TSB</h1>
 <input type="hidden" id="customerId"/>
@@ -55,7 +61,19 @@
 										<display:column property="transactionReference" title="Reference"/>
                     <display:column property="customer.fullName" title="Customer"/>
                     <display:column>
-                          <button onclick="javascript:match('${searchTable.transactionDescription}')" class="btn btn-danger">Match</button>
+<div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Action <span class="caret"></span>
+              </button>
+               <ul class="dropdown-menu" role="menu">
+                <li>                    
+                  <a onclick="javascript:match('${searchTable.transactionDescription}')">Match</a>
+                </li>
+                <li>                    
+                  <a onclick="javascript:matchSecondary('${searchTable.transactionDescription}')">Match</a>
+                </li>                                  
+               </ul>
+
                    </display:column>
           </display:table>
 

@@ -20,6 +20,8 @@ public class BookmarksAccount implements Serializable{
 
 	private String tsbMatch;
 
+	private String tsbMatchSecondary;
+
 	private Boolean paysInMonthly = false;
 
 	private String comment;
@@ -33,6 +35,15 @@ public class BookmarksAccount implements Serializable{
 	public void setTsbMatch(String tsbMatch) {
 		this.tsbMatch = tsbMatch;
 	}
+
+
+	public String getTsbMatchSecondary() {
+		return tsbMatchSecondary;
+	}
+
+	public void setTsbMatchSecondary(String tsbMatchSecondary) {
+		this.tsbMatchSecondary = tsbMatchSecondary;
+	}	
 
 	public String getComment() {
 		return comment;

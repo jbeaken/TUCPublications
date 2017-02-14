@@ -29,4 +29,6 @@ public interface CustomerService extends Service<Customer>{
 
 	Customer findMatchedCustomer(String match);
 
+	Customer findSecondaryMatchedCustomer(String match);
+
 }
