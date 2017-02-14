@@ -239,7 +239,7 @@ public class CustomerController extends AbstractBookmarksController {
 
 			// Sort out ampersand and single quote in transactionDescription
 			transactionDescription = transactionDescription.replace("&", "");
-			transactionDescription = transactionDescription.replace("'", "")
+			transactionDescription = transactionDescription.replace("'", "");
 
 			String tsbMatch = transactionDescription;
 
