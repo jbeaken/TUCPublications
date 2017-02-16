@@ -253,6 +253,11 @@
       <put-attribute name="body" value="/WEB-INF/jsp/customer/editCustomer.jsp"/>
   </definition>
 
+  <definition name="editCustomerAccount" extends="baseLayout">
+      <put-attribute name="title" value="Edit Customer Account"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/customer/editAccount.jsp"/>
+  </definition>
+
   <definition name="searchCustomers" extends="baseLayout">
       <put-attribute name="title" value="Search Customers"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/searchCustomers.jsp"/>
@@ -266,17 +271,17 @@
   <definition name="uploadAccountsFromTSB" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/uploadAccountsFromTSB.jsp"/>
-  </definition> 
+  </definition>
 
   <definition name="confirmUploadAccounts" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/confirmUploadAccounts.jsp"/>
-  </definition>  
-  
+  </definition>
+
   <definition name="selectMatch" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/selectMatch.jsp"/>
-  </definition>      
+  </definition>
 
   <definition name="createInvoice" extends="baseLayout">
       <put-attribute name="title" value="Add Invoice"/>
@@ -477,7 +482,7 @@
       <put-attribute name="title" value="View Author"/>
       <put-attribute name="body" value="/WEB-INF/jsp/author/view.jsp"/>
   </definition>
-  
+
  <!-- CREDIT NOTE -->
 
   <definition name="editCreditNote" extends="baseLayout">
@@ -504,7 +509,7 @@
   <definition name="viewCreditNote" extends="baseLayout">
       <put-attribute name="title" value="View CreditNote"/>
       <put-attribute name="body" value="/WEB-INF/jsp/creditNote/view.jsp"/>
-  </definition>  
+  </definition>
 
 
   <!-- Supplier Delivery -->

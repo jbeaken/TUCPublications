@@ -5,10 +5,6 @@
 <fmt:setLocale value="en_GB"/>
 		<form:form modelAttribute="customer" action="edit?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
-		  	<form:hidden path="creationDate"/>
-		  	<form:hidden path="note"/>
-			<form:hidden path="bookmarksAccount.openingBalance"/>
-			<form:hidden path="bookmarksAccount.currentBalance"/>
 
 <div class="rows">
         <div class="row">
@@ -71,7 +67,7 @@
                 <form:input path="contactDetails.mobileNumber" /> <form:errors path="contactDetails.mobileNumber" />
 		  </div>
 	</div>
-	
+
   <div class="row">
 		<div class="column w-33-percent">
 			<form:label for="bookmarksAccount.currentBalance" path="bookmarksAccount.currentBalance">Current Balance</form:label><br/>

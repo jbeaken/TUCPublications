@@ -157,7 +157,7 @@ public class CustomerController extends AbstractBookmarksController {
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
 		cn.setCustomer(customer);
-		
+
 		if(priority == 1) {
 			cn.setStatus("Potential Primary Match");
 		} else if(priority == 2) {
@@ -169,26 +169,26 @@ public class CustomerController extends AbstractBookmarksController {
 		populateCreditNoteModel(creditNoteMap, modelMap);
 
 		return "confirmUploadAccounts";
-	}	
+	}
 
-	
+
 
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
 	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
 			throws IOException {
 
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
-		
+
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
-		CreditNote cn = creditNoteMap.get(transactionDescription);		
+		CreditNote cn = creditNoteMap.get(transactionDescription);
 
 		Customer customer = customerService.get(customerId);
-		
+
 		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
 			addError("Cannot match this row as has status " + cn.getStatus(), modelMap);
 			return "confirmUploadAccounts";
-		}		
-		
+		}
+
 		//Check if customer is already matched
 		if( customer.getBookmarksAccount().getTsbMatch() != null ) {
 			logger.debug("Customer already has primary match");
@@ -196,7 +196,7 @@ public class CustomerController extends AbstractBookmarksController {
 			modelMap.addAttribute("customer", customer);
 			modelMap.addAttribute("transactionDescription", transactionDescription);
 			return "selectMatch";
-		}		
+		}
 
 		//Primary match
 		cn.setCustomer(customer);
@@ -273,11 +273,12 @@ public class CustomerController extends AbstractBookmarksController {
 				transactionDescription = record.get(4) + record.get(5);
 				transactionDescription = transactionDescription.replace("\"", "");
 				amount = record.get(7);
-			} 
+			}
 
 			// Sort out ampersand and single quote in transactionDescription
 			transactionDescription = transactionDescription.replace("&", "");
 			transactionDescription = transactionDescription.replace("'", "");
+			transactionDescription = transactionDescription.replace("+", "");
 			transactionDescription = transactionDescription.trim();
 
 			String tsbMatch = transactionDescription;
@@ -303,7 +304,7 @@ public class CustomerController extends AbstractBookmarksController {
 				int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
 				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();
 			}
-			
+
 
 			// Find customer match if possible
 			Customer matchedCustomer = customerService.findMatchedCustomer(tsbMatch);
@@ -325,7 +326,7 @@ public class CustomerController extends AbstractBookmarksController {
 			if (transactionType.equals("SO") ) {
 				transactionReference = record.get(0) + "-SO-" + transactionDescription;
 			}
-			
+
 			if (cn.isClubAccount()) {
 				cn.setStatus("Club Account");
 				amount = "-" + record.get(5);
@@ -336,9 +337,9 @@ public class CustomerController extends AbstractBookmarksController {
 
 			// Check that this transaction hasn't already been processed
 			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
-			
+
 			if(matchedCreditNote != null) cn.setStatus("Already Processed");
-			
+
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");
@@ -368,7 +369,7 @@ public class CustomerController extends AbstractBookmarksController {
 		session.setAttribute("creditNoteMap", creditNoteMap);
 
 		populateCreditNoteModel(creditNoteMap, modelMap);
-		
+
 		if(allMatched == true){
 			message += ". All matched!";
 		}
@@ -725,6 +726,7 @@ public class CustomerController extends AbstractBookmarksController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(@Valid Customer customer, BindingResult bindingResult, String flow, HttpSession session,
 			HttpServletRequest request, ModelMap modelMap) {
+
 		// Check for errors
 		if (bindingResult.hasErrors()) {
 			modelMap.addAttribute(CustomerType.values());
@@ -732,9 +734,18 @@ public class CustomerController extends AbstractBookmarksController {
 			return "editCustomer";
 		}
 
-		customerService.update(customer);
+		Customer dbCustomer = customerService.get( customer.getId() );
 
-		logger.info("Successfully edited customer - " + customer.getId() + " : " + customer.getFullName());
+		dbCustomer.setFirstName( customer.getFirstName() );
+		dbCustomer.setContactDetails( customer.getContactDetails() );
+		dbCustomer.setAddress( customer.getAddress() );
+		dbCustomer.setCustomerType( customer.getCustomerType() );
+		dbCustomer.setBookmarksDiscount( customer.getBookmarksDiscount() );
+		dbCustomer.setNonBookmarksDiscount( customer.getNonBookmarksDiscount() );
+
+		customerService.update( dbCustomer );
+
+		logger.info("Successfully edited customer - " + dbCustomer.getId() + " : " + customer.getFullName());
 
 		if (flow.equals("invoiceSearch") || flow.equals("customerOrderSearch")) {
 			modelMap.addAttribute("closeWindow", "not null");
@@ -846,6 +857,40 @@ public class CustomerController extends AbstractBookmarksController {
 			// Probably no labels, no page exeption
 		}
 
+	}
+	@RequestMapping(value = "/editAccount", method = RequestMethod.POST)
+	public String editAccount(@Valid Customer customer, BindingResult bindingResult, String flow, HttpSession session,
+			HttpServletRequest request, ModelMap modelMap) {
+
+		// Check for errors
+		if (bindingResult.hasErrors()) {
+			modelMap.addAttribute("flow", flow);
+			return "editCustomerAccount";
+		}
+
+		Customer dbCustomer = customerService.get( customer.getId() );
+
+		dbCustomer.setBookmarksAccount( customer.getBookmarksAccount() );
+
+		customerService.update( dbCustomer );
+
+		logger.info("Successfully edited customer acount - " + dbCustomer.getId() + " : " + customer.getFullName());
+
+		return searchFromSession(session, request, modelMap);
+	}
+
+	@RequestMapping(value = "/editAccount", method = RequestMethod.GET)
+	public String editAccount(Long id, String flow, ModelMap modelMap) {
+
+		Customer customer = customerService.get(id);
+
+		logger.info("About to edit customer account " + customer.getId() + " : " + customer.getFullName());
+
+		modelMap.addAttribute(customer);
+		modelMap.addAttribute("flow", flow);
+		modelMap.addAttribute(CustomerType.values());
+
+		return "editCustomerAccount";
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

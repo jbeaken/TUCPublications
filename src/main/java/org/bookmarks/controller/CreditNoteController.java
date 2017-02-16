@@ -9,8 +9,10 @@ import javax.validation.Valid;
 
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.StockItem;
+import org.bookmarks.domain.Customer;
 import org.bookmarks.service.AZLookupServiceImpl;
 import org.bookmarks.service.CreditNoteService;
+import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,13 +32,16 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 
 	@Autowired
 	private CreditNoteService creditNoteService;
-	
+
+	@Autowired
+	private CustomerService customerService;
+
 	private Logger logger = LoggerFactory.getLogger(CreditNoteController.class);
-	
+
 
 	@RequestMapping(value="/search")
 	public String search(CreditNoteSearchBean creditNoteSearchBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		
+
 		if(creditNoteSearchBean.isFromSession() == false) { //Pagination etc. already set
 			setPaginationFromRequest(creditNoteSearchBean, request);
 		} else {
@@ -44,11 +49,11 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		}
 
 		Collection<CreditNote> creditNoteList = creditNoteService.search(creditNoteSearchBean);
-		
+
 		//Now reconcile
 		BigDecimal clubAccountOutgoings = creditNoteService.getOutgoings();
 		BigDecimal clubAccountIncomings = creditNoteService.getIncomings();
-		
+
 		BigDecimal clubAccountBalance = clubAccountOutgoings.add(clubAccountIncomings);
 
 		//Don't like, fix for shitty export
@@ -62,11 +67,11 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		modelMap.addAttribute("clubAccountIncomings", clubAccountIncomings);
 		modelMap.addAttribute("clubAccountBalance", clubAccountBalance);
 		modelMap.addAttribute("searchResultCount", creditNoteSearchBean.getSearchResultCount());
-		
+
 		return "searchCreditNotes";
 	}
 
-	
+
 	@RequestMapping(value="/displaySearch", method=RequestMethod.GET)
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
@@ -84,18 +89,18 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 			//Most likely due to this invoice being referenced from col
 			addError("Cannot delete! Perhaps this creditNote has creditNoteed", modelMap);
 			return searchFromSession(session, request, modelMap);
-		}		
-		
-		
+		}
+
+
 		return "redirect:searchFromSession";
-	}	
+	}
 
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public String add(@Valid CreditNote creditNote, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
-		
+
+
 //		CreditNote exists = creditNoteService.findByName(creditNote.getName());
-//		
+//
 //		if(exists != null) {
 //			addError(creditNote.getTransactionDescription() + " already exists", modelMap);
 //			return "addCreditNote";
@@ -104,22 +109,29 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 			addError("Cannot save creditNote", modelMap);
 			return "addCreditNote";
 		}
-		
+
 		creditNoteService.save(creditNote);
-		
+
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
 		creditNoteSearchBean.setCreditNote(creditNote);
-		
-		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);		
-		
+
+		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
+
 		redirectAttributes.addFlashAttribute("success", "Have added creditNote " + creditNote.getTransactionDescription());
-		
+
 		return "redirect:searchFromSession";
 	}
-	
+
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-	public String displayAdd(ModelMap modelMap) {
-		modelMap.addAttribute(new CreditNote());
+	public String displayAdd(Customer customer, ModelMap modelMap) {
+		CreditNote creditNote = new CreditNote();
+
+		Customer dbCustomer = customerService.get( customer.getId() );
+
+		creditNote.setCustomer( dbCustomer );
+
+		modelMap.addAttribute(creditNote);
+
 		return "addCreditNote";
 	}
 
@@ -130,14 +142,14 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 			modelMap.addAttribute("flow", flow);
 			return "editCreditNote";
 		}
-		
+
 		CreditNote dbCreditNote = creditNoteService.get(creditNote.getId());
 
 		creditNoteService.update(dbCreditNote);
 
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
 		creditNoteSearchBean.setCreditNote(creditNote);
-		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);				
+		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
 
 		return "redirect:searchFromSession";
 	}
@@ -154,15 +166,15 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = (CreditNoteSearchBean) session.getAttribute("creditNoteSearchBean");
-		
+
 		if(creditNoteSearchBean == null) {
 			creditNoteSearchBean = new CreditNoteSearchBean();
 		}
-		
+
 		creditNoteSearchBean.isFromSession(true);
-		
+
 		modelMap.addAttribute(creditNoteSearchBean);
-		
+
 		return search(creditNoteSearchBean, request, session, modelMap);
 	}
 
@@ -171,4 +183,3 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		return creditNoteService;
 	}
 }
-

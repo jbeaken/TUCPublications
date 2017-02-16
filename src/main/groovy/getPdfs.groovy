@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document
 import org.jsoup.Jsoup
 
 @Grapes(
-	@Grab(group='org.jsoup', module='jsoup', version='1.8.1')
+	@Grab(group='org.jsoup', module='jsoup', version='1.10.2')
 )
 
 
