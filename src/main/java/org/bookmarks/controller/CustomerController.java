@@ -252,6 +252,8 @@ public class CustomerController extends AbstractBookmarksController {
 
 		for (CSVRecord record : records) {
 
+			logger.info(record.toString());
+
 			CreditNote cn = new CreditNote();
 
 			Date transactionDate = null;
