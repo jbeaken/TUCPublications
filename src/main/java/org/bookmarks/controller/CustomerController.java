@@ -254,13 +254,31 @@ public class CustomerController extends AbstractBookmarksController {
 
 			CreditNote cn = new CreditNote();
 
-			Date transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse(record.get(0));
-			String transactionType = record.get(1);
-			String sortCode = record.get(2);
-			String accountNumber = record.get(3);
-			String transactionDescription = record.get(4);
-			String amount = record.get(6);
+			Date transactionDate = null;
+			String transactionType = null;
+			String sortCode = null;
+			String accountNumber = null;
+			String transactionDescription = null;
+			String amount = null;
 			String transactionReference = null;
+
+			try {
+				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse(record.get(0));
+				transactionType = record.get(1);
+				sortCode = record.get(2);
+				accountNumber = record.get(3);
+				transactionDescription = record.get(4);
+				amount = record.get(6);
+				transactionReference = null;
+			} catch (java.text.ParseException e) {
+				transactionDate = new SimpleDateFormat("dd MM yy").parse(record.get(0));
+				transactionType = record.get(1);
+				sortCode = record.get(2);
+				accountNumber = record.get(3);
+				transactionDescription = record.get(4);
+				amount = record.get(6);
+				transactionReference = null;
+			}
 
 			// Exception for transfers from club account to main bank account
 			if (transactionDescription.startsWith("I S BOOKS LTD")
