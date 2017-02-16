@@ -305,6 +305,7 @@ public class CustomerController extends AbstractBookmarksController {
 				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();
 			}
 
+			transactionReference = transactionDescription;
 
 			// Find customer match if possible
 			Customer matchedCustomer = customerService.findMatchedCustomer(tsbMatch);
@@ -339,7 +340,6 @@ public class CustomerController extends AbstractBookmarksController {
 			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
 
 			if(matchedCreditNote != null) cn.setStatus("Already Processed");
-
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");

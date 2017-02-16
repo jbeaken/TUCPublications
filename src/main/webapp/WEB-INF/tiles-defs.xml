@@ -278,6 +278,11 @@
       <put-attribute name="body" value="/WEB-INF/jsp/customer/confirmUploadAccounts.jsp"/>
   </definition>
 
+  <definition name="processedAccountsFromTSB" extends="baseLayout">
+      <put-attribute name="title" value="Upload Accounts"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/customer/processedAccountsFromTSB.jsp"/>
+  </definition>
+
   <definition name="selectMatch" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/selectMatch.jsp"/>
