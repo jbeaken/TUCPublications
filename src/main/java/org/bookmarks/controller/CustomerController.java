@@ -247,6 +247,11 @@ public class CustomerController extends AbstractBookmarksController {
 
 		Reader reader = new InputStreamReader(file.getInputStream());
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
+		Long size = records.spliterator().getExactSizeIfKnown();
+		logger.info("Have records of size " + size );
+		if(size == 0l) {
+			records = CSVFormat.TDF.withQuote(null).parse(reader);
+		}
 
 		Map<String, CreditNote> creditNoteMap = new HashMap<>();
 
