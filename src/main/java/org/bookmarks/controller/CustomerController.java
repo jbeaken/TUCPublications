@@ -273,7 +273,7 @@ public class CustomerController extends AbstractBookmarksController {
 				amount = record.get(6);
 				transactionReference = null;
 			} catch (java.text.ParseException e) {
-				transactionDate = new SimpleDateFormat("dd MM yy").parse(record.get(0));
+				transactionDate = new SimpleDateFormat("dd MMM yy").parse(record.get(0));
 				transactionType = record.get(1);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
