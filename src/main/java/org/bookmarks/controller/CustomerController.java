@@ -252,12 +252,12 @@ public class CustomerController extends AbstractBookmarksController {
 		// Long size = records.spliterator().getExactSizeIfKnown();
 		logger.info("Have records of size " + records.size());
 
-		if(records.size() == 0) {
-			reader = new InputStreamReader(file.getInputStream());
-			parser = CSVFormat.TDF.withQuote(null).parse(reader);
-			 records = parser.getRecords();
-			logger.info("Have records of size " + records.size() );
-		}
+		// if(records.size() == 0) {
+		// 	reader = new InputStreamReader(file.getInputStream());
+		// 	parser = CSVFormat.TDF.withQuote(null).parse(reader);
+		// 	 records = parser.getRecords();
+		// 	logger.info("Have records of size " + records.size() );
+		// }
 
 		Map<String, CreditNote> creditNoteMap = new HashMap<>();
 
