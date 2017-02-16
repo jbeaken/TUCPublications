@@ -859,14 +859,8 @@ public class CustomerController extends AbstractBookmarksController {
 
 	}
 	@RequestMapping(value = "/editAccount", method = RequestMethod.POST)
-	public String editAccount(@Valid Customer customer, BindingResult bindingResult, String flow, HttpSession session,
+	public String editAccount(Customer customer, BindingResult bindingResult, String flow, HttpSession session,
 			HttpServletRequest request, ModelMap modelMap) {
-
-		// Check for errors
-		if (bindingResult.hasErrors()) {
-			modelMap.addAttribute("flow", flow);
-			return "editCustomerAccount";
-		}
 
 		Customer dbCustomer = customerService.get( customer.getId() );
 

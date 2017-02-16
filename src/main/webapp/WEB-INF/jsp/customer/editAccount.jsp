@@ -3,19 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <fmt:setLocale value="en_GB"/>
+
+
 		<form:form modelAttribute="customer" action="editAccount?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
 
-<spring:hasBindErrors name="customer">
-    <h2>Errors</h2>
-    <div class="formerror">
-        <ul>
-            <c:forEach var="error" items="${errors.allErrors}" varStatus="index">
-            	<li>${error.defaultMessage}</li>
-			</c:forEach>
-        </ul>
-    </div>
-</spring:hasBindErrors>	  	
+ 	
 
 <div class="rows">
 
