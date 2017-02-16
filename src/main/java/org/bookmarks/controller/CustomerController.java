@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVParser;
 
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
@@ -246,14 +247,16 @@ public class CustomerController extends AbstractBookmarksController {
 		}
 
 		Reader reader = new InputStreamReader(file.getInputStream());
-		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
-		Long size = records.spliterator().getExactSizeIfKnown();
-		logger.info("Have records of size " + size );
-		if(size == -1l) {
+		CSVParser parser = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
+		List<CSVRecord> records = parser.getRecords();
+		// Long size = records.spliterator().getExactSizeIfKnown();
+		logger.info("Have records of size " + records.size());
+
+		if(records.size() == 0) {
 			reader = new InputStreamReader(file.getInputStream());
-			records = CSVFormat.TDF.withQuote(null).parse(reader);
-			size = records.spliterator().getExactSizeIfKnown();
-			logger.info("Have records of size " + size );
+			parser = CSVFormat.TDF.withQuote(null).parse(reader);
+			 records = parser.getRecords();
+			logger.info("Have records of size " + records.size() );
 		}
 
 		Map<String, CreditNote> creditNoteMap = new HashMap<>();
