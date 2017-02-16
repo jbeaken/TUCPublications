@@ -250,6 +250,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Long size = records.spliterator().getExactSizeIfKnown();
 		logger.info("Have records of size " + size );
 		if(size == -1l) {
+			reader = new InputStreamReader(file.getInputStream());
 			records = CSVFormat.TDF.withQuote(null).parse(reader);
 			size = records.spliterator().getExactSizeIfKnown();
 			logger.info("Have records of size " + size );
