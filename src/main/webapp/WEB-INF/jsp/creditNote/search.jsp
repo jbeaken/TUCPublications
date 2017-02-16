@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
 <form:form modelAttribute="creditNoteSearchBean" action="search" method="post" role="form">
 	<div class="row">
 		<div class="col-sm-3">
@@ -44,7 +45,7 @@
 			  <display:column property="date" sortable="true" sortName="cn.date" title="Date"/>
 			  <display:column property="customer" sortable="true" sortName="cn.date" title="Customer"/>
 			  <display:column property="amount" sortable="true" sortName="cn.amount" title="Amount"/>
-			  <display:column property="transactionDescription" sortable="true" sortName="cn.transactionDescription" title="Desc"/>
+			  <display:column property="transactionDescription" sortable="true" sortName="cn.transactionDescription" title="Customer Match"/>
 			  <display:column property="transactionReference" sortable="true" sortName="cn.transactionReference" title="Ref"/>
 			  <display:column property="transactionType" sortable="true" sortName="cn.transactionType" title="Type"/>
 			  
