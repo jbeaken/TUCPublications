@@ -6,6 +6,17 @@
 		<form:form modelAttribute="customer" action="editAccount?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
 
+<spring:hasBindErrors name="customer">
+    <h2>Errors</h2>
+    <div class="formerror">
+        <ul>
+            <c:forEach var="error" items="${errors.allErrors}" varStatus="index">
+            	<li>${error.defaultMessage}</li>
+			</c:forEach>
+        </ul>
+    </div>
+</spring:hasBindErrors>	  	
+
 <div class="rows">
 
   <div class="row">
@@ -16,9 +27,9 @@
 		</div>
 
 		<div class="column w-33-percent">
-          <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
-          <form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
-	 	 </div>
+        	<form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
+        	<form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
+		</div>
 
 	</div>
 
