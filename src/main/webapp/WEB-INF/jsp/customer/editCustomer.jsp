@@ -97,24 +97,8 @@
                                         <form:label for="nonBookmarksDiscount" path="nonBookmarksDiscount" cssErrorClass="error">Non Bookmarks Discount</form:label><br/>
                                         <form:input path="nonBookmarksDiscount" /> <form:errors path="nonBookmarksDiscount" />
 		  </div>
-			<div class="column w-33-percent">
-                                        <label>Account Comment</label><br/>
-                                        <form:input path="bookmarksAccount.comment" /> <form:errors path="bookmarksAccount.comment" />
-		  </div>
 	</div>
-      <div class="row">
-		  <div class="column w-100-percent">
-		  		&nbsp;<br/>
-                 <form:checkbox path="bookmarksAccount.accountHolder" />
-				 <form:label id="checkboxLabel" for="bookmarksAccount.accountHolder" path="bookmarksAccount.accountHolder" cssErrorClass="error">Account</form:label>
-                 <form:checkbox path="bookmarksAccount.sponsor" />
-				 <form:label for="bookmarksAccount.sponsor" path="bookmarksAccount.sponsor" cssErrorClass="error">Sponsor</form:label>
-                 <form:checkbox path="bookmarksAccount.paysInMonthly" />
-				 <form:label for="bookmarksAccount.paysInMonthly" path="bookmarksAccount.paysInMonthly" cssErrorClass="error">Pays In Monthly</form:label>
-
-				<form:label for="id" path="id" cssErrorClass="error">ID</form:label> ${customer.id}
-		  </div>
-	</div>
+     
       <div class="row">
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
