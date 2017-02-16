@@ -309,6 +309,7 @@ public class CustomerController extends AbstractBookmarksController {
 			transactionDescription = transactionDescription.replace("'", "");
 			transactionDescription = transactionDescription.replace("+", "");
 			transactionDescription = transactionDescription.replace(",", "");
+			transactionDescription = transactionDescription.replace("  ", "");
 			transactionDescription = transactionDescription.trim();
 
 			String tsbMatch = transactionDescription;
