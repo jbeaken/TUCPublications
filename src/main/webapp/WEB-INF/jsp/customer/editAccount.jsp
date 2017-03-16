@@ -7,6 +7,9 @@
 
 		<form:form modelAttribute="customer" action="editAccount?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
+		  	<form:hidden path="bookmarksAccount.currentBalance"/>
+		  	<form:hidden path="bookmarksAccount.comment"/>
+
 
  	
 
