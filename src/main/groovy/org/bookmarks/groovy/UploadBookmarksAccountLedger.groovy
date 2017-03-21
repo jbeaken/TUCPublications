@@ -26,7 +26,7 @@ def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admi
 count = 0
 Long customerId = 1
 nextRowIsCustomer = false
-customerMap = [:]
+creditNotes = []
 dateFormatter = new java.text.SimpleDateFormat("dd/MM/yy")
 
 new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields ->
@@ -70,6 +70,8 @@ new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields
 
 		CreditNote cn = new CreditNote(customerId : customerId, reference : reference, balance : balance, asset : asset, liability : liability, details : details, date : date, )
 		println cn
+
+		creditNotes =+ cn
 	}
 
 	count++
