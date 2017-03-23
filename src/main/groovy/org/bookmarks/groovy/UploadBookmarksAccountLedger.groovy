@@ -37,24 +37,34 @@ customers = []
 new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields ->
 
 	def firstRow = fields[0]      //This will be customer id, of blank
-	//println firstRow
 	
 	//Blank rows
 	if(!firstRow) {
-		if(customer) customers.add( customer )
-		//Terminates customer collection
-		customer = null
 		return
 	}
 
+	
 
 	if( firstRow ==~ /\d{5}/ ) {
 		//have a customer
+
+		
+		if(customer && !customer.currentBalance)  {
+			throw new Exception("Have found customer ${firstRow}, but already have a customer ${customer.id} in progress!")
+			return
+		}		
+		
+		if(customer) customers.add( customer )
+
 		customer = new Customer(id : Long.valueOf(firstRow))
-		//println "Have new customer with ID : ${customer.id}"
+		return
 	}
 
+	if(firstRow.startsWith("Balance at")) {
+		println "balance at " + fields
 
+		customer.currentBalance = Float.valueOf( fields[8].replace(",", "") ) * -1
+	}	
 
 	if( firstRow ==~ /\d{2}\/\d{2}\/\d{2}/ ) {
 		if(!customer)  {
@@ -84,11 +94,11 @@ new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields
 				//println asset
 				//println liability
 			customer.openingBalance = liability
+			return
+		}
 
-		}			
+				
 		
-
-
 		CreditNote cn = new CreditNote(reference : reference, balance : balance, asset : asset, liability : liability, details : details, date : date, )
 		//println cn
 		customer.creditNotes.add( cn )
@@ -108,6 +118,12 @@ sql.executeUpdate("delete from CreditNote")
 customers.each {c -> 
 	//if(c.id != 45671) return
 	println c.id
+	//println c.currentBalance
+	
+	if(!customer.currentBalance) throw new Exception("Have customer with no current balance")
+
+	sql.executeUpdate("update customer set openingBalance = ?, currentBalance = ? where id = ?", [c.openingBalance, c.currentBalance, c.id])
+
 
 	c.creditNotes.each {cn ->
 		//println cn
@@ -120,6 +136,7 @@ customers.each {c ->
 class Customer {
 	Long id
 	Float openingBalance = 0.0
+	Float currentBalance 
 	def creditNotes = []
 }
 
