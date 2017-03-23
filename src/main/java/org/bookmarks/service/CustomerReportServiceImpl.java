@@ -117,10 +117,16 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 		if(filter != null) {
 			if(filter.equals("DEBITS")) {
 				invoiceReportLines = invoiceReportLines.stream()
-					.filter( irl -> irl.getSale() != null || irl.getCreditNote().getTransactionReference().contains("SIN"))
+					.filter( irl -> irl.getCreditAmount().signum() < 0 )
 					.collect(Collectors.toList());
 					
 			}
+			if(filter.equals("CREDITS")) {
+				invoiceReportLines = invoiceReportLines.stream()
+					.filter( irl -> irl.getCreditAmount().signum() > 0 )
+					.collect(Collectors.toList());
+					
+			}			
 		}
 
 		//Sort them by date, most recent first
