@@ -3,6 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 	<script>
+
+	function filterInvoiceReportLineList() {
+		var filter = $('select#transactionTypeSelect').val()
+		$('input#filter').val(filter)
+		
+		document.forms[0].submit()
+	}
 	$(function() {
 		$( "#startDate" ).datepicker({
 			changeMonth: true,
@@ -44,6 +51,7 @@
 </script>
 <form:form modelAttribute="customerReportBean" action="/bookmarks/customerReport/report" method="post">
 <form:hidden path="customer.id" id="customerId"/>
+<form:hidden path="filter" />
 <form:errors></form:errors>
 <div class="rows">
 <div class="row">
@@ -110,6 +118,12 @@ Current Balance : ${customer.bookmarksAccount.currentBalance}
 
 
 <c:if test="${invoiceReportLineList != null}">
+
+<select id="transactionTypeSelect" onchange="javascript:filterInvoiceReportLineList()">
+	<option value="">All</option>
+	<option value="DEBITS">Debits</option>
+	<option value="CREDITS">Credits</option>
+</select>
 
 <display:table name="invoiceReportLineList" 
 			   requestURI="/bookmarks/saleReport/report" 

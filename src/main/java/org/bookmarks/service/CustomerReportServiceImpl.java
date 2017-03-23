@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.stream.*;
+import java.util.stream.Collectors;
+
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Invoice;
@@ -62,6 +65,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 
 		//Put them into InvoiceReportLine objects
 		List<InvoiceReportLine> invoiceReportLines = new ArrayList<InvoiceReportLine>();
+
 		for(Invoice invoice : invoices) {
 			for(Sale sale : invoice.getSales()) {
 				//System.out.println(sale.getStockItem().getTitle());
@@ -106,6 +110,17 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 			InvoiceReportLine irl = new InvoiceReportLine();
 			irl.setCreditNote(creditNote);
 			invoiceReportLines.add(irl);
+		}
+
+		//Filter if necessary
+		String filter = customerReportBean.getFilter();
+		if(filter != null) {
+			if(filter.equals("DEBITS")) {
+				invoiceReportLines = invoiceReportLines.stream()
+					.filter( irl -> irl.getSale() != null || irl.getCreditNote().getTransactionReference().contains("SIN"))
+					.collect(Collectors.toList());
+					
+			}
 		}
 
 		//Sort them by date, most recent first
