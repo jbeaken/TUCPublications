@@ -60,9 +60,6 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getCredit() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
-		if(invoiceReportLine.isCredit()) {
-			return currencyFormatter.print(invoiceReportLine.getCreditNote().getAmount(), Locale.UK);
-		}
-		return "-";
+		return currencyFormatter.print(invoiceReportLine.getCreditAmount(), Locale.UK);
 	}
 }

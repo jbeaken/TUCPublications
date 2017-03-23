@@ -61,6 +61,7 @@ new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields
 	}
 
 	if(firstRow.startsWith("Balance at")) {
+		//found current Balance
 		println "balance at " + fields
 
 		customer.currentBalance = Float.valueOf( fields[8].replace(",", "") ) * -1
@@ -96,8 +97,6 @@ new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields
 			customer.openingBalance = liability
 			return
 		}
-
-				
 		
 		CreditNote cn = new CreditNote(reference : reference, balance : balance, asset : asset, liability : liability, details : details, date : date, )
 		//println cn
@@ -118,7 +117,7 @@ sql.executeUpdate("delete from CreditNote")
 customers.each {c -> 
 	//if(c.id != 45671) return
 	println c.id
-	//println c.currentBalance
+	println c.currentBalance
 	
 	if(!customer.currentBalance) throw new Exception("Have customer with no current balance")
 

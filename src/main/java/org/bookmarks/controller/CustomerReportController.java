@@ -117,7 +117,11 @@ public class CustomerReportController extends AbstractBookmarksController {
 	private String invoiceReport(CustomerReportBean customerReportBean,	HttpServletRequest request, ModelMap modelMap) {
 
 		Collection<InvoiceReportLine> invoiceReportLines = customerReportService.getInvoiceReport(customerReportBean);
+		Customer customer = customerService.get( customerReportBean.getCustomer().getId() );
+
 		modelMap.addAttribute(invoiceReportLines);
+		modelMap.addAttribute(customer);
+
 		return "customerReport";
 	}
 

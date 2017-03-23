@@ -101,8 +101,16 @@
 	</div>		
 </div>		
 </form:form>
+
 		<br/>
+
+Opening Balance : ${customer.bookmarksAccount.openingBalance}		
+<br/>
+Current Balance : ${customer.bookmarksAccount.currentBalance}		
+
+
 <c:if test="${invoiceReportLineList != null}">
+
 <display:table name="invoiceReportLineList" 
 			   requestURI="/bookmarks/saleReport/report" 
         	   decorator="org.bookmarks.ui.InvoiceReportDecorator"
