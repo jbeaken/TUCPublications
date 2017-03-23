@@ -12,7 +12,7 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 		if(!invoiceReportLine.isCredit()) {
 			return invoiceReportLine.getSale().getStockItem().getIsbn();
 		}
-		return "";
+		return invoiceReportLine.getCreditNote().getTransactionReference();
 	}
 
 	public String getDate() {
@@ -20,7 +20,7 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 		if(!invoiceReportLine.isCredit()) {
 			return dateFormatter.print(invoiceReportLine.getSale().getCreationDate(), Locale.UK);
 		}
-		return dateFormatter.print(invoiceReportLine.getCreditNote().getCreationDate(), Locale.UK);
+		return dateFormatter.print(invoiceReportLine.getDate(), Locale.UK);
 	}
 
 	public String getDeliveryType() {
@@ -55,7 +55,7 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 		if(!invoiceReportLine.isCredit()) {
 			return invoiceReportLine.getSale().getStockItem().getTitle();
 		}
-		return "";
+		return invoiceReportLine.getCreditNote().getTransactionDescription();
 	}
 
 	public String getCredit() {

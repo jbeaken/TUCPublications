@@ -119,7 +119,7 @@
 					  <display:column property="sale.quantity" title="Quantity"/>
 					  <display:column property="discount" sortable="true" sortName="s.sellPrice" title="Discount"/>
 					  <display:column property="deliveryType" title="Delivery"/>
-					  <display:column property="totalPrice" title="Total Sell Price"/>
+					  <display:column property="totalPrice" title="Total Price"/>
 					  <display:column property="currentBalance" title="Balance"/>
 					  <display:column property="credit" title="Credit"/>
   					</display:table>

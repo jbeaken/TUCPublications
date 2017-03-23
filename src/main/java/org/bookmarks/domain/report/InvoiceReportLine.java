@@ -7,7 +7,8 @@ import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.website.domain.DeliveryType;
 
-public class InvoiceReportLine implements Comparable{
+public class InvoiceReportLine implements Comparable {
+
 	private Sale sale;
 	private CreditNote creditNote;
 	private BigDecimal currentBalance;
@@ -43,17 +44,17 @@ public class InvoiceReportLine implements Comparable{
 	public int compareTo(Object o) {
 		InvoiceReportLine that = (InvoiceReportLine) o;
 
-		Date thatCreationDate = getCreationDate(that);
-		Date thisCreationDate = getCreationDate(this);
+		Date thatCreationDate = that.getDate();
+		Date thisCreationDate = getDate();
 
 		return thatCreationDate.compareTo(thisCreationDate);
 	}
 	
-	private Date getCreationDate(InvoiceReportLine invoiceReportLine) {
-		if(invoiceReportLine.isCredit()) {
-			return invoiceReportLine.getCreditNote().getCreationDate();
+	public Date getDate() {
+		if(isCredit()) {
+			return getCreditNote().getDate();
 		} else {
-			return invoiceReportLine.getSale().getCreationDate();
+			return getSale().getCreationDate();
 		}
 	}
 	

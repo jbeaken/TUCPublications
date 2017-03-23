@@ -134,7 +134,4 @@ public class CustomerReportController extends AbstractBookmarksController {
 		modelMap.addAttribute("info", "Select customer and dates to show all books ordered on account for given period");
 		return "customerReport";
 	}
-
-
-
 }

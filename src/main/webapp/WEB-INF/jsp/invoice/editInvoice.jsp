@@ -113,6 +113,7 @@ tr.tableRowEven,tr.even {
 <legend>${saleToEdit.stockItem.title}</legend>
 <form:form modelAttribute="saleToEdit" action="${pageContext.request.contextPath}/invoice/editInvoiceOrderLine" method="post">
 	<form:hidden path="id"/>
+	<form:hidden path="creationDate"/>
 	<form:hidden path="stockItem.id"/>
 	<form:hidden path="stockItem.type"/>
 	<form:hidden path="stockItem.title"/>

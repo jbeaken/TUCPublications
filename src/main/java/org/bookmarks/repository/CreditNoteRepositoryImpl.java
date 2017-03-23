@@ -59,7 +59,7 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 	public Collection<CreditNote> getCreditNotes(
 			CustomerReportBean customerReportBean) {
 		Query query = sessionFactory.getCurrentSession().createQuery("select cn from CreditNote cn " +
-				"where cn.creationDate between :startDate and :endDate " +
+				"where cn.date between :startDate and :endDate " +
 						"and cn.customer = :customer)");
 		query.setParameter("customer", customerReportBean.getCustomer());
 		query.setParameter("startDate", customerReportBean.getStartDate());
