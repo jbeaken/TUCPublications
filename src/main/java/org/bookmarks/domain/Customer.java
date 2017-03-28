@@ -88,7 +88,6 @@ public class Customer extends AbstractEntity {
 		setId(customerId);
 	}
 
-	@NotNull
 	@Embedded
 	private ContactDetails contactDetails;
 
