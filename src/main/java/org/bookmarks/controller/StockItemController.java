@@ -229,12 +229,16 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		if(stockItem.getPutOnWebsite() == true) {
 			try {
 				chipsService.syncStockItemWithChips(stockItem);
-				addSuccess("Have successfully added " + stockItem.getTitle() + " and put on website", modelMap);
+				if(stockItem.getPutImageOnWebsite() == true) {
+					addSuccess("Have successfully added " + stockItem.getTitle() + " and put on website", modelMap);
+				} else {
+					addWarning("Have successfully added " + stockItem.getTitle() + " and put on website, but without image as is turned off. Please edit to turn on.", modelMap);
+				}
 			} catch (Exception e) {
 				addError("Have added stock, but not been able to put on chips: " + e.getMessage(), modelMap);
 			}
 		} else {
-			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website", modelMap);
+			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website as it is turned off. Please edit to turn on.", modelMap);
 		}		
 
 		//Depending on flow, redirect
