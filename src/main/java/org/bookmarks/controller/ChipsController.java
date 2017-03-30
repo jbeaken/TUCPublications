@@ -12,9 +12,10 @@ import org.bookmarks.service.CustomerOrderService;
 import org.bookmarks.service.Service;
 import org.bookmarks.service.StockItemService;
 import org.bookmarks.website.domain.Customer;
-import org.jfree.util.Log;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ public class ChipsController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerOrderService customerOrderService;
 
-	final Logger logger = LoggerFactory.getLogger(ChipsController.class);
+	private final Logger logger = LoggerFactory.getLogger(ChipsController.class);
 
 	@RequestMapping(value="/updateChips", method=RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {

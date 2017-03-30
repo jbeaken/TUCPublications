@@ -2,9 +2,13 @@ package org.bookmarks.controller;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.StockItemType;
@@ -22,11 +26,15 @@ public class BounciesController extends AbstractStickyController {
 
 	@Autowired
 	private StockItemService stockItemService;
+
+	private final Logger logger = LoggerFactory.getLogger(BounciesController.class);
 	
 	@RequestMapping(value="/manage", method=RequestMethod.GET)
 	public String manage(HttpSession session, ModelMap modelMap) {
 		
 		Collection<StockItem> stockItems = stockItemService.getBouncies();
+
+		logger.info("Have got {} stickies to manage", stockItems.size());
 		
 		modelMap.addAttribute(new StockItem());
 		
@@ -44,13 +52,30 @@ public class BounciesController extends AbstractStickyController {
 		if(stockItems == null) {
 			return "sessionExpired";
 		}
+
+		logger.info("Have got {} stickies to save", stockItems.size());
 		
 		if(stockItems.size() < 18) {
 			addError("18 bouncies are needed, you only have " + stockItems.size(), modelMap);
 			modelMap.addAttribute(new StockItem());
 			return getManagedView();
 		}
-		
+
+		stockItems =  new ArrayList<StockItem>(stockItems.subList(0, 18));
+
+		for(StockItem si : stockItems)  {
+			if(si.getPutImageOnWebsite() == false) {
+				addError(si.getTitle() + " has put image on website set to off, please correct ", modelMap);
+				modelMap.addAttribute(new StockItem());
+				return getManagedView();
+			}
+			if(si.getPutOnWebsite() == false) {
+				addError(si.getTitle() + " has put stock on website set to off, please correct ", modelMap);
+				modelMap.addAttribute(new StockItem());
+				return getManagedView();
+			}			
+		}
+
 		stockItemService.saveBouncies(stockItems);
 		
 		session.removeAttribute("stickies");
