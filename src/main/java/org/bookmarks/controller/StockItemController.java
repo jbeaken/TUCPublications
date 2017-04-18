@@ -627,7 +627,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		session.setAttribute("sessionStockItem", stockItem);
 		session.setAttribute("flow", flow);
 
-		logger.debug("About to edit : {}", stockItem);
+		logger.info("About to edit : {}", stockItem);
 
 		return "editStock";
 	}

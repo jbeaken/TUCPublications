@@ -12,8 +12,10 @@ import org.springframework.format.annotation.NumberFormat.Style;
 @Embeddable
 public class BookmarksAccount implements Serializable{
 
-	@NotNull
-	private Boolean sponsor = false;
+	@Enumerated(type=STRING)
+	private SponsorType sponsorType;
+	
+	private Date sponsorStartDate;
 
 	@NotNull
 	private Boolean accountHolder = false;
@@ -65,11 +67,11 @@ public class BookmarksAccount implements Serializable{
 
 	private BigDecimal openingBalance;
 
-	public Boolean getSponsor() {
+	public SponsorType getSponsorType() {
 		return sponsor;
 	}
 
-	public void setSponsor(Boolean sponsor) {
+	public void setSponsorType(SponsorType sponsor) {
 		this.sponsor = sponsor;
 	}
 
