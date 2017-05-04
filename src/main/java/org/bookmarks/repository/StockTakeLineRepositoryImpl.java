@@ -96,27 +96,45 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 		Query query = null;
 
 		if(resetQuantityInStock) { //Reset quantity in stock if necessary, but not for bookmarks publications
-			query = sessionFactory
-					.getCurrentSession()
-					.createQuery("update StockItem si set si.quantityInStock = 0 "
-							// + "where si.publisher.id not in (725,729) "
-							// + "and si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
-              // + "where si.publisher.id not in (725,729) "
-							+ "where si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
+      if(includeBookmarks == true) {
+        query = sessionFactory
+            .getCurrentSession()
+            .createQuery("update StockItem si set si.quantityInStock = 0 "
+                + "where si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
+        query.executeUpdate();
+      } else {
+        query = sessionFactory
+            .getCurrentSession()
+            .createQuery("update StockItem si set si.quantityInStock = 0 "
+                + "where si.publisher.id not in (725,729) "
+                + "and si.type not in ('DVD','CARD','POSTER','BAG') and  category.id != 69");
 
-			query.executeUpdate();
+        query.executeUpdate();
+      }
 		}
 
 		//Update any stock referenced by a StockTakeLine
 		//Except bookmarks, redwords publisher and merchandise
-		query = sessionFactory
-				.getCurrentSession()
-				.createSQLQuery("update stockitem si, StockTakeLine stl " +
-						"set si.quantityInStock = stl.quantity " +
-						// "where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
-						"where si.id = stl.stockItem_id " + // and si.publisher_id not in (725,729) " +
-						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
-		query.executeUpdate();
+    if(includeBookmarks == true) {
+      query = sessionFactory
+  				.getCurrentSession()
+  				.createSQLQuery("update stockitem si, StockTakeLine stl " +
+  						"set si.quantityInStock = stl.quantity " +
+  						"where si.id = stl.stockItem_id " + // and si.publisher_id not in (725,729) " +
+  						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
+  		query.executeUpdate();
+    } else {
+      query = sessionFactory
+  				.getCurrentSession()
+  				.createSQLQuery("update stockitem si, StockTakeLine stl " +
+  						"set si.quantityInStock = stl.quantity " +
+  						"where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
+  						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
+  		query.executeUpdate();
+    }
+
+
+
 	}
 
 
