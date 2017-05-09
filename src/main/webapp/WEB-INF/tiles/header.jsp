@@ -1,4 +1,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script>
+	$(function() {
+		$("#globalCustomerAutoComplete").autocomplete( {
+			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname",
+			minLength: 3,
+			select: function( event, ui ) {
+				$("#globalCustomerAutoComplete").val(ui.item.label);
+				$("#customerId").val(ui.item.value);
+				$("#searchCustomerSubmitButton").click();
+				return false;
+			},
+			focus: function( event, ui ) {
+				$("#globalCustomerAutoComplete").val(ui.item.label);
+				return false;
+			}
+		});
+		$('#customerId').val(''); //clear customer id
+		$('#globalCustomerAutoComplete').focus();
+	});
+
+</script>
 <ul id="css3menu1" class="topmenu">
 	<li class="topfirst"><a href="<c:url value="/sale/sell" />" accesskey="S" title="Sell" style="height:16px;line-height:16px;">Sell</a>
 		<ul>
@@ -15,7 +36,7 @@
 			<li><a href="<c:url value="/saleOrReturn/displaySearch" />" title="Search Sale or Returns"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Search Sale Or Returns"/>Search Sale or Returns</a></li>
 			<li><a href="<c:url value="/customer/merge" />" title="Merge Customer"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Merge Customers"/>Merge Customers</a></li>
 			<li><a href="<c:url value="/creditNote/displaySearch" />" title="Accounts"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Accounts"/>Accounts</a></li>
-			<li><a href="<c:url value="/customer/uploadAccountsFromTSB" />" title="Upload Accounts From TSB"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Upload Accounts From TSB"/>Upload Accounts From TSB</a></li>			
+			<li><a href="<c:url value="/customer/uploadAccountsFromTSB" />" title="Upload Accounts From TSB"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Upload Accounts From TSB"/>Upload Accounts From TSB</a></li>
 		<c:if test="${sessionScope.invoice != null}">
 			<li><a href="<c:url value="/invoice/continue" />" title="Invoice"><img src="<c:url value="/resources/images/blue-database1.png" />" />Invoice</a></li>
 		</c:if>
@@ -101,3 +122,4 @@
 		</ul>
 	</li>
 </ul>
+<input type="text" id="globalCustomerAutoComplete"/>
