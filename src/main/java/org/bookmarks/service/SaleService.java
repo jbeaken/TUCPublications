@@ -23,6 +23,8 @@ public interface SaleService extends Service<Sale>{
 
 	void sell(Sale sale);
 
+	void sell(Sale sale, Boolean skipUpdatingStockRecord);
+
 	void updateWithStockRecord(Sale sale, boolean updateStockRecord);
 
 	Sale sellCustomerOrder(CustomerOrderLine col);
@@ -35,7 +37,7 @@ public interface SaleService extends Service<Sale>{
 			Date endDate);
 
 	List getAllForCsv();
-	
+
 
 //	void sell(InvoiceOrderLine invoiceOrderLine);
 }

@@ -262,8 +262,8 @@ public class EventController extends AbstractBookmarksController {
 			}
 
 			total = total + (s.getQuantity() * s.getSellPrice().floatValue());
-			System.out.println( total );
 		}
+
 		String totalFormatted = new CurrencyStyleFormatter().print( total, java.util.Locale.UK );
 
 		session.setAttribute("salesForUpload", sales);
@@ -282,11 +282,8 @@ public class EventController extends AbstractBookmarksController {
 		List<Sale> sales = (List<Sale>)session.getAttribute( "salesForUpload" );
 		Event event = (Event)session.getAttribute("eventForUpload");
 
-		// Persist sales
-		for (Sale s : sales) {
-			//Decrements stock level
-			saleService.sell(s);
-		}
+		// Persist sales and decrements stock level
+		sales.forEach (	s -> saleService.sell(s, event.getSkipUpdatingStockRecord()) );
 
 		// Persist invoices. This will decrement stock as well
 		for (Invoice i : invoices) {

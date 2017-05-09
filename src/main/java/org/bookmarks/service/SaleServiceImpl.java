@@ -28,22 +28,22 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 
 	@Autowired
 	private SaleRepository saleRepository;
-	
+
 	@Autowired
 	private StockItemService stockItemService;
-	
+
 	@Autowired
 	private SupplierOrderLineService supplierOrderLineService;
 
 	public Sale sell(StockItem stockItem, Event event) {
 		//Create sale
 		Sale sale = getSale(stockItem, event);
-		
+
 		sell(sale);
-		
+
 		return sale;
 	}
-	
+
 	private Sale getSale(StockItem stockItem, Event event) {
 		Sale sale = new Sale();
 		sale.setQuantity(1l);
@@ -51,30 +51,35 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		sale.setSellPrice(stockItem.getSellPrice());
 		sale.setVat(stockItem.getVat());
 		sale.setEvent(event);
-		
-		BigDecimal vatAmount = 
+
+		BigDecimal vatAmount =
 				sale.getSellPrice()
 				.multiply(sale.getStockItem().getVat())
-				.divide(new BigDecimal(100));	
-		sale.setVatAmount(vatAmount);		
+				.divide(new BigDecimal(100));
+		sale.setVatAmount(vatAmount);
 		return sale;
 	}
 
+	@Override
+	public void sell(Sale sale, Boolean skipUpdatingStockRecord) {
+		//Update stock record
+		if(skipUpdatingStockRecord == false) {
+			stockItemService.updateQuantityInStock(sale.getStockItem(), sale.getQuantity() * -1);
+		}
 
+		//Reconcile keep in stock supplier order lines
+		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), true);
+
+		//Persist
+		save(sale);
+	}
 
 
 	@Override
 	public void sell(Sale sale) {
-		//Update stock record
-		stockItemService.updateQuantityInStock(sale.getStockItem(), sale.getQuantity() * -1);	
-				
-		//Reconcile keep in stock supplier order lines
-		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), true);
-		
-		//Persist
-		save(sale);
-	}	
-	
+		sell(sale, true);
+	}
+
 //	@Override
 //	public void sell(InvoiceOrderLine invoiceOrderLine) {
 //		Sale sale = new Sale();
@@ -83,15 +88,15 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 //		sale.setSellPrice(invoiceOrderLine.getSellPrice().multiply(new BigDecimal(sale.getQuantity())));
 //		sale.setVat(invoiceOrderLine.getVat());
 //		invoiceOrderLine.setSale(sale);
-//		
+//
 //		sell(sale);
-//	}	
+//	}
 	@Override
 	public void updateWithStockRecord(Sale sale, boolean updateStockRecord) {
 		if(sale.getEvent() == null || sale.getEvent().getId() == null) {
 			sale.setEvent(null); //Why do I have to do this
 		}
-		
+
 		//TO-DO
 		//Quick fix
 		if(sale.getOriginalQuantity() == null) {
@@ -99,12 +104,12 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		}
 		//Update stock record
 		if(updateStockRecord) {
-			stockItemService.updateQuantityInStock(sale.getStockItem(), (sale.getQuantity() - sale.getOriginalQuantity()) * -1);	
+			stockItemService.updateQuantityInStock(sale.getStockItem(), (sale.getQuantity() - sale.getOriginalQuantity()) * -1);
 		}
-		
+
 		//Reconcile keep in stock supplier order lines
 		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), false);
-		
+
 		super.update(sale);
 	}
 
@@ -113,7 +118,7 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		if(sale.getEvent() == null || sale.getEvent().getId() == null) {
 			sale.setEvent(null); //Why do I have to do this
 		}
-		
+
 		//TO-DO
 		//Quick fix
 		if(sale.getOriginalQuantity() == null) {
@@ -121,13 +126,13 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		}
 		//Update stock record
 		stockItemService.updateQuantityInStock(sale.getStockItem(), (sale.getQuantity() - sale.getOriginalQuantity()) * -1);
-		
+
 		//Reconcile keep in stock supplier order lines
 		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), false);
-		
+
 		super.update(sale);
 	}
-	
+
 	@Override
 	public List getAllForCsv() {
 		return saleRepository.getAllForCsv();
@@ -137,15 +142,15 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 	public void delete(Sale sale) {
 		// Must also place back into stock
 		sale = saleRepository.get(sale);
-		
+
 		StockItem stockItem = sale.getStockItem();
-		
+
 		//Update stock record
 		stockItemService.updateQuantityInStock(stockItem, sale.getQuantity());
-		
+
 		//Reconcile keep in stock supplier order lines
 		supplierOrderLineService.reconcileKeepInStock(sale.getStockItem(), false);
-		
+
 		super.delete(sale);
 	}
 
@@ -160,7 +165,7 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 	public Collection<Sale> getAll(Date startDate, Date endDate) {
 		return saleRepository.get(startDate, endDate);
 	}
-	
+
 	@Override
 	public Collection<Sale> get(Long stockItemID, Date startDate, Date endDate) {
 		return saleRepository.get(stockItemID, startDate, endDate);
@@ -194,19 +199,19 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 		//This could be an edit, check original amount sold
 		for(SaleOrReturnOrderLine s : saleOrReturn.getSaleOrReturnOrderLines()) {
 			Sale sale = getSale(s.getStockItem(), null);
-			
+
 			Long newAmountToSell = s.getAmountSold() - s.getOriginalAmountSold();
 			Long newAmountWithCustomer = s.getOriginalAmountRemainingWithCustomer() - s.getAmountRemainingWithCustomer();
-			
+
 			sale.setQuantity(newAmountToSell);
-			
+
 			//Change quantities
 			stockItemService.updateQuantities(s.getStockItem(), (newAmountWithCustomer - newAmountToSell) * 1, newAmountToSell * -1, null, null, null);
 			if(newAmountToSell != 0l) {
 				save(sale);
 			}
 		}
-		
+
 	}
 
 	@Override

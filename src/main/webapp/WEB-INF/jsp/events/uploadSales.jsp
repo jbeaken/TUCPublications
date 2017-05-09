@@ -14,7 +14,7 @@
     <input type="hidden" value="${event.name}" name="name"/>
 
   <div class="rows">
- 
+
       <div class="row">
             <div class="column w-33-percent">
           <form:label	for="file" path="file">CSV file To Upload</form:label><br/>
@@ -23,6 +23,12 @@
 
          <br/><br/>
 
+      </div>
+
+      <div class="row">
+          <div class="column w-33-percent">
+         <form:checkbox path="skipUpdatingStockRecord"/>
+         Click here to record sales, but not change stock record
       </div>
 
         <div class="row">

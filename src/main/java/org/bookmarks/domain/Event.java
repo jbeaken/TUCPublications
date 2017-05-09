@@ -60,6 +60,7 @@ public class Event extends AbstractNamedEntity {
 
 	//For upload of sales csv
 	@Transient private MultipartFile file;
+	@Transient private Boolean skipUpdatingStockRecord;
 
 	@NotNull
 	@DateTimeFormat(pattern="dd/MM/yy")
@@ -97,6 +98,13 @@ public class Event extends AbstractNamedEntity {
 
 	public EventType getType() {
 		return type;
+	}
+	public Boolean getSkipUpdatingStockRecord() {
+		return skipUpdatingStockRecord;
+	}
+
+	public void setSkipUpdatingStockRecord(Boolean skipUpdatingStockRecord) {
+		this.skipUpdatingStockRecord = skipUpdatingStockRecord;
 	}
 
 	public void setType(EventType type) {
