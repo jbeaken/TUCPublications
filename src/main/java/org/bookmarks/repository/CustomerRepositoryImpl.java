@@ -157,6 +157,8 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Customer> getForAutoComplete(String searchString, Boolean accountHolders) {
+		String baseSql = "select new Customer(c.id, c.firstName, c.lastName, c.address.postcode, c.bookmarksAccount.currentBalance) from Customer c ";
+
 		searchString = searchString.trim().replace("'", "''");  //trim and escape apostrophe
 		int index = searchString.indexOf(",");
 		Query query = null;
@@ -168,7 +170,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		if(index == -1) {
 			query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select new Customer(c.id, c.firstName, c.lastName, c.address.postcode) from Customer c " +
+				.createQuery(baseSql +
 					"where c.lastName like '" + searchString + "%'" + extras);
 		} else
 		//Comma but haven't started entering firstname
@@ -176,7 +178,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			searchString = searchString.substring(0, searchString.length() - 1);
 			query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select new Customer(c.id, c.firstName, c.lastName, c.address.postcode) from Customer c " +
+				.createQuery(baseSql +
 					"where c.lastName = '" + searchString + "'" + extras);
 		} else {
 			//Comma and has started entering first name
@@ -184,7 +186,7 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			String firstName = searchString.substring(index + 1).trim();
 			query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select new Customer(c.id, c.firstName, c.lastName, c.address.postcode) from Customer c " +
+				.createQuery(baseSql +
 					"where c.lastName = '" + surname + "' and c.firstName like '" + firstName + "%'" + extras);
 
 		}

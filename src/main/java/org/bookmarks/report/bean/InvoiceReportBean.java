@@ -20,7 +20,7 @@ public class InvoiceReportBean {
 	}
 	
 	public InvoiceReportBean(Long customerId, String firstName, String lastName, BigDecimal total, Double vat) {
-		this.customer = new Customer(customerId, firstName, lastName, "");
+		this.customer = new Customer(customerId, firstName, lastName, "", null);
 		
 		this.total = total;
 		this.vat = vat == null ? new Double(0) : vat;

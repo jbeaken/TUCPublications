@@ -549,8 +549,12 @@ public class CustomerController extends AbstractBookmarksController {
 
 		for (Customer c : customers) {
 			String postcode = c.getAddress().getPostcode();
-			buffer.append(" { \"label\": \"" + c.getLastName() + ", " + c.getFirstName() + " "
-					+ (postcode != null ? postcode : "") + "\", \"value\": \"" + c.getId() + "\" }");
+			BigDecimal currentBalance = c.getBookmarksAccount().getCurrentBalance();
+
+			String label =  c.getLastName() + ", " + c.getFirstName() + " "	+ (postcode != null ? postcode : "");
+			if( currentBalance != null ) label += " " + currentBalance.toString();
+
+			buffer.append(" { \"label\": \"" + label + "\", \"value\": \"" + c.getId() + "\" }");
 			buffer.append(", ");
 		}
 		String json = buffer.toString();

@@ -6,8 +6,8 @@
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#globalCustomerAutoComplete").val(ui.item.label);
-				$("#customerId").val(ui.item.value);
-				$("#searchCustomerSubmitButton").click();
+				$("#globalCustomerId").val(ui.item.value);
+				$("#globalCustomerForm").submit();
 				return false;
 			},
 			focus: function( event, ui ) {
@@ -15,7 +15,7 @@
 				return false;
 			}
 		});
-		$('#customerId').val(''); //clear customer id
+		$('#globalCustomerId').val(''); //clear customer id
 		$('#globalCustomerAutoComplete').focus();
 	});
 
@@ -123,3 +123,8 @@
 	</li>
 </ul>
 <input type="text" id="globalCustomerAutoComplete"/>
+
+<form id="globalCustomerForm" action="${pageContext.request.contextPath}/customer/search"s>
+
+<input type="hidden" name="customer.id" id="globalCustomerId"/>
+</form>

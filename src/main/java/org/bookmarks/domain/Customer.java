@@ -129,13 +129,17 @@ public class Customer extends AbstractEntity {
 
 	//From AutoComplete
 	//new Customer(c.id, c.firstName, c.surname, c.address.postcode)
-	public Customer(Long id, String firstName, String lastName, String postcode) {
+	public Customer(Long id, String firstName, String lastName, String postcode, BigDecimal currentBalance) {
 			this();
 			setId(id);
 			setFirstName(firstName);
 			setLastName(lastName);
 			address.setPostcode(postcode);
 			setAddress(address);
+
+			BookmarksAccount ba = new BookmarksAccount();
+			ba.setCurrentBalance( currentBalance );
+			setBookmarksAccount( ba );
 	}
 	//From getMinimal
 	//new Customer(c.id, c.firstName, c.surname, c.address.postcode)
