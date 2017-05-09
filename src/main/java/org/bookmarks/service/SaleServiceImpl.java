@@ -87,7 +87,7 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 
 	@Override
 	public void sell(Sale sale) {
-		sell(sale, true, false);
+		sell(sale, false, false);
 	}
 
 //	@Override

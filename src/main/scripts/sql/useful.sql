@@ -1,3 +1,7 @@
+-- Reset reorder review for an event
+update sale s, stockitem si set lastReorderReviewDate = '2016-01-01 00:00:00'
+  where s.stockItem_id = si.id and s.event_id in (636, 635);
+
 -- Delete event sales
 SET @eventId = ???;
 set foreign_key_checks = 0;
