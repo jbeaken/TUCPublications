@@ -61,10 +61,20 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 	}
 
 	@Override
-	public void sell(Sale sale, Boolean skipUpdatingStockRecord) {
+	public void sell(Sale sale, Boolean skipUpdatingStockRecord, Boolean updateReorderReviewDate) {
+
 		//Update stock record
 		if(skipUpdatingStockRecord == false) {
 			stockItemService.updateQuantityInStock(sale.getStockItem(), sale.getQuantity() * -1);
+		}
+
+		if(updateReorderReviewDate == true) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTime( sale.getCreationDate() );
+			cal.add(Calendar.DATE, -30);
+			Date dateBefore30Days = cal.getTime();
+
+			stockItemService.updateLastReorderReviewDate(sale.getStockItem(), dateBefore30Days);
 		}
 
 		//Reconcile keep in stock supplier order lines
@@ -77,7 +87,7 @@ public class SaleServiceImpl extends AbstractService<Sale> implements SaleServic
 
 	@Override
 	public void sell(Sale sale) {
-		sell(sale, true);
+		sell(sale, true, false);
 	}
 
 //	@Override

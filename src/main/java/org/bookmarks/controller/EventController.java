@@ -283,7 +283,7 @@ public class EventController extends AbstractBookmarksController {
 		Event event = (Event)session.getAttribute("eventForUpload");
 
 		// Persist sales and decrements stock level
-		sales.forEach (	s -> saleService.sell(s, event.getSkipUpdatingStockRecord()) );
+		sales.forEach (	s -> saleService.sell(s, event.getSkipUpdatingStockRecord(), true) );
 
 		// Persist invoices. This will decrement stock as well
 		for (Invoice i : invoices) {

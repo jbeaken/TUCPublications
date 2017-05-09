@@ -23,7 +23,7 @@ public interface SaleService extends Service<Sale>{
 
 	void sell(Sale sale);
 
-	void sell(Sale sale, Boolean skipUpdatingStockRecord);
+	void sell(Sale sale, Boolean skipUpdatingStockRecord, Boolean updateReorderReviewDate);
 
 	void updateWithStockRecord(Sale sale, boolean updateStockRecord);
 
