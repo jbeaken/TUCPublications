@@ -19,7 +19,7 @@ def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admi
 
 count = 0
 
-sql.executeUpdate('update customer set currentBalance = 0, amountPaidInMonthly = 0, paysInMonthly = false') //Reset all balances
+sql.executeUpdate('update customer set currentBalance = null, amountPaidInMonthly = null, paysInMonthly = false') //Reset all balances
 
 new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
