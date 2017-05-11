@@ -15,13 +15,13 @@ this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "cyclops", "com.mysql.jdbc.Driver")
 
 count = 0
 
 sql.executeUpdate('update customer set currentBalance = 0, amountPaidInMonthly = 0, paysInMonthly = false') //Reset all balances
 
-new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
+new File("/home/left-unpack/brain/accounts.txt").splitEachLine("\t") {fields ->
 
 //	def customerName = fields[0]
   def customerName = fields[0]      //This will be customer id, of blank
@@ -29,7 +29,7 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 	def currentBalance = fields[2]
 	def comment = fields[3]
 	def commentAsFloat = 0
-	def monthlyMatcher  = (comment =~ /£\d{1,2}/)
+	def monthlyMatcher  = (comment =~ /\d{1,2}\smonthly/)
 
   if(!customerId) {println "Invalid id ${customerId}!";return} //Skip nonsense row
 	if(!currentBalance) {println "Invalid current balance ${currentBalance}!";return} //Skip nonsense row
@@ -44,7 +44,8 @@ new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
 	if(monthlyMatcher)	{
 		//println "Have regex match " + monthlyMatcher[0]
-		commentAsFloat = Float.parseFloat(monthlyMatcher[0].replace('£', ''))
+    def amount = monthlyMatcher[0].replace(" monthly", "")
+		commentAsFloat = Float.parseFloat( amount )
 	}
 
 
