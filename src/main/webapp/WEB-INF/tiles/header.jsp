@@ -103,28 +103,18 @@
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateEvents")' title="Update Events"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Events"/>Update Events</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/uploadBrochure")' title="Upload Brochure"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Brochure"/>Upload Brochure</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateReadingLists")' title="Update Reading Lists"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Reading Lists"/>Update Reading Lists</a></li>
-		</ul>
-	</li>
-	<li class="toplast"><a href="<c:url value="/admin" />" accessKey="A" title="Admin" style="height:16px;line-height:16px;">Admin</a>
-		<ul>
-			<%--
-			<li><a href="<c:url value="/admin/uploadAccounts" />" title="Upload Accounts"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Accounts"/>Upload Accounts</a></li>
-			--%>
-			<li><a href="<c:url value="/admin/sendDailyEmail" />" title="Send Email Report"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Send Email Report"/>Send Email Report</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/removeConsumedCustomers")' title="Remove Customers"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Send Email Report"/>Remove Consumed Chips Orders</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/buildIndex")'" title="Build Index"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Build Index"/>Build Index</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/webScraper/getVerso")'" title="Get Verso"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Verso"/>Get Verso</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/webScraper/getZed")'" title="Get Zed"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Verso"/>Get Zed</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/webScraper/getLRB")'" title="Get LRB"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Verso"/>Get LRB</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/webScraper/getPluto")'" title="Get Pluto"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Pluto"/>Get Pluto</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/webScraper/getHaymarket")'" title="Get Haymarket"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Haymarket"/>Get Haymarket</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/admin/checkGardnersAvailability")'" title="Gardners"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Get Verso"/>Gardners Availability</a></li>
 		</ul>
 	</li>
 </ul>
+<!--
+
+<div id="globalCustomerAutoCompleteWrapper">
 <input type="text" id="globalCustomerAutoComplete"/>
 
 <form id="globalCustomerForm" action="${pageContext.request.contextPath}/customer/search"s>
 
-<input type="hidden" name="customer.id" id="globalCustomerId"/>
+<input type="hidden" name="customer.id" accesskey="M" id="globalCustomerId"/>
 </form>
+</div>
+-->

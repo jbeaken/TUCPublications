@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import java.math.BigDecimal;
@@ -61,6 +62,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.format.number.CurrencyStyleFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -289,7 +292,7 @@ public class CustomerController extends AbstractBookmarksController {
 				transactionType = record.get(2);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
-				
+
 				amount = record.get(3);
 				transactionReference = null;
 			}
@@ -543,6 +546,8 @@ public class CustomerController extends AbstractBookmarksController {
 	public String autoCompleteSurname(String term, Boolean accountHolders, HttpServletRequest request,
 			ModelMap modelMap) {
 
+				CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+
 		Collection<Customer> customers = customerService.getForAutoComplete(term, accountHolders);
 
 		StringBuffer buffer = new StringBuffer("[ ");
@@ -552,7 +557,7 @@ public class CustomerController extends AbstractBookmarksController {
 			BigDecimal currentBalance = c.getBookmarksAccount().getCurrentBalance();
 
 			String label =  c.getLastName() + ", " + c.getFirstName() + " "	+ (postcode != null ? postcode : "");
-			if( currentBalance != null ) label += " " + currentBalance.toString();
+			if( currentBalance != null ) label += " " +  currencyFormatter.print(currentBalance, Locale.UK);
 
 			buffer.append(" { \"label\": \"" + label + "\", \"value\": \"" + c.getId() + "\" }");
 			buffer.append(", ");

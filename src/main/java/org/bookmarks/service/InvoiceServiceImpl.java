@@ -31,7 +31,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.bookmarks.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.number.CurrencyFormatter;
 import org.springframework.format.number.PercentFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
