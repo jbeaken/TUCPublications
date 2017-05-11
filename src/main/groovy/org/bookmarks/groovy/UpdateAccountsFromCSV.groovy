@@ -15,13 +15,13 @@ this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "cyclops", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admin", "com.mysql.jdbc.Driver")
 
 count = 0
 
 sql.executeUpdate('update customer set currentBalance = 0, amountPaidInMonthly = 0, paysInMonthly = false') //Reset all balances
 
-new File("/home/left-unpack/brain/accounts.txt").splitEachLine("\t") {fields ->
+new File("/home/bookmarks/accounts.csv").splitEachLine("\t") {fields ->
 
 //	def customerName = fields[0]
   def customerName = fields[0]      //This will be customer id, of blank
