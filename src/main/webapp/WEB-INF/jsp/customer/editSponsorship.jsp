@@ -3,7 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <fmt:setLocale value="en_GB"/>
-
+<script>
+$(function() {
+	$( "#startDate" ).datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'dd/mm/yy'
+	});
+});
+</script>
 
 		<form:form modelAttribute="customer" action="editSponsorship?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
@@ -22,7 +30,7 @@
 
 		<div class="column w-33-percent">
         	<form:label for="sponsorshipDetails.startDate" path="sponsorshipDetails.startDate" cssErrorClass="error">Start Date</form:label><br/>
-        	<form:input path="sponsorshipDetails.startDate" /> <form:errors path="sponsorshipDetails.startDate" />
+        	<form:input path="sponsorshipDetails.startDate" id="startDate" /> <form:errors path="sponsorshipDetails.startDate" />
 		</div>
 
 	</div>
