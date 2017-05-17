@@ -152,7 +152,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 	private void getCategory(Document doc, StockItem stockItem) {
 		try {
 			Elements elements = doc.select("div.bucket");
-			
+
 			for(Element e : elements) {
 				Element h2 = e.select("h2").first();
 
@@ -719,6 +719,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 	private void getReview(Document doc, StockItem stockItem) {
 		//Review
 		Element reviewElement = doc.select("div#postBodyPS").first();
+
 		if(reviewElement == null) {
 			reviewElement = doc.select("div.productDescriptionWrapper").first();
 		}
@@ -753,6 +754,16 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 		String reviewAsHtml = null;
 		String reviewAsText = null;
 
+		//Check for presense of noscript
+		Elements noScriptElements = doc.select("noscript");
+		if(noScriptElements != null) {
+			for(Element e : noScriptElements) {
+				logger.debug("Have noScript as text = " + e.text());
+				logger.debug("Have noScript as html = " + e.html());
+			}
+		} else {
+			logger.debug("noScriptElements is null!");
+		}
 
 		//Check for presense of id=iframeContent
 		Elements iframeContentElements = doc.select("div#iframeContent");
@@ -768,8 +779,6 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 					logger.debug("iframeContent is null!");
 			}
 		}
-
-
 
 		try {
 
@@ -794,7 +803,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 
 					reviewAsText = java.net.URLDecoder.decode(reviewAsText, "UTF-8");
 
-			  		logger.debug("review : " + reviewAsText);
+			  		//logger.debug("review : " + reviewAsText);
 
 			  		//reviewAsHtml = reviewAsText;
 					stockItem.setReviewAsText(reviewAsText);

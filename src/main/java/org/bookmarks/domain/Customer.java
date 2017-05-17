@@ -64,6 +64,9 @@ public class Customer extends AbstractEntity {
 	@Embedded
 	private BookmarksAccount bookmarksAccount;
 
+	@Embedded
+	private SponsorshipDetails sponsorshipDetails;
+
 	@NotNull
 	@Size(min=1, max = 55)
 	@Column(name="firstName")
@@ -93,6 +96,15 @@ public class Customer extends AbstractEntity {
 
 	@Transient
 	private BigDecimal creditAmount;
+
+
+		public void setSponsorshipDetails(SponsorshipDetails sponsorshipDetails) {
+			this.sponsorshipDetails = sponsorshipDetails;
+		}
+
+		public SponsorshipDetails getSponsorshipDetails() {
+			return sponsorshipDetails;
+		}
 
 	public BigDecimal getCreditAmount() {
 		return creditAmount;

@@ -258,6 +258,11 @@
       <put-attribute name="body" value="/WEB-INF/jsp/customer/editAccount.jsp"/>
   </definition>
 
+  <definition name="editSponsorship" extends="baseLayout">
+      <put-attribute name="title" value="Edit Sponsorship Details"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/customer/editSponsorship.jsp"/>
+  </definition>
+
   <definition name="searchCustomers" extends="baseLayout">
       <put-attribute name="title" value="Search Customers"/>
       <put-attribute name="body" value="/WEB-INF/jsp/customer/searchCustomers.jsp"/>

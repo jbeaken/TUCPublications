@@ -1,18 +1,18 @@
 package org.bookmarks.domain;
 
-public enum SponsorType {
+public enum SponsorshipType {
 	WEB("Web"),
 	CUSTOMER("Customer"),
-	BOOKMARKS("Bookmarks"), 
+	BOOKMARKS("Bookmarks"),
 	CENTRE("Centre"),
 	BRANCH_DISTRICT("Branch/District"),
 	TRADE("Trade"),
 	INSTITUTION("Institution"),
 	SISTER("Sister");
-	
+
 	private final String displayName;
 
-    private SponsorType(String displayName) {
+    private SponsorshipType(String displayName) {
         this.displayName = displayName;
     }
 

@@ -1,6 +1,5 @@
 package org.bookmarks.domain;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Embeddable;
@@ -10,7 +9,7 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 @Embeddable
-public class BookmarksAccount implements Serializable{
+public class BookmarksAccount implements java.io.Serializable {
 
 	@NotNull
 	private Boolean sponsor = false;
@@ -43,7 +42,7 @@ public class BookmarksAccount implements Serializable{
 
 	public void setTsbMatchSecondary(String tsbMatchSecondary) {
 		this.tsbMatchSecondary = tsbMatchSecondary;
-	}	
+	}
 
 	public String getComment() {
 		return comment;

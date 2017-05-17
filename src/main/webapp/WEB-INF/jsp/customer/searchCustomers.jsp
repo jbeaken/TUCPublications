@@ -115,6 +115,7 @@
 <a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}"><img src="../resources/images/invoice.png" title="Create Invoice" /></a>
 <a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit" /></a>
 <a href="${pageContext.request.contextPath}/customer/editAccount?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit Account" /></a>
+<a href="${pageContext.request.contextPath}/customer/editSponsorship?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit Sponsorship" /></a>
 <a href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}"><img src="../resources/images/view.png" title="View Invoices" /></a>
 <img src='../resources/images/delete_medium.png' onclick='javascript:authoriseUser("delete?id=${searchTable.id}")' />
 <a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}"><img src="../resources/images/saleOrReturn.png" title="Sale or return" /></a>

@@ -51,6 +51,9 @@ import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.CustomerType;
 import org.bookmarks.domain.TransactionType;
 import org.bookmarks.service.CustomerService;
+import org.bookmarks.domain.SponsorshipDetails;
+import org.bookmarks.domain.SponsorshipType;
+
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
 import org.bookmarks.repository.AccountRepository;
@@ -929,6 +932,36 @@ public class CustomerController extends AbstractBookmarksController {
 
 		return "editCustomerAccount";
 	}
+
+
+		@RequestMapping(value = "/editSponsorship", method = RequestMethod.GET)
+		public String editSponsorship(Long id, String flow, ModelMap modelMap) {
+
+			Customer customer = customerService.get(id);
+
+			logger.info("About to edit customer sponsorship " + customer.getId() + " : " + customer.getFullName());
+
+			modelMap.addAttribute(customer);
+			modelMap.addAttribute("flow", flow);
+			modelMap.addAttribute(SponsorshipType.values());
+
+			return "editSponsorship";
+		}
+
+		@RequestMapping(value = "/editSponsorship", method = RequestMethod.POST)
+		public String editSponsorship(Customer customer, BindingResult bindingResult, String flow, HttpSession session,
+				HttpServletRequest request, ModelMap modelMap) {
+
+			Customer dbCustomer = customerService.get( customer.getId() );
+
+			dbCustomer.setSponsorshipDetails( customer.getSponsorshipDetails() );
+
+			customerService.update( dbCustomer );
+
+			logger.info("Successfully edited customer sponsorship - " + dbCustomer.getId() + " : " + customer.getFullName());
+
+			return searchFromSession(session, request, modelMap);
+		}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(Long id, String flow, ModelMap modelMap) {
