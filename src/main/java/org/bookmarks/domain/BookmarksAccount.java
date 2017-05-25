@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import javax.persistence.Column;
+
+
 @Embeddable
 public class BookmarksAccount implements java.io.Serializable {
 
@@ -23,6 +26,7 @@ public class BookmarksAccount implements java.io.Serializable {
 
 	private Boolean paysInMonthly = false;
 
+	@Column(columnDefinition="text", name = "comment")
 	private String comment;
 
 	private BigDecimal currentBalance = new BigDecimal(0);
