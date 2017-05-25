@@ -783,6 +783,7 @@ public class CustomerController extends AbstractBookmarksController {
 		Customer dbCustomer = customerService.get( customer.getId() );
 
 		dbCustomer.setFirstName( customer.getFirstName() );
+		dbCustomer.setFirstName( customer.getLastName() );
 		dbCustomer.setContactDetails( customer.getContactDetails() );
 		dbCustomer.setAddress( customer.getAddress() );
 		dbCustomer.setCustomerType( customer.getCustomerType() );
