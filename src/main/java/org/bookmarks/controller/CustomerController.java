@@ -953,6 +953,10 @@ public class CustomerController extends AbstractBookmarksController {
 		public String editSponsorship(Customer customer, BindingResult bindingResult, String flow, HttpSession session,
 				HttpServletRequest request, ModelMap modelMap) {
 
+			if(bindingResult.hasErrors()) {
+				return "editSponsorship";
+			}
+
 			Customer dbCustomer = customerService.get( customer.getId() );
 
 			dbCustomer.setSponsorshipDetails( customer.getSponsorshipDetails() );

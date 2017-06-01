@@ -40,7 +40,7 @@ $(function() {
 	 <div class="row">
         <div class="form-group">
 		     <label>Author To Delete</label>
-		     <input type="text" name="authorToDeleteName" id="authorToDeleteAutoComplete" autofocus="autofocus" required="required" class="form-control"/>
+		     <input type="text" name="authorToDeleteName" id="authorToDeleteAutoComplete" value="${authorToDeleteId}" autofocus="autofocus" required="required" class="form-control"/>
   	    </div>         
 	</div>
 	 <div class="row">

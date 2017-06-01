@@ -41,7 +41,7 @@
 						  <ul class="dropdown-menu" role="menu">
 						    <li><a href="${pageContext.request.contextPath}/author/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
 						    <li><a href="${pageContext.request.contextPath}/author/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
-							<li><a href="${pageContext.request.contextPath}/author/moveAndDelete?id=${searchTable.id}" target="_blank">Move and Delete</a></li>
+							<li><a href="${pageContext.request.contextPath}/author/moveAndDelete/${searchTable.id}" target="_blank">Move and Delete</a></li>
 						    <li class="divider"></li>
 						    
 						    <li><a href="${pageContext.request.contextPath}/author/delete?id=${searchTable.id}">Delete</a></li>

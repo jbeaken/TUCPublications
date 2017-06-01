@@ -21,17 +21,19 @@ $(function() {
   <div class="row">
 
 		<div class="column w-33-percent">
-			<label>Sponsorship Type</label><br/>
-			<form:select path="sponsorshipDetails.type">
-				<form:option value="" label="-select-" />
-							<form:options items="${sponsorshipTypeList}" itemLabel="displayName"/>
-			</form:select>
+			<label>Sponsorship Amount</label><br/>
+			<form:input path="sponsorshipDetails.amount" /> <form:errors path="sponsorshipDetails.amount" />
 		</div>
 
 		<div class="column w-33-percent">
         	<form:label for="sponsorshipDetails.startDate" path="sponsorshipDetails.startDate" cssErrorClass="error">Start Date</form:label><br/>
         	<form:input path="sponsorshipDetails.startDate" id="startDate" /> <form:errors path="sponsorshipDetails.startDate" />
 		</div>
+
+		<div class="column w-33-percent">
+        	<form:label for="sponsorshipDetails.endDate" path="sponsorshipDetails.endDate" cssErrorClass="error">End Date</form:label><br/>
+        	<form:input path="sponsorshipDetails.endDate" id="endDate" /> <form:errors path="sponsorshipDetails.endDate" />
+		</div>		
 
 	</div>
 
@@ -40,9 +42,7 @@ $(function() {
 		<div class="column w-33-percent">
 			<form:label for="sponsorshipDetails.comment" path="sponsorshipDetails.comment">Comments</form:label>
 			<br/>
-			<textarea name="sponsorshipDetails.comment" rows="10" cols="80">
-				${customer.sponsorshipDetails.comment}
-				<textarea>
+			<textarea name="sponsorshipDetails.comment" rows="10" cols="80">${customer.sponsorshipDetails.comment}</textarea>
 		</div>
 
 	</div>
@@ -51,7 +51,7 @@ $(function() {
       <div class="row">
           <div class="column w-100-percent">
 
- 				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
+ 				<input type="submit" class="btn btn-primary" value="Save Changes"></input>
 
 	 	 </div>
 	</div>

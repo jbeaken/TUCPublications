@@ -109,39 +109,56 @@
                       <display:column property="contactDetails.email" sortable="true" sortName="c.contactDetails.email" maxLength="19" title="Email"/>
                       <display:column property="sponsor" sortable="true" style="text-align: center;" sortName="c.bookmarksAccount.sponsor"  title="Sponsor"/>
                       <display:column property="account" sortable="true" sortName="c.bookmarksAccount.amount"  title="Account" />
-                      <display:column title="Actions" media="html" style="width:20%">
-<a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${searchTable.id}"><img src="../resources/images/order.png" title="Create Order" /></a>
-<a href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${searchTable.lastName}&customerOrderLine.customer.firstName=${searchTable.firstName}"><img src="../resources/images/allOrders.png" title="View Orders" /></a>
-<a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}"><img src="../resources/images/invoice.png" title="Create Invoice" /></a>
-<a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit" /></a>
-<a href="${pageContext.request.contextPath}/customer/editAccount?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit Account" /></a>
-<a href="${pageContext.request.contextPath}/customer/editSponsorship?id=${searchTable.id}&flow=search"><img src="../resources/images/write_medium.png" title="Edit Sponsorship" /></a>
-<a href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}"><img src="../resources/images/view.png" title="View Invoices" /></a>
-<img src='../resources/images/delete_medium.png' onclick='javascript:authoriseUser("delete?id=${searchTable.id}")' />
-<a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}"><img src="../resources/images/saleOrReturn.png" title="Sale or return" /></a>
-<a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}" target="_blank"><img src="../resources/images/credit.png" title="Add Credit" /></a>
-<a href="displayEditNote?id=${searchTable.id}" target="_blank"><img src="../resources/images/note.png" title="Add note" /></a>
-<a href="mergeFromSearchToKeep?id=${searchTable.id}" target="_blank"><img src="../resources/images/order.png" title="Merge And Keep" /></a>
-<a href="mergeFromSearchToDiscard?id=${searchTable.id}" target="_blank"><img src="../resources/images/write_medium.png" title="Merge And Discard" /></a>
-                      </display:column>
-                      <!--
+
+<display:column title="Actions" media="html" style="width:10%">
 					  	<div class="btn-group">
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
 						    <li><a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${searchTable.id}">Create Order</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/searchByCustomerID?id=${searchTable.id}">View Orders</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${searchTable.lastName}&customerOrderLine.customer.firstName=${searchTable.firstName}">View Orders</a></li>
+
 						    <li class="divider"></li>
-						    <li><a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}">Create Invoice</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search">Edit</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customer/view?id=${searchTable.id}&flow=search">View</a></li>
-						    <li><a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}">Sale Or Return</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}" target="_blank">Add Credit</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}" target="_blank">Create Invoice</a></li>
+
+  							<li><a href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}">View Invoices</a></li>	
+  							
+  							<li class="divider"></li>
+					    
+
+						    <li><a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customer/editAccount?id=${searchTable.id}&flow=search">Edit Account</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customer/editSponsorship?id=${searchTable.id}&flow=search">Edit Sponsorship</a></li>
+
+						    <li class="divider"></li>
+
+						  
+
+						    <li><a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}">Add Credit</a></li>
+
 						    <li><a href="displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
-						    <li><a onclick='javascript:authoriseUser("delete?id=${searchTable.id}")'>Delete</a></li>
+
+						    <li class="divider"></li>
+
+						    <li><a href="mergeFromSearchToKeep?id=${searchTable.id}" target="_blank">Merge and Keep</a></li>
+
+						    <li><a href="mergeFromSearchToDiscard?id=${searchTable.id}" target="_blank">Merge and Discard</a></li>
+
+						    <li class="divider"></li>
+
+						    <li><a href='javascript:authoriseUser("delete?id=${searchTable.id}")'>Delete
+						    </a></li>
+
 						  </ul>
 						</div>
-                       -->
+</display:column>
+
+
+                     
                       </display:table>
  </c:if>

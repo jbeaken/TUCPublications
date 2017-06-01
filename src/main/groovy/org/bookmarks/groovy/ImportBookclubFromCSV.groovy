@@ -15,11 +15,9 @@ this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "cyclops", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admin", "com.mysql.jdbc.Driver")
 
 count = 0
-
-sql.executeUpdate('update customer set currentBalance = null, amountPaidInMonthly = null, paysInMonthly = false') //Reset all balances
 
 new File("/home/bookmarks/pubclub.csv").splitEachLine("\t") {fields ->
 
@@ -27,17 +25,20 @@ new File("/home/bookmarks/pubclub.csv").splitEachLine("\t") {fields ->
   def lastname = fields[0]      //This will be customer id, of blank
 	def firstname = fields[1]      //This will be customer id, of blank
 	def address = fields[2]
-	def joined = fields[3]
-  def booksCutoff = fields[4]
+	def startDate = fields[3]
+  def endDate = fields[4]
+  def comment = fields[5]
 
-  if(lastname == 'Surname' || lastname == 'Curtis (2nd acct)') return
+  if(lastname == 'Surname' || lastname == 'Curtis (2nd acct)' || lastname == 'Stone (2ns acct)') return
 
 println "**"
   println lastname
   println firstname
   println address
-  println "joined : ${joined}"
-  println "booksCutoff : ${booksCutoff}"
+  println "startDate : ${startDate}"
+  println "endDate : ${endDate}"
+  println "comment : ${comment}"
+
 
   //def customer = sql.rows("select * from customer where firstname = ? and lastname = ? and sponsor = true", firstname, lastname)
   def customer = sql.rows("select * from customer where lastname = ? and sponsor = true", lastname)
@@ -55,7 +56,19 @@ if(customer.size() > 1) {
   if(!customer) System.exit(0);
 }
 
-  println customer
+if(comment) {
+  comment = comment + "<br/>" + customer[0].sponsorshipComment
+  } else {
+    comment = customer[0].sponsorshipComment
+  }
+
+  println comment
+
+  def sDate = Date.parse("dd/MM/yy", startDate)
+  def eDate = Date.parse("dd/MM/yy", endDate)
+
+
+  sql.executeUpdate("update customer set sponsorshipStartDate = ?, sponsorshipEndDate = ?, sponsorshipComment = ? where id = ?", sDate, eDate, comment, customer[0].id)
 
 count++
   //if(count > 4) System.exit(2)

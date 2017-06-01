@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.bookmarks.domain.Author;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.service.AZLookupServiceImpl;
@@ -157,10 +159,10 @@ public class AuthorController extends AbstractBookmarksController<Author> {
 		return "searchAuthors";
 	}
 
-	@RequestMapping(value="/moveAndDelete", method=RequestMethod.GET)
-	public String moveAndDelete(HttpSession session, ModelMap modelMap) {	
+	@RequestMapping(value="/moveAndDelete/{id}", method=RequestMethod.GET)
+	public String moveAndDelete(@PathVariable("id") Long id, ModelMap modelMap) {	
 		
-		modelMap.addAttribute(new Author());
+		modelMap.addAttribute("authorToDeleteId", id);
 		
 		return "moveAndDelete";
 	}
