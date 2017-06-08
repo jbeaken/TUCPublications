@@ -127,6 +127,10 @@
   							<li><a href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}">View Invoices</a></li>	
   							
   							<li class="divider"></li>
+
+  							<li><a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}">Create Sale Of Return</a></li>
+
+  							<li class="divider"></li>
 					    
 
 						    <li><a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
