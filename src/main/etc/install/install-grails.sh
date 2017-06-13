@@ -1,12 +1,4 @@
-# Make sure root
-if [ "$(id -u)" = "0" ]; then
-   echo "This script must not be run as root" 1>&2
-   exit 1
-fi
+wget https://github.com/grails/grails-core/releases/download/v2.5.6/grails-2.5.6.zip
+sudo unzip grails-2.5.6.zip -d /opt
+sudo ln -s /opt/grails-2.5.6 /opt/grails
 
-sudo apt-get install -y curl
-curl -s get.sdkman.io | bash
-
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-sdk install grails 2.5.6
