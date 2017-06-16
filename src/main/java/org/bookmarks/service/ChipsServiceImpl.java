@@ -536,7 +536,13 @@ public class ChipsServiceImpl implements ChipsService {
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 		
 		StatusLine status = response.getStatusLine();
+<<<<<<< HEAD
 		
+=======
+
+		log.info("/website/getOrders return status : " + status);
+
+>>>>>>> 973e5cd... Adding loggin
 		checkStatus(status);
 		
 
@@ -569,8 +575,11 @@ public class ChipsServiceImpl implements ChipsService {
 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
 
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
+
 		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
+		
 		for(Customer c : chipsCustomers) {
+
 
 		}
 
