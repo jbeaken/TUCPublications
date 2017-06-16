@@ -675,7 +675,7 @@
       <put-attribute name="body" value="/WEB-INF/jsp/admin/uploadAccounts.jsp"/>
   </definition>
 <definition name="chipsTransferReport" extends="baseLayout">
-      <put-attribute name="title" value="Sales Report"/>
+      <put-attribute name="title" value="Website Transfer Report"/>
       <put-attribute name="body" value="/WEB-INF/jsp/admin/chipsTransferReport.jsp"/>
   </definition>
 </tiles-definitions>

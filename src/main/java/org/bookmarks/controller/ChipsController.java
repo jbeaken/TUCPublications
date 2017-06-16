@@ -1,5 +1,6 @@
 package org.bookmarks.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,7 @@ import org.bookmarks.service.ChipsService;
 import org.bookmarks.service.CustomerOrderService;
 import org.bookmarks.service.Service;
 import org.bookmarks.service.StockItemService;
-import org.bookmarks.website.domain.Customer;
+import org.bookmarks.website.domain.WebsiteCustomer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +32,8 @@ public class ChipsController extends AbstractBookmarksController {
 	@Value("#{ applicationProperties['chipsUrl'] }")
 	private String chipsUrl;
 
- 	@Autowired
-	private CustomerRepository customerRepository;
-
-	@Autowired
-	private StockItemRepository stockItemRepository;
+	@Value("#{ applicationProperties['chips.get.orders'] }")
+	private Boolean chipsGetOrders;
 
 	@Autowired
 	private StockItemService stockItemService;
@@ -43,12 +41,9 @@ public class ChipsController extends AbstractBookmarksController {
 	@Autowired
 	private ChipsService chipsService;
 
-	@Autowired
-	private CustomerOrderService customerOrderService;
-
 	private final Logger logger = LoggerFactory.getLogger(ChipsController.class);
 
-	@RequestMapping(value="/updateChips", method=RequestMethod.GET)
+	@RequestMapping(value = "/updateChips", method = RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to update chips");
 		try {
@@ -63,8 +58,7 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-
-	@RequestMapping(value="/updateEvents", method=RequestMethod.GET)
+	@RequestMapping(value = "/updateEvents", method = RequestMethod.GET)
 	public String updateEvents(HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to update events on chips");
 		try {
@@ -79,7 +73,7 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-	@RequestMapping(value="/updateReadingLists", method=RequestMethod.GET)
+	@RequestMapping(value = "/updateReadingLists", method = RequestMethod.GET)
 	public String updateReadingLists(HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to update reading lists on chips");
 		try {
@@ -95,28 +89,28 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-	@RequestMapping(value="/uploadBrochure", method=RequestMethod.GET)
+	@RequestMapping(value = "/uploadBrochure", method = RequestMethod.GET)
 	public String uploadBrochure(Long id, HttpSession session, ModelMap modelMap) {
-		modelMap.addAttribute( new StockItem() );
+		modelMap.addAttribute(new StockItem());
 		return "displayUploadBrochure";
 	}
 
-	@RequestMapping(value="/uploadBrochure", method=RequestMethod.POST)
-	public String uploadBrochure(	StockItem stockItem, HttpSession session, ModelMap modelMap) {
+	@RequestMapping(value = "/uploadBrochure", method = RequestMethod.POST)
+	public String uploadBrochure(StockItem stockItem, HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to upload brouchure");
 
 		MultipartFile file = stockItem.getFile();
 		String fileName = file.getOriginalFilename();
 		Long fileSize = file.getSize();
 
-		if(fileName.indexOf(".pdf") == -1 && fileName.indexOf(".jpeg") == -1) {
+		if (fileName.indexOf(".pdf") == -1 && fileName.indexOf(".jpeg") == -1) {
 			logger.error("Brouchure filename {} is not a pdf", fileName);
 			addError("Can only upload pdfs", modelMap);
 			modelMap.addAttribute(stockItem);
 			return "displayUploadBrochure";
 		}
 
-		if(fileSize < 50000) {
+		if (fileSize < 50000) {
 			addError("File too small!", modelMap);
 			logger.error("Brouchure file is too small {}", fileSize);
 			modelMap.addAttribute(stockItem);
@@ -137,30 +131,31 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-	@RequestMapping(value="/removeFromWebsite", method=RequestMethod.GET)
+	@RequestMapping(value = "/removeFromWebsite", method = RequestMethod.GET)
 	public String removeFromWebsite(Long id, HttpSession session, ModelMap modelMap) {
 		chipsService.removeFromWebsite(id);
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";
 	}
 
-	@RequestMapping(value="/putOnWebsite", method=RequestMethod.GET)
+	@RequestMapping(value = "/putOnWebsite", method = RequestMethod.GET)
 	public String putOnWebsite(Long id, HttpSession session, ModelMap modelMap) {
 		chipsService.putOnWebsite(id);
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";
 	}
 
-	@RequestMapping(value="/syncStockItemWithChips", method=RequestMethod.GET)
-	public String syncStockItemWithChips(Long id, ModelMap modelMap)  {
+	@RequestMapping(value = "/syncStockItemWithChips", method = RequestMethod.GET)
+	public String syncStockItemWithChips(Long id, ModelMap modelMap) {
 
 		StockItem stockItem = stockItemService.get(id);
 
 		try {
 			chipsService.syncStockItemWithChips(stockItem);
-			if(stockItem.getPutOnWebsite()) {
+			if (stockItem.getPutOnWebsite()) {
 				addSuccess("Successfully updated " + stockItem.getTitle(), modelMap);
-			} else addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
+			} else
+				addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
 		} catch (Exception e) {
 			e.printStackTrace();
 			addError("Cannot sync with chips! " + e.getMessage(), modelMap);
@@ -169,8 +164,8 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-	@RequestMapping(value="/buildIndex", method=RequestMethod.GET)
-	public String buildIndex(ModelMap modelMap)  {
+	@RequestMapping(value = "/buildIndex", method = RequestMethod.GET)
+	public String buildIndex(ModelMap modelMap) {
 
 		long start = System.currentTimeMillis();
 
@@ -190,7 +185,7 @@ public class ChipsController extends AbstractBookmarksController {
 		return "welcome";
 	}
 
-	@RequestMapping(value="/removeConsumedCustomers")
+	@RequestMapping(value = "/removeConsumedCustomers")
 	public String removeConsumedCustomers(ModelMap modelMap) {
 		try {
 			chipsService.removeConsumedCustomers();
@@ -202,24 +197,26 @@ public class ChipsController extends AbstractBookmarksController {
 		return "chipsTransferReport";
 	}
 
-	@RequestMapping(value="/getOrders")
+	@RequestMapping(value = "/getOrders")
 	public String getOrders(ModelMap modelMap) {
 
-		logger.info("User request for getOrders started");
+		logger.info("User manual request for getOrders started");
 
+<<<<<<< HEAD
 		List<Customer> chipsCustomers;
 <<<<<<< HEAD
 =======
+=======
+		if (chipsGetOrders != true) {
+			logger.info("Aborting getOrders(), turned off");
+			return null;
+		}
+>>>>>>> 7fc11cb... getOrders now working
 
 >>>>>>> 49e2612... Added upload brochure functionality
 		try {
-			chipsCustomers = chipsService.getOrders();
-		} catch (Exception e) {
-			logger.error("Cannot get orders", e);
-			addError("Cannot get orders from chips! " + e.getMessage(), modelMap);
-			return "chipsTransferReport";
-		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 		if(chipsCustomers == null) {
@@ -234,11 +231,21 @@ public class ChipsController extends AbstractBookmarksController {
 			addError("Have got orders, but beans cannot process them :  " + e.getMessage(), modelMap);
 			return "chipsTransferReport";
 		}
+=======
+			Collection<WebsiteCustomer> chipsCustomers = chipsService.getOrders();
 
-		addSuccess("Have retrieved " + chipsCustomers.size() + " orders from chips" , modelMap);
+			addSuccess("Have retrieved " + chipsCustomers.size() + " orders from chips", modelMap);
 
-		logger.info("User request for getOrders started");
-		modelMap.addAttribute(chipsCustomers);
+			modelMap.addAttribute(chipsCustomers);
+>>>>>>> 7fc11cb... getOrders now working
+
+			logger.info("User request for getOrders successful");
+
+		} catch (Exception e) {
+			logger.error("Cannot get orders", e);
+
+			addError("Cannot get orders from chips! " + e.getMessage(), modelMap);
+		}
 
 		return "chipsTransferReport";
 	}

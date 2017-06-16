@@ -7,7 +7,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.bookmarks.service.ChipsService;
 import org.bookmarks.service.CustomerOrderService;
 import org.bookmarks.service.EmailService;
-import org.bookmarks.website.domain.Customer;
+import org.bookmarks.website.domain.WebsiteCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class ChipsOrdersManager extends AbstractScheduler {
 
 		if(isProduction() == false) return; //Should only run in production
 
-		List<Customer> chipsCustomers = null;
+		List<WebsiteCustomer> chipsCustomers = null;
 
 		try {
 			chipsCustomers = chipsService.getOrders();

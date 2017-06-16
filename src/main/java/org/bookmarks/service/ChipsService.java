@@ -7,7 +7,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.bookmarks.controller.StockItemSearchBean;
 import org.bookmarks.domain.Category;
 import org.bookmarks.domain.StockItem;
-import org.bookmarks.website.domain.Customer;
+import org.bookmarks.website.domain.WebsiteCustomer;
 
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
@@ -23,9 +23,9 @@ public interface ChipsService {
 
 	void putOnWebsite(Long id);
 
-	List<Customer> getOrders() throws ClientProtocolException, IOException;
+	Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException;
 
- void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException;
+	void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException;
 
 	void removeConsumedCustomers() throws ClientProtocolException, IOException;
 

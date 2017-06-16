@@ -12,7 +12,7 @@
 <br/>
 <br/>
 <br/>
- <c:forEach var="customer" items="${customerList}" varStatus="rowCounter">
+ <c:forEach var="customer" items="${websiteCustomerList}" varStatus="rowCounter">
  	<label>CUSTOMER : ${customer.fullName}</label><br/>
  		 <c:forEach var="order" items="${customer.orders}" varStatus="rowCounter">
  		 		<label>Stock : ${order.stockItem.title}</label><br/>

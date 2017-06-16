@@ -32,7 +32,7 @@ public class OrderLine extends AbstractEntity {
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name="customer_id")
-	private Customer customer;
+	private WebsiteCustomer customer;
 	
 	//ACCESSORS
 	public BigDecimal getSellPrice() {
@@ -54,10 +54,10 @@ public class OrderLine extends AbstractEntity {
 		this.quantity = quantity;
 	}
 	
-	public Customer getCustomer() {
+	public WebsiteCustomer getCustomer() {
 		return customer;
 	}
-	public void setCustomer(Customer customer) {
+	public void setCustomer(WebsiteCustomer customer) {
 		this.customer = customer;
 	}
 	

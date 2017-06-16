@@ -10,20 +10,20 @@ import flexjson.JSONSerializer;
 
 public class CustomerOrder {
 
-	private Customer customer;
+	private WebsiteCustomer customer;
 
 	//Constructor
 	public CustomerOrder() {
-		customer = new Customer();
+		customer = new WebsiteCustomer();
 		customer.setOrders(new HashSet<OrderLine>());
 	}
 
     //ACCESSORS
-    public Customer getCustomer() {
+    public WebsiteCustomer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(Customer customer) {
+	public void setCustomer(WebsiteCustomer customer) {
 		this.customer = customer;
 	}
 

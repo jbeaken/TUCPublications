@@ -7,9 +7,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+<<<<<<< HEAD
 import java.util.Date;
 import java.util.List;
 
+=======
+import java.util.HashSet;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.net.ssl.SSLSocket;
+import javax.transaction.Transactional;
+
+>>>>>>> 7fc11cb... getOrders now working
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -17,20 +27,37 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.bookmarks.domain.BookmarksAccount;
 import org.bookmarks.domain.Category;
+import org.bookmarks.domain.Customer;
+import org.bookmarks.domain.CustomerOrder;
+import org.bookmarks.domain.CustomerOrderLine;
+import org.bookmarks.domain.CustomerType;
 import org.bookmarks.domain.Event;
 import org.bookmarks.domain.Publisher;
 import org.bookmarks.domain.ReadingList;
+import org.bookmarks.domain.Source;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.exceptions.BookmarksException;
+import org.bookmarks.repository.CustomerRepository;
 import org.bookmarks.repository.StockItemRepository;
+<<<<<<< HEAD
 import org.bookmarks.website.domain.Customer;
 import org.jfree.util.Log;
+=======
+import org.bookmarks.website.domain.Address;
+import org.bookmarks.website.domain.ContactDetails;
+import org.bookmarks.website.domain.CreditCard;
+import org.bookmarks.website.domain.WebsiteCustomer;
+import org.bookmarks.website.domain.OrderLine;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+>>>>>>> 7fc11cb... getOrders now working
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +65,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
@@ -117,6 +146,9 @@ public class ChipsServiceImpl implements ChipsService {
 	@Autowired
 	private Environment environment;
 
+	@Autowired
+	private CustomerOrderService customerOrderService;
+
 	private final Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class);
 
 	private HttpHost target;
@@ -124,6 +156,12 @@ public class ChipsServiceImpl implements ChipsService {
 	private CredentialsProvider credsProvider;
 
 	private HttpClientContext localContext;
+
+	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private CustomerService customerService;	
 
 	@PostConstruct
 	public void postConstruct() {
@@ -176,7 +214,7 @@ public class ChipsServiceImpl implements ChipsService {
 			ChannelSftp sftpChannel = (ChannelSftp) channel;
 
 			// SFTP up original file
-		//	InputStream in = FileUtils.openInputStream(file);
+			// InputStream in = FileUtils.openInputStream(file);
 
 			sftpChannel.put(in, "/images/brochure.pdf", ChannelSftp.OVERWRITE);
 
@@ -225,6 +263,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			String knownHostsFilename = "/root/.ssh/known_hosts";
 <<<<<<< HEAD
+<<<<<<< HEAD
 			jsch.setKnownHosts(knownHostsFilename);
 >>>>>>> f35c91c... Chaning location of known hosts
 =======
@@ -242,12 +281,17 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			jsch.addIdentity( "/root/.ssh/id_rsa" );
 >>>>>>> f7fb51f... Using private key for sftp, not public
+=======
+			jsch.setKnownHosts("/root/.ssh/known_hosts");
+			jsch.addIdentity("/root/.ssh/id_rsa");
+>>>>>>> 7fc11cb... getOrders now working
 
 <<<<<<< HEAD
 			session = jsch.getSession( sftpUsername, sftpHost, 2298 );    
 			// non-interactive version. Relies in host key being in known-hosts file
 =======
 			session = jsch.getSession(sftpUsername, sftpHost, 2298);
+<<<<<<< HEAD
 <<<<<<< HEAD
 			// non-interactive version. Relies in host key being in known-hosts
 			// file
@@ -262,6 +306,13 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> daac66b... Adding customer search option merge
 		//	session.setPassword( sftpPassword );
 >>>>>>> 1e478db... Added shh key for sftp
+=======
+			// non-interactive version. Relies in host key being in known-hosts
+			// file
+
+			// Now using ssh keys (see addIdentity)
+			// session.setPassword( sftpPassword );
+>>>>>>> 7fc11cb... getOrders now working
 
 			session.connect();
 
@@ -275,8 +326,12 @@ public class ChipsServiceImpl implements ChipsService {
 			File originalFile = new File(imageFileLocation + "original" + File.separator + stockItem.getImageFilename());
 =======
 			// SFTP up original file
+<<<<<<< HEAD
 			File originalFile = new File( filename );
 >>>>>>> 88dbf5a... ADding logging
+=======
+			File originalFile = new File(filename);
+>>>>>>> 7fc11cb... getOrders now working
 			InputStream in = FileUtils.openInputStream(originalFile);
 			
 			sftpChannel.put(in, "/images/original/" + stockItem.getImageFilename(), ChannelSftp.OVERWRITE);
@@ -411,7 +466,8 @@ public class ChipsServiceImpl implements ChipsService {
 			HttpEntity entity = response.getEntity();
 			String returnCode = EntityUtils.toString(entity);
 			// if(EntityUtils.toString(entity) != "success") throw new
-			// BookmarksException("Cannot update chips with filename information for stockitem "
+			// BookmarksException("Cannot update chips with filename information
+			// for stockitem "
 			// + stockItem.getId());
 			EntityUtils.consume(entity);
 			// do something useful with the response body
@@ -473,7 +529,7 @@ public class ChipsServiceImpl implements ChipsService {
 	
 	@Override
 	public void updateChips() throws ClientProtocolException, IOException {
-		
+
 		Collection<StockItem> stockItems = stockItemService.getBounciesAndStickies();
 		Collection<StockItem> strippedStockItems = new ArrayList<StockItem>();
 		
@@ -511,10 +567,120 @@ public class ChipsServiceImpl implements ChipsService {
 		try {
 		    checkStatus(response);
 		} finally {
+<<<<<<< HEAD
 		    response.close();
 		}		
 	} 
 	
+=======
+			response.close();
+		}
+	}
+
+	private CloseableHttpResponse execute(String url, String name, String value) throws ClientProtocolException, IOException {
+
+		// Get Post
+		HttpPost httpPost = getHttpPost(url, name, value);
+
+		CredentialsProvider credsProvider = new BasicCredentialsProvider();
+
+		// credsProvider.setCredentials( new AuthScope(AuthScope.ANY_HOST, -1),
+		// new UsernamePasswordCredentials("little", "large"));
+		credsProvider.setCredentials(new AuthScope(target.getHostName(), -1), new UsernamePasswordCredentials("little", "large"));
+
+		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+
+		// // Create AuthCache instance
+		AuthCache authCache = new BasicAuthCache();
+		// // Generate BASIC scheme object and add it to the local
+		// // auth cache
+		BasicScheme basicAuth = new BasicScheme();
+		authCache.put(target, basicAuth);
+		//
+		// // Add AuthCache to the execution context
+		HttpClientContext localContext = HttpClientContext.create();
+		localContext.setCredentialsProvider(credsProvider);
+		localContext.setAuthCache(authCache);
+
+		CloseableHttpResponse response = httpclient.execute(httpPost, localContext);
+
+		return response;
+	}
+
+	private HttpPost getHttpPost(String uri, String name, String value) throws UnsupportedEncodingException {
+
+		HttpPost httpPost = getHttpPost(uri);
+
+		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+
+		nvps.add(new BasicNameValuePair(name, value));
+		httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
+		// httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+
+		return httpPost;
+	}
+
+	private HttpPost getHttpPost(String uri) {
+		String url = chips_protocol + "://" + chips_host;
+		if (chips_port != 80 && !chips_protocol.equals("https")) {
+			url = url + ":" + chips_port;
+		}
+
+		if (!chips_context.isEmpty()) {
+			url = url + "/" + chips_context;
+		}
+		url = url + uri;
+
+		logger.debug("Creating HTTP Post with url " + url);
+
+		HttpPost httpPost = new HttpPost(url);
+
+		return httpPost;
+	}
+
+	private HttpGet getHttpGet(String uri) {
+		String url = chips_protocol + "://" + chips_host;
+		if (chips_port != 80 && !chips_protocol.equals("https")) {
+			url = url + ":" + chips_port;
+		}
+
+		if (!chips_context.isEmpty()) {
+			url = url + "/" + chips_context;
+		}
+		url = url + uri;
+
+		logger.debug("Creating HTTP Get with url " + url);
+
+		HttpGet httpGet = new HttpGet(url);
+
+		return httpGet;
+	}
+
+	private CloseableHttpClient getHttpClient() {
+		// HttpHost target = new HttpHost(chips_host, chips_port,
+		// chips_protocol);
+
+		// CredentialsProvider credsProvider = new BasicCredentialsProvider();
+
+		// credsProvider.setCredentials(new AuthScope(target.getHostName(), -1),
+		// new UsernamePasswordCredentials("little", "large"));
+
+		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
+
+		// // // Create AuthCache instance
+		// AuthCache authCache = new BasicAuthCache();
+		// // // Generate BASIC scheme object and add it to the local
+		// // // auth cache
+		// BasicScheme basicAuth = new BasicScheme();
+		// authCache.put(target, basicAuth);
+		// //
+		// // // Add AuthCache to the execution context
+		// HttpClientContext localContext = HttpClientContext.create();
+		// localContext.setAuthCache(authCache);
+
+		return httpclient;
+	}
+>>>>>>> 7fc11cb... getOrders now working
 
 	private void checkStatus(CloseableHttpResponse response) throws IOException {
 	    HttpEntity entity = response.getEntity();
@@ -524,6 +690,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<Customer> getOrders() throws ClientProtocolException, IOException {
 <<<<<<< HEAD
 		CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -540,15 +707,24 @@ public class ChipsServiceImpl implements ChipsService {
 			logger.info("Aborting getOrders(), turned off");
 			return null;
 		}
+=======
+	@Transactional
+	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+>>>>>>> 7fc11cb... getOrders now working
 
 		CloseableHttpClient httpclient = getHttpClient();
 
-		HttpPost httpPost = getHttpPost("/website/getOrders");
-		httpost.addHeader("accepts", "application/json");
+		HttpGet httpGet = getHttpGet("/website/getOrders");
+		httpGet.addHeader("accepts", "application/json");
 
+<<<<<<< HEAD
 >>>>>>> 84d9d23... Adding accepts headers
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 		
+=======
+		CloseableHttpResponse response = httpclient.execute(httpGet);
+
+>>>>>>> 7fc11cb... getOrders now working
 		StatusLine status = response.getStatusLine();
 <<<<<<< HEAD
 		
@@ -585,20 +761,111 @@ public class ChipsServiceImpl implements ChipsService {
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize( jsonCustomers );
 =======
 
-		//Decrypt json
+		// Decrypt json
 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
+		
+		logger.debug("{}", decryptedJson);
 
-		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
+		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
+		});
 
 		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
 
-		for(Customer c : chipsCustomers) {
+		// Now persist
+		saveOrders(chipsCustomers);
 
+		return chipsCustomers;
+	}
 
-		}
+	private void saveOrders(List<WebsiteCustomer> chipsCustomers) {
 
+<<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
 		return chipsCustomers;
+=======
+		for (WebsiteCustomer chipsCustomer : chipsCustomers) { 
+
+			
+			ContactDetails descryptedContactDetails = chipsCustomer.getContactDetails();
+
+			CreditCard decryptedCreditCard = chipsCustomer.getCreditCard();
+
+			Address decryptedAddress = chipsCustomer.getAddress();
+			
+			// Check if customers exist using email, if doesn't exist create new beans customer
+			Customer beansCustomer = customerRepository.getByEmail(chipsCustomer.getContactDetails().getEmail());
+
+			if (beansCustomer == null) {
+
+				beansCustomer = new org.bookmarks.domain.Customer();
+
+				// Set is from web
+				beansCustomer.setCustomerType(CustomerType.WEB);
+
+				beansCustomer.setFirstName(chipsCustomer.getFirstName());
+				beansCustomer.setLastName(chipsCustomer.getLastName());
+				beansCustomer.setAddress(decryptedAddress);
+
+				BookmarksAccount account = new BookmarksAccount();
+				beansCustomer.setBookmarksAccount(account);
+			}
+
+			beansCustomer.setContactDetails(descryptedContactDetails);
+
+			beansCustomer.setWebAddress(decryptedAddress);
+
+			// TODO What to do about name? Maybe need webname
+
+			customerService.saveOrUpdate(beansCustomer);
+
+			// Build up Beans CustomerOrderLines
+			beansCustomer.setCustomerOrderLines(new HashSet<CustomerOrderLine>());
+
+			for (OrderLine chipsOl : chipsCustomer.getOrders()) {
+				CustomerOrderLine beansOl = new CustomerOrderLine();
+
+				beansOl.setAmount(new Long(chipsOl.getQuantity()));
+				beansOl.setSellPrice(chipsOl.getSellPrice());
+				beansOl.setPostage(chipsOl.getPostage());
+				beansOl.setWebReference(chipsOl.getWebReference());
+
+				if (chipsCustomer.getOrders().size() > 1) {
+					beansOl.setIsMultipleOrder(true);
+				} else {
+					beansOl.setIsMultipleOrder(false);
+				}
+
+				StockItem stockItem = stockItemService.get(chipsOl.getStockItem().getId());
+
+				beansOl.setStockItem(stockItem);
+				beansOl.setAddress(chipsCustomer.getAddress());
+
+				beansCustomer.getCustomerOrderLines().add(beansOl);
+
+				logger.info("******");
+				logger.info("StockItem : " + stockItem.getTitle());
+				logger.info("Quantity : " + beansOl.getAmount());
+				logger.info("Web ref : " + beansOl.getWebReference());
+				logger.info("******");
+
+			}
+
+			// The customer order mechanism used by beans
+			CustomerOrder customerOrder = new CustomerOrder();
+			
+			customerOrder.setPaymentType(chipsCustomer.getPaymentType());
+
+			customerOrder.setDeliveryType(chipsCustomer.getDeliveryType());
+
+			customerOrder.setCreditCard(decryptedCreditCard);
+
+			customerOrder.setCustomer(beansCustomer);
+
+			customerOrder.setSource(Source.WEB);
+
+			customerOrderService.save(customerOrder, beansCustomer.getCustomerOrderLines());
+		} // end for
+>>>>>>> 7fc11cb... getOrders now working
 	}
 	
 	@Override
@@ -695,10 +962,17 @@ public class ChipsServiceImpl implements ChipsService {
 		if(status.getStatusCode() == 424) {
 			throw new BookmarksException("Error, cannot find image " + status.getStatusCode());
 		}
+<<<<<<< HEAD
 		if(status.getStatusCode() == 403) {
 			throw new BookmarksException("Error, bad time stamp " + status.getStatusCode());
 		}			
 		if(status.getStatusCode() != 200) {
+=======
+		if (status.getStatusCode() == 403) {
+			throw new BookmarksException("Error, security (perhaps csrf?) " + status.getStatusCode());
+		}
+		if (status.getStatusCode() != 200) {
+>>>>>>> 7fc11cb... getOrders now working
 			throw new BookmarksException("Error, status code " + status.getStatusCode());
 		}
 	}

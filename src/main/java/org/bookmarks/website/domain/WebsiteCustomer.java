@@ -16,8 +16,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
+<<<<<<< HEAD:src/main/java/org/bookmarks/website/domain/Customer.java
 @Entity
 public class Customer extends AbstractEntity {
+=======
+//@Entity
+public class WebsiteCustomer extends AbstractEntity {
+>>>>>>> 7fc11cb... getOrders now working:src/main/java/org/bookmarks/website/domain/WebsiteCustomer.java
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="customer", fetch=FetchType.EAGER)
     private Set<OrderLine> orders = new HashSet<OrderLine>();
@@ -46,12 +51,6 @@ public class Customer extends AbstractEntity {
 	@Column(name="deliveryType")
 	private DeliveryType deliveryType = DeliveryType.MAIL;	
 	
-	@NotNull
-	private Boolean hasBeenConsumed;
-    
-    //@NotNull
-    //private Boolean hasAccount;
-
     @Embedded
     private ContactDetails contactDetails;
     
@@ -59,7 +58,8 @@ public class Customer extends AbstractEntity {
     private Address address;
     
     //Constructors
-    public Customer() {
+    
+    public WebsiteCustomer() {
     	super();
     	setAddress(new Address());
     	setCreditCard(new CreditCard());
@@ -84,16 +84,6 @@ public class Customer extends AbstractEntity {
 	public void setBeansId(Long beansId) {
 		this.beansId = beansId;
 	}
-/*
-	public Boolean getHasAccount() {
-		return hasAccount;
-	}
-
-	public void setHasAccount(Boolean hasAccount) {
-		this.hasAccount = hasAccount;
-	}
-*/
-	
 	
 	public ContactDetails getContactDetails() {
 		return contactDetails;
@@ -124,14 +114,6 @@ public class Customer extends AbstractEntity {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	public Boolean getHasBeenConsumed() {
-		return hasBeenConsumed;
-	}
-
-	public void setHasBeenConsumed(Boolean hasBeenConsumed) {
-		this.hasBeenConsumed = hasBeenConsumed;
 	}
 
 	public CreditCard getCreditCard() {

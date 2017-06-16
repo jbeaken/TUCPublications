@@ -6,7 +6,7 @@ import java.util.List;
 import org.bookmarks.controller.CustomerOrderLineSearchBean;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.CustomerOrderLine;
-import org.bookmarks.website.domain.Customer;
+import org.bookmarks.website.domain.WebsiteCustomer;
 
 public interface CustomerOrderService {
 
@@ -18,5 +18,4 @@ public interface CustomerOrderService {
 	
 	void save(CustomerOrder customerOrder, Collection<CustomerOrderLine> collection);
 
-	void saveChipsOrders(List<Customer> chipsCustomers);
 }

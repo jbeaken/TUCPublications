@@ -86,8 +86,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	 * For beans, as opposed to chips
 	 */
 	@Override
-	public void save(CustomerOrder customerOrder,
-			Collection<CustomerOrderLine> customerOrderLines) {
+	public void save(CustomerOrder customerOrder, Collection<CustomerOrderLine> customerOrderLines) {
 		customerOrder.setCustomerOrderline(customerOrderLines);
 		CustomerOrderLine split = null; // If partial fill
 
@@ -124,22 +123,18 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			}
 
 			// Not research
-			long quantityInStock = customerOrderLine.getStockItem()
-					.getQuantityInStock();
+			long quantityInStock = customerOrderLine.getStockItem().getQuantityInStock();
 			if (quantityInStock > 0) { // In stock, is fully filled?
 				if (quantityInStock >= customerOrderLine.getAmount()) {
-					customerOrderLine
-							.setStatus(CustomerOrderLineStatus.IN_STOCK);
+					customerOrderLine.setStatus(CustomerOrderLineStatus.IN_STOCK);
 				} else {
 					// Split into two, one fully filled (in stock) one out of
 					// stock
 					split = customerOrderLine.clone();
-					split.setAmount(customerOrderLine.getAmount()
-							- quantityInStock);
+					split.setAmount(customerOrderLine.getAmount() - quantityInStock);
 					split.setStatus(CustomerOrderLineStatus.OUT_OF_STOCK);
 					customerOrderLine.setAmount(quantityInStock);
-					customerOrderLine
-							.setStatus(CustomerOrderLineStatus.IN_STOCK);
+					customerOrderLine.setStatus(CustomerOrderLineStatus.IN_STOCK);
 					// SupplierOrderLine supplierOrderLine = new
 					// SupplierOrderLine(split);
 
@@ -153,8 +148,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 				// TO-DO Check keep in stock, check if partial fill
 			} else {
 				// Out of stock
-				customerOrderLine
-						.setStatus(CustomerOrderLineStatus.OUT_OF_STOCK);
+				customerOrderLine.setStatus(CustomerOrderLineStatus.OUT_OF_STOCK);
 				// TO-DO Create order automatically
 			}
 
@@ -172,9 +166,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 
 			// Deal with stock item
 			StockItem stockItem = customerOrderLine.getStockItem();
-			Long quantityForCustomerOrder = (split == null ? customerOrderLine
-					.getAmount() : customerOrderLine.getAmount()
-					+ split.getAmount());
+			Long quantityForCustomerOrder = (split == null ? customerOrderLine.getAmount() : customerOrderLine.getAmount() + split.getAmount());
 			/*
 			 * Long quantityForCustomerOrder = 0l; if(split == null) {
 			 * quantityForCustomerOrder = customerOrderLine.getAmount();
@@ -186,33 +178,29 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 			 */
 			// stockItem.setQuantityForCustomerOrder(quantityForCustomerOrder +
 			// stockItem.getQuantityForCustomerOrder());
-			stockItemService.updateQuantities(stockItem, null, null, null,
-					quantityForCustomerOrder, null);
-		}// end of customerorderline for loop
+			stockItemService.updateQuantities(stockItem, null, null, null, quantityForCustomerOrder, null);
+		} // end of customerorderline for loop
 
 		// Email customer if they have an email address
 
 	}
 
-	private void setDetails(CustomerOrder customerOrder,
-			CustomerOrderLine customerOrderLine) {
+	private void setDetails(CustomerOrder customerOrder, CustomerOrderLine customerOrderLine) {
 		customerOrderLine.setCustomer(customerOrder.getCustomer());
 
 		if (customerOrder.getSource() != Source.WEB) { // Transfer over address
 														// from customer
-			customerOrderLine.setAddress(customerOrder.getCustomer()
-					.getAddress());
-			customerOrderLine.setSellPrice(customerOrderLine.getStockItem()
-					.getSellPrice());
+			customerOrderLine.setAddress(customerOrder.getCustomer().getAddress());
+			customerOrderLine.setSellPrice(customerOrderLine.getStockItem().getSellPrice());
 		}
 
 		// Temp, as setting to web manually should not happen after new release
-		if (customerOrder.getSource() == Source.WEB
-				&& customerOrderLine.getSellPrice() == null) { // Transfer over
-																// address from
-																// customer
-			customerOrderLine.setSellPrice(customerOrderLine.getStockItem()
-					.getSellPrice());
+		if (customerOrder.getSource() == Source.WEB && customerOrderLine.getSellPrice() == null) { // Transfer
+																									// over
+																									// address
+																									// from
+																									// customer
+			customerOrderLine.setSellPrice(customerOrderLine.getStockItem().getSellPrice());
 		}
 
 		if (customerOrderLine.getDeliveryType() == DeliveryType.MAIL) {
@@ -236,6 +224,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		col.setStatus(CustomerOrderLineStatus.RESEARCH);
 		customerOrderLineService.save(col);
 	}
+<<<<<<< HEAD
 
 	@Override
 	public void saveChipsOrders(List<org.bookmarks.website.domain.Customer> chipsCustomers) {
@@ -412,4 +401,6 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	// customerOrderLineRepository.getCustomerOrderLines(customerId);
 	// return customerOrderLines;
 	// }
+=======
+>>>>>>> 7fc11cb... getOrders now working
 }
