@@ -525,6 +525,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@Override
 	public List<Customer> getOrders() throws ClientProtocolException, IOException {
+<<<<<<< HEAD
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
 		HttpPost httpPost = new HttpPost(chipsUrl + "/website/getOrders");
@@ -533,6 +534,19 @@ public class ChipsServiceImpl implements ChipsService {
 		
 		httpPost.setEntity(new UrlEncodedFormEntity(nvps));
 		
+=======
+
+		if (chipsGetOrders != true) {
+			logger.info("Aborting getOrders(), turned off");
+			return null;
+		}
+
+		CloseableHttpClient httpclient = getHttpClient();
+
+		HttpPost httpPost = getHttpPost("/website/getOrders");
+		httpost.addHeader("accepts", "application/json");
+
+>>>>>>> 84d9d23... Adding accepts headers
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 		
 		StatusLine status = response.getStatusLine();
@@ -540,7 +554,7 @@ public class ChipsServiceImpl implements ChipsService {
 		
 =======
 
-		log.info("/website/getOrders return status : " + status);
+		logger.info("/website/getOrders return status : " + status);
 
 >>>>>>> 973e5cd... Adding loggin
 		checkStatus(status);
@@ -577,7 +591,7 @@ public class ChipsServiceImpl implements ChipsService {
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize(decryptedJson);
 
 		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
-		
+
 		for(Customer c : chipsCustomers) {
 
 
