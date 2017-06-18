@@ -1,9 +1,5 @@
 package org.bookmarks.scheduler;
 
-import java.io.IOException;
-import java.util.Set;
-
-import org.bookmarks.bean.ScraperISBNHolder;
 import org.bookmarks.exceptions.BookmarksException;
 import org.bookmarks.service.EmailService;
 import org.slf4j.Logger;

@@ -108,6 +108,7 @@ public class EmailServiceImpl implements EmailService {
 	}	
 	
 	@Override
+<<<<<<< HEAD
 	public void emailErrorToJack(Exception exception) {
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setFrom(fromEmail);
@@ -123,6 +124,8 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
+=======
+>>>>>>> 407a726... Cleaned up basic auth
 	public void sendGardnersAvailabiltyReport(int count) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
@@ -208,9 +211,15 @@ public class EmailServiceImpl implements EmailService {
 
 	@Override
 	public void sendCustomerOrderConfirmationEmail(final CustomerOrder customerOrder) {
+<<<<<<< HEAD
 		
 //		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
 		final String[] emails = {"jack747@gmail.com","info@bookmarksbookshop.co.uk"};
+=======
+
+		final String[] emails = { customerOrder.getCustomer().getContactDetails().getEmail(), "info@bookmarksbookshop.co.uk" };
+
+>>>>>>> 407a726... Cleaned up basic auth
 		StringBuilder builder = new StringBuilder(300);
 		builder.append("<html>");
 		builder.append("<a href='http://bookmarksbookshop.co.uk'><img src='http://bookmarksbookshop.co.uk/resources/images/bookmarks_logo_400.png'/></a>");
@@ -220,10 +229,47 @@ public class EmailServiceImpl implements EmailService {
 		for(CustomerOrderLine col : customerOrder.getCustomerOrderline()) {
 			builder.append("<div>" + col.getStockItem().getTitle() + "</div>");
 		}
+<<<<<<< HEAD
 		
+=======
+
+		builder.append("</html>");
+
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+				message.setTo(emails);
+				message.setFrom(fromEmail);
+				message.setSubject("Your bookmarks bookshop order");
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("customerOrder", customerOrder);
+				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-confirmation.vm", "utf-8", model);
+				message.setText(text, true);
+			}
+		};
+
+		this.mailSender.send(preparator);
+	}
+
+	@Override
+	public void sendCustomerOrderLinePostedEmail(final CustomerOrderLine customerOrderLine) {
+
+		final String[] emails = { customerOrderLine.getCustomer().getContactDetails().getEmail(), "info@bookmarksbookshop.co.uk" };
+
+		StringBuilder builder = new StringBuilder(300);
+
+		builder.append("<html>");
+		builder.append("<a href='http://bookmarksbookshop.co.uk'><img src='http://bookmarksbookshop.co.uk/resources/images/bookmarks_logo_400.png'/></a>");
+		builder.append("<h1>Confirmation of Order</h1>");
+		builder.append("<br/><br/>");
+
+		builder.append("<div>" + customerOrderLine.getStockItem().getTitle() + "</div>");
+
+>>>>>>> 407a726... Cleaned up basic auth
 		builder.append("</html>");
 		
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
+<<<<<<< HEAD
 	         public void prepare(MimeMessage mimeMessage) throws Exception {
 	            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 	            message.setTo(emails);
@@ -241,5 +287,43 @@ public class EmailServiceImpl implements EmailService {
 //		} catch(MailException ex) {
 //			logger.error("Cannot send confirmation order", ex.getMessage());            
 //		}	
+=======
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				
+				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+				
+				message.setTo(emails);
+				message.setFrom(fromEmail);
+				message.setSubject("Your bookmarks bookshop order");
+				
+				Map<String, Object> model = new HashMap<String, Object>();
+				
+				model.put("customerOrderLine", customerOrderLine);
+				
+				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-posted.vm", "utf-8", model);
+				message.setText(text, true);
+			}
+		};
+
+		this.mailSender.send(preparator);
+
+>>>>>>> 407a726... Cleaned up basic auth
 	}
+
+	@Override
+	public void sendErrorEmail(Exception exception, String subject) {
+		SimpleMailMessage msg = new SimpleMailMessage();
+		
+		msg.setFrom(fromEmail);
+		msg.setSubject("Error : " + subject);
+		msg.setTo("jack747@gmail.com");
+		msg.setText(exception.getStackTrace().toString());
+		
+		try {
+			this.mailSender.send(msg);
+		} catch (MailException ex) {
+			System.err.println(ex.getMessage());
+		}
+	}
+
 }

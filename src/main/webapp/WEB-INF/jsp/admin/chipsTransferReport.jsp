@@ -13,8 +13,13 @@
 <br/>
 <br/>
  <c:forEach var="customer" items="${websiteCustomerList}" varStatus="rowCounter">
- 	<label>CUSTOMER : ${customer.fullName}</label><br/>
+ 	
+ 	<label>CUSTOMER : </label>${customer.fullName}<br/>
+ 	
+ 	No of order lines : ${customer.orders.size()}<br/>
+ 	
  		 <c:forEach var="order" items="${customer.orders}" varStatus="rowCounter">
  		 		<label>Stock : ${order.stockItem.title}</label><br/>
  		 </c:forEach>
+ 		  	
  </c:forEach>

@@ -136,7 +136,13 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@Value("#{ applicationProperties['chips.protocol'] }")
 	private String chips_protocol;
+	
+	@Value("#{ applicationProperties['chips.basic.username'] }")
+	private String chips_username;	
 
+	@Value("#{ applicationProperties['chips.basic.password'] }")
+	private String chips_password;
+	
 	@Autowired
 	private StandardPBEStringEncryptor jsonEcryptor;
 
@@ -162,32 +168,40 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@PostConstruct
 	public void postConstruct() {
-		logger.debug("Building chips host details");
+		
+		logger.info("Building chips host details");
+		
+		logger.info("Host : {}, port : {}, protocal : {}", chips_host, chips_port, chips_protocol);
+		
 		target = new HttpHost(chips_host, chips_port, chips_protocol);
 
 		credsProvider = new BasicCredentialsProvider();
 
-		// credsProvider.setCredentials( new AuthScope(AuthScope.ANY_HOST, -1),
-		// new UsernamePasswordCredentials("little", "large"));
-		credsProvider.setCredentials(new AuthScope(target.getHostName(), -1), new UsernamePasswordCredentials("little", "large"));
+		credsProvider.setCredentials(new AuthScope(target.getHostName(), -1), new UsernamePasswordCredentials(chips_username, chips_password));
 
-		// // Create AuthCache instance
+		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
-		// // Generate BASIC scheme object and add it to the local
-		// // auth cache
+		
+		// Generate BASIC scheme object and add it to the local auth cache
 		BasicScheme basicScheme = new BasicScheme();
 		authCache.put(target, basicScheme);
-		//
-		// // Add AuthCache to the execution context
+
+		// Add AuthCache to the execution context
 		localContext = HttpClientContext.create();
 		localContext.setCredentialsProvider(credsProvider);
 		localContext.setAuthCache(authCache);
+		
+		logger.info("Finished building chips host details");
 	}
 
+<<<<<<< HEAD
 	// @Override
 <<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
 =======
+=======
+	@Override
+>>>>>>> 407a726... Cleaned up basic auth
 	public void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException {
 
 		Session session = null;
@@ -199,8 +213,7 @@ public class ChipsServiceImpl implements ChipsService {
 			jsch.setKnownHosts(knownHostsFilename);
 
 			session = jsch.getSession(sftpUsername, sftpHost, 2298);
-			// non-interactive version. Relies in host key being in known-hosts
-			// file
+			// non-interactive version. Relies in host key being in known-hosts file
 			session.setPassword(sftpPassword);
 
 			session.connect();
@@ -209,9 +222,6 @@ public class ChipsServiceImpl implements ChipsService {
 			channel.connect();
 
 			ChannelSftp sftpChannel = (ChannelSftp) channel;
-
-			// SFTP up original file
-			// InputStream in = FileUtils.openInputStream(file);
 
 			sftpChannel.put(in, "/images/brochure.pdf", ChannelSftp.OVERWRITE);
 
@@ -224,8 +234,11 @@ public class ChipsServiceImpl implements ChipsService {
 		}
 	}
 
+<<<<<<< HEAD
 	// @Override
 >>>>>>> 49e2612... Added upload brochure functionality
+=======
+>>>>>>> 407a726... Cleaned up basic auth
 	private void uploadImageToChips(StockItem stockItem) throws SftpException, JSchException, IOException {
 		
 		if(!isProduction()) {
@@ -290,6 +303,7 @@ public class ChipsServiceImpl implements ChipsService {
 			session = jsch.getSession(sftpUsername, sftpHost, 2298);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			// non-interactive version. Relies in host key being in known-hosts
 			// file
 <<<<<<< HEAD
@@ -310,6 +324,8 @@ public class ChipsServiceImpl implements ChipsService {
 			// Now using ssh keys (see addIdentity)
 			// session.setPassword( sftpPassword );
 >>>>>>> 7fc11cb... getOrders now working
+=======
+>>>>>>> 407a726... Cleaned up basic auth
 
 			session.connect();
 
@@ -654,26 +670,8 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	private CloseableHttpClient getHttpClient() {
-		// HttpHost target = new HttpHost(chips_host, chips_port,
-		// chips_protocol);
-
-		// CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-		// credsProvider.setCredentials(new AuthScope(target.getHostName(), -1),
-		// new UsernamePasswordCredentials("little", "large"));
-
+		
 		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-
-		// // // Create AuthCache instance
-		// AuthCache authCache = new BasicAuthCache();
-		// // // Generate BASIC scheme object and add it to the local
-		// // // auth cache
-		// BasicScheme basicAuth = new BasicScheme();
-		// authCache.put(target, basicAuth);
-		// //
-		// // // Add AuthCache to the execution context
-		// HttpClientContext localContext = HttpClientContext.create();
-		// localContext.setAuthCache(authCache);
 
 		return httpclient;
 	}
@@ -781,7 +779,6 @@ public class ChipsServiceImpl implements ChipsService {
 		return chipsCustomers;
 =======
 		for (WebsiteCustomer chipsCustomer : chipsCustomers) { 
-
 			
 			ContactDetails descryptedContactDetails = chipsCustomer.getContactDetails();
 
@@ -955,8 +952,16 @@ public class ChipsServiceImpl implements ChipsService {
 	private void checkStatus(StatusLine status) {
 		if(status.getStatusCode() == 409) {
 			throw new BookmarksException("Error, failed authentication " + status.getStatusCode());
+<<<<<<< HEAD
 		}	
 		if(status.getStatusCode() == 424) {
+=======
+		}
+		if (status.getStatusCode() == 401) {
+			throw new BookmarksException("Error, failed basic authentication " + status.getStatusCode());
+		}		
+		if (status.getStatusCode() == 424) {
+>>>>>>> 407a726... Cleaned up basic auth
 			throw new BookmarksException("Error, cannot find image " + status.getStatusCode());
 		}
 <<<<<<< HEAD

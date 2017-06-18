@@ -5,11 +5,7 @@ import org.bookmarks.domain.CustomerOrder;
 
 public interface EmailService {
 
-	//void receive(MimeMessage[] mimeMessage);
-
 	void sendDailyReport(String emotion, String message);
-
-	void emailErrorToJack(Exception ex);
 
 	void sendWebScraperReport(WebScraperResultBean webScraperResultBean);
 
@@ -22,4 +18,11 @@ public interface EmailService {
 	void sendWebScraperFailedReport(WebScraperResultBean webScraperResultBean);
 
 	void sendCustomerOrderConfirmationEmail(CustomerOrder customerOrder);
+<<<<<<< HEAD
+=======
+
+	void sendCustomerOrderLinePostedEmail(CustomerOrderLine customerOrderLine);
+
+	void sendErrorEmail(Exception exception, String subject);
+>>>>>>> 407a726... Cleaned up basic auth
 }
