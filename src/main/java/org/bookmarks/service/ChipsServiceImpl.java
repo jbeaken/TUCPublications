@@ -137,9 +137,6 @@ public class ChipsServiceImpl implements ChipsService {
 	@Value("#{ applicationProperties['chips.protocol'] }")
 	private String chips_protocol;
 
-	@Value("#{ applicationProperties['chips.get.orders'] }")
-	private Boolean chipsGetOrders;
-
 	@Autowired
 	private StandardPBEStringEncryptor jsonEcryptor;
 
@@ -764,7 +761,7 @@ public class ChipsServiceImpl implements ChipsService {
 		// Decrypt json
 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
 		
-		logger.debug("{}", decryptedJson);
+//		logger.debug("{}", decryptedJson);
 
 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
 		});
