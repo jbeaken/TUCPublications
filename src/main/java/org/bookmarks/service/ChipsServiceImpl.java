@@ -63,6 +63,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -171,9 +172,19 @@ public class ChipsServiceImpl implements ChipsService {
 		
 		logger.info("Building chips host details");
 		
+		// Defaults
+		
+		Integer port = chips_port == null ? 80 : chips_port;
+		
+		String protocol = chips_protocol == null ? "http" : chips_protocol;
+		
+		String host = (chips_context == null ? chips_host : chips_host + "/" + chips_context);
+		
+		// Build
+		
 		logger.info("Host : {}, port : {}, protocal : {}", chips_host, chips_port, chips_protocol);
 		
-		target = new HttpHost(chips_host, chips_port, chips_protocol);
+		target = new HttpHost(host, port, protocol);
 
 		credsProvider = new BasicCredentialsProvider();
 
@@ -665,6 +676,8 @@ public class ChipsServiceImpl implements ChipsService {
 		logger.debug("Creating HTTP Get with url " + url);
 
 		HttpGet httpGet = new HttpGet(url);
+		
+		httpGet.addHeader("accepts", MediaType.APPLICATION_JSON_VALUE);
 
 		return httpGet;
 	}
@@ -710,7 +723,6 @@ public class ChipsServiceImpl implements ChipsService {
 		CloseableHttpClient httpclient = getHttpClient();
 
 		HttpGet httpGet = getHttpGet("/website/getOrders");
-		httpGet.addHeader("accepts", "application/json");
 
 <<<<<<< HEAD
 >>>>>>> 84d9d23... Adding accepts headers
@@ -889,6 +901,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@Override
 	public void buildIndex() throws ClientProtocolException, IOException {
+<<<<<<< HEAD
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		
 		HttpPost httpPost = new HttpPost(chipsUrl + "/website/buildIndex");
@@ -899,6 +912,15 @@ public class ChipsServiceImpl implements ChipsService {
 		
 		CloseableHttpResponse response = httpclient.execute(httpPost);
 		
+=======
+
+		CloseableHttpClient httpclient = getHttpClient();
+
+		HttpGet httpGet = getHttpGet("/website/buildIndex");
+
+		CloseableHttpResponse response = httpclient.execute( httpGet );
+
+>>>>>>> e444a65... Fixed null context and port for website
 		StatusLine status = response.getStatusLine();
 		
 		checkStatus(status);
