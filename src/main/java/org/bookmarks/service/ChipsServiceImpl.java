@@ -1026,7 +1026,7 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 		String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website/buildIndex", String.class);
 
 		if( !json.equals("success") ) {
-			throw new BookmarksException("Cannot build index " + e.getMessage());
+			throw new BookmarksException("Cannot build index " + json);
 		}
 		logger.info("buildIndex return : {}", json);
 	}

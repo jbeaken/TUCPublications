@@ -3,7 +3,9 @@
 
 
 # Get latest from repository
-git pull
+
+# git pull
+
 if [ "$?" = "1" ]; then
 	echo "git error, aborting!" 
 	exit 1
