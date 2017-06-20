@@ -706,11 +706,12 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	private RestTemplate getRestTemplate() {
+		
 		RestTemplate restTemplate = new RestTemplate();
 
-		 restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
+		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
 
-			return restTemplate;
+		return restTemplate;
 	}
 
 	@Override
