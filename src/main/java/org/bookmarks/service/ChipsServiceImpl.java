@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.List;
 
+import org.springframework.web.client.RestTemplate;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
+
 import javax.annotation.PostConstruct;
 import javax.net.ssl.SSLSocket;
 import javax.transaction.Transactional;
@@ -137,13 +143,13 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@Value("#{ applicationProperties['chips.protocol'] }")
 	private String chips_protocol;
-	
-	@Value("#{ applicationProperties['chips.basic.username'] }")
-	private String chips_username;	
 
-	@Value("#{ applicationProperties['chips.basic.password'] }")
+	@Value("#{ applicationProperties['chips.username'] }")
+	private String chips_username;
+
+	@Value("#{ applicationProperties['chips.password'] }")
 	private String chips_password;
-	
+
 	@Autowired
 	private StandardPBEStringEncryptor jsonEcryptor;
 
@@ -163,27 +169,28 @@ public class ChipsServiceImpl implements ChipsService {
 
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Autowired
-	private CustomerService customerService;	
+	private CustomerService customerService;
 
 	@PostConstruct
 	public void postConstruct() {
-		
+
 		logger.info("Building chips host details");
-		
+
 		// Defaults
-		
+
 		Integer port = chips_port == null ? 80 : chips_port;
-		
+
 		String protocol = chips_protocol == null ? "http" : chips_protocol;
-		
+
 		String host = (chips_context == null ? chips_host : chips_host + "/" + chips_context);
-		
+
 		// Build
-		
-		logger.info("Host : {}, port : {}, protocal : {}", chips_host, chips_port, chips_protocol);
-		
+
+		logger.info("Host : {}, port : {}, protocal : {}", host, port, protocol);
+		logger.debug("Basic Authentication Username : {}, Password : {}", chips_username, chips_password);
+
 		target = new HttpHost(host, port, protocol);
 
 		credsProvider = new BasicCredentialsProvider();
@@ -192,7 +199,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		// Create AuthCache instance
 		AuthCache authCache = new BasicAuthCache();
-		
+
 		// Generate BASIC scheme object and add it to the local auth cache
 		BasicScheme basicScheme = new BasicScheme();
 		authCache.put(target, basicScheme);
@@ -201,7 +208,7 @@ public class ChipsServiceImpl implements ChipsService {
 		localContext = HttpClientContext.create();
 		localContext.setCredentialsProvider(credsProvider);
 		localContext.setAuthCache(authCache);
-		
+
 		logger.info("Finished building chips host details");
 	}
 
@@ -664,6 +671,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 	private HttpGet getHttpGet(String uri) {
 		String url = chips_protocol + "://" + chips_host;
+
 		if (chips_port != 80 && !chips_protocol.equals("https")) {
 			url = url + ":" + chips_port;
 		}
@@ -676,14 +684,14 @@ public class ChipsServiceImpl implements ChipsService {
 		logger.debug("Creating HTTP Get with url " + url);
 
 		HttpGet httpGet = new HttpGet(url);
-		
-		httpGet.addHeader("accepts", MediaType.APPLICATION_JSON_VALUE);
+
+		//httpGet.addHeader("accepts", MediaType.APPLICATION_JSON_VALUE);
 
 		return httpGet;
 	}
 
 	private CloseableHttpClient getHttpClient() {
-		
+
 		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
 
 		return httpclient;
@@ -718,6 +726,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 	@Transactional
 	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+<<<<<<< HEAD
 >>>>>>> 7fc11cb... getOrders now working
 
 		CloseableHttpClient httpclient = getHttpClient();
@@ -767,11 +776,26 @@ public class ChipsServiceImpl implements ChipsService {
 <<<<<<< HEAD
 		List<Customer> chipsCustomers = new JSONDeserializer<List<Customer>>().deserialize( jsonCustomers );
 =======
+=======
+RestTemplate restTemplate = new RestTemplate();
 
-		// Decrypt json
-		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
-		
-//		logger.debug("{}", decryptedJson);
+ restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
+		// ResponseEntity<List<WebsiteCustomer>> rateResponse =
+		//         restTemplate.exchange("https://bookmarksbookshop.co.uk/website/getOrders",
+		//                     HttpMethod.GET, null, new ParameterizedTypeReference<List<WebsiteCustomer>>() {
+		//             });
+		// List<WebsiteCustomer> chipsCustomers = rateResponse.getBody();
+		//
+		// RestTemplate restTemplate = new RestTemplate();
+		// 	 Collection<WebsiteCustomer> quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", List<WebsiteCustomer>.class);
+		// 	 log.info(quote.toString());
+
+String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website/getOrders", String.class);
+// Decrypt json
+		String decryptedJson = jsonEcryptor.decrypt(json);
+>>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
+
+		logger.debug("{}", decryptedJson);
 
 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
 		});
@@ -782,22 +806,69 @@ public class ChipsServiceImpl implements ChipsService {
 		saveOrders(chipsCustomers);
 
 		return chipsCustomers;
+
 	}
+// 	@Override
+// 	@Transactional
+// 	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+//
+// 		CloseableHttpClient httpclient = getHttpClient();
+//
+// 		HttpGet httpGet = getHttpGet("/website/getOrders");
+//
+// 		CloseableHttpResponse response = httpclient.execute(httpGet);
+//
+// 		StatusLine status = response.getStatusLine();
+//
+// 		logger.info("/website/getOrders return status : " + status);
+//
+// 		checkStatus(status);
+//
+// 		String jsonCustomers = null;
+//
+// 		try {
+// 			HttpEntity entity = response.getEntity();
+// 			jsonCustomers = EntityUtils.toString(entity);
+// 			EntityUtils.consume(entity);
+// 		} finally {
+// 			response.close();
+// 		}
+//
+// 		// Decrypt json
+// 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
+//
+// //		logger.debug("{}", decryptedJson);
+//
+// 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
+// 		});
+//
+// 		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
+//
+// 		// Now persist
+// 		saveOrders(chipsCustomers);
+//
+// 		return chipsCustomers;
+// 	}
 
 	private void saveOrders(List<WebsiteCustomer> chipsCustomers) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
 		return chipsCustomers;
 =======
 		for (WebsiteCustomer chipsCustomer : chipsCustomers) { 
 			
+=======
+		for (WebsiteCustomer chipsCustomer : chipsCustomers) {
+
+>>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 			ContactDetails descryptedContactDetails = chipsCustomer.getContactDetails();
 
 			CreditCard decryptedCreditCard = chipsCustomer.getCreditCard();
 
 			Address decryptedAddress = chipsCustomer.getAddress();
-			
+
 			// Check if customers exist using email, if doesn't exist create new beans customer
 			Customer beansCustomer = customerRepository.getByEmail(chipsCustomer.getContactDetails().getEmail());
 
@@ -828,6 +899,10 @@ public class ChipsServiceImpl implements ChipsService {
 			beansCustomer.setCustomerOrderLines(new HashSet<CustomerOrderLine>());
 
 			for (OrderLine chipsOl : chipsCustomer.getOrders()) {
+
+				logger.debug( "{}", chipsOl.getWebReference() );
+				logger.debug( "{}", chipsOl.getStockItem().getId() );
+
 				CustomerOrderLine beansOl = new CustomerOrderLine();
 
 				beansOl.setAmount(new Long(chipsOl.getQuantity()));
@@ -858,7 +933,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 			// The customer order mechanism used by beans
 			CustomerOrder customerOrder = new CustomerOrder();
-			
+
 			customerOrder.setPaymentType(chipsCustomer.getPaymentType());
 
 			customerOrder.setDeliveryType(chipsCustomer.getDeliveryType());
@@ -981,7 +1056,7 @@ public class ChipsServiceImpl implements ChipsService {
 		}
 		if (status.getStatusCode() == 401) {
 			throw new BookmarksException("Error, failed basic authentication " + status.getStatusCode());
-		}		
+		}
 		if (status.getStatusCode() == 424) {
 >>>>>>> 407a726... Cleaned up basic auth
 			throw new BookmarksException("Error, cannot find image " + status.getStatusCode());

@@ -20,18 +20,19 @@ public class ChipsOrdersManager extends AbstractScheduler {
 	@Autowired private EmailService emailService;
 
 	@Autowired private ChipsService chipsService;
-	
-	@Value("#{ applicationProperties['chips.get.orders'] }")
-	private Boolean chipsGetOrders;	
+
+	@Value("#{ applicationProperties['chips.auto.download.orders'] }")
+	private Boolean chipsDownloadOrders;
 
 	private Logger logger = LoggerFactory.getLogger(ChipsOrdersManager.class);
 
 	//Every 30 mins past the hour
 	@Scheduled(cron = "0 30 * * * ?")
 	public void process() throws ClientProtocolException, IOException {
-		
+
 		logger.info("Auto request for getOrders started");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if(isProduction() == false) return; //Should only run in production
 
@@ -54,24 +55,28 @@ public class ChipsOrdersManager extends AbstractScheduler {
 		if (chipsGetOrders != true) {
 			logger.info("Aborting getOrders(), turned off in configuration");
 >>>>>>> 407a726... Cleaned up basic auth
+=======
+		if (chipsDownloadOrders != true) {
+			logger.info("Aborting auto getOrders(), turned off in configuration");
+>>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 			return;
 		}
 >>>>>>> 1978e06... Fixing session search for supplier returns
 
 		try {
-			
+
 			Collection<WebsiteCustomer>  chipsCustomers = chipsService.getOrders();
-			
+
 			logger.info("Have retrieved " + chipsCustomers.size() + " orders from chips");
 
-			logger.info("Auto request for getOrders successful");	
-			
+			logger.info("Auto request for getOrders successful");
+
 		} catch (Exception e) {
 			logger.error("Cannot get orders from chips", e);
 			emailService.sendErrorEmail(e, "Cannot get orders from chips");
 		}
 
-		
+
 	}
 
 }

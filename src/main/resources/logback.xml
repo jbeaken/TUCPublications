@@ -60,6 +60,7 @@
               <property name="APP_LOG_LEVEL" value="DEBUG"/>
         </if>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         <logger name="org.hibernate" level="INFO" />
 >>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
@@ -90,9 +91,13 @@
         <logger name="org.apache.http" level="INFO" />
 =======
         
+=======
+
+>>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
         <logger name="org.bookmarks" level="${APP_LOG_LEVEL}" />
 >>>>>>> a2330fa... Added debug
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> aa4a49e... Added spring security
@@ -101,6 +106,10 @@
         <root level="DEBUG">
 >>>>>>> 85bbe47... Added documentation
 =======
+=======
+        <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
+
+>>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
         <root level="INFO">
 >>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />
