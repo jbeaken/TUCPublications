@@ -173,6 +173,9 @@ public class ChipsServiceImpl implements ChipsService {
 	@Autowired
 	private CustomerService customerService;
 
+	@Autowired
+	private RestTemplate chipsRestTeamplate;
+
 	@PostConstruct
 	public void postConstruct() {
 
@@ -1008,6 +1011,7 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 		RestTemplate restTemplate = getRestTemplate();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		CloseableHttpResponse response = httpclient.execute( httpGet );
 
 >>>>>>> e444a65... Fixed null context and port for website
@@ -1025,6 +1029,9 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 	
 =======
 		String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website/buildIndex", String.class);
+=======
+		String json = chipsRestTeamplate.getForObject("https://bookmarksbookshop.co.uk/website/buildIndex", String.class);
+>>>>>>> 4cf5fd3... RestTemplate now using bean
 
 		if( !json.equals("success") ) {
 			throw new BookmarksException("Cannot build index " + json);
