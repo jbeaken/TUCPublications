@@ -172,13 +172,17 @@ public class ChipsController extends AbstractBookmarksController {
 		logger.info("Building index on chips");
 
 		try {
+
 			chipsService.buildIndex();
+
 			long end = System.currentTimeMillis();
 			long time = (end - start) / 1000;
-			addSuccess("Successfully build chips index in " + time + " seconds", modelMap);
-			logger.info("Success!! Build index");
+
+			addSuccess("Successfully built chips index in " + time + " seconds", modelMap);
+
+			logger.info("Successfully built chips index in " + time + " seconds");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Cannot build index", e);
 			addError("Error building Chips index " + e.getMessage(), modelMap);
 		}
 

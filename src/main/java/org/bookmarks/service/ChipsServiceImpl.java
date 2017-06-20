@@ -705,6 +705,14 @@ public class ChipsServiceImpl implements ChipsService {
 	    EntityUtils.consume(entity);
 	}
 
+	private RestTemplate getRestTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
+
+		 restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
+
+			return restTemplate;
+	}
+
 	@Override
 <<<<<<< HEAD
 	public List<Customer> getOrders() throws ClientProtocolException, IOException {
@@ -726,6 +734,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 	@Transactional
 	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 7fc11cb... getOrders now working
 
@@ -778,8 +787,10 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 =======
 RestTemplate restTemplate = new RestTemplate();
+=======
+RestTemplate restTemplate = getRestTemplate();
+>>>>>>> c5f5df8... Converted buildIndex to RestTemplate
 
- restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
 		// ResponseEntity<List<WebsiteCustomer>> rateResponse =
 		//         restTemplate.exchange("https://bookmarksbookshop.co.uk/website/getOrders",
 		//                     HttpMethod.GET, null, new ParameterizedTypeReference<List<WebsiteCustomer>>() {
@@ -945,8 +956,12 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 			customerOrder.setSource(Source.WEB);
 
 			customerOrderService.save(customerOrder, beansCustomer.getCustomerOrderLines());
+<<<<<<< HEAD
 		} // end for
 >>>>>>> 7fc11cb... getOrders now working
+=======
+		} // end orderlines for
+>>>>>>> c5f5df8... Converted buildIndex to RestTemplate
 	}
 	
 	@Override
@@ -989,10 +1004,9 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 		
 =======
 
-		CloseableHttpClient httpclient = getHttpClient();
+		RestTemplate restTemplate = getRestTemplate();
 
-		HttpGet httpGet = getHttpGet("/website/buildIndex");
-
+<<<<<<< HEAD
 		CloseableHttpResponse response = httpclient.execute( httpGet );
 
 >>>>>>> e444a65... Fixed null context and port for website
@@ -1008,6 +1022,16 @@ String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website
 		}
 	}	
 	
+=======
+		String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website/buildIndex", String.class);
+
+		if( !json.equals("success") ) {
+			throw new BookmarksException("Cannot build index " + e.getMessage());
+		}
+		logger.info("buildIndex return : {}", json);
+	}
+
+>>>>>>> c5f5df8... Converted buildIndex to RestTemplate
 	@Override
 	public void removeFromWebsite(Long id) {
 		stockItemRepository.removeFromWebsite(id);
