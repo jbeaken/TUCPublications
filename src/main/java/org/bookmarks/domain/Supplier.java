@@ -17,8 +17,12 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="supplier")
+@JsonIgnoreProperties(value = { "supplierInvoices" })
 public class Supplier extends AbstractNamedEntity {
 
 
@@ -62,6 +66,9 @@ public class Supplier extends AbstractNamedEntity {
 
 	private String email;
 
+	@OneToMany
+	private Collection<SupplierDelivery> supplierInvoices;	
+
     @Embedded
  	private SupplierAccount supplierAccount;
 
@@ -104,9 +111,6 @@ public class Supplier extends AbstractNamedEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@OneToMany
-	private Collection<SupplierDelivery> supplierInvoices;
 
 	public Address getAddress() {
 		return address;

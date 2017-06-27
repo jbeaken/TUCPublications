@@ -60,31 +60,40 @@ public class ChipsController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/updateEvents", method = RequestMethod.GET)
 	public String updateEvents(HttpSession session, ModelMap modelMap) {
+
 		logger.info("Attempting to update events on chips");
-		try {
-			chipsService.updateEvents();
-		} catch (Exception e) {
-			logger.error("Cannot update events", e);
-			addError("Cannot update events : " + e.getMessage(), modelMap);
-			return "welcome";
-		}
-		addSuccess("Have updated events", modelMap);
-		logger.info("Successfully updated events on chips!");
+		
+		// String result = chipsService.updateEvents();
+		
+		// if(result.equals("success")) {
+		// 	logger.info("Cannot update reading lists! {}", result);
+		// 	addError("Cannot update reading lists " + result, modelMap);
+		// } else {
+		// 	addSuccess("Have updated events", modelMap);	
+		// 	logger.info("Successfully updated events on chips!");
+		// }
+
+		
+
 		return "welcome";
 	}
 
 	@RequestMapping(value = "/updateReadingLists", method = RequestMethod.GET)
 	public String updateReadingLists(HttpSession session, ModelMap modelMap) {
+
 		logger.info("Attempting to update reading lists on chips");
-		try {
-			chipsService.updateReadingLists();
-		} catch (Exception e) {
-			addError("Cannot update reading lists : " + e.getMessage(), modelMap);
-			return "welcome";
+		
+		String result = chipsService.updateReadingLists();
+
+		if(!result.equals("success")) {
+			logger.info("Cannot update reading lists! {}", result);
+			addError("Cannot update reading lists " + result, modelMap);
+		} else {
+			addSuccess("Have updated events", modelMap);	
+			logger.info("Successfully updated events on chips!");
 		}
 
-		addSuccess("Have updated reading lists", modelMap);
-		logger.info("Successfully updated reading lists on chips!");
+		
 
 		return "welcome";
 	}

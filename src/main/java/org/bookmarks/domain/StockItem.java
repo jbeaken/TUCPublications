@@ -34,6 +34,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * img_url_az : from az http://www.amazon.co.uk/etc
  * img_url : 9782342342343.jpg for example
@@ -49,8 +51,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 @Entity
-//@Indexed
 @Table(name="stockitem")
+@JsonIgnoreProperties(value = { "sales", "supplierOrderLines" })
 public class StockItem extends AbstractEntity {
 
 	//Overrides

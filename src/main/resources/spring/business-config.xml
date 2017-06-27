@@ -87,8 +87,8 @@
 
 <util:list id="interceptors">
       <bean id="basicAuthorizationInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
-      	<constructor-arg index = "0" value = "little"/>
-      	<constructor-arg index = "1" value = "bastard"/>
+      	<constructor-arg index = "0" value = "${chips.username}"/>
+      	<constructor-arg index = "1" value = "${chips.password}"/>
       </bean>
 </util:list>   
 

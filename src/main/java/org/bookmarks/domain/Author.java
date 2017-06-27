@@ -14,8 +14,11 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="author")
+@JsonIgnoreProperties(value = { "stockItems" })
 public class Author extends AbstractEntity {
 
     @NotNull

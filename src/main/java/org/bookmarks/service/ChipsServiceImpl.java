@@ -28,6 +28,11 @@ import javax.transaction.Transactional;
 >>>>>>> 7fc11cb... getOrders now working
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
+<<<<<<< HEAD
+=======
+//import org.springframework.http.HttpEntity;
+import org.apache.http.HttpHost;
+>>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
@@ -132,23 +137,15 @@ public class ChipsServiceImpl implements ChipsService {
 //	@Override
 =======
 
-	@Value("#{ applicationProperties['chips.host'] }")
-	private String chips_host;
+	@Value("#{ applicationProperties['chips.url'] }")
+	private String chipsUrl;
 
-	@Value("#{ applicationProperties['chips.context'] }")
-	private String chips_context;
+      private HttpHost target;
 
-	@Value("#{ applicationProperties['chips.port'] }")
-	private Integer chips_port;
+       private CredentialsProvider credsProvider;
 
-	@Value("#{ applicationProperties['chips.protocol'] }")
-	private String chips_protocol;
+       private HttpClientContext localContext;
 
-	@Value("#{ applicationProperties['chips.username'] }")
-	private String chips_username;
-
-	@Value("#{ applicationProperties['chips.password'] }")
-	private String chips_password;
 
 	@Autowired
 	private StandardPBEStringEncryptor jsonEcryptor;
@@ -161,12 +158,6 @@ public class ChipsServiceImpl implements ChipsService {
 
 	private final Logger logger = LoggerFactory.getLogger(ChipsServiceImpl.class);
 
-	private HttpHost target;
-
-	private CredentialsProvider credsProvider;
-
-	private HttpClientContext localContext;
-
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -176,6 +167,7 @@ public class ChipsServiceImpl implements ChipsService {
 	@Autowired
 	private RestTemplate chipsRestTemplate;
 
+<<<<<<< HEAD
 	@PostConstruct
 	public void postConstruct() {
 
@@ -221,6 +213,8 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> fc67d45... Adding showHome
 =======
 =======
+=======
+>>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 	@Override
 >>>>>>> 407a726... Cleaned up basic auth
 	public void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException {
@@ -533,6 +527,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}		
 	
 	@Override
+<<<<<<< HEAD
 	public void updateReadingLists() throws ClientProtocolException, IOException {
 		
 		Collection<ReadingList> readingLists = readingListService.getAll();
@@ -561,6 +556,36 @@ public class ChipsServiceImpl implements ChipsService {
 		}		
 	} 	
 	
+=======
+	public String updateReadingLists()  {
+
+		Collection<ReadingList> readingLists = readingListService.getAll();
+
+		logger.info("Have got {} reading lists to put on chips with url {}", readingLists.size(), chipsUrl);
+
+		// JSONSerializer serializer = new JSONSerializer();
+
+		// String readingListsAsJson = serializer.include("stockItems").serialize(readingLists);
+
+		// CloseableHttpClient httpclient = getHttpClient();
+
+		// HttpPost httpPost = getHttpPost("/website/updateReadingLists", "readingListsAsJson", readingListsAsJson);
+
+		// CloseableHttpResponse response = httpclient.execute(httpPost);
+
+		// chipsRestTemplate.postForObject(chipsUrl + "/website/updateReadingLists", readingLists, Payment.class);
+		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( readingLists );
+
+		//logger.debug("HttpEntity body : {}", requestEntity.getBody());
+
+		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateReadingLists", HttpMethod.POST, requestEntity, String.class);
+
+		logger.info("Readling lists return result : {}", result);
+
+		return result.getBody();
+	}
+
+>>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 	@Override
 	public void updateChips() throws ClientProtocolException, IOException {
 
@@ -655,40 +680,17 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	private HttpPost getHttpPost(String uri) {
-		String url = chips_protocol + "://" + chips_host;
-		if (chips_port != 80 && !chips_protocol.equals("https")) {
-			url = url + ":" + chips_port;
-		}
+		logger.debug("Creating HTTP Post with url " + chipsUrl);
 
-		if (!chips_context.isEmpty()) {
-			url = url + "/" + chips_context;
-		}
-		url = url + uri;
-
-		logger.debug("Creating HTTP Post with url " + url);
-
-		HttpPost httpPost = new HttpPost(url);
+		HttpPost httpPost = new HttpPost( chipsUrl );
 
 		return httpPost;
 	}
 
 	private HttpGet getHttpGet(String uri) {
-		String url = chips_protocol + "://" + chips_host;
+		logger.debug("Creating HTTP Get with url " + chipsUrl);
 
-		if (chips_port != 80 && !chips_protocol.equals("https")) {
-			url = url + ":" + chips_port;
-		}
-
-		if (!chips_context.isEmpty()) {
-			url = url + "/" + chips_context;
-		}
-		url = url + uri;
-
-		logger.debug("Creating HTTP Get with url " + url);
-
-		HttpGet httpGet = new HttpGet(url);
-
-		//httpGet.addHeader("accepts", MediaType.APPLICATION_JSON_VALUE);
+		HttpGet httpGet = new HttpGet(chipsUrl);
 
 		return httpGet;
 	}
@@ -738,6 +740,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 	@Transactional
 	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 7fc11cb... getOrders now working
@@ -794,19 +797,12 @@ RestTemplate restTemplate = new RestTemplate();
 =======
 RestTemplate restTemplate = getRestTemplate();
 >>>>>>> c5f5df8... Converted buildIndex to RestTemplate
+=======
+>>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 
-		// ResponseEntity<List<WebsiteCustomer>> rateResponse =
-		//         restTemplate.exchange("https://bookmarksbookshop.co.uk/website/getOrders",
-		//                     HttpMethod.GET, null, new ParameterizedTypeReference<List<WebsiteCustomer>>() {
-		//             });
-		// List<WebsiteCustomer> chipsCustomers = rateResponse.getBody();
-		//
-		// RestTemplate restTemplate = new RestTemplate();
-		// 	 Collection<WebsiteCustomer> quote = restTemplate.getForObject("http://gturnquist-quoters.cfapps.io/api/random", List<WebsiteCustomer>.class);
-		// 	 log.info(quote.toString());
-
-String json = restTemplate.getForObject("https://bookmarksbookshop.co.uk/website/getOrders", String.class);
-// Decrypt json
+		String json = chipsRestTemplate.getForObject("https://bookmarksbookshop.co.uk/website/getOrders", String.class);
+		
+		// Decrypt json
 		String decryptedJson = jsonEcryptor.decrypt(json);
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 
