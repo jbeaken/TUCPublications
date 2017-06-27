@@ -45,7 +45,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * Lookup stockitem information at AZ. Use the ISBN to do an initial search
- * e.g. http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=" + isbn;
+ * e.g. http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords= + isbn;
  * This is the landing page and also contains the image as the drilldown page makes images harder to
  * retrieve using base64
  *
@@ -55,6 +55,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AZLookupServiceImpl implements AZLookupService {
 
+	public final String azUrl = "https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=";
+	
 	@Value("#{ applicationProperties['imageFileLocation'] }")
 	private String imageFileLocation;
 
@@ -241,7 +243,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 
 //		String url = "http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=" + isbn + "&rh=n%3A266239%2Ck%3A9780952203834";
 		//http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=9780198229773&rh=n%3A266239%2Ck%3A9780198229773
-		String url = "http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=" + isbn;
+		String url = azUrl + isbn;
 		logger.debug("Search Url : " + url);
 
 		Document doc = Jsoup.connect(url)
