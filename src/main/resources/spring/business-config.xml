@@ -6,6 +6,7 @@
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:tx="http://www.springframework.org/schema/tx" 
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:util="http://www.springframework.org/schema/util"
@@ -74,17 +75,22 @@
    </bean>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 5e6452c... Clean up
 =======
 	<bean id="chipsRestTemplate" class="org.springframework.web.client.RestTemplate" p:interceptors-ref="interceptors">
 	</bean>
+=======
+   <bean id="chipsRestTemplate" class="org.springframework.web.client.RestTemplate" p:interceptors-ref="interceptors">
+   </bean>
+>>>>>>> 0128527... Adding p prefix
 
 <util:list id="interceptors">
       <bean id="basicAuthorizationInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
       	<constructor-arg index = "0" value = "little"/>
       	<constructor-arg index = "1" value = "bastard"/>
       </bean>
-</util:list>  
+</util:list>   
 
 >>>>>>> 5fb074b... Adding bean definition for chipsRestTemplate
    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
