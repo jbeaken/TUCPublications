@@ -73,7 +73,20 @@
       <property name="velocityEngine" ref="velocityEngine"/>
    </bean>
 
+<<<<<<< HEAD
 >>>>>>> 5e6452c... Clean up
+=======
+	<bean id="chipsRestTemplate" class="org.springframework.web.client.RestTemplate" p:interceptors-ref="interceptors">
+	</bean>
+
+<util:list id="interceptors">
+      <bean id="basicAuthorizationInterceptor" class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+      	<constructor-arg index = "0" value = "little"/>
+      	<constructor-arg index = "1" value = "bastard"/>
+      </bean>
+</util:list>  
+
+>>>>>>> 5fb074b... Adding bean definition for chipsRestTemplate
    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
       <property name="velocityProperties">
          <value>
