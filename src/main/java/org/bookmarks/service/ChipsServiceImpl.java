@@ -147,6 +147,9 @@ public class ChipsServiceImpl implements ChipsService {
        private HttpClientContext localContext;
 
 
+	@Value("#{ applicationProperties['chips.get.orders'] }")
+	private Boolean chipsGetOrders;
+
 	@Autowired
 	private StandardPBEStringEncryptor jsonEcryptor;
 
@@ -799,6 +802,11 @@ RestTemplate restTemplate = getRestTemplate();
 >>>>>>> c5f5df8... Converted buildIndex to RestTemplate
 =======
 >>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
+
+		if (chipsGetOrders != true) {
+			logger.info("Aborting getOrders(), turned off");
+			return null;
+		}
 
 		String json = chipsRestTemplate.getForObject("https://bookmarksbookshop.co.uk/website/getOrders", String.class);
 		
