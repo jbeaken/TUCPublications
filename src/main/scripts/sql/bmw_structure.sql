@@ -196,7 +196,7 @@ CREATE TABLE `reading_list_stock_items` (
   `position` bigint(20) DEFAULT NULL,
   `reading_list` bigint(20) DEFAULT NULL,
   `stock_items` bigint(20) DEFAULT NULL,
-  `stock_item_idx` int(11) not null
+  `stock_item_idx` int(11) not null,
   PRIMARY KEY (`id`),
   KEY `FK_6v5o4xqyfnmvvig74m5ajud30` (`reading_list`),
   KEY `FK_8wunn4eyqjd4ijbn70fab3a24` (`stock_items`),
