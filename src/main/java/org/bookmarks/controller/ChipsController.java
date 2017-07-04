@@ -222,7 +222,7 @@ public class ChipsController extends AbstractBookmarksController {
 =======
 		if (chipsGetOrders != true) {
 			logger.info("Aborting getOrders(), turned off");
-			addWarning("Chips get Orders is turned off!", modelMap);
+			addWarning("Retrieval of chips orders is turned off!", modelMap);
 			return "chipsTransferReport";
 		}
 >>>>>>> 7fc11cb... getOrders now working
