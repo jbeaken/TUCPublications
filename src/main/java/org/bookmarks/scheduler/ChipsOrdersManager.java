@@ -21,8 +21,8 @@ public class ChipsOrdersManager extends AbstractScheduler {
 
 	@Autowired private ChipsService chipsService;
 
-	@Value("#{ applicationProperties['chips.auto.download.orders'] }")
-	private Boolean chipsDownloadOrders;
+	@Value("#{ applicationProperties['chips.get.orders'] }")
+	private Boolean chipsGetOrders;
 
 	private Logger logger = LoggerFactory.getLogger(ChipsOrdersManager.class);
 
@@ -32,6 +32,7 @@ public class ChipsOrdersManager extends AbstractScheduler {
 
 		logger.info("Auto request for getOrders started");
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		if(isProduction() == false) return; //Should only run in production
@@ -57,6 +58,9 @@ public class ChipsOrdersManager extends AbstractScheduler {
 >>>>>>> 407a726... Cleaned up basic auth
 =======
 		if (chipsDownloadOrders != true) {
+=======
+		if (chipsGetOrders != true) {
+>>>>>>> 8e7be17... Adding code to turn off get orders
 			logger.info("Aborting auto getOrders(), turned off in configuration");
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 			return;
