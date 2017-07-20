@@ -80,7 +80,7 @@
       <div class="rows">
             <div class="row">
               <div class="column w-33-percent">
-                  <a href="/bookmarks/customer/saveAccountsFromTSB" class="btn btn-danger">Save</a>
+                  <a href="/bookmarks/tsb/saveAccountsFromTSB" class="btn btn-danger">Save</a>
               </div>
         </div>
       </div>

@@ -1,135 +1,77 @@
 package org.bookmarks.controller;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
-import java.math.BigDecimal;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVParser;
-
-import java.util.GregorianCalendar;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-
-import java.io.Reader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import org.apache.commons.csv.CSVRecord;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
-import org.bookmarks.domain.CustomerOrder;
-import org.bookmarks.domain.CustomerOrderLine;
-import org.bookmarks.domain.CustomerType;
 import org.bookmarks.domain.TransactionType;
-import org.bookmarks.service.CustomerService;
-import org.bookmarks.domain.SponsorshipDetails;
-import org.bookmarks.domain.SponsorshipType;
-
-import org.bookmarks.service.EmailService;
-import org.bookmarks.service.Service;
+import org.bookmarks.domain.VTTransaction;
 import org.bookmarks.repository.AccountRepository;
-import org.bookmarks.website.domain.Address;
-import org.bookmarks.controller.bean.CustomerMergeFormObject;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import org.springframework.format.number.CurrencyStyleFormatter;
-
-import org.springframework.beans.factory.annotation.Value;
-
+import org.bookmarks.repository.VTTransactionRepository;
+import org.bookmarks.service.CustomerService;
+import org.bookmarks.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/tsb")
 public class TSBController extends AbstractBookmarksController {
 
 	@Value("#{ applicationProperties['accounts.upload.increment'] }")
-    private Boolean incrementAccount;
+	private Boolean incrementAccount;
 
 	@Autowired
 	private CustomerService customerService;
 
-	@Autowired
-	private EmailService emailService;
+//	@Autowired
+//	private EmailService emailService;
 
+	@Autowired
+	private VTTransactionRepository vtTransactionRepository;
 
 	@Autowired
 	private AccountRepository accountRepository;
 
 	private Logger logger = LoggerFactory.getLogger(TSBController.class);
 
+	/**
+	 * File(s) have been uploaded, converted into credit notes, now process them
+	 */
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
+	@Transactional
 	public String saveAccountsFromTSB(ModelMap modelMap, HttpSession session) throws IOException {
 
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 
-		for (CreditNote creditNote : creditNoteMap.values()) {
-			// if(creditNote.getCustomer() == null) {
-			//
-			// addError("Please match customer " +
-			// creditNote.getTransactionDescription(), modelMap);
-			//
-			// return "confirmUploadAccounts";
-			// }
-		}
-
 		logger.info("About to process credit notes, incrementAccount = {}", incrementAccount);
 
 		for (CreditNote creditNote : creditNoteMap.values()) {
+			
+			logger.debug("CreditNote : {}", creditNote);
 
 			if (creditNote.getStatus().equals("Unmatched")) {
 				continue;
@@ -137,6 +79,16 @@ public class TSBController extends AbstractBookmarksController {
 
 			if (creditNote.getStatus().equals("Already Processed")) {
 				continue;
+			}
+
+			if (creditNote.isClubAccount()) {
+				logger.debug("Found club account, saving vt transaction");
+
+				VTTransaction transaction = new VTTransaction();
+
+				transaction.setTotal(creditNote.getAmount().floatValue());
+
+				vtTransactionRepository.save(transaction);
 			}
 
 			accountRepository.processCreditNote(creditNote, incrementAccount);
@@ -148,8 +100,7 @@ public class TSBController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/selectMatch", method = RequestMethod.GET)
-	public String selectMatch(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
-			throws IOException {
+	public String selectMatch(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
 
 		logger.debug("Have selected " + priority + " match for " + customerId + " transactionDescription : " + transactionDescription);
 
@@ -160,9 +111,9 @@ public class TSBController extends AbstractBookmarksController {
 
 		cn.setCustomer(customer);
 
-		if(priority == 1) {
+		if (priority == 1) {
 			cn.setStatus("Potential Primary Match");
-		} else if(priority == 2) {
+		} else if (priority == 2) {
 			cn.setStatus("Potential Secondary Match");
 		}
 
@@ -173,11 +124,8 @@ public class TSBController extends AbstractBookmarksController {
 		return "confirmUploadAccounts";
 	}
 
-
-
 	@RequestMapping(value = "/match", method = RequestMethod.GET)
-	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session)
-			throws IOException {
+	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
 
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
 
@@ -191,8 +139,8 @@ public class TSBController extends AbstractBookmarksController {
 			return "confirmUploadAccounts";
 		}
 
-		//Check if customer is already matched
-		if( customer.getBookmarksAccount().getTsbMatch() != null ) {
+		// Check if customer is already matched
+		if (customer.getBookmarksAccount().getTsbMatch() != null) {
 			logger.debug("Customer already has primary match");
 			addInfo("This customer already has a primary match. Either overwrite or select as a secondary match", modelMap);
 			modelMap.addAttribute("customer", customer);
@@ -200,7 +148,7 @@ public class TSBController extends AbstractBookmarksController {
 			return "selectMatch";
 		}
 
-		//Primary match
+		// Primary match
 		cn.setCustomer(customer);
 		cn.setStatus("Potential Primary Match");
 
@@ -223,8 +171,7 @@ public class TSBController extends AbstractBookmarksController {
 	 * sales and invoices
 	 **/
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.POST)
-	public String uploadAccountsFromTSB(CreditNote creditNote, HttpSession session, ModelMap modelMap)
-			throws IOException, java.text.ParseException {
+	public String uploadAccountsFromTSB(CreditNote creditNote, HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
 
 		MultipartFile file = creditNote.getFile();
 		String fileName = file.getOriginalFilename();
@@ -254,10 +201,10 @@ public class TSBController extends AbstractBookmarksController {
 		logger.info("Have records of size " + records.size());
 
 		// if(records.size() == 0) {
-		// 	reader = new InputStreamReader(file.getInputStream());
-		// 	parser = CSVFormat.TDF.withQuote(null).parse(reader);
-		// 	 records = parser.getRecords();
-		// 	logger.info("Have records of size " + records.size() );
+		// reader = new InputStreamReader(file.getInputStream());
+		// parser = CSVFormat.TDF.withQuote(null).parse(reader);
+		// records = parser.getRecords();
+		// logger.info("Have records of size " + records.size() );
 		// }
 
 		Map<String, CreditNote> creditNoteMap = new HashMap<>();
@@ -296,8 +243,7 @@ public class TSBController extends AbstractBookmarksController {
 			}
 
 			// Exception for transfers from club account to main bank account
-			if (transactionDescription.startsWith("I S BOOKS LTD")
-					|| transactionDescription.startsWith("TO 30932900089719")) {
+			if (transactionDescription.startsWith("I S BOOKS LTD") || transactionDescription.startsWith("TO 30932900089719")) {
 				cn.setClubAccount(true);
 			}
 
@@ -359,7 +305,7 @@ public class TSBController extends AbstractBookmarksController {
 				cn.setCustomer(matchedCustomer);
 			}
 
-			if (transactionType.equals("SO") ) {
+			if (transactionType.equals("SO")) {
 				transactionReference = record.get(0) + "-SO-" + transactionDescription;
 			}
 
@@ -374,7 +320,8 @@ public class TSBController extends AbstractBookmarksController {
 			// Check that this transaction hasn't already been processed
 			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
 
-			if(matchedCreditNote != null) cn.setStatus("Already Processed");
+			if (matchedCreditNote != null)
+				cn.setStatus("Already Processed");
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");
@@ -405,13 +352,12 @@ public class TSBController extends AbstractBookmarksController {
 
 		populateCreditNoteModel(creditNoteMap, modelMap);
 
-		if(allMatched == true){
+		if (allMatched == true) {
 			message += ". All matched!";
 		}
 
 		if (count == 150) {
-			addWarning("Upload from bank text file successful! Have got " + count
-					+ " lines. There may be more lines!! Check paper statements", modelMap);
+			addWarning("Upload from bank text file successful! Have got " + count + " lines. There may be more lines!! Check paper statements", modelMap);
 		} else {
 			addSuccess("Upload from bank text file successful! Have got " + count + " lines.", modelMap);
 		}
@@ -420,12 +366,10 @@ public class TSBController extends AbstractBookmarksController {
 	}
 
 	private void populateCreditNoteModel(Map<String, CreditNote> creditNoteMap, ModelMap modelMap) {
-		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream()
-				.sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
+		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream().sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
 
-	}	
+	}
 
-	
 	@Override
 	public Service<Customer> getService() {
 		return customerService;

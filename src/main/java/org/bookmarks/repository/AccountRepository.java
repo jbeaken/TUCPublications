@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.bookmarks.domain.CreditNote;
+import org.bookmarks.domain.VTTransaction;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class AccountRepository {
 
     @Autowired
     private CreditNoteRepository creditNoteRepository;
-
+    
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -31,6 +32,7 @@ public class AccountRepository {
 
 
 	public void processCreditNote(CreditNote creditNote, Boolean incrementAccount) {
+		
 		Query query = null;
 		
 		if(creditNote.getStatus().equals("Primary Matched") || creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
@@ -51,8 +53,6 @@ public class AccountRepository {
 
 		 query.executeUpdate();
 
-		 logger.info("incrementAccount = {}", incrementAccount);
-
 		 if(incrementAccount) {
  			query = sessionFactory
 		 		.getCurrentSession()
@@ -66,8 +66,6 @@ public class AccountRepository {
 		 
 		 //Now save creditNote
 		 creditNoteRepository.save( creditNote );
-		 
-		 
 	}
 
 	public CreditNote getCreditNote(String transactionReference) {

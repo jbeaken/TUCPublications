@@ -120,4 +120,10 @@ public class CreditNote extends AbstractEntity {
 	public void setClubAccount(boolean isClubAccount) {
 		this.isClubAccount = isClubAccount;
 	}
+
+	@Override
+	public String toString() {
+		return "CreditNote [amount=" + amount + ", date=" + date + ", transactionType=" + transactionType + ", transactionReference=" + transactionReference + ", transactionDescription=" + transactionDescription + ", status=" + status + ", isClubAccount=" + isClubAccount + ", file=" + file
+				+ ", customer=" + customer + "]";
+	}
 }
