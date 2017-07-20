@@ -15,10 +15,8 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/bookmarks.js" />" ></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js" />" ></script>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/chosen.css" />" />
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,900' rel='stylesheet' type='text/css'>
 <style type="text/css">
 body {
-	font-family: 'Roboto', sans-serif;
 }
 td.title {
   font-size : 120%;

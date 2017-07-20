@@ -10,11 +10,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Repository
 @Transactional
 public class AccountRepository {
 
     private SessionFactory sessionFactory;
+
+    @Value("#{ applicationProperties['accounts.upload.increment'] }")
+    private Boolean incrementAccount;
     
     @Autowired
     private CreditNoteRepository creditNoteRepository;
@@ -45,6 +50,17 @@ public class AccountRepository {
 		 }		 
 
 		 query.executeUpdate();
+
+		 if(incrementAccount) {
+ 			query = sessionFactory
+		 		.getCurrentSession()
+		 		.createQuery("update Customer c set c.bookmarksAccount.currentBalance = c.bookmarksAccount.currentBalance + :amount where c.id = :id")
+		 		.setParameter("amount", creditNote.getAmount())
+		 		.setParameter("id", creditNote.getCustomer().getId());		
+
+		 		 query.executeUpdate(); 	
+
+		 }
 		 
 		 //Now save creditNote
 		 creditNoteRepository.save( creditNote );
