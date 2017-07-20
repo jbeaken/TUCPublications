@@ -2,14 +2,28 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <form:form modelAttribute="vtTransactionSearchBean" action="search" method="post" role="form">
-	<div class="row">
-		<div class="col-sm-3">
-			<div class="form-group">	  
-				<label>Customer</label>
-			</div>
+<div class="rows">
+        <div class="row">
+          <div class="column w-33-percent">
+				
 		</div>
-		
+          <div class="column w-33-percent">
+				<form:label	for="transaction.status" path="transaction.status" cssErrorClass="error">Status</form:label><br/>
+				<form:select path="transaction.status">
+        			<form:option value="" label="All"/>
+        			<form:options items="${VTTransactionStatusList}" itemLabel="displayName"/>
+    			</form:select>
+
+	  	 </div>
+          <div class="column w-33-percent">
+				<form:label	for="transaction.type" path="transaction.type" cssErrorClass="error">Type</form:label><br/>
+				<form:select path="transaction.type">
+        			<form:option value="" label="All"/>
+        			<form:options items="${VTTransactionTypeList}" itemLabel="displayName"/>
+    			</form:select>
+	 	 </div>
 	</div>
+</div><!-- /rows -->
 			
 			<input type="submit" class="btn btn-danger" id="searchVTTransactionsButton"/> 
 			
@@ -37,6 +51,8 @@
 			   <display:setProperty name="export.csv.filename" value="vtTransactions.txt"/> 	
 			   				   				
 			  <display:column property="id" sortable="true" sortName="t.id" title="ID"/>	
+			  <display:column property="status" sortable="true" sortName="t.status" title="Status"/>
+			  <display:column property="type" sortable="true" sortName="t.type" title="Type"/>
 			  <display:column property="total" sortable="true" sortName="t.total" title="Total"/>
 			  
 <display:column title="Actions" media="html" style="width:10%">

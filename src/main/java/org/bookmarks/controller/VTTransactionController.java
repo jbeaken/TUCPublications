@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.bookmarks.domain.VTTransaction;
 import org.bookmarks.domain.StockItem;
+import org.bookmarks.bean.VTTransactionStatus;
+import org.bookmarks.bean.VTTransactionType;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.service.AZLookupServiceImpl;
 import org.bookmarks.service.VTTransactionService;
@@ -67,7 +69,12 @@ public class VTTransactionController extends AbstractBookmarksController<VTTrans
 	@RequestMapping(value="/displaySearch", method=RequestMethod.GET)
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		VTTransactionSearchBean vtTransactionSearchBean = new VTTransactionSearchBean();
-		modelMap.addAttribute(vtTransactionSearchBean);
+		
+		modelMap.addAttribute("vtTransactionSearchBean", vtTransactionSearchBean);
+		modelMap.addAttribute(VTTransactionStatus.values());
+		modelMap.addAttribute(VTTransactionType.values());
+		
+		
 		return search(vtTransactionSearchBean, request, session, modelMap);
 	}
 
@@ -98,7 +105,7 @@ public class VTTransactionController extends AbstractBookmarksController<VTTrans
 		vtTransactionService.save(vtTransaction);
 
 		VTTransactionSearchBean vtTransactionSearchBean = new VTTransactionSearchBean();
-		vtTransactionSearchBean.setVTTransaction(vtTransaction);
+		vtTransactionSearchBean.setTransaction(vtTransaction);
 
 		session.setAttribute("vtTransactionSearchBean", vtTransactionSearchBean);
 
@@ -121,7 +128,7 @@ public class VTTransactionController extends AbstractBookmarksController<VTTrans
 		vtTransactionService.update(dbVTTransaction);
 
 		VTTransactionSearchBean vtTransactionSearchBean = new VTTransactionSearchBean();
-		vtTransactionSearchBean.setVTTransaction(vtTransaction);
+		vtTransactionSearchBean.setTransaction(vtTransaction);
 		session.setAttribute("vtTransactionSearchBean", vtTransactionSearchBean);
 
 		return "redirect:searchFromSession";

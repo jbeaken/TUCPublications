@@ -3,28 +3,31 @@ package org.bookmarks.controller;
 import org.bookmarks.domain.VTTransaction;
 
 public class VTTransactionSearchBean extends AbstractSearchBean {
+	
+	private VTTransaction transaction;
 
 	public VTTransactionSearchBean() {
 		super();
-		creditNote = new VTTransaction();
+		transaction = new VTTransaction();
 //		setSortColumn("e.startDate");
 //		setSortOrder("DESC");
 		setPage("1");
 	}
 	
-	public VTTransaction getVTTransaction() {
-		return creditNote;
-	}
-
-	public void setVTTransaction(VTTransaction creditNote) {
-		this.creditNote = creditNote;
-	}
-
-	private VTTransaction creditNote;
 
 	@Override
 	public void reset() {
-		creditNote = new VTTransaction();
+		transaction = new VTTransaction();
+	}
+
+
+	public VTTransaction getTransaction() {
+		return transaction;
+	}
+
+
+	public void setTransaction(VTTransaction transaction) {
+		this.transaction = transaction;
 	}
 	
 }

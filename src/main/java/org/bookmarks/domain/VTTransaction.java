@@ -2,6 +2,7 @@ package org.bookmarks.domain;
 
 import java.util.Date;
 
+import org.bookmarks.bean.VTTransactionStatus;
 import org.bookmarks.bean.VTTransactionType;
 import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
@@ -16,6 +17,8 @@ public class VTTransaction extends AbstractEntity {
 
 	private VTTransactionType type;
 	
+	private VTTransactionStatus status;
+
 	private String primaryAccount;
 	
 	private String details;
@@ -52,5 +55,13 @@ public class VTTransaction extends AbstractEntity {
 
 	public void setTotal(Float total) {
 		this.total = total;
+	}
+
+	public VTTransactionStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(VTTransactionStatus status) {
+		this.status = status;
 	}
 }
