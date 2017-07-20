@@ -8,7 +8,7 @@
 
 <form:form
     modelAttribute="creditNote"
-    action="${pageContext.request.contextPath}/customer/uploadAccountsFromTSB"
+    action="${pageContext.request.contextPath}/tsb/uploadAccountsFromTSB"
     method="post"
     enctype="multipart/form-data">    
 
@@ -16,10 +16,11 @@
   <div class="rows">
  
       <div class="row">
-          <div class="column w-33-percent">
-<form:label for="file" path="file">CSV file To Upload</form:label><br/>
-          <form:input path="file" type="file" required="required" />
-         </div>
+
+        <div class="column w-33-percent">
+          <form:label for="file" path="file">CSV file To Upload</form:label><br/>
+          <form:input path="file" type="file" required="required" multiple="multiple"/>
+        </div>
 
          <br/><br/>
 

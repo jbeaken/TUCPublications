@@ -68,6 +68,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.format.number.CurrencyStyleFormatter;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +96,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController extends AbstractBookmarksController {
+
+	@Value("#{ applicationProperties['accounts.upload.increment'] }")
+    private Boolean incrementAccount;
 
 	@Autowired
 	private CustomerService customerService;
@@ -134,6 +139,8 @@ public class CustomerController extends AbstractBookmarksController {
 			// }
 		}
 
+		logger.info("About to process credit notes, incrementAccount = {}", incrementAccount);
+
 		for (CreditNote creditNote : creditNoteMap.values()) {
 
 			if (creditNote.getStatus().equals("Unmatched")) {
@@ -144,7 +151,7 @@ public class CustomerController extends AbstractBookmarksController {
 				continue;
 			}
 
-			accountRepository.processCreditNote(creditNote);
+			accountRepository.processCreditNote(creditNote, incrementAccount);
 		}
 
 		addSuccess("All Saved!", modelMap);

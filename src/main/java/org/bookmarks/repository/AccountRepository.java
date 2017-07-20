@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Repository
 @Transactional
@@ -18,9 +19,8 @@ public class AccountRepository {
 
     private SessionFactory sessionFactory;
 
-    @Value("#{ applicationProperties['accounts.upload.increment'] }")
-    private Boolean incrementAccount;
-    
+    private Logger logger = LoggerFactory.getLogger(AccountRepository.class);
+
     @Autowired
     private CreditNoteRepository creditNoteRepository;
 
@@ -30,7 +30,7 @@ public class AccountRepository {
     }
 
 
-	public void processCreditNote(CreditNote creditNote) {
+	public void processCreditNote(CreditNote creditNote, Boolean incrementAccount) {
 		Query query = null;
 		
 		if(creditNote.getStatus().equals("Primary Matched") || creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
@@ -50,6 +50,8 @@ public class AccountRepository {
 		 }		 
 
 		 query.executeUpdate();
+
+		 logger.info("incrementAccount = {}", incrementAccount);
 
 		 if(incrementAccount) {
  			query = sessionFactory
