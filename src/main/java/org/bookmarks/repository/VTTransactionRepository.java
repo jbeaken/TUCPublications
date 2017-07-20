@@ -29,7 +29,7 @@ public class VTTransactionRepository extends AbstractRepository<VTTransaction> {
   
 	@Override
 	public String getEntityName() {
-		return "org.bookmarks.domain.CreditNote";
+		return "org.bookmarks.domain.VTTransaction";
 	}
 
 	@Override
@@ -38,15 +38,15 @@ public class VTTransactionRepository extends AbstractRepository<VTTransaction> {
 	}
 	
 	public StringBuffer getSelectClauseHQL(SearchBean searchBean) {
-    	return new StringBuffer("select cn from CreditNote as cn");
+    	return new StringBuffer("select t from VTTransaction as t");
     }
 
 	public StringBuffer getCountClauseHQL(SearchBean searchBean) {
-		return new StringBuffer("select count(cn) from CreditNote as cn");
+		return new StringBuffer("select count(t) from VTTransaction as t");
 	}
 	
 	protected String getDefaultSortColumn() {
-		return "cn.date";
+		return "t.id";
 	}	
 
 

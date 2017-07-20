@@ -36,13 +36,8 @@
 			   <display:setProperty name="export.pdf.filename" value="vtTransactions.pdf"/> 				   
 			   <display:setProperty name="export.csv.filename" value="vtTransactions.txt"/> 	
 			   				   				
-			  <display:column property="id" sortable="true" sortName="cn.id" title="ID"/>	
-			  <display:column property="date" sortable="true" sortName="cn.date" title="Date"/>
-			  <display:column property="customer" sortable="true" sortName="cn.date" title="Customer"/>
-			  <display:column property="amount" sortable="true" sortName="cn.amount" title="Amount"/>
-			  <display:column property="transactionDescription" sortable="true" sortName="cn.transactionDescription" title="Customer Match"/>
-			  <display:column property="transactionReference" sortable="true" sortName="cn.transactionReference" title="Ref"/>
-			  <display:column property="transactionType" sortable="true" sortName="cn.transactionType" title="Type"/>
+			  <display:column property="id" sortable="true" sortName="t.id" title="ID"/>	
+			  <display:column property="total" sortable="true" sortName="t.total" title="Total"/>
 			  
 <display:column title="Actions" media="html" style="width:10%">
 					  	<div class="btn-group">
