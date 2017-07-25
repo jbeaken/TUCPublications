@@ -52,6 +52,7 @@
 			   				   				
 			  <display:column property="id" sortable="true" sortName="t.id" title="ID"/>
 			   <display:column property="date" sortable="true" sortName="t.creationDate" title="Date"/>	
+			   <display:column property="primaryAccount" sortable="true" sortName="t.primaryAccount" title="Account"/>	
 			  <display:column property="status" sortable="true" sortName="t.status" title="Status"/>
 			  <display:column property="type" sortable="true" sortName="t.type" title="Type"/>
 			  <display:column property="total" sortable="true" sortName="t.total" title="Total"/>

@@ -88,6 +88,7 @@ public class TSBController extends AbstractBookmarksController {
 
 				transaction.setTotal(creditNote.getAmount().floatValue());
 				transaction.setDate(creditNote.getDate());
+				transaction.setPrimaryAccount("Club Account");
 
 				vtTransactionRepository.save(transaction);
 			}
