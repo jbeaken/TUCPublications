@@ -7,10 +7,10 @@ import org.bookmarks.domain.VTTransaction;
 
 public class SearchVTTransactionsDecorator extends AbstractBookmarksTableDecorator {
 	
-//	public String getDate() {
-//		VTTransaction e = (VTTransaction)getCurrentRowObject();
-//		return dateFormatter.print(e.getDate(), Locale.UK);
-//	}
+	public String getDate() {
+		VTTransaction e = (VTTransaction)getCurrentRowObject();
+		return dateFormatter.print(e.getDate(), Locale.UK);
+	}
 
 	
 	public String getTotal() {

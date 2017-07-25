@@ -50,7 +50,8 @@
 			   <display:setProperty name="export.pdf.filename" value="vtTransactions.pdf"/> 				   
 			   <display:setProperty name="export.csv.filename" value="vtTransactions.txt"/> 	
 			   				   				
-			  <display:column property="id" sortable="true" sortName="t.id" title="ID"/>	
+			  <display:column property="id" sortable="true" sortName="t.id" title="ID"/>
+			   <display:column property="date" sortable="true" sortName="t.creationDate" title="Date"/>	
 			  <display:column property="status" sortable="true" sortName="t.status" title="Status"/>
 			  <display:column property="type" sortable="true" sortName="t.type" title="Type"/>
 			  <display:column property="total" sortable="true" sortName="t.total" title="Total"/>

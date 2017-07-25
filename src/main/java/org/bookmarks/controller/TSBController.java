@@ -87,6 +87,7 @@ public class TSBController extends AbstractBookmarksController {
 				VTTransaction transaction = new VTTransaction();
 
 				transaction.setTotal(creditNote.getAmount().floatValue());
+				transaction.setTransactionDate(creditNote.getDate());
 
 				vtTransactionRepository.save(transaction);
 			}

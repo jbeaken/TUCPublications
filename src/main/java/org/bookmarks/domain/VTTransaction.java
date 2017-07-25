@@ -25,6 +25,16 @@ public class VTTransaction extends AbstractEntity {
 	
 	private Float total;
 
+	private Date transactionDate;
+
+	public Date getTransactionDate() {
+		return transactionDate;
+	}
+
+	public void setTransactionDate(Date transactionDate) {
+		this.transactionDate = transactionDate;
+	}	
+
 	public VTTransactionType getType() {
 		return type;
 	}
