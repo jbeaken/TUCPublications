@@ -51,10 +51,10 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		Collection<CreditNote> creditNoteList = creditNoteService.search(creditNoteSearchBean);
 
 		//Now reconcile
-		BigDecimal clubAccountOutgoings = creditNoteService.getOutgoings();
-		BigDecimal clubAccountIncomings = creditNoteService.getIncomings();
+	//	BigDecimal clubAccountOutgoings = creditNoteService.getOutgoings();
+		//BigDecimal clubAccountIncomings = creditNoteService.getIncomings();
 
-		BigDecimal clubAccountBalance = clubAccountOutgoings.add(clubAccountIncomings);
+		//BigDecimal clubAccountBalance = clubAccountOutgoings.add(clubAccountIncomings);
 
 		//Don't like, fix for shitty export
 		setPageSize(creditNoteSearchBean, modelMap, creditNoteList.size());
@@ -63,9 +63,9 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
 
 		modelMap.addAttribute("creditNoteList", creditNoteList);
-		modelMap.addAttribute("clubAccountOutgoings", clubAccountOutgoings);
-		modelMap.addAttribute("clubAccountIncomings", clubAccountIncomings);
-		modelMap.addAttribute("clubAccountBalance", clubAccountBalance);
+		//modelMap.addAttribute("clubAccountOutgoings", clubAccountOutgoings);
+		//modelMap.addAttribute("clubAccountIncomings", clubAccountIncomings);
+		//modelMap.addAttribute("clubAccountBalance", clubAccountBalance);
 		modelMap.addAttribute("searchResultCount", creditNoteSearchBean.getSearchResultCount());
 
 		return "searchCreditNotes";
