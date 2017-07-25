@@ -35,7 +35,7 @@ public interface ChipsService {
 
 	void buildIndex() throws ClientProtocolException, IOException;
 
-	void updateChips() throws UnsupportedEncodingException, ClientProtocolException, IOException;
+	String updateChips() throws UnsupportedEncodingException, ClientProtocolException, IOException;
 
 	String updateReadingLists();
 

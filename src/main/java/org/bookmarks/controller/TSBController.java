@@ -63,11 +63,11 @@ public class TSBController extends AbstractBookmarksController {
 	 */
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
 	@Transactional
-	public String saveAccountsFromTSB(ModelMap modelMap, HttpSession session) throws IOException {
+	public String saveAccountsFromTSB(Boolean credit, ModelMap modelMap, HttpSession session) throws IOException {
 
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 
-		logger.info("About to process credit notes, incrementAccount = {}", incrementAccount);
+		logger.info("About to process credit notes, credit = {}", credit);
 
 		for (CreditNote creditNote : creditNoteMap.values()) {
 			
@@ -91,7 +91,7 @@ public class TSBController extends AbstractBookmarksController {
 				vtTransactionRepository.save(transaction);
 			}
 
-			accountRepository.processCreditNote(creditNote, incrementAccount);
+			accountRepository.processCreditNote(creditNote, credit);
 		}
 
 		addSuccess("All Saved!", modelMap);

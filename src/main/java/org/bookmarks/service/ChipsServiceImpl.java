@@ -590,16 +590,25 @@ public class ChipsServiceImpl implements ChipsService {
 
 >>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 	@Override
-	public void updateChips() throws ClientProtocolException, IOException {
+	public String updateChips() throws ClientProtocolException, IOException {
 
 		Collection<StockItem> stockItems = stockItemService.getBounciesAndStickies();
 		Collection<StockItem> strippedStockItems = new ArrayList<StockItem>();
 		
 		Collection<ReadingList> readingLists = readingListService.getAll();
+<<<<<<< HEAD
 		
 		//Transfer to reduce amount of unneeded fluff (could do this is hql I suppose)
 		for(StockItem si : stockItems) {
 			if(si.getPutOnWebsite() == false) continue; //TODO 
+=======
+
+		// Transfer to reduce amount of unneeded fluff (could do this is hql I
+		// suppose)
+		for (StockItem si : stockItems) {
+			if (si.getPutOnWebsite() == false)
+				continue; 
+>>>>>>> 85c75a2... Added credit boolean to upload accounts
 			StockItem bouncy = new StockItem(si.getId());
 			bouncy.setTitle(si.getTitle());
 			bouncy.setIsbn(si.getIsbn());
@@ -609,6 +618,7 @@ public class ChipsServiceImpl implements ChipsService {
 			bouncy.setStickyTypeIndex(si.getStickyTypeIndex());
 			strippedStockItems.add(bouncy);
 		}
+<<<<<<< HEAD
 		
 		JSONSerializer serializer = new JSONSerializer();
 
@@ -637,6 +647,19 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			response.close();
 		}
+=======
+
+	
+		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
+
+		logger.debug("HttpEntity body : {}", requestEntity.getBody());
+
+		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateChips", HttpMethod.POST, requestEntity, String.class);
+
+		logger.info("Update chips exchange return result : {}", result);
+
+		return result.getBody();		
+>>>>>>> 85c75a2... Added credit boolean to upload accounts
 	}
 
 	private CloseableHttpResponse execute(String url, String name, String value) throws ClientProtocolException, IOException {
