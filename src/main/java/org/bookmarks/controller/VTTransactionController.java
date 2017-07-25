@@ -59,6 +59,7 @@ public class VTTransactionController extends AbstractBookmarksController<VTTrans
 		//Add to session for later search
 		session.setAttribute("vtTransactionSearchBean", vtTransactionSearchBean);
 
+		modelMap.addAttribute("vtTransactionSearchBean", vtTransactionSearchBean);
 		modelMap.addAttribute("vtTransactionList", vtTransactionList);
 		modelMap.addAttribute("searchResultCount", vtTransactionSearchBean.getSearchResultCount());
 
