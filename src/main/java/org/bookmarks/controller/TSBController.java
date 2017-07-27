@@ -333,8 +333,9 @@ public class TSBController extends AbstractBookmarksController {
 				logger.debug(transactionType);
 				logger.debug(sortCode);
 				logger.debug(accountNumber);
-
-				logger.debug(tsbMatch);
+				logger.debug("transactionDescription {}", transactionDescription);
+				logger.debug("transactionReference {}", transactionReference);
+				logger.debug("tsbMatch {}", tsbMatch);
 				logger.debug(amount);
 			}
 
