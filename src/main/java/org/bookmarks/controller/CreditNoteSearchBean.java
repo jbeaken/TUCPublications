@@ -1,12 +1,14 @@
 package org.bookmarks.controller;
 
 import org.bookmarks.domain.CreditNote;
+import org.bookmarks.domain.Customer;
 
 public class CreditNoteSearchBean extends AbstractSearchBean {
 
 	public CreditNoteSearchBean() {
 		super();
 		creditNote = new CreditNote();
+		creditNote.setCustomer(new Customer());
 //		setSortColumn("e.startDate");
 //		setSortOrder("DESC");
 		setPage("1");

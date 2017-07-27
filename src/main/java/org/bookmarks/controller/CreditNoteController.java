@@ -76,6 +76,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
 		modelMap.addAttribute(creditNoteSearchBean);
+		
 		return search(creditNoteSearchBean, request, session, modelMap);
 	}
 
