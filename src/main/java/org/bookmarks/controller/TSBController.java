@@ -328,6 +328,7 @@ public class TSBController extends AbstractBookmarksController {
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");
+				logger.debug("Is clubAccount = {}", cn.isClubAccount());
 				logger.debug("" + transactionDate);
 				logger.debug(transactionType);
 				logger.debug(sortCode);
