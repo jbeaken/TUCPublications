@@ -70,7 +70,7 @@ public class TSBController extends AbstractBookmarksController {
 		logger.info("About to process credit notes, credit = {}", credit);
 
 		for (CreditNote creditNote : creditNoteMap.values()) {
-			
+
 			logger.debug("CreditNote : {}", creditNote);
 
 			if (creditNote.getStatus().equals("Unmatched")) {
@@ -315,6 +315,7 @@ public class TSBController extends AbstractBookmarksController {
 				cn.setStatus("Club Account");
 				amount = "-" + record.get(5);
 				transactionReference = record.get(0) + "-CLUB-" + amount;
+				transactionDescription = transactionReference + " " + transactionDate;
 				Customer clubAccountCustomer = customerService.get(31245l);
 				cn.setCustomer(clubAccountCustomer);
 			}
