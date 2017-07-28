@@ -229,16 +229,17 @@ public class TSBController extends AbstractBookmarksController {
 			String transactionDescription = null;
 			String amount = null;
 			String transactionReference = null;
+			String transactionDateStr = record.get(0);
 
 			try {
-				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse(record.get(0));
+				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse( transactionDateStr );
 				transactionType = record.get(1);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
 				transactionDescription = record.get(4);
 				amount = record.get(6);
 			} catch (java.text.ParseException e) {
-				transactionDate = new SimpleDateFormat("dd MMM yy").parse(record.get(0));
+				transactionDate = new SimpleDateFormat("dd MMM yy").parse(transactionDateStr);
 				transactionDescription = record.get(1);
 				transactionType = record.get(2);
 				sortCode = record.get(2);
@@ -310,14 +311,14 @@ public class TSBController extends AbstractBookmarksController {
 			}
 
 			if (transactionType.equals("SO")) {
-				transactionReference = record.get(0) + "-SO-" + transactionDescription;
+				transactionReference = transactionDateStr + "-SO-" + transactionDescription;
 			}
 
 			if (cn.isClubAccount()) {
 				cn.setStatus("Club Account");
 				amount = "-" + record.get(5);
-				transactionReference = record.get(0) + "-CLUB-" + amount;
-				transactionDescription = transactionReference + " " + transactionDate;
+				transactionReference = transactionDescription + "-" + transactionDateStr + "-CLUB" + amount;
+				transactionDescription = transactionReference;
 				Customer clubAccountCustomer = customerService.get(31245l);
 				cn.setCustomer(clubAccountCustomer);
 			}
