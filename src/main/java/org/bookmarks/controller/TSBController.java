@@ -168,9 +168,10 @@ public class TSBController extends AbstractBookmarksController {
 	}
 
 	/**
-	 * Text file to upload from mini beans, for external event 1) CSV file
-	 * contains with sales, followed by invoice sales. 2) Create event 3) Create
-	 * sales and invoices
+	 * File has been selected, convert csv lines into CreditNotes
+	 * All credit notes have unique transactionReference. 
+	 * 
+	 * Checks that the csv line transactionReference doesn't already exist
 	 **/
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.POST)
 	public String uploadAccountsFromTSB(CreditNote creditNote, HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
@@ -178,20 +179,24 @@ public class TSBController extends AbstractBookmarksController {
 		MultipartFile file = creditNote.getFile();
 		String fileName = file.getOriginalFilename();
 		Long fileSize = file.getSize();
+		
+		//Validate the uploaded file
 
 		float total = 0;
 		int count = 0;
 		String message = "Successfully uploaded bank text file from TSB!";
 		boolean allMatched = true;
 
-		logger.info("Uploading customer accounts ");
+		logger.info("Uploading tsb bank lines from csv {}", file.getOriginalFilename());
 
 		if (fileName.indexOf(".csv") == -1) {
+			logger.info("Not a csv file, exiting!");
 			addError("The file must be a csv file ", modelMap);
 			return "confirmUploadAccounts";
 		}
 
 		if (fileSize > 100000) {
+			logger.info("file too big, exiting!");
 			addError("File too big! Size is " + (fileSize / 1000) + " Kb", modelMap);
 			return "confirmUploadAccounts";
 		}
@@ -232,19 +237,16 @@ public class TSBController extends AbstractBookmarksController {
 				accountNumber = record.get(3);
 				transactionDescription = record.get(4);
 				amount = record.get(6);
-				transactionReference = null;
 			} catch (java.text.ParseException e) {
 				transactionDate = new SimpleDateFormat("dd MMM yy").parse(record.get(0));
 				transactionDescription = record.get(1);
 				transactionType = record.get(2);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
-
 				amount = record.get(3);
-				transactionReference = null;
 			}
 
-			// Exception for transfers from club account to main bank account
+			// is this a club account transfer into the main bookmarks account?
 			if (transactionDescription.startsWith("I S BOOKS LTD") || transactionDescription.startsWith("TO 30932900089719")) {
 				cn.setClubAccount(true);
 			}
@@ -320,7 +322,7 @@ public class TSBController extends AbstractBookmarksController {
 				cn.setCustomer(clubAccountCustomer);
 			}
 
-			// Check that this transaction hasn't already been processed
+			// Check that this transaction hasn't already been processed, look up based on transactionReference
 			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
 
 			if (matchedCreditNote != null)
@@ -339,7 +341,9 @@ public class TSBController extends AbstractBookmarksController {
 				logger.debug(amount);
 			}
 
-			transactionDescription = tsbMatch;
+			if (!cn.isClubAccount()) {
+				transactionDescription = tsbMatch;
+			}
 
 			cn.setDate(transactionDate);
 			cn.setAmount(new BigDecimal(amount));
