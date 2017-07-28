@@ -34,6 +34,20 @@
 
 </script>
 <h1>Upload bank credits from TSB</h1>
+
+		<div class="alert alert-error">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<ul>
+				<li>Uploaded ${noOfLines} lines from csv files</li>
+				<li>Found ${noOfCreditNotes} credit Notes</li>
+				<li>${noOfAlreadyProcessed} are already processed</li>
+				<li>${noOfUnmatched} are unmatched</li>
+				<li>${noOfMatched} are matched</li>
+				<li>${noOfClubAccounts} are club accounts</li>
+			</ul>
+			<br />
+		</div>  	
+		
 <input type="hidden" id="customerId"/>
 
     <div class="rows">
@@ -65,11 +79,11 @@
                 Action <span class="caret"></span>
               </button>
                <ul class="dropdown-menu" role="menu">
+               <c:if test="${searchTable.clubAccount == false}">
                 <li>                    
-                  <a onclick="javascript:match('${searchTable.transactionDescription}')">Match</a>
+                  <a onclick="javascript:match('${searchTable.transactionReference}')">Match</a>
                 </li>
-                <li>                    
-                </li>                                  
+                </c:if>
                </ul>
 
                    </display:column>

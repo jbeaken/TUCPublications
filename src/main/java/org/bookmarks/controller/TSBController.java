@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.TransactionType;
 import org.bookmarks.domain.VTTransaction;
+import org.bookmarks.exceptions.BookmarksException;
 import org.bookmarks.repository.AccountRepository;
 import org.bookmarks.repository.VTTransactionRepository;
 import org.bookmarks.service.CustomerService;
@@ -35,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -47,8 +50,8 @@ public class TSBController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerService customerService;
 
-//	@Autowired
-//	private EmailService emailService;
+	// @Autowired
+	// private EmailService emailService;
 
 	@Autowired
 	private VTTransactionRepository vtTransactionRepository;
@@ -63,7 +66,7 @@ public class TSBController extends AbstractBookmarksController {
 	 */
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
 	@Transactional
-	public String saveAccountsFromTSB(Boolean credit, ModelMap modelMap, HttpSession session) throws IOException {
+	public String saveAccountsFromTSB(@RequestParam("credit") Boolean credit, ModelMap modelMap, HttpSession session) throws IOException {
 
 		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
 
@@ -98,127 +101,58 @@ public class TSBController extends AbstractBookmarksController {
 
 		addSuccess("All Saved!", modelMap);
 
-		return "confirmUploadAccounts";
+		return "redirect:/tsb/uploadAccountsFromTSB";
 	}
 
-	@RequestMapping(value = "/selectMatch", method = RequestMethod.GET)
-	public String selectMatch(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
+	
+	@RequestMapping(value = "/uploadCSVFiles", method = RequestMethod.POST)
+	public String uploadCSVFiles(@RequestParam("csvFiles") MultipartFile[] csvFiles, ModelMap modelMap, HttpSession session) throws IOException {
 
-		logger.debug("Have selected " + priority + " match for " + customerId + " transactionDescription : " + transactionDescription);
+		CreditNoteHolder holder = new CreditNoteHolder();
 
-		Customer customer = customerService.get(customerId);
-
-		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
-		CreditNote cn = creditNoteMap.get(transactionDescription);
-
-		cn.setCustomer(customer);
-
-		if (priority == 1) {
-			cn.setStatus("Potential Primary Match");
-		} else if (priority == 2) {
-			cn.setStatus("Potential Secondary Match");
+		for (MultipartFile csvFile : csvFiles) {
+			try {
+				processCSVFile(holder, csvFile);
+			} catch (Exception e) {
+				logger.error("Problem uploading csv files from file " + csvFile.getOriginalFilename(), e);
+			}
 		}
-
-		addSuccess("Secondary Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
-
-		populateCreditNoteModel(creditNoteMap, modelMap);
-
-		return "confirmUploadAccounts";
-	}
-
-	@RequestMapping(value = "/match", method = RequestMethod.GET)
-	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
-
-		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
-
-		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
-		CreditNote cn = creditNoteMap.get(transactionDescription);
-
-		Customer customer = customerService.get(customerId);
-
-		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
-			addError("Cannot match this row as has status " + cn.getStatus(), modelMap);
-			return "confirmUploadAccounts";
-		}
-
-		// Check if customer is already matched
-		if (customer.getBookmarksAccount().getTsbMatch() != null) {
-			logger.debug("Customer already has primary match");
-			addInfo("This customer already has a primary match. Either overwrite or select as a secondary match", modelMap);
-			modelMap.addAttribute("customer", customer);
-			modelMap.addAttribute("transactionDescription", transactionDescription);
-			return "selectMatch";
-		}
-
-		// Primary match
-		cn.setCustomer(customer);
-		cn.setStatus("Potential Primary Match");
-
-		addSuccess("Primary match for " + customer.getFullName() + " to " + transactionDescription, modelMap);
-
-		populateCreditNoteModel(creditNoteMap, modelMap);
-
-		return "confirmUploadAccounts";
-	}
-
-	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
-	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
-		modelMap.addAttribute("creditNote", new CreditNote());
-		return "uploadAccountsFromTSB";
-	}
-
-	/**
-	 * File has been selected, convert csv lines into CreditNotes
-	 * All credit notes have unique transactionReference. 
-	 * 
-	 * Checks that the csv line transactionReference doesn't already exist
-	 **/
-	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.POST)
-	public String uploadAccountsFromTSB(CreditNote creditNote, HttpSession session, ModelMap modelMap) throws IOException, java.text.ParseException {
-
-		MultipartFile file = creditNote.getFile();
-		String fileName = file.getOriginalFilename();
-		Long fileSize = file.getSize();
 		
-		//Validate the uploaded file
+		//Sanity check, all lines should have been uploaded
+		assert holder.getCreditNoteMap().values().size() == holder.getNoOfLines();
 
-		float total = 0;
+		session.setAttribute("creditNoteHolder", holder);
+
+		populateCreditNoteModel(holder, modelMap);
+
+		return "confirmUploadAccounts";
+	}
+
+	private void processCSVFile(CreditNoteHolder holder, MultipartFile csvFile) throws IOException, ParseException {
+		String fileName = csvFile.getOriginalFilename();
+
+		logger.info("Uploading tsb bank lines from csv {}", csvFile.getOriginalFilename());
+
 		int count = 0;
-		String message = "Successfully uploaded bank text file from TSB!";
-		boolean allMatched = true;
-
-		logger.info("Uploading tsb bank lines from csv {}", file.getOriginalFilename());
-
+		
+		// Validate the uploaded file
 		if (fileName.indexOf(".csv") == -1) {
 			logger.info("Not a csv file, exiting!");
-			addError("The file must be a csv file ", modelMap);
-			return "confirmUploadAccounts";
+			throw new BookmarksException(csvFile.getOriginalFilename() + " is not a csv file!");
 		}
 
-		if (fileSize > 100000) {
-			logger.info("file too big, exiting!");
-			addError("File too big! Size is " + (fileSize / 1000) + " Kb", modelMap);
-			return "confirmUploadAccounts";
-		}
-
-		Reader reader = new InputStreamReader(file.getInputStream());
+		Reader reader = new InputStreamReader(csvFile.getInputStream());
 		CSVParser parser = CSVFormat.DEFAULT.withHeader().withQuote(null).parse(reader);
 		List<CSVRecord> records = parser.getRecords();
-		// Long size = records.spliterator().getExactSizeIfKnown();
+
 		logger.info("Have records of size " + records.size());
-
-		// if(records.size() == 0) {
-		// reader = new InputStreamReader(file.getInputStream());
-		// parser = CSVFormat.TDF.withQuote(null).parse(reader);
-		// records = parser.getRecords();
-		// logger.info("Have records of size " + records.size() );
-		// }
-
-		Map<String, CreditNote> creditNoteMap = new HashMap<>();
 
 		for (CSVRecord record : records) {
 
 			logger.info(record.toString());
+			
+			holder.incrementNoOfLines();
+			count++;
 
 			CreditNote cn = new CreditNote();
 
@@ -232,7 +166,7 @@ public class TSBController extends AbstractBookmarksController {
 			String transactionDateStr = record.get(0);
 
 			try {
-				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse( transactionDateStr );
+				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse(transactionDateStr);
 				transactionType = record.get(1);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
@@ -282,9 +216,7 @@ public class TSBController extends AbstractBookmarksController {
 					logger.debug("transactionReference : " + transactionReference);
 
 				} else {
-					addError("Could not find transaction reference in " + transactionDescription, modelMap);
-					populateCreditNoteModel(creditNoteMap, modelMap);
-					return "confirmUploadAccounts";
+					throw new BookmarksException(csvFile.getOriginalFilename() + " : Could not find transaction reference in " + transactionDescription);
 				}
 
 				int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
@@ -300,7 +232,6 @@ public class TSBController extends AbstractBookmarksController {
 				matchedCustomer = customerService.findSecondaryMatchedCustomer(tsbMatch);
 				if (matchedCustomer == null) {
 					cn.setStatus("Unmatched");
-					allMatched = false;
 				} else {
 					cn.setStatus("Secondary Matched");
 					cn.setCustomer(matchedCustomer);
@@ -323,11 +254,13 @@ public class TSBController extends AbstractBookmarksController {
 				cn.setCustomer(clubAccountCustomer);
 			}
 
-			// Check that this transaction hasn't already been processed, look up based on transactionReference
+			// Check that this transaction hasn't already been processed, look
+			// up based on transactionReference
 			CreditNote matchedCreditNote = accountRepository.getCreditNote(transactionReference);
 
-			if (matchedCreditNote != null)
+			if (matchedCreditNote != null) {
 				cn.setStatus("Already Processed");
+			}
 
 			if (logger.isDebugEnabled()) {
 				logger.debug("**********************");
@@ -351,37 +284,160 @@ public class TSBController extends AbstractBookmarksController {
 			cn.setTransactionDescription(transactionDescription);
 			cn.setTransactionType(TransactionType.TFR);
 			cn.setTransactionReference(transactionReference);
+			
+			holder.getCreditNoteMap().put(transactionReference, cn);
+		}
+		
+		logger.info("{} contained {} lines", csvFile.getOriginalFilename(), count);
 
-			creditNoteMap.put(transactionDescription, cn);
+	}
 
-			total += cn.getAmount().floatValue();
-			count++;
+	@RequestMapping(value = "/selectMatch", method = RequestMethod.GET)
+	public String selectMatch(Integer priority, Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
+
+		logger.debug("Have selected " + priority + " match for " + customerId + " transactionDescription : " + transactionDescription);
+
+		Customer customer = customerService.get(customerId);
+
+		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
+		
+		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
+		
+		CreditNote cn = creditNoteMap.get(transactionDescription);
+
+		cn.setCustomer(customer);
+
+		if (priority == 1) {
+			cn.setStatus("Potential Primary Match");
+		} else if (priority == 2) {
+			cn.setStatus("Potential Secondary Match");
 		}
 
-		session.setAttribute("creditNoteMap", creditNoteMap);
+		addSuccess("Secondary Matched " + customer.getFullName() + " to " + transactionDescription, modelMap);
 
-		populateCreditNoteModel(creditNoteMap, modelMap);
-
-		if (allMatched == true) {
-			message += ". All matched!";
-		}
-
-		if (count == 150) {
-			addWarning("Upload from bank text file successful! Have got " + count + " lines. There may be more lines!! Check paper statements", modelMap);
-		} else {
-			addSuccess("Upload from bank text file successful! Have got " + count + " lines.", modelMap);
-		}
+		populateCreditNoteModel(holder, modelMap);
 
 		return "confirmUploadAccounts";
 	}
 
-	private void populateCreditNoteModel(Map<String, CreditNote> creditNoteMap, ModelMap modelMap) {
-		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream().sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
+	@RequestMapping(value = "/match", method = RequestMethod.GET)
+	public String match(Long customerId, String transactionDescription, ModelMap modelMap, HttpSession session) throws IOException {
 
+		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
+
+		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
+		
+		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
+		
+		CreditNote cn = creditNoteMap.get(transactionDescription);
+
+		Customer customer = customerService.get(customerId);
+
+		if (cn.getStatus().equals("Already Processed") || cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")) {
+			addError("Cannot match this row as has status " + cn.getStatus(), modelMap);
+			return "confirmUploadAccounts";
+		}
+
+		// Check if customer is already matched
+		if (customer.getBookmarksAccount().getTsbMatch() != null) {
+			logger.debug("Customer already has primary match");
+			addInfo("This customer already has a primary match. Either overwrite or select as a secondary match", modelMap);
+			modelMap.addAttribute("customer", customer);
+			modelMap.addAttribute("transactionDescription", transactionDescription);
+			return "selectMatch";
+		}
+
+		// Primary match
+		cn.setCustomer(customer);
+		cn.setStatus("Potential Primary Match");
+
+		addSuccess("Primary match for " + customer.getFullName() + " to " + transactionDescription, modelMap);
+
+		populateCreditNoteModel(holder, modelMap);
+
+		return "confirmUploadAccounts";
+	}
+
+	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
+	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
+		modelMap.addAttribute("creditNote", new CreditNote());
+		return "uploadAccountsFromTSB";
+	}
+
+
+	private void populateCreditNoteModel(CreditNoteHolder holder, ModelMap modelMap) {
+		
+		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
+		
+		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream().sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
+		
+		modelMap.addAttribute("noOfLines", holder.getNoOfLines());
+		modelMap.addAttribute("noOfCreditNotes", creditNoteMap.values().size());
+		modelMap.addAttribute("noOfUnmatched", holder.getNoUnmatched());
+		modelMap.addAttribute("noOfMatched", holder.getNoMatched());
+		modelMap.addAttribute("noOfClubAccounts", holder.getNoOfClubAccounts());
+		modelMap.addAttribute("noOfAlreadyProcessed", holder.getNoOfAlreadyProcessed());
+		
 	}
 
 	@Override
 	public Service<Customer> getService() {
 		return customerService;
 	}
+}
+
+class CreditNoteHolder {
+
+	private Map<String, CreditNote> creditNoteMap = new HashMap<>();
+
+	private Integer noOfLines = 0;
+	
+	public Map<String, CreditNote> getCreditNoteMap() {
+		return creditNoteMap;
+	}
+
+	public Object getNoOfAlreadyProcessed() {
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Already Processed")).count();
+	}
+
+	public Long getNoUnmatched() {
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Unmatched")).count();
+	}
+	
+	public Long getNoMatched() {
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")).count();
+	}	
+
+	public void incrementNoOfLines() {
+		noOfLines++;
+	}
+	
+	public Integer getNoOfLines() {
+		return noOfLines;
+	}
+
+	public double getTotalAmountInPounds() {
+		return creditNoteMap.values().stream().mapToDouble(i -> i.getAmount().doubleValue()).sum();
+	}
+
+	public List<CreditNote> getMatched() {
+		return creditNoteMap.values().stream().filter(cn -> !cn.getStatus().equals("Unmatched")).collect(Collectors.toList());
+	}
+
+	
+	public List<CreditNote> getAlreadyProcessed() {
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Already Processed")).collect(Collectors.toList());
+	}
+
+
+
+	public List<CreditNote> getClubAccounts() {
+		return creditNoteMap.values().stream().filter(cn -> cn.isClubAccount()).collect(Collectors.toList());
+	}
+	
+	public int getNoOfClubAccounts() {
+		return getClubAccounts().size();
+	}
+
+	
 }

@@ -3,12 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
-<h1>Upload csv file from TSB</h1>
+<h1>Upload CSV file from TSB</h1>
 
 
-<form:form
-    modelAttribute="creditNote"
-    action="${pageContext.request.contextPath}/tsb/uploadAccountsFromTSB"
+<form:form action="${pageContext.request.contextPath}/tsb/uploadCSVFiles"
     method="post"
     enctype="multipart/form-data">    
 
@@ -18,8 +16,9 @@
       <div class="row">
 
         <div class="column w-33-percent">
-          <form:label for="file" path="file">CSV file To Upload</form:label><br/>
-          <form:input path="file" type="file" required="required" multiple="multiple"/>
+         <label>Files to upload</label>
+         <br/>
+         <input type="file" required="required" multiple="multiple" name="csvFiles" />
         </div>
 
          <br/><br/>
@@ -28,7 +27,7 @@
 
         <div class="row">
             <div class="column w-33-percent">
-           <input type="submit" class="btn btn-primary" value="Upload sales"/>
+           <input type="submit" class="btn btn-primary" value="Upload CSV Files"/>
         </div>
     </div>
 
