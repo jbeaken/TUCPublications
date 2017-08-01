@@ -32,9 +32,6 @@ public class CreditNote extends AbstractEntity {
 	
 	@Transient private boolean isClubAccount;
 
-	//For upload of sales csv
-	@Transient private MultipartFile file;
-
 	@ManyToOne
 	@NotNull
 	private Customer customer;
@@ -77,20 +74,12 @@ public class CreditNote extends AbstractEntity {
 		this.amount = amount;
 	}
 
-	public MultipartFile getFile() {
-		return file;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public void setFile(MultipartFile file) {
-		this.file = file;
 	}
 
 	public void setTransactionReference(String transactionReference) {
@@ -127,7 +116,6 @@ public class CreditNote extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "CreditNote [amount=" + amount + ", date=" + date + ", transactionType=" + transactionType + ", transactionReference=" + transactionReference + ", transactionDescription=" + transactionDescription + ", status=" + status + ", isClubAccount=" + isClubAccount + ", file=" + file
-				+ ", customer=" + customer + "]";
+		return "CreditNote [amount=" + amount + ", date=" + date + ", transactionType=" + transactionType + ", transactionReference=" + transactionReference + ", transactionDescription=" + transactionDescription + ", status=" + status + ", isClubAccount=" + isClubAccount + ", customer=" + customer + "]";
 	}
 }
