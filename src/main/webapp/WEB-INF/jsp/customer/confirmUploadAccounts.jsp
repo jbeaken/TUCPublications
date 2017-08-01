@@ -29,14 +29,14 @@
 			return
 		}
 		//alert( customerId + " " + transactionDescription);
-		window.location.href = "/bookmarks/customer/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+		window.location.href = "/bookmarks/tsb/match?customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 
 </script>
 <h1>Upload bank credits from TSB</h1>
 
 		<div class="alert alert-error">
-			<button type="button" class="close" data-dismiss="alert">×</button>
+			<button type="button" class="close" data-dismiss="alert">ï¿½</button>
 			<ul>
 				<li>Uploaded ${noOfLines} lines from csv files</li>
 				<li>Found ${noOfCreditNotes} credit Notes</li>
@@ -46,8 +46,8 @@
 				<li>${noOfClubAccounts} are club accounts</li>
 			</ul>
 			<br />
-		</div>  	
-		
+		</div>
+
 <input type="hidden" id="customerId"/>
 
     <div class="rows">
@@ -80,7 +80,7 @@
               </button>
                <ul class="dropdown-menu" role="menu">
                <c:if test="${searchTable.clubAccount == false}">
-                <li>                    
+                <li>
                   <a onclick="javascript:match('${searchTable.transactionReference}')">Match</a>
                 </li>
                 </c:if>
@@ -98,6 +98,6 @@
               </div>
               <div class="column w-33-percent">
                   <a href="/bookmarks/tsb/saveAccountsFromTSB?credit=false" class="btn btn-primary">Save Without Crediting</a>
-              </div>              
+              </div>
         </div>
       </div>
