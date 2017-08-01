@@ -128,6 +128,8 @@ public class SaleReportController extends AbstractBookmarksController {
 				return invoice(saleReportBean, request, modelMap);
 			case UNSOLD:
 				return unsold(saleReportBean, request, modelMap);
+			case VAT:
+				return vat(saleReportBean, request, modelMap);
 			case PUBLISHER_STOCK_TAKE:
 				return publisherStockTakeReport(saleReportBean, request, session, modelMap);				
 			default:
@@ -249,6 +251,30 @@ public class SaleReportController extends AbstractBookmarksController {
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
+		
+		return "salesReport";
+	}		
+
+	/**
+	 * Report for SaleList : has to be a mapping as well due to pagination and sorting
+	 */
+	@RequestMapping(value="/vat")
+	public String vat(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
+		setPaginationFromRequest(saleReportBean, request);
+		
+		Collection<Sale> sales = saleService.search(saleReportBean);
+		
+		SaleTotalBean saleTotalBean = saleReportService.getSaleTotalBean(saleReportBean);
+		
+		//Don't like, fix for shitty export
+		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
+		
+		modelMap.addAttribute(sales);
+		modelMap.addAttribute("searchResultCount", saleReportBean.getSearchResultCount());
+		modelMap.addAttribute(saleReportBean);
+		modelMap.addAttribute(getCategories());
+		modelMap.addAttribute(getPublishers());
+		modelMap.addAttribute(saleTotalBean);
 		
 		return "salesReport";
 	}		

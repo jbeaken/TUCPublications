@@ -1,1 +1,0 @@
-update customerorderline set securitycode = '' where customerorderstatus = 'COMPLETE' or customerorderstatus ='CANCELLED';

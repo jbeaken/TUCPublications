@@ -140,12 +140,11 @@ public class ChipsServiceImpl implements ChipsService {
 	@Value("#{ applicationProperties['chips.url'] }")
 	private String chipsUrl;
 
-      private HttpHost target;
+    private HttpHost target;
 
-       private CredentialsProvider credsProvider;
+    private CredentialsProvider credsProvider;
 
-       private HttpClientContext localContext;
-
+    private HttpClientContext localContext;
 
 	@Value("#{ applicationProperties['chips.get.orders'] }")
 	private Boolean chipsGetOrders;
@@ -620,12 +619,15 @@ public class ChipsServiceImpl implements ChipsService {
 			bouncy.setBouncyIndex(si.getBouncyIndex());
 			bouncy.setStickyCategoryIndex(si.getStickyCategoryIndex());
 			bouncy.setStickyTypeIndex(si.getStickyTypeIndex());
+			bouncy.setPutImageOnWebsite(si.getPutImageOnWebsite());
+			logger.debug("Adding stockitem to bouncies {}, {}", bouncy, bouncy.getPutImageOnWebsite());
 			strippedStockItems.add(bouncy);
 		}
 <<<<<<< HEAD
 		
 		JSONSerializer serializer = new JSONSerializer();
 
+<<<<<<< HEAD
 		String bounciesAndStickiesAsJson = serializer.serialize(strippedStockItems);
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -654,6 +656,10 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 
 
+=======
+		logger.info("Have got {} bouncies to put on chips with url {}", strippedStockItems.size(), chipsUrl);
+		
+>>>>>>> a59ed76... Added date to add credit note
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());

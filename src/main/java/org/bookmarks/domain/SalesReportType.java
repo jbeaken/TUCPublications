@@ -8,7 +8,8 @@ public enum SalesReportType {
 	TIME_OF_DAY("Time of Day"), 
 	BY_SOURCE("By Source"),
 	INVOICE("Invoice List"),
-	BY_CATEGORY("By Category"), 
+	BY_CATEGORY("By Category"),
+	VAT("VAT"), 
 	UNSOLD("Unsold");
 	
 	private final String displayName;

@@ -172,6 +172,26 @@
 			</c:if>
 </c:if>
 
+<c:if test="${vatList != null}">
+	<br/>
+	<br/>
+	<display:table name="vatList"
+				   requestURI="${pageContext.request.contextPath}/saleReport/report"
+				   export="true"
+				   size="${vatList.size()}"
+				   id="searchTable"
+				   class="smallTextTable">
+		   <display:setProperty name="export.pdf" value="true" />
+		   <display:setProperty name="export.xml" value="false" />
+		   <display:setProperty name="export.pdf.filename" value="invoices.pdf"/>
+		   <display:setProperty name="export.csv.filename" value="invoices.csv"/>
+			 <display:column property="customer.id" title="Customer ID"/>
+			 <display:column property="customer.fullName" title="Customer"/>
+			 <display:column property="formattedTotal" title="Total"/>
+			 <display:column property="formattedVat" title="VAT"/>
+	</display:table>
+</c:if>
+
 <c:if test="${invoiceReportBeanList != null}">
 	<br/>
 	<br/>
