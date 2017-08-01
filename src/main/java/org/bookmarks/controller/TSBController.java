@@ -68,11 +68,11 @@ public class TSBController extends AbstractBookmarksController {
 	@Transactional
 	public String saveAccountsFromTSB(@RequestParam("credit") Boolean credit, ModelMap modelMap, HttpSession session) throws IOException {
 
-		Map<String, CreditNote> creditNoteMap = (Map<String, CreditNote>) session.getAttribute("creditNoteMap");
+		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
 
 		logger.info("About to process credit notes, credit = {}", credit);
 
-		for (CreditNote creditNote : creditNoteMap.values()) {
+		for (CreditNote creditNote : holder.getCreditNoteMap().values()) {
 
 			logger.debug("CreditNote : {}", creditNote);
 
@@ -104,7 +104,7 @@ public class TSBController extends AbstractBookmarksController {
 		return "redirect:/tsb/uploadAccountsFromTSB";
 	}
 
-	
+
 	@RequestMapping(value = "/uploadCSVFiles", method = RequestMethod.POST)
 	public String uploadCSVFiles(@RequestParam("csvFiles") MultipartFile[] csvFiles, ModelMap modelMap, HttpSession session) throws IOException {
 
@@ -117,7 +117,7 @@ public class TSBController extends AbstractBookmarksController {
 				logger.error("Problem uploading csv files from file " + csvFile.getOriginalFilename(), e);
 			}
 		}
-		
+
 		//Sanity check, all lines should have been uploaded
 		assert holder.getCreditNoteMap().values().size() == holder.getNoOfLines();
 
@@ -134,7 +134,7 @@ public class TSBController extends AbstractBookmarksController {
 		logger.info("Uploading tsb bank lines from csv {}", csvFile.getOriginalFilename());
 
 		int count = 0;
-		
+
 		// Validate the uploaded file
 		if (fileName.indexOf(".csv") == -1) {
 			logger.info("Not a csv file, exiting!");
@@ -150,7 +150,7 @@ public class TSBController extends AbstractBookmarksController {
 		for (CSVRecord record : records) {
 
 			logger.info(record.toString());
-			
+
 			holder.incrementNoOfLines();
 			count++;
 
@@ -284,10 +284,10 @@ public class TSBController extends AbstractBookmarksController {
 			cn.setTransactionDescription(transactionDescription);
 			cn.setTransactionType(TransactionType.TFR);
 			cn.setTransactionReference(transactionReference);
-			
+
 			holder.getCreditNoteMap().put(transactionReference, cn);
 		}
-		
+
 		logger.info("{} contained {} lines", csvFile.getOriginalFilename(), count);
 
 	}
@@ -300,9 +300,9 @@ public class TSBController extends AbstractBookmarksController {
 		Customer customer = customerService.get(customerId);
 
 		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
-		
+
 		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
-		
+
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
 		cn.setCustomer(customer);
@@ -326,9 +326,9 @@ public class TSBController extends AbstractBookmarksController {
 		logger.debug("Finding match for " + customerId + " transactionDescription : " + transactionDescription);
 
 		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
-		
+
 		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
-		
+
 		CreditNote cn = creditNoteMap.get(transactionDescription);
 
 		Customer customer = customerService.get(customerId);
@@ -366,18 +366,18 @@ public class TSBController extends AbstractBookmarksController {
 
 
 	private void populateCreditNoteModel(CreditNoteHolder holder, ModelMap modelMap) {
-		
+
 		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
-		
+
 		modelMap.addAttribute("creditNoteList", creditNoteMap.values().stream().sorted((p1, p2) -> p2.getStatus().compareTo(p1.getStatus())).collect(Collectors.toList()));
-		
+
 		modelMap.addAttribute("noOfLines", holder.getNoOfLines());
 		modelMap.addAttribute("noOfCreditNotes", creditNoteMap.values().size());
 		modelMap.addAttribute("noOfUnmatched", holder.getNoUnmatched());
 		modelMap.addAttribute("noOfMatched", holder.getNoMatched());
 		modelMap.addAttribute("noOfClubAccounts", holder.getNoOfClubAccounts());
 		modelMap.addAttribute("noOfAlreadyProcessed", holder.getNoOfAlreadyProcessed());
-		
+
 	}
 
 	@Override
@@ -391,7 +391,7 @@ class CreditNoteHolder {
 	private Map<String, CreditNote> creditNoteMap = new HashMap<>();
 
 	private Integer noOfLines = 0;
-	
+
 	public Map<String, CreditNote> getCreditNoteMap() {
 		return creditNoteMap;
 	}
@@ -403,15 +403,15 @@ class CreditNoteHolder {
 	public Long getNoUnmatched() {
 		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Unmatched")).count();
 	}
-	
+
 	public Long getNoMatched() {
 		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")).count();
-	}	
+	}
 
 	public void incrementNoOfLines() {
 		noOfLines++;
 	}
-	
+
 	public Integer getNoOfLines() {
 		return noOfLines;
 	}
@@ -424,7 +424,7 @@ class CreditNoteHolder {
 		return creditNoteMap.values().stream().filter(cn -> !cn.getStatus().equals("Unmatched")).collect(Collectors.toList());
 	}
 
-	
+
 	public List<CreditNote> getAlreadyProcessed() {
 		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Already Processed")).collect(Collectors.toList());
 	}
@@ -434,10 +434,10 @@ class CreditNoteHolder {
 	public List<CreditNote> getClubAccounts() {
 		return creditNoteMap.values().stream().filter(cn -> cn.isClubAccount()).collect(Collectors.toList());
 	}
-	
+
 	public int getNoOfClubAccounts() {
 		return getClubAccounts().size();
 	}
 
-	
+
 }
