@@ -25,7 +25,7 @@
 	function match( priority, transactionDescription ) {
 		var customerId = $('#customerId').val();
 		//alert( customerId + " " + transactionDescription);
-		window.location.href = "/bookmarks/customer/match?priority=" + priority + "&customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
+		window.location.href = "/bookmarks/tsb/match?priority=" + priority + "&customerId=" + customerId + "&transactionDescription=" + encodeURI( transactionDescription );
 	}
 
 </script>
@@ -33,12 +33,10 @@
 
     <div class="rows">
     		Primary Match : ${customer.bookmarksAccount.tsbMatch}
-    		<br/>		
+    		<br/>
     		Secondary Match : ${customer.bookmarksAccount.tsbMatchSecondary}
     		<br/>
-    		<a href="/bookmarks/customer/selectMatch?priority=1&customerId=${customer.id}&transactionDescription=${transactionDescription}" class="btn btn-danger">Save To Primary</a>
+    		<a href="/bookmarks/tsb/selectMatch?priority=1&customerId=${customer.id}&transactionDescription=${transactionDescription}" class="btn btn-danger">Save To Primary</a>
     		<br/>
-    		<a href="/bookmarks/customer/selectMatch?priority=2&customerId=${customer.id}&transactionDescription=${transactionDescription}" class="btn btn-danger">Save To Secondary</a>
+    		<a href="/bookmarks/tsb/selectMatch?priority=2&customerId=${customer.id}&transactionDescription=${transactionDescription}" class="btn btn-danger">Save To Secondary</a>
       </div>
-
-        

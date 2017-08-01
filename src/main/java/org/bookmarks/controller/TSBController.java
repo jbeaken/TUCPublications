@@ -301,9 +301,7 @@ public class TSBController extends AbstractBookmarksController {
 
 		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
 
-		Map<String, CreditNote> creditNoteMap = holder.getCreditNoteMap();
-
-		CreditNote cn = creditNoteMap.get(transactionDescription);
+		CreditNote cn = holder.getCreditNote( transactionDescription );
 
 		cn.setCustomer(customer);
 
@@ -437,6 +435,10 @@ class CreditNoteHolder {
 
 	public int getNoOfClubAccounts() {
 		return getClubAccounts().size();
+	}
+
+	public CreditNote getCreditNote(String transactionDescription) {
+			return creditNoteMap.get(transactionDescription);
 	}
 
 
