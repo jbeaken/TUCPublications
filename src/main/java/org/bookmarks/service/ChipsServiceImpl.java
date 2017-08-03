@@ -620,7 +620,12 @@ public class ChipsServiceImpl implements ChipsService {
 			bouncy.setStickyCategoryIndex(si.getStickyCategoryIndex());
 			bouncy.setStickyTypeIndex(si.getStickyTypeIndex());
 			bouncy.setPutImageOnWebsite(si.getPutImageOnWebsite());
-			logger.debug("Adding stockitem to bouncies {}, {}", bouncy, bouncy.getPutImageOnWebsite());
+
+			if(si.getPutImageOnWebsite() == false) {
+				throw new BookmarksException("StockItem " + si.toString() + " has put image on website set to false, bouncies must have images");
+			}
+			logger.debug("Adding stockitem to bouncies {}", bouncy);
+			
 			strippedStockItems.add(bouncy);
 		}
 <<<<<<< HEAD
