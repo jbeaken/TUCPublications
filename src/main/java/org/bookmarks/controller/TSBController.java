@@ -403,7 +403,7 @@ class CreditNoteHolder {
 	}
 
 	public Long getNoMatched() {
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")).count();
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().contains("Primary Match") || cn.getStatus().equals("Secondary Match")).count();
 	}
 
 	public void incrementNoOfLines() {

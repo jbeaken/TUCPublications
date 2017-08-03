@@ -579,7 +579,7 @@ public class ChipsServiceImpl implements ChipsService {
 		// chipsRestTemplate.postForObject(chipsUrl + "/website/updateReadingLists", readingLists, Payment.class);
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( readingLists );
 
-		//logger.debug("HttpEntity body : {}", requestEntity.getBody());
+		logger.debug("HttpEntity body : {}", requestEntity.getBody());
 
 		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateReadingLists", HttpMethod.POST, requestEntity, String.class);
 
@@ -607,8 +607,12 @@ public class ChipsServiceImpl implements ChipsService {
 		// suppose)
 		for (StockItem si : stockItems) {
 			if (si.getPutOnWebsite() == false)
+<<<<<<< HEAD
 				continue; 
 >>>>>>> 85c75a2... Added credit boolean to upload accounts
+=======
+				continue;
+>>>>>>> 0d21347... Adding better check for matched to include potential matches
 			StockItem bouncy = new StockItem(si.getId());
 			bouncy.setTitle(si.getTitle());
 			bouncy.setIsbn(si.getIsbn());
@@ -649,17 +653,23 @@ public class ChipsServiceImpl implements ChipsService {
 		}
 =======
 
-	
+
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());
+
+		logger.info("Have got {} bouncies to put on chips with url {}", stockItems.size(), chipsUrl);
 
 		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateChips", HttpMethod.POST, requestEntity, String.class);
 
 		logger.info("Update chips exchange return result : {}", result);
 
+<<<<<<< HEAD
 		return result.getBody();		
 >>>>>>> 85c75a2... Added credit boolean to upload accounts
+=======
+		return result.getBody();
+>>>>>>> 0d21347... Adding better check for matched to include potential matches
 	}
 
 	private CloseableHttpResponse execute(String url, String name, String value) throws ClientProtocolException, IOException {
@@ -737,7 +747,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	private RestTemplate getRestTemplate() {
-		
+
 		RestTemplate restTemplate = new RestTemplate();
 
 		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
@@ -832,7 +842,7 @@ RestTemplate restTemplate = getRestTemplate();
 		}
 
 		String json = chipsRestTemplate.getForObject("https://bookmarksbookshop.co.uk/website/getOrders", String.class);
-		
+
 		// Decrypt json
 		String decryptedJson = jsonEcryptor.decrypt(json);
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
