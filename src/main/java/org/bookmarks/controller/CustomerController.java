@@ -305,7 +305,10 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/addCredit", method = RequestMethod.POST)
 	public String addCredit(CreditNote creditNote, ModelMap modelMap) {
-		customerService.debitAccount(creditNote);
+
+		logger.info( "Saving creditNote : {}", creditNote );
+
+		customerService.debitAccount( creditNote );
 
 		modelMap.addAttribute("closeWindow", "not null");
 		return "closeWindow";
