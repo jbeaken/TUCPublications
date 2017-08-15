@@ -46,15 +46,23 @@ public class ChipsController extends AbstractBookmarksController {
 	@RequestMapping(value = "/updateChips", method = RequestMethod.GET)
 	public String updateChips(HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to update chips");
+		
+		String result = null;
+		
 		try {
-			chipsService.updateChips();
+			result = chipsService.updateChips();
 		} catch (Exception e) {
 			logger.error("Cannot update chips ", e);
 			addError("Cannot update chips : " + e.getMessage(), modelMap);
 			return "welcome";
 		}
-		addSuccess("Have updated chips", modelMap);
-		logger.info("Successfully updated chips!");
+		
+		if(result.equals("success")) {
+			addSuccess("Have updated chips", modelMap);
+			logger.info("Successfully updated chips!");
+		} else {
+			addError("Cannot update chips : " + result, modelMap);
+		}
 		return "welcome";
 	}
 

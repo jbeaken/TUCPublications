@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<<<<<<< HEAD
 <beans xmlns="http://www.springframework.org/schema/beans" 
 	xmlns:aop="http://www.springframework.org/schema/aop" 
 	xmlns:context="http://www.springframework.org/schema/context" 
@@ -19,6 +20,23 @@
 		http://www.springframework.org/schema/jee 
 		http://www.springframework.org/schema/jee/spring-jee-3.2.xsd 
 		http://www.springframework.org/schema/tx 
+=======
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jee
+		http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/tx
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 		http://www.springframework.org/schema/jdbc
 	    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
@@ -64,12 +82,13 @@
 >>>>>>> 565e5ed... Externalised email properties
 
 	<bean id="filterMultipartResolver"
-	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
-	    <property name="maxUploadSize" value="-1" />
+		<property name="maxUploadSize" value="-1" />
 	</bean>
 
 	<bean id="emailService" class="org.bookmarks.service.EmailServiceImpl">
+<<<<<<< HEAD
       <property name="mailSender" ref="mailSender"/>
       <property name="velocityEngine" ref="velocityEngine"/>
    </bean>
@@ -109,6 +128,37 @@
 =======
    </bean>
 >>>>>>> d1bea6f... Fixed binging error for dates
+=======
+		<property name="mailSender" ref="mailSender" />
+		<property name="velocityEngine" ref="velocityEngine" />
+	</bean>
+
+	<bean id="chipsRestTemplate" class="org.springframework.web.client.RestTemplate"
+		p:interceptors-ref="interceptors">
+	</bean>
+
+	<util:list id="interceptors">
+		<bean id="basicAuthorizationInterceptor"
+			class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+			<constructor-arg index="0" value="${chips.username}" />
+			<constructor-arg index="1" value="${chips.password}" />
+		</bean>
+		<!-- 
+		<bean id="loggingRequestInterceptor" class="org.bookmarks.logging.LoggingRequestInterceptor">
+		</bean>
+		 -->
+	</util:list>
+
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<value>
+				resource.loader=class
+				class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+			</value>
+		</property>
+	</bean>
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
 	<!-- Encryption -->
 	<bean id="bcProvider" class="org.bouncycastle.jce.provider.BouncyCastleProvider" />
@@ -129,7 +179,8 @@
 		</property>
 	</bean>
 
-	<bean id="hibernateStringEncryptor" class="org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor">
+	<bean id="hibernateStringEncryptor"
+		class="org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor">
 		<property name="registeredName">
 			<value>strongHibernateStringEncryptor</value>
 		</property>
@@ -139,19 +190,26 @@
 	</bean>
 
 
+<<<<<<< HEAD
 	<!--
 >>>>>>> 5e6452c... Clean up
 	<jpa:repositories base-package="org.bookmarks.repository.data"/>
 	 -->
+=======
+	<!-- <jpa:repositories base-package="org.bookmarks.repository.data"/> -->
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
 	<!-- Scan for service and repository beans -->
 	<context:component-scan base-package="org.bookmarks">
-		<context:exclude-filter expression="org.springframework.stereotype.Controller" type="annotation"/>
+		<context:exclude-filter expression="org.springframework.stereotype.Controller"
+			type="annotation" />
 	</context:component-scan>
 
-	<context:property-placeholder properties-ref="applicationProperties"/>
+	<context:property-placeholder
+		properties-ref="applicationProperties" />
 
 	<util:properties id="emailProperties" location="classpath:spring/email.properties" />
+<<<<<<< HEAD
 	<context:property-placeholder properties-ref="emailProperties"  />	
 
 	<!-- Enable @Scheduled (used by DailyReport) -->
@@ -249,11 +307,98 @@
         <property name="minEvictableIdleTimeMillis" value="1800000"/>
         <property name="validationQuery" value="SELECT 1"/>	  
 	</bean>
+=======
+	<context:property-placeholder
+		properties-ref="emailProperties" />
 
- 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan">
+	<!-- Enable @Scheduled (used by DailyReport) -->
+	<task:annotation-driven />
+
+	<!-- Turn on AspectJ @Configurable support. As a result, any time you instantiate 
+		an object, Spring will attempt to perform dependency injection on that object. 
+		This occurs for instantiation via the "new" keyword, as well as via reflection. 
+		This is possible because AspectJ is used to "weave" Roo-based applications 
+		at compile time. In effect this feature allows dependency injection of any 
+		object at all in your system, which is a very useful feature (without @Configurable 
+		you'd only be able to dependency inject objects acquired from Spring or subsequently 
+		presented to a specific Spring dependency injection method). Roo applications 
+		use this useful feature in a number of areas, such as @PersistenceContext 
+		injection into entities. <context:spring-configured/> -->
+	<!-- This declaration will cause Spring to locate every @Component, @Repository 
+		and @Service in your application. In practical terms this allows you to write 
+		a POJO and then simply annotate the new POJO as an @Service and Spring will 
+		automatically detect, instantiate and dependency inject your service at startup 
+		time. Importantly, you can then also have your new service injected into 
+		any other class that requires it simply by declaring a field for your service 
+		inside the relying class and Spring will inject it. Note that two exclude 
+		filters are declared. The first ensures that Spring doesn't spend time introspecting 
+		Roo-specific ITD aspects. The second ensures Roo doesn't instantiate your 
+		@Controller classes, as these should be instantiated by a web tier application 
+		context. Refer to web.xml for more details about the web tier application 
+		context setup services. Furthermore, this turns on @Autowired, @PostConstruct 
+		etc support. These annotations allow you to use common Spring and Java Enterprise 
+		Edition annotations in your classes without needing to do any special configuration. 
+		The most commonly used annotation is @Autowired, which instructs Spring to 
+		dependency inject an object into your class. <context:component-scan base-package="com.jack.membership"> 
+		<context:exclude-filter expression=".*_Roo_.*" type="regex"/> <context:exclude-filter 
+		expression="org.springframework.stereotype.Controller" type="annotation"/> 
+		</context:component-scan> -->
+	<!-- Application Message Bundle <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+		<property name="basename" value="messages" /> </bean> -->
+
+
+	<bean id="namingStrategy" class="org.hibernate.cfg.ImprovedNamingStrategy" />
+
+	<!-- TRANSACTION MANAGEMENT -->
+
+	<bean class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		id="transactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven mode="aspectj"
+		transaction-manager="transactionManager" />
+
+	<beans profile="prod">
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
+
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="host" value="auth.smtp.1and1.co.uk" />
+			<property name="port" value="587" />
+			<property name="username" value="${email.username}" />
+			<property name="password" value="${email.password}" />
+			<property name="javaMailProperties">
+				<props>
+					<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+					<prop key="mail.debug">false</prop>
+					<prop key="mail.smtp.auth">true</prop>
+					<!-- Use TLS to encrypt communication with SMTP server -->
+					<prop key="mail.smtp.starttls.enable">true</prop>
+				</props>
+			</property>
+		</bean>
+
+		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url"
+				value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8" />
+			<property name="username" value="${db.beans.user}" />
+			<property name="password" value="${db.beans.password}" />
+			<property name="testOnBorrow" value="true" />
+			<property name="testOnReturn" value="true" />
+			<property name="testWhileIdle" value="true" />
+			<property name="timeBetweenEvictionRunsMillis" value="1800000" />
+			<property name="numTestsPerEvictionRun" value="3" />
+			<property name="minEvictableIdleTimeMillis" value="1800000" />
+			<property name="validationQuery" value="SELECT 1" />
+		</bean>
+
+		<bean id="sessionFactory"
+			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>
+<<<<<<< HEAD
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
@@ -287,38 +432,59 @@
 	</bean>		
 	
 	<util:properties id="applicationProperties"	location="classpath:spring/application.prod.properties" />
-
-</beans>
-
-<beans profile="dev,mini-beans">
-
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="auth.smtp.1and1.co.uk"/>
-		<property name="port" value="587"/>
-		<property name="username" value="${email.username}" />
-		<property name="password" value="${email.password}" />
-			<property name="javaMailProperties">
-					<props>
-							<!-- Use SMTP-AUTH to authenticate to SMTP server -->
-				<prop key="mail.debug">false</prop>
-						 <prop key="mail.smtp.auth">true</prop>
-							<!-- Use TLS to encrypt communication with SMTP server -->
-							<prop key="mail.smtp.starttls.enable">true</prop>
-					</props>
+=======
 			</property>
-	</bean>
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.connection.useUnicode">true</prop>
+					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+					<prop key="hibernate.connection.charSet">UTF-8</prop>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">validate</prop>
+					<prop key="hibernate.show_sql">false</prop>
+					<prop key="hibernate.format_sql">false</prop>
+				</props>
+			</property>
+		</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8"/>
-	    <property name="username" value="${db.beans.user}"/>
-	    <property name="password" value="${db.beans.password}"/>
-	</bean>
+		<util:properties id="applicationProperties"
+			location="classpath:spring/application.prod.properties" />
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
- 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan">
+	</beans>
+
+	<beans profile="dev,mini-beans">
+
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="host" value="auth.smtp.1and1.co.uk" />
+			<property name="port" value="587" />
+			<property name="username" value="${email.username}" />
+			<property name="password" value="${email.password}" />
+			<property name="javaMailProperties">
+				<props>
+					<!-- Use SMTP-AUTH to authenticate to SMTP server -->
+					<prop key="mail.debug">false</prop>
+					<prop key="mail.smtp.auth">true</prop>
+					<!-- Use TLS to encrypt communication with SMTP server -->
+					<prop key="mail.smtp.starttls.enable">true</prop>
+				</props>
+			</property>
+		</bean>
+
+		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url"
+				value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8" />
+			<property name="username" value="${db.beans.user}" />
+			<property name="password" value="${db.beans.password}" />
+		</bean>
+
+		<bean id="sessionFactory"
+			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>
+<<<<<<< HEAD
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
@@ -356,20 +522,41 @@
 	</bean>		
 	
 	<util:properties id="applicationProperties"	location="classpath:spring/application.dev.properties" />
+=======
+			</property>
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.connection.useUnicode">true</prop>
+					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+					<prop key="hibernate.connection.charSet">UTF-8</prop>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">update</prop>
+					<prop key="hibernate.show_sql">false</prop>
+					<prop key="hibernate.format_sql">true</prop>
+				</props>
+			</property>
+		</bean>
 
-</beans>
+		<util:properties id="applicationProperties"
+			location="classpath:spring/application.dev.properties" />
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
-<beans profile="test">
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://localhost/bookmarks_test"/>
-	    <property name="username" value="${db.beans.user}"/>
-	    <property name="password" value="${db.beans.password}"/>
-	</bean>
- 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-	    <property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan">
+	</beans>
+
+	<beans profile="test">
+		<bean id="dataSource"
+			class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+			<property name="url" value="jdbc:mysql://localhost/bookmarks_test" />
+			<property name="username" value="${db.beans.user}" />
+			<property name="password" value="${db.beans.password}" />
+		</bean>
+		<bean id="sessionFactory"
+			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>
+<<<<<<< HEAD
 		</property>
 	    <property name="hibernateProperties">
 	    	<props>
@@ -387,23 +574,39 @@
 	
 =======
 	</bean>
+=======
+			</property>
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.connection.useUnicode">true</prop>
+					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+					<prop key="hibernate.connection.charSet">UTF-8</prop>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+					<prop key="hibernate.show_sql">false</prop>
+					<prop key="hibernate.format_sql">true</prop>
+				</props>
+			</property>
+		</bean>
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="auth.smtp.1and1.co.uk"/>
-		<property name="port" value="587"/>
-		<property name="username" value="${email.username}" />
-		<property name="password" value="${email.password}" />
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="host" value="auth.smtp.1and1.co.uk" />
+			<property name="port" value="587" />
+			<property name="username" value="${email.username}" />
+			<property name="password" value="${email.password}" />
 			<property name="javaMailProperties">
-					<props>
+				<props>
 					<!-- Use SMTP-AUTH to authenticate to SMTP server -->
 					<prop key="mail.debug">false</prop>
 					<prop key="mail.smtp.auth">true</prop>
 					<!-- Use TLS to encrypt communication with SMTP server -->
 					<prop key="mail.smtp.starttls.enable">true</prop>
-					</props>
+				</props>
 			</property>
-	</bean>
+		</bean>
 
+<<<<<<< HEAD
 >>>>>>> 565e5ed... Externalised email properties
 	<util:properties id="applicationProperties"	location="classpath:spring/application.dev.properties" />
 	
@@ -416,4 +619,18 @@
     	
     	</jdbc:initialize-database> 	
     </beans>
+=======
+		<util:properties id="applicationProperties"
+			location="classpath:spring/application.dev.properties" />
+
+	</beans>
+
+	<beans profile="test">
+		<jdbc:initialize-database data-source="dataSource">
+
+			<jdbc:script location="classpath:db/build-test.sql" />
+
+		</jdbc:initialize-database>
+	</beans>
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 </beans>

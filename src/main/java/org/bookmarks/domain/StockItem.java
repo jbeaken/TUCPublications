@@ -86,7 +86,7 @@ public class StockItem extends AbstractEntity {
 
 	@Transient private Integer salesLastYear;
 
-  @Transient private Integer salesTotal;
+    @Transient private Integer salesTotal;
 
 	//For upload of images
 	@Transient private MultipartFile file;
@@ -757,10 +757,6 @@ public class StockItem extends AbstractEntity {
 		return true;
 	}
 
-	public String toString() {
-		return getId() + " : " + getIsbn() + " : " + getTitle() + " : " + getAuthorsToString() + " " + getSellPrice() + " " + getType();
-	}
-
 	private String getAuthorsToString() {
 		StringBuilder build = new StringBuilder();
 		for(Author author : getAuthors()) {
@@ -996,7 +992,7 @@ public class StockItem extends AbstractEntity {
 		return bouncyIndex;
 	}
 	public void setBouncyIndex(Long bouncyIndex) {
-		this.bouncyIndex = bouncyIndex;
+		this.bouncyIndex = bouncyIndex; 
 	}
 	public MultipartFile getFile() {
 		return file;
@@ -1099,5 +1095,10 @@ public class StockItem extends AbstractEntity {
 
 	public void setIsNewRelease(Boolean isNewRelease) {
 		this.isNewRelease = isNewRelease;
+	}
+
+	@Override
+	public String toString() {
+		return "StockItem [bouncyIndex=" + bouncyIndex + ", title=" + title + ", getId()=" + getId() + ", getIsbn()=" + getIsbn() + "]";
 	}
 }

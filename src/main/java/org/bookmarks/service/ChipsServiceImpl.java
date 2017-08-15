@@ -15,22 +15,17 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.List;
 
-import org.springframework.web.client.RestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
-
-import javax.annotation.PostConstruct;
-import javax.net.ssl.SSLSocket;
 import javax.transaction.Transactional;
 
 >>>>>>> 7fc11cb... getOrders now working
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 //import org.springframework.http.HttpEntity;
+=======
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 import org.apache.http.HttpHost;
 >>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
 import org.apache.http.NameValuePair;
@@ -65,8 +60,8 @@ import org.jfree.util.Log;
 import org.bookmarks.website.domain.Address;
 import org.bookmarks.website.domain.ContactDetails;
 import org.bookmarks.website.domain.CreditCard;
-import org.bookmarks.website.domain.WebsiteCustomer;
 import org.bookmarks.website.domain.OrderLine;
+import org.bookmarks.website.domain.WebsiteCustomer;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 >>>>>>> 7fc11cb... getOrders now working
 import org.slf4j.Logger;
@@ -74,8 +69,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -86,7 +85,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
-import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
 
@@ -143,8 +141,6 @@ public class ChipsServiceImpl implements ChipsService {
     private HttpHost target;
 
     private CredentialsProvider credsProvider;
-
-    private HttpClientContext localContext;
 
 	@Value("#{ applicationProperties['chips.get.orders'] }")
 	private Boolean chipsGetOrders;
@@ -587,11 +583,17 @@ public class ChipsServiceImpl implements ChipsService {
 		return result.getBody();
 	}
 
+<<<<<<< HEAD
 >>>>>>> 3e52cb5... Fixing chipsService updateReadingLists
+=======
+	/**
+	 * At present only sending up bouncies, stickies aren't working
+	 */
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 	@Override
 	public String updateChips() throws ClientProtocolException, IOException {
 
-		Collection<StockItem> stockItems = stockItemService.getBounciesAndStickies();
+		ArrayList<StockItem> stockItems = (ArrayList<StockItem>) stockItemService.getBounciesAndStickies();
 		Collection<StockItem> strippedStockItems = new ArrayList<StockItem>();
 		
 		Collection<ReadingList> readingLists = readingListService.getAll();
@@ -602,9 +604,9 @@ public class ChipsServiceImpl implements ChipsService {
 			if(si.getPutOnWebsite() == false) continue; //TODO 
 =======
 
-		// Transfer to reduce amount of unneeded fluff (could do this is hql I
-		// suppose)
+		// Transfer to reduce amount of unneeded fluff
 		for (StockItem si : stockItems) {
+<<<<<<< HEAD
 			if (si.getPutOnWebsite() == false)
 <<<<<<< HEAD
 				continue; 
@@ -613,6 +615,15 @@ public class ChipsServiceImpl implements ChipsService {
 				continue;
 >>>>>>> 0d21347... Adding better check for matched to include potential matches
 			StockItem bouncy = new StockItem(si.getId());
+=======
+			
+			if (si.getPutOnWebsite() == false || si.getBouncyIndex() == null)
+				continue;
+			
+			StockItem bouncy = new StockItem();
+			
+			bouncy.setId(si.getId());
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 			bouncy.setTitle(si.getTitle());
 			bouncy.setIsbn(si.getIsbn());
 			bouncy.setImageFilename(si.getImageFilename());
@@ -629,6 +640,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 			strippedStockItems.add(bouncy);
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 		
 		JSONSerializer serializer = new JSONSerializer();
@@ -660,20 +672,30 @@ public class ChipsServiceImpl implements ChipsService {
 			response.close();
 		}
 =======
+=======
+		
+		// Check have enough
+		if (strippedStockItems.size() < 16) {
+			return "Need more bouncies, only have " + strippedStockItems.size() + ". Add more at 'Manage Bouncies'";
+		}
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
 
+<<<<<<< HEAD
 =======
 		logger.info("Have got {} bouncies to put on chips with url {}", strippedStockItems.size(), chipsUrl);
 		
 >>>>>>> a59ed76... Added date to add credit note
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
+=======
+		org.springframework.http.HttpEntity< Collection<StockItem> > requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
+>>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());
 
-		logger.info("Have got {} bouncies to put on chips with url {}", stockItems.size(), chipsUrl);
-
 		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateChips", HttpMethod.POST, requestEntity, String.class);
 
+		logger.info("Update chips exchange return result : {}", result.getBody());
 		logger.info("Update chips exchange return result : {}", result);
 
 <<<<<<< HEAD

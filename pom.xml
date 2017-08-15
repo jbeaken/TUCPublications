@@ -1202,7 +1202,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<port>8080</port>
+					<port>8081</port>
 					<path>/bookmarks</path>
 					<systemProperties>
 						<spring.profiles.active>dev</spring.profiles.active>
