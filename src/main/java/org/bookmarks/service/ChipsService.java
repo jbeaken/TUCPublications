@@ -31,7 +31,7 @@ public interface ChipsService {
 
 	void evictAll() throws UnsupportedEncodingException, ClientProtocolException, IOException;
 
-	void syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException;
+	String syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException;
 
 	void buildIndex() throws ClientProtocolException, IOException;
 

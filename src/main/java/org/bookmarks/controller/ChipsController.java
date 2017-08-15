@@ -47,21 +47,22 @@ public class ChipsController extends AbstractBookmarksController {
 	public String updateChips(HttpSession session, ModelMap modelMap) {
 		logger.info("Attempting to update chips");
 		
-		String result = null;
+		String response = null;
 		
 		try {
-			result = chipsService.updateChips();
+			response = chipsService.updateChips();
+			logger.debug("Update response : {}", response);
 		} catch (Exception e) {
 			logger.error("Cannot update chips ", e);
 			addError("Cannot update chips : " + e.getMessage(), modelMap);
 			return "welcome";
 		}
 		
-		if(result.equals("success")) {
+		if(response.equals("success")) {
 			addSuccess("Have updated chips", modelMap);
 			logger.info("Successfully updated chips!");
 		} else {
-			addError("Cannot update chips : " + result, modelMap);
+			addError("Cannot update chips : " + response, modelMap);
 		}
 		return "welcome";
 	}
@@ -167,15 +168,26 @@ public class ChipsController extends AbstractBookmarksController {
 
 		StockItem stockItem = stockItemService.get(id);
 
+		String response = null;
+		
 		try {
-			chipsService.syncStockItemWithChips(stockItem);
-			if (stockItem.getPutOnWebsite()) {
-				addSuccess("Successfully updated " + stockItem.getTitle(), modelMap);
-			} else
-				addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
+			
+			response = chipsService.syncStockItemWithChips(stockItem);
+			
+			if(response.equals("success")) {
+				if (stockItem.getPutOnWebsite()) {
+					addSuccess("Successfully updated " + stockItem.getTitle(), modelMap);
+				} else {
+					addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
+				}
+			} else {
+				addError("Cannot sync with chips! " + response, modelMap);
+			}
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			addError("Cannot sync with chips! " + e.getMessage(), modelMap);
+			addError("ERROR!! Cannot sync with chips! " + e.getMessage(), modelMap);
 		}
 
 		return "welcome";

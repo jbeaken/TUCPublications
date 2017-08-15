@@ -392,14 +392,18 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public void syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException {
 <<<<<<< HEAD
 		 
 		//First upload image if necessary
 		if(stockItem.getPutImageOnWebsite() && stockItem.getImageFilename() != null && !stockItem.getImageFilename().isEmpty()) {
 =======
+=======
+	public String syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException {
+>>>>>>> aa101b7... Fixed sync stockitem
 
-		logger.info("Attempting to sync stockitem with chips");
+		logger.info("Attempting to sync stockitem with chips : {}", stockItem);
 
 		// First upload image if necessary
 		if (stockItem.getPutImageOnWebsite() && stockItem.getImageFilename() != null && !stockItem.getImageFilename().isEmpty()) {
@@ -429,6 +433,7 @@ public class ChipsServiceImpl implements ChipsService {
 		publisher.setName(azPublisher.getName());
 		
 		stockItem.setPublisher(publisher);
+<<<<<<< HEAD
 		
 		//Serialise using bookmarks domain object
 		JSONSerializer jsonSerializer = new JSONSerializer();
@@ -465,21 +470,27 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 =======
 >>>>>>> 1f51618... Fixing session search for supplier deliveries
+=======
 
-		logger.debug(jsonStockItem);
+		logger.info("Exchanging with chips url {}", chipsUrl);
+>>>>>>> aa101b7... Fixed sync stockitem
 
-		// Now post up to chips
-		CloseableHttpClient httpclient = getHttpClient();
+		org.springframework.http.HttpEntity< StockItem > requestEntity = new org.springframework.http.HttpEntity<>( stockItem );
 
-		HttpPost httpPost = getHttpPost("/website/syncStockItemFromBeansWithJson", "jsonStockItem", jsonStockItem);
+		logger.debug("HttpEntity body : {}", requestEntity.getBody());
 
+<<<<<<< HEAD
 >>>>>>> 1978e06... Fixing session search for supplier returns
 		CloseableHttpResponse response = httpclient.execute(httpPost);
+=======
+		ResponseEntity<String> response = chipsRestTemplate.exchange(chipsUrl + "/website/syncStockItemFromBeansWithJson", HttpMethod.POST, requestEntity, String.class);
+>>>>>>> aa101b7... Fixed sync stockitem
 
-		StatusLine status = response.getStatusLine();
+		logger.info("Chips response : {}", response);
 
-		checkStatus(status);
+		return response.getBody();
 
+<<<<<<< HEAD
 		try {
 <<<<<<< HEAD
 		    HttpEntity entity = response.getEntity();
@@ -505,6 +516,8 @@ public class ChipsServiceImpl implements ChipsService {
 		}
 
 		logger.info("Successfully synced with chips");
+=======
+>>>>>>> aa101b7... Fixed sync stockitem
 	}
 	
 	@Override
@@ -594,8 +607,13 @@ public class ChipsServiceImpl implements ChipsService {
 	public String updateChips() throws ClientProtocolException, IOException {
 
 		ArrayList<StockItem> stockItems = (ArrayList<StockItem>) stockItemService.getBounciesAndStickies();
+<<<<<<< HEAD
 		Collection<StockItem> strippedStockItems = new ArrayList<StockItem>();
 		
+=======
+		ArrayList<StockItem> strippedStockItems = new ArrayList<StockItem>();
+
+>>>>>>> aa101b7... Fixed sync stockitem
 		Collection<ReadingList> readingLists = readingListService.getAll();
 <<<<<<< HEAD
 		
@@ -682,6 +700,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		logger.info("Have got {} bouncies to put on chips with url {}", strippedStockItems.size(), chipsUrl);
 		
@@ -690,20 +709,26 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 		org.springframework.http.HttpEntity< Collection<StockItem> > requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
 >>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
+=======
+		org.springframework.http.HttpEntity< ArrayList<StockItem> > requestEntity = new org.springframework.http.HttpEntity<>( strippedStockItems );
+>>>>>>> aa101b7... Fixed sync stockitem
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());
 
-		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateChips", HttpMethod.POST, requestEntity, String.class);
+		ResponseEntity<String> response = chipsRestTemplate.exchange(chipsUrl + "/website/updateChips", HttpMethod.POST, requestEntity, String.class);
 
-		logger.info("Update chips exchange return result : {}", result.getBody());
-		logger.info("Update chips exchange return result : {}", result);
+		logger.info("Chips response : {}", response);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		return result.getBody();		
 >>>>>>> 85c75a2... Added credit boolean to upload accounts
 =======
 		return result.getBody();
 >>>>>>> 0d21347... Adding better check for matched to include potential matches
+=======
+		return response.getBody();
+>>>>>>> aa101b7... Fixed sync stockitem
 	}
 
 	private CloseableHttpResponse execute(String url, String name, String value) throws ClientProtocolException, IOException {

@@ -132,8 +132,6 @@ public class AuthorController extends AbstractBookmarksController<Author> {
 		}
 		table = table + "</table>";  
 		
-		logger.debug(table);
-		
 		return table;
 	}
 
