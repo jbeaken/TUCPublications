@@ -19,5 +19,7 @@ public interface CreditNoteRepository extends Repository<CreditNote>{
 
 	BigDecimal getIncomings();
 
-	
+	void creditAccount(Customer customer, BigDecimal amount);
+
+	void removeMatch(String transactionDescription);
 }

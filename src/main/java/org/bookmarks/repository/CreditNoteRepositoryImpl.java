@@ -93,16 +93,16 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 				}
 			}
 		}
-		
+
 		if(cn.getTransactionReference() != null && !cn.getTransactionReference().isEmpty()) {
 			String trimmedValue = cn.getTransactionReference().trim().replace("'", "''");
 			queryBuilder.append("cn.transactionReference like '%" + trimmedValue + "%'");
 		}
-		
+
 		if(cn.getTransactionDescription() != null && !cn.getTransactionDescription().isEmpty()) {
 			String trimmedValue = cn.getTransactionDescription().trim().replace("'", "''");
 			queryBuilder.append("cn.transactionDescription like '%" + trimmedValue + "%'");
-		}		
+		}
 
 		query.append(queryBuilder.getQuery());
 	}
@@ -120,6 +120,35 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 	public BigDecimal getOutgoings() {
 		Query query = sessionFactory.getCurrentSession().createQuery("select sum(amount) from CreditNote cn " + "where cn.customer.id = 31245");
 		return (BigDecimal) query.uniqueResult();
+	}
+@Override
+	public void creditAccount(Customer customer, BigDecimal amount) {
+		Query query = sessionFactory
+				.getCurrentSession()
+				.createQuery("update Customer c " +
+					"set c.bookmarksAccount.currentBalance = c.bookmarksAccount.currentBalance + :amountChange " +
+					"where c.id = :id");
+		query.setParameter("amountChange",amount);
+		query.setParameter("id", customer.getId());
+		int result = query.executeUpdate();
+	}
+@Override
+	public void removeMatch(String transactionDescription) {
+		Query query = sessionFactory
+				.getCurrentSession()
+				.createQuery("update Customer c " +
+					"set c.bookmarksAccount.tsbMatch = null " +
+					"where c.bookmarksAccount.tsbMatch = :transactionDescription");
+		query.setParameter("transactionDescription",transactionDescription);
+		int result = query.executeUpdate();
+
+		query = sessionFactory
+				.getCurrentSession()
+				.createQuery("update Customer c " +
+					"set c.bookmarksAccount.tsbMatchSecondary = null " +
+					"where c.bookmarksAccount.tsbMatchSecondary = :transactionDescription");
+		query.setParameter("transactionDescription",transactionDescription);
+		result = query.executeUpdate();
 	}
 
 	@Override

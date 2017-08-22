@@ -4,22 +4,7 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <script>
 	$(function() {
-		$("#customerAutoComplete").autocomplete( {
-			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname?accountHolders=true",
-			minLength: 3,
-			select: function( event, ui ) {
-				$("#customerAutoComplete").val(ui.item.label);
-				$("#customerId").val(ui.item.value);
-				$("#searchCustomerSubmitButton").click();
-				return false;
-			},
-			focus: function( event, ui ) {
-				$("#customerAutoComplete").val(ui.item.label);
-				return false;
-			}
-		});
-		$('#customerId').val(''); //clear customer id
-		$('#customerAutoComplete').focus();
+		
 	});
 
 	function match( priority, transactionDescription ) {

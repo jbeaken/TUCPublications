@@ -624,8 +624,9 @@ public class ChipsServiceImpl implements ChipsService {
 			if(si.getPutImageOnWebsite() == false) {
 				throw new BookmarksException("StockItem " + si.toString() + " has put image on website set to false, bouncies must have images");
 			}
+
 			logger.debug("Adding stockitem to bouncies {}", bouncy);
-			
+
 			strippedStockItems.add(bouncy);
 		}
 <<<<<<< HEAD
@@ -964,7 +965,7 @@ RestTemplate restTemplate = getRestTemplate();
 			for (OrderLine chipsOl : chipsCustomer.getOrders()) {
 
 				logger.debug( "{}", chipsOl.getWebReference() );
-				logger.debug( "{}", chipsOl.getStockItem().getId() );
+				logger.debug( "{}", chipsOl.getStockItem() );
 
 				CustomerOrderLine beansOl = new CustomerOrderLine();
 

@@ -15,8 +15,6 @@
 			changeYear: true,
 			dateFormat: 'dd/mm/yy'
 		});
-		
-
 	});
 	</script>
 
@@ -43,7 +41,7 @@
 	           <form:label for="date" path="date" cssErrorClass="error">Date</form:label><br/>
 				<form:input path="date" required="required" />
 	 	 </div>
-	</div>	
+	</div>
       <div class="row">
 		  <div class="column w-100-percent">
 		  	<input type="submit" class="btn btn-primary"/>

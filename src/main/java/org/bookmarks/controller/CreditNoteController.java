@@ -76,7 +76,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
 		modelMap.addAttribute(creditNoteSearchBean);
-		
+
 		return search(creditNoteSearchBean, request, session, modelMap);
 	}
 
@@ -137,20 +137,33 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
-	public String edit(@Valid CreditNote creditNote, BindingResult bindingResult, String flow, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		//Check for errors
-		if(bindingResult.hasErrors()){
-			modelMap.addAttribute("flow", flow);
-			return "editCreditNote";
-		}
+	public String edit(CreditNote creditNote, ModelMap modelMap) {
 
 		CreditNote dbCreditNote = creditNoteService.get(creditNote.getId());
 
-		creditNoteService.update(dbCreditNote);
+		dbCreditNote.setNote( creditNote.getNote() );
 
-		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
-		creditNoteSearchBean.setCreditNote(creditNote);
-		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
+		if(dbCreditNote.getCustomer().getId() != creditNote.getCustomer().getId()) {
+			//Customer has changed.
+			//Debit old customer
+			creditNoteService.creditAccount( dbCreditNote.getCustomer(), dbCreditNote.getAmount().negate() );
+
+			//Credit new customer
+			creditNoteService.creditAccount( creditNote.getCustomer(), dbCreditNote.getAmount() );
+
+			//Deal with match, remove from old
+			//update customer set tsbMatch = null where tsbMatch = creditNote.getTransactionDescription();
+			//update customer set tsbMatchSecondary = null where tsbMatchSecondary = ?
+			creditNoteService.removeMatch( dbCreditNote.getTransactionDescription() );
+
+			//Skip add, do manually on next import
+
+			//Move over new customer
+
+			dbCreditNote.setCustomer( creditNote.getCustomer() );
+		}
+
+		creditNoteService.update(dbCreditNote);
 
 		return "redirect:searchFromSession";
 	}

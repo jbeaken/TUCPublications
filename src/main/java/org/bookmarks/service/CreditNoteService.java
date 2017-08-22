@@ -14,5 +14,11 @@ public interface CreditNoteService extends Service<CreditNote>{
 
 	BigDecimal getIncomings();
 
+	void creditAccount(CreditNote creditNote);
+
+	void creditAccount(Customer customer, BigDecimal amount);
+
+	void removeMatch(String transactionDescription);
+
 
 }

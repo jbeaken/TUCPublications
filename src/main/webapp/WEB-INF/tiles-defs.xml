@@ -520,10 +520,10 @@
       <put-attribute name="title" value="View Credit Note"/>
       <put-attribute name="body" value="/WEB-INF/jsp/creditNote/view.jsp"/>
   </definition>
-  
+
  <!-- VT TRANSACTION -->
 
-  <definition name="editCreditNote" extends="baseLayout">
+  <definition name="editVTTransaction" extends="baseLayout">
       <put-attribute name="title" value="Edit VT Transaction"/>
       <put-attribute name="body" value="/WEB-INF/jsp/vtTransaction/edit.jsp"/>
   </definition>
@@ -547,7 +547,7 @@
   <definition name="viewVTTransaction" extends="baseLayout">
       <put-attribute name="title" value="View VT Transaction"/>
       <put-attribute name="body" value="/WEB-INF/jsp/vtTransaction/view.jsp"/>
-  </definition>  
+  </definition>
 
 
   <!-- Supplier Delivery -->

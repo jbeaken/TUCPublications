@@ -141,8 +141,8 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			.getCurrentSession()
 			.createQuery("select c from Customer c where c.bookmarksAccount.tsbMatchSecondary = :tsbMatchSecondary");
 	      	query.setParameter("tsbMatchSecondary", tsbMatchSecondary);
-	return (Customer) query.uniqueResult();
-  }  
+	         return (Customer) query.uniqueResult();
+  }
 
 	@Override
 	public SessionFactory getSessionFactory() {
