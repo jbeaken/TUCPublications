@@ -75,8 +75,8 @@
 		</div>
 
 		<div class="column w-33-percent">
-          <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
-          <form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
+          <form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly">Monthly Payment</form:label><br/>
+					&pound;<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${customer.bookmarksAccount.amountPaidInMonthly}" />
 	 	 </div>
 
 		  <div class="column w-33-percent">
@@ -98,7 +98,7 @@
                                         <form:input path="nonBookmarksDiscount" /> <form:errors path="nonBookmarksDiscount" />
 		  </div>
 	</div>
-     
+
       <div class="row">
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
