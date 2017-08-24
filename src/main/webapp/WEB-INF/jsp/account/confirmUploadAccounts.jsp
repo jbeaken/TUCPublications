@@ -46,12 +46,12 @@
 				<li>${noOfClubAccountsUnprocessed} are club accounts</li>
 			</ul>
 			<br />
-			<g:if test="${noOfUnmatched > 0}">
+			<c:if test="${noOfUnmatched > 0}">
 				Please match the unmatched lines using 'Customer To Match' and selected 'Match' next to the appropriate unmatched line
-			</g:if>
-			<g:if test="${noOfUnmatched == 0}">
+			</c:if>
+			<c:if test="${noOfUnmatched == 0}">
 				All good! Press 'Save and Credit' to credit account holders with monies.
-			</g:if>
+			</c:if>
 		</div>
 
 <input type="hidden" id="customerId"/>
