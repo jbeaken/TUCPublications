@@ -275,23 +275,25 @@
 
   <definition name="uploadAccountsFromTSB" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
-      <put-attribute name="body" value="/WEB-INF/jsp/customer/uploadAccountsFromTSB.jsp"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/account/uploadAccountsFromTSB.jsp"/>
+  </definition>
+
+  <definition name="displayUploadedAccountsSummary" extends="baseLayout">
+      <put-attribute name="title" value="Upload Accounts"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/account/displayUploadedAccountsSummary.jsp"/>
   </definition>
 
   <definition name="confirmUploadAccounts" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
-      <put-attribute name="body" value="/WEB-INF/jsp/customer/confirmUploadAccounts.jsp"/>
-  </definition>
-
-  <definition name="processedAccountsFromTSB" extends="baseLayout">
-      <put-attribute name="title" value="Upload Accounts"/>
-      <put-attribute name="body" value="/WEB-INF/jsp/customer/processedAccountsFromTSB.jsp"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/account/confirmUploadAccounts.jsp"/>
   </definition>
 
   <definition name="selectMatch" extends="baseLayout">
       <put-attribute name="title" value="Upload Accounts"/>
-      <put-attribute name="body" value="/WEB-INF/jsp/customer/selectMatch.jsp"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/account/selectMatch.jsp"/>
   </definition>
+
+<!-- INVOICE -->
 
   <definition name="createInvoice" extends="baseLayout">
       <put-attribute name="title" value="Add Invoice"/>

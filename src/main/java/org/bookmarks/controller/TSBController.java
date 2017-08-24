@@ -101,8 +101,19 @@ public class TSBController extends AbstractBookmarksController {
 
 		addSuccess("All Saved!", modelMap);
 
-		return "redirect:/tsb/uploadAccountsFromTSB";
+		return "redirect:/tsb/displayUploadedAccountsSummary";
 	}
+
+	@RequestMapping(value = "/displayUploadedAccountsSummary", method = RequestMethod.GET)
+	public String displayUploadAccountsSummary(HttpSession session, ModelMap modelMap) {
+		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
+
+		modelMap.addAttribute("noOfMatched", holder.getNoMatched());
+		modelMap.addAttribute(holder.getMatched());
+
+		return "displayUploadedAccountsSummary";
+	}
+
 
 
 	@RequestMapping(value = "/uploadCSVFiles", method = RequestMethod.POST)
@@ -373,7 +384,7 @@ public class TSBController extends AbstractBookmarksController {
 		modelMap.addAttribute("noOfCreditNotes", creditNoteMap.values().size());
 		modelMap.addAttribute("noOfUnmatched", holder.getNoUnmatched());
 		modelMap.addAttribute("noOfMatched", holder.getNoMatched());
-		modelMap.addAttribute("noOfClubAccountsUnProcessed", holder.getNoOfClubAccountsUnprocessed());
+		modelMap.addAttribute("noOfClubAccountsUnprocessed", holder.getNoOfClubAccountsUnprocessed());
 		modelMap.addAttribute("noOfAlreadyProcessed", holder.getNoOfAlreadyProcessed());
 
 	}
@@ -402,9 +413,8 @@ class CreditNoteHolder {
 		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Unmatched")).count();
 	}
 
-	public Long getNoMatched() {
-		//Must match Secondary Match and Primary March
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().contains("Matched") || cn.getStatus().equals("Secondary Match")).count();
+	public int getNoMatched() {
+		return getMatched().size();
 	}
 
 	public void incrementNoOfLines() {
@@ -420,7 +430,8 @@ class CreditNoteHolder {
 	}
 
 	public List<CreditNote> getMatched() {
-		return creditNoteMap.values().stream().filter(cn -> !cn.getStatus().equals("Unmatched")).collect(Collectors.toList());
+		//Must match Secondary Match and Primary March
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")).collect(Collectors.toList());
 	}
 
 

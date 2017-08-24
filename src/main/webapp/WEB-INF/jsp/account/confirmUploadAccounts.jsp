@@ -35,17 +35,23 @@
 </script>
 <h1>Upload bank credits from TSB</h1>
 
-		<div class="alert alert-error">
-			<button type="button" class="close" data-dismiss="alert">�</button>
+		<div class="alert alert-info">
+			<button type="button" class="close" data-dismiss="alert">x</button>
 			<ul>
-				<li>Uploaded ${noOfLines} lines from csv files</li>
+				<li><strong>Uploaded ${noOfLines} lines from csv files</strong></li>
 				<li>Found ${noOfCreditNotes} credit Notes</li>
 				<li>${noOfAlreadyProcessed} are already processed</li>
 				<li>${noOfUnmatched} are unmatched</li>
 				<li>${noOfMatched} are matched</li>
-				<li>${noOfClubAccountsnoOfClubAccountsUnProcessed} are club accounts</li>
+				<li>${noOfClubAccountsUnprocessed} are club accounts</li>
 			</ul>
 			<br />
+			<g:if test="${noOfUnmatched > 0}">
+				Please match the unmatched lines using 'Customer To Match' and selected 'Match' next to the appropriate unmatched line
+			</g:if>
+			<g:if test="${noOfUnmatched == 0}">
+				All good! Press 'Save and Credit' to credit account holders with monies.
+			</g:if>
 		</div>
 
 <input type="hidden" id="customerId"/>
