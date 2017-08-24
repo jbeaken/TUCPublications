@@ -109,7 +109,11 @@
 =======
         <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
 
+<<<<<<< HEAD
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
+=======
+        <logger name="org.bookmarks.controller.TSBController" level="DEBUG" />
+>>>>>>> ecd018b... Adding to transaction decorator for tsb
         <root level="INFO">
 >>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />

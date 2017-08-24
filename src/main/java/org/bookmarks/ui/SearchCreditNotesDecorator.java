@@ -17,6 +17,13 @@ public class SearchCreditNotesDecorator extends AbstractBookmarksTableDecorator 
 		return getCustomerName(e.getCustomer());
 	}	
 	
+	public String getTransactionReference() {
+		CreditNote e = (CreditNote)getCurrentRowObject();
+		if(e.getTransactionReference() == null) return e.getNote();
+
+		return e.getTransactionReference();
+	}
+
 	public String getAmount() {
 		
 		String color = "black";

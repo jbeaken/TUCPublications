@@ -143,8 +143,10 @@
 			<constructor-arg index="0" value="${chips.username}" />
 			<constructor-arg index="1" value="${chips.password}" />
 		</bean>
+<!--
 		<bean id="loggingRequestInterceptor" class="org.bookmarks.logging.LoggingRequestInterceptor">
 		</bean>
+-->
 	</util:list>
 
 	<bean id="velocityEngine"
