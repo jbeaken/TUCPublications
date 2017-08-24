@@ -2,6 +2,8 @@ package org.bookmarks.domain;
 
 import java.math.BigDecimal;
 
+import java.util.Date;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
@@ -26,6 +28,14 @@ public class BookmarksAccount implements java.io.Serializable {
 
 	private Boolean paysInMonthly = false;
 
+	private BigDecimal amountPaidInMonthly;
+
+	private BigDecimal openingBalance;
+
+	private Date lastPaymentDate;
+
+	private Date firstPaymentDate;
+
 	@Column(columnDefinition="text", name = "comment")
 	private String comment;
 
@@ -38,7 +48,6 @@ public class BookmarksAccount implements java.io.Serializable {
 	public void setTsbMatch(String tsbMatch) {
 		this.tsbMatch = tsbMatch;
 	}
-
 
 	public String getTsbMatchSecondary() {
 		return tsbMatchSecondary;
@@ -64,9 +73,21 @@ public class BookmarksAccount implements java.io.Serializable {
 		this.openingBalance = openingBalance;
 	}
 
-	private BigDecimal amountPaidInMonthly;
+	public Date getLastPaymentDate() {
+		return lastPaymentDate;
+	}
 
-	private BigDecimal openingBalance;
+	public void setLastPaymentDate(Date lastPaymentDate) {
+		this.lastPaymentDate = lastPaymentDate;
+	}
+
+	public Date getFirstPaymentDate() {
+		return firstPaymentDate;
+	}
+
+	public void setFirstPaymentDate(Date firstPaymentDate) {
+		this.firstPaymentDate = firstPaymentDate;
+	}
 
 	public Boolean getSponsor() {
 		return sponsor;

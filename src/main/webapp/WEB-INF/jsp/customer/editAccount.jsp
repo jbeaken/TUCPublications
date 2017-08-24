@@ -8,23 +8,28 @@
 		<form:form modelAttribute="customer" action="editAccount?flow=${flow}" method="post">
 		  	<form:hidden path="id"/>
 		  	<form:hidden path="bookmarksAccount.currentBalance"/>
+				<form:hidden path="bookmarksAccount.lastPaymentDate"/>
+				<form:hidden path="bookmarksAccount.firstPaymentDate"/>
+				<form:hidden path="bookmarksAccount.amountPaidInMonthly"/>
 		  	<form:hidden path="bookmarksAccount.comment"/>
 
 
- 	
+
 
 <div class="rows">
 
   <div class="row">
 
 		<div class="column w-33-percent">
-			<form:label for="bookmarksAccount.currentBalance" path="bookmarksAccount.currentBalance">Current Balance</form:label><br/>
+			<label>Current Balance</label>
 			&pound;<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${customer.bookmarksAccount.currentBalance}" />
 		</div>
 
 		<div class="column w-33-percent">
-        	<form:label for="bookmarksAccount.amountPaidInMonthly" path="bookmarksAccount.amountPaidInMonthly" cssErrorClass="error">Monthly Payment</form:label><br/>
-        	<form:input path="bookmarksAccount.amountPaidInMonthly" /> <form:errors path="bookmarksAccount.amountPaidInMonthly" />
+        	<label>Amount Paid In Monthly</label>
+        	<div>
+						&pound;<fmt:formatNumber minFractionDigits="2" maxFractionDigits="2" value="${customer.bookmarksAccount.amountPaidInMonthly}" />
+					</div>
 		</div>
 
 	</div>

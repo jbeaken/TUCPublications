@@ -9,9 +9,11 @@
 </script>
 <h1>Summary of Uploaded Accounts</h1>
 
-		<div class="alert alert-error">
+		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">�</button>
-			Have Credited the following accounts :
+			<h2>Success!</h2>
+			Have credited the following accounts :
+			<br/>
 		</div>
 
          <display:table name="creditNoteList"

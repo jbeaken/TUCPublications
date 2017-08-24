@@ -5,6 +5,15 @@ import java.util.List;
 
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.VTTransaction;
+import org.bookmarks.domain.Customer;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+
+import java.util.Date;
+
+import java.math.BigDecimal;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +33,26 @@ public class AccountRepository {
 
     @Autowired
     private CreditNoteRepository creditNoteRepository;
-    
+
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
 
+
+public Collection<Customer> getAccountCustomers() {
+ Query query = sessionFactory
+   .getCurrentSession()
+   .createQuery("select c from Customer c where c.bookmarksAccount.accountHolder = true");
+
+   return query.list();
+ }
+
 	public void processCreditNote(CreditNote creditNote, Boolean incrementAccount) {
-		
+
 		Query query = null;
-		
+
 		if(creditNote.getStatus().equals("Primary Matched") || creditNote.getStatus().equals("Potential Primary Match") || creditNote.getStatus().equals("Club Account")) {
 			 query = sessionFactory
 		 		.getCurrentSession()
@@ -49,7 +67,7 @@ public class AccountRepository {
 		 		.createQuery("update Customer c set c.bookmarksAccount.tsbMatchSecondary = :tsbMatch where c.id = :id")
 		 		.setParameter("tsbMatch", creditNote.getTransactionDescription())
 		 		.setParameter("id", creditNote.getCustomer().getId());
-		 }		 
+		 }
 
 		 query.executeUpdate();
 
@@ -58,15 +76,67 @@ public class AccountRepository {
 		 		.getCurrentSession()
 		 		.createQuery("update Customer c set c.bookmarksAccount.currentBalance = c.bookmarksAccount.currentBalance + :amount where c.id = :id")
 		 		.setParameter("amount", creditNote.getAmount())
-		 		.setParameter("id", creditNote.getCustomer().getId());		
+		 		.setParameter("id", creditNote.getCustomer().getId());
 
-		 		 query.executeUpdate(); 	
+		 		 query.executeUpdate();
 
 		 }
-		 
+
 		 //Now save creditNote
 		 creditNoteRepository.save( creditNote );
 	}
+
+  public void resetMonthlyPayments() {
+    Query  query = sessionFactory
+        .getCurrentSession()
+        .createQuery("update Customer c set c.bookmarksAccount.amountPaidInMonthly = null");
+
+     query.executeUpdate();
+  }
+
+  public void updateMonthlyPayments(Customer customer, BigDecimal amount, Date lastPaymentDate, Date firstPaymentDate) {
+    Query  query = sessionFactory
+        .getCurrentSession()
+        .createQuery("update Customer c set c.bookmarksAccount.amountPaidInMonthly = :amount, c.bookmarksAccount.lastPaymentDate = :lastPaymentDate, c.bookmarksAccount.firstPaymentDate = :firstPaymentDate where c.id = :customerId")
+        .setParameter("amount", amount)
+        .setParameter("lastPaymentDate", lastPaymentDate)
+        .setParameter("firstPaymentDate", firstPaymentDate)
+        .setParameter("customerId", customer.getId());
+
+     query.executeUpdate();
+  }
+
+  public Date getLastPaymentDate(Customer customer) {
+    Query  query = sessionFactory
+        .getCurrentSession()
+        .createQuery("select max(cn.date) from CreditNote cn where cn.customer.id = :customerId")
+        .setParameter("customerId", customer.getId());
+
+
+    return (Date)query.uniqueResult();
+  }
+
+  public Date getFirstPaymentDate(Customer customer) {
+    Query  query = sessionFactory
+        .getCurrentSession()
+        .createQuery("select min(cn.date) from CreditNote cn where cn.customer.id = :customerId")
+        .setParameter("customerId", customer.getId());
+
+
+    return (Date)query.uniqueResult();
+  }
+
+
+  public BigDecimal getMonthlyPayment(Customer customer, LocalDate startDate, LocalDate endDate) {
+    Query query = sessionFactory
+        .getCurrentSession()
+        .createQuery("select sum(cn.amount) from CreditNote cn where date between :startDate and :endDate and customer.id = :customerId")
+        .setParameter("startDate",  Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) )
+        .setParameter("endDate", Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant()) )
+        .setParameter("customerId", customer.getId());
+
+        return (BigDecimal) query.uniqueResult();
+  }
 
 	public CreditNote getCreditNote(String transactionReference) {
 		Query query = sessionFactory

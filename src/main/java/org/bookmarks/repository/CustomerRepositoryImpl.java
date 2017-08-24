@@ -57,7 +57,6 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			queryBuilder.append(c, "c.id");
 		} else {
 			queryBuilder.append(ba.getSponsor(), "c.bookmarksAccount.sponsor");
-			queryBuilder.append(ba.getPaysInMonthly(), "c.bookmarksAccount.paysInMonthly");
 			queryBuilder.append(ba.getAccountHolder(), "c.bookmarksAccount.accountHolder");
 			queryBuilder.append(c.getCustomerType(), "c.customerType");
 			//queryBuilder.appendAndEscape(c.getFirstName(), "c.firstName");
@@ -66,6 +65,13 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			//queryBuilder.append(a.getAddress1(), "c.address.address1");
 			//queryBuilder.append(a.getCity(), "c.address.city");
 			//queryBuilder.append(a.getPostcode(), "c.address.postcode");
+
+      System.out.println("ba.getPaysInMonthly() : " + ba.getPaysInMonthly());
+
+      if(ba.getPaysInMonthly() != null && ba.getPaysInMonthly() == true) {
+        queryBuilder.append("c.bookmarksAccount.amountPaidInMonthly is not null and c.bookmarksAccount.amountPaidInMonthly > 0");
+      }
+
 			String firstName = c.getFirstName();
 			if(!firstName.isEmpty()) {
 				String trimmedValue = c.getFirstName().trim().replace("'", "''");
@@ -78,6 +84,8 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		}
 
 		query.append(queryBuilder.getQuery());
+
+    System.out.println(queryBuilder.getQuery());
 	}
 
   @Override
