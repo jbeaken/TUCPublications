@@ -43,7 +43,7 @@
 				<li>${noOfAlreadyProcessed} are already processed</li>
 				<li>${noOfUnmatched} are unmatched</li>
 				<li>${noOfMatched} are matched</li>
-				<li>${noOfClubAccounts} are club accounts</li>
+				<li>${noOfClubAccountsnoOfClubAccountsUnProcessed} are club accounts</li>
 			</ul>
 			<br />
 		</div>

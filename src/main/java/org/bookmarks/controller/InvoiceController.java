@@ -416,7 +416,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		logger.info("Edit oft invoice for {} successful", invoice.getCustomer());
 
-		return searchFromSession(session, request, modelMap);
+		return "redirect:searchFromSession";
 	}
 
 	@RequestMapping(value="/addStockItem")
@@ -460,7 +460,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		return "searchInvoices";
 	}
 
-	@RequestMapping(value="/showAddAdditionalCharges", method=RequestMethod.GET)
+  @RequestMapping(value="/showAddAdditionalCharges", method=RequestMethod.GET)
 	public String showAddAdditionalCharges(ModelMap modelMap, HttpSession session) {
 		Map<Long, Sale> orderLineMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Invoice invoice = (Invoice) session.getAttribute("invoice");

@@ -373,7 +373,7 @@ public class TSBController extends AbstractBookmarksController {
 		modelMap.addAttribute("noOfCreditNotes", creditNoteMap.values().size());
 		modelMap.addAttribute("noOfUnmatched", holder.getNoUnmatched());
 		modelMap.addAttribute("noOfMatched", holder.getNoMatched());
-		modelMap.addAttribute("noOfClubAccounts", holder.getNoOfClubAccounts());
+		modelMap.addAttribute("noOfClubAccountsUnProcessed", holder.getNoOfClubAccountsUnprocessed());
 		modelMap.addAttribute("noOfAlreadyProcessed", holder.getNoOfAlreadyProcessed());
 
 	}
@@ -403,7 +403,8 @@ class CreditNoteHolder {
 	}
 
 	public Long getNoMatched() {
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().contains("Primary Match") || cn.getStatus().equals("Secondary Match")).count();
+		//Must match Secondary Match and Primary March
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().contains("Matched") || cn.getStatus().equals("Secondary Match")).count();
 	}
 
 	public void incrementNoOfLines() {
@@ -435,6 +436,10 @@ class CreditNoteHolder {
 
 	public int getNoOfClubAccounts() {
 		return getClubAccounts().size();
+	}
+
+	public int getNoOfClubAccountsUnprocessed() {
+		return getClubAccounts().stream().filter(cn -> !cn.getStatus().equals("Already Processed")).collect(Collectors.toList()).size();
 	}
 
 	public CreditNote getCreditNote(String transactionDescription) {
