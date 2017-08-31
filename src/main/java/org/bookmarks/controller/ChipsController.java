@@ -72,17 +72,15 @@ public class ChipsController extends AbstractBookmarksController {
 
 		logger.info("Attempting to update events on chips");
 		
-		// String result = chipsService.updateEvents();
+		String result = chipsService.updateEvents();
 		
-		// if(result.equals("success")) {
-		// 	logger.info("Cannot update reading lists! {}", result);
-		// 	addError("Cannot update reading lists " + result, modelMap);
-		// } else {
-		// 	addSuccess("Have updated events", modelMap);	
-		// 	logger.info("Successfully updated events on chips!");
-		// }
-
-		
+		if(result.equals("success")) {
+			addSuccess("Have updated events", modelMap);	
+			logger.info("Successfully updated events on chips!");
+		} else {
+			logger.error("Cannot update reading lists! {}", result);
+			addError("Cannot update reading lists " + result, modelMap);			
+		}
 
 		return "welcome";
 	}

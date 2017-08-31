@@ -10,12 +10,12 @@ import groovy.sql.Sql;
 import groovy.grape.Grape;
 
 //Load the mysql driver
-Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.39', classLoader: this.class.classLoader.rootLoader)
+Grape.grab(group:'mysql', module:'mysql-connector-java', version:'5.1.43', classLoader: this.class.classLoader.rootLoader)
 this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "admin", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "cyclops", "com.mysql.jdbc.Driver")
 
 count = 0
 

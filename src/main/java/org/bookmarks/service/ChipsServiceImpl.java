@@ -1227,6 +1227,7 @@ RestTemplate restTemplate = getRestTemplate();
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void updateEvents() throws ClientProtocolException, IOException {
 		
 		String profile = environment.getActiveProfiles()[0];
@@ -1270,13 +1271,24 @@ RestTemplate restTemplate = getRestTemplate();
 >>>>>>> 1f51618... Fixing session search for supplier deliveries
 			logger.info("Sending json " + eventsAsJson);
 		}
+=======
+	public String updateEvents() {
 
-		CloseableHttpClient httpclient = getHttpClient();
 
-		HttpPost httpPost = getHttpPost("/website/updateEvents", "eventsAsJson", eventsAsJson);
+		Collection<Event> events = eventService.getChipsEvents();
 
-		CloseableHttpResponse response = httpclient.execute(httpPost);
+		logger.info("Have got {} reading lists to put on chips with url {}", events.size(), chipsUrl);
 
+		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( events );
+>>>>>>> 3a5e91c... Fixing updateEvents
+
+		logger.debug("HttpEntity body : {}", requestEntity.getBody());
+
+		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateEvents", HttpMethod.POST, requestEntity, String.class);
+
+		logger.info("Readling lists return result : {}", result);
+
+<<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
 		try {
 		    checkStatus(response);
@@ -1285,3 +1297,8 @@ RestTemplate restTemplate = getRestTemplate();
 		}		
 	} 
 }
+=======
+		return result.getBody();
+	}
+}
+>>>>>>> 3a5e91c... Fixing updateEvents
