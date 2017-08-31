@@ -431,7 +431,7 @@ class CreditNoteHolder {
 
 	public List<CreditNote> getMatched() {
 		//Must match Secondary Match and Primary March
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Matched") || cn.getStatus().equals("Secondary Matched")).collect(Collectors.toList());
+		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Primary Match") || cn.getStatus().equals("Secondary Match")).collect(Collectors.toList());
 	}
 
 
