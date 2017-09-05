@@ -116,7 +116,6 @@ new File("/home/bookmarks/archive.txt").splitEachLine("\t") {fields ->
 
 	count++
 
-	//if(count > 20) System.exit(0)
 
 } //end splitEachLine
 println "Finished - Updated ${count} credit notes"
@@ -160,7 +159,10 @@ customers.each {c ->
 				[ c.id, cn.date, cn.reference, cn.details, cn.amount])
 	}
 
+<<<<<<< HEAD
   if(c.id == 37132) System.exit(0);
+=======
+>>>>>>> 99634ab... Archive credit notes now imported
 }
 
 @ToString(includeNames=true)

@@ -32,7 +32,7 @@ public class MonthlyAccountPayment extends AbstractScheduler {
 
 	private Logger logger = LoggerFactory.getLogger(MonthlyAccountPayment.class);
 
-	@Scheduled(cron = "0 44 16 * * ?")
+	@Scheduled(cron = "0 01 17 * * ?")
 	@Transactional
 	public void process() {
 

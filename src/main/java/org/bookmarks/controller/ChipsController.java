@@ -50,7 +50,7 @@ public class ChipsController extends AbstractBookmarksController {
 		String response = null;
 		
 		try {
-			response = chipsService.updateChips();
+//			response = chipsService.updateChips();
 			logger.debug("Update response : {}", response);
 		} catch (Exception e) {
 			logger.error("Cannot update chips ", e);
