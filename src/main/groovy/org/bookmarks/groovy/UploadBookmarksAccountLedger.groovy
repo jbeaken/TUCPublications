@@ -27,7 +27,7 @@ this.class.classLoader.getURLs().each{
   ClassLoader.systemClassLoader.addURL(it);
 }
 
-def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "", "com.mysql.jdbc.Driver")
+def sql = Sql.newInstance("jdbc:mysql://localhost:3306/bookmarks", "root", "cyclops", "com.mysql.jdbc.Driver")
 
 count = 0
 Long customerId = 1
@@ -37,7 +37,7 @@ dateFormatter = new java.text.SimpleDateFormat("dd/MM/yy")
 Customer customer = null
 customers = []
 
-new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields ->
+new File("/home/bookmarks/archive.txt").splitEachLine("\t") {fields ->
 
 	def firstRow = fields[0]      //This will be customer id, of blank
 
@@ -106,7 +106,7 @@ new File("/home/bookmarks/ledgers_club_account.txt").splitEachLine("\t") {fields
     if(liability) amount = liability
     if(asset) amount = asset + -1
 
-    if(reference.contains("REC")) {
+    if(reference.contains("REC") && amount) {
 
 		    CreditNote cn = new CreditNote( reference : reference, amount : amount, details : details, date : date )
 
@@ -160,7 +160,7 @@ customers.each {c ->
 				[ c.id, cn.date, cn.reference, cn.details, cn.amount])
 	}
 
-  if(c.id == 30273) System.exit(0);
+  if(c.id == 37132) System.exit(0);
 }
 
 @ToString(includeNames=true)

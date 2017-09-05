@@ -19,39 +19,39 @@ import org.springframework.format.annotation.DateTimeFormat;
 public abstract class ReportBean extends AbstractSearchBean {
 
 
-	
+
 	private Boolean isDateAgnostic = Boolean.FALSE;
-	
+
 	public Boolean getIsDateAgnostic() {
 		return isDateAgnostic;
 	}
-	
+
 	public void setIsDateAgnostic(Boolean isDateAgnostic) {
 		this.isDateAgnostic = isDateAgnostic;
 	}
-	
-	@DateTimeFormat(pattern="dd-MMM-yyyy")
-	private Date startDate = new Date();
 
 	@DateTimeFormat(pattern="dd-MMM-yyyy")
-	private Date endDate = new Date();
-	
+	private Date startDate;
+
+	@DateTimeFormat(pattern="dd-MMM-yyyy")
+	private Date endDate;
+
 	@Min(value=0)
 	@Max(value=23)
 	private Integer startHour = 0;
-	
+
 	@Min(value=0)
-	@Max(value=59)	
+	@Max(value=59)
 	private Integer startMinute = 0;
 
 	@Min(value=0)
 	@Max(value=23)
 	private Integer endHour = 23;
-	
+
 	@Min(value=0)
 	@Max(value=59)
 	private Integer endMinute = 59;
-	
+
 	public Integer getStartHour() {
 		return startHour;
 	}
@@ -91,7 +91,7 @@ public abstract class ReportBean extends AbstractSearchBean {
 		startCalendar.setTime(startDate);
 		startCalendar.set(Calendar.HOUR, getStartHour());
 		startCalendar.set(Calendar.MINUTE, getStartMinute());
-		
+
 		return startCalendar.getTime();
 	}
 
@@ -105,7 +105,7 @@ public abstract class ReportBean extends AbstractSearchBean {
 		endCalendar.setTime(endDate);
 		endCalendar.set(Calendar.HOUR, getEndHour());
 		endCalendar.set(Calendar.MINUTE, getEndMinute());
-		
+
 		return endCalendar.getTime();
 	}
 
@@ -116,7 +116,7 @@ public abstract class ReportBean extends AbstractSearchBean {
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

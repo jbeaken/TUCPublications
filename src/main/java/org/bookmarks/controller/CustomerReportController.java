@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import java.time.LocalDate;
+
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -29,6 +31,9 @@ import org.bookmarks.domain.Invoice;
 import org.bookmarks.domain.SalesReportType;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.Event;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.bookmarks.controller.bean.SaleTotalBean;
 import org.bookmarks.controller.validation.CustomerReportBeanValidator;
@@ -87,14 +92,10 @@ public class CustomerReportController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerReportBeanValidator customerReportBeanValidator;
 
+	private Logger logger = LoggerFactory.getLogger(CustomerReportController.class);
+
 	/**
 	 * Main entry point, analyses report bean to see which report to call
-	 * @param saleReportBean
-	 * @param bindingResult
-	 * @param request
-	 * @param session
-	 * @param modelMap
-	 * @return
 	 */
 	@RequestMapping(value="/report")
 	public String report(@Valid CustomerReportBean customerReportBean, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -102,6 +103,7 @@ public class CustomerReportController extends AbstractBookmarksController {
 		customerReportBean.setCustomer(customer);
 
 		customerReportBeanValidator.validate(customerReportBean, bindingResult);
+
 		if(bindingResult.hasErrors()) {
 			modelMap.addAttribute(customerReportBean);
 			return "customerReport";
@@ -115,6 +117,23 @@ public class CustomerReportController extends AbstractBookmarksController {
 	}
 
 	private String invoiceReport(CustomerReportBean customerReportBean,	HttpServletRequest request, ModelMap modelMap) {
+
+		//If from customerSearch.jsp, dates are null, default to ALL
+		if(customerReportBean.getStartDate() == null) {
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.YEAR, -10);
+			customerReportBean.setStartDate( cal.getTime() );
+		}
+		
+		if(customerReportBean.getEndDate() == null) {
+			customerReportBean.setEndDate(new Date());
+		}
+
+		logger.debug("Have customerReportBean : {}", customerReportBean);
+
+		logger.debug("Have customerReportBean : {}", customerReportBean.getStartDate());
+
+		logger.debug("Have customerReportBean : {}", customerReportBean.getEndDate());
 
 		Collection<InvoiceReportLine> invoiceReportLines = customerReportService.getInvoiceReport(customerReportBean);
 		Customer customer = customerService.get( customerReportBean.getCustomer().getId() );

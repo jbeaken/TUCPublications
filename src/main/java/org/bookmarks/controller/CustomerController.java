@@ -233,13 +233,13 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/addCredit", method = RequestMethod.GET)
 	public String addCredit(Long customerId, ModelMap modelMap) {
-		
+
 		CreditNote creditNote = new CreditNote(customerId);
-		
+
 		creditNote.setDate( new Date() );
-		
+
 		modelMap.addAttribute(creditNote);
-		
+
 		return "addCredit";
 	}
 
