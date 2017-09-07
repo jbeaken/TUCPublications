@@ -103,8 +103,9 @@
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
 				<a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${customer.id}" class="btn btn-danger">Create New Customer Order</a>
-				<a class="btn btn-default" href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${customer.lastName}&customerOrderLine.customer.firstName=${customer.firstName}">View Orders</a>
-				<a class="btn btn-primary" href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${customer.lastName}&invoice.customer.firstName=${customer.firstName}">View Invoices</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${customer.lastName}&customerOrderLine.customer.firstName=${customer.firstName}">Orders</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement</a>
+				<a class="btn btn-primary" href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${customer.lastName}&invoice.customer.firstName=${customer.firstName}">Invoices</a>
  				<c:if test="${flow == 'search' || flow == 'searchCustomers'}">
  					<a href="${pageContext.request.contextPath}/customer/searchFromSession" class="btn btn-danger">Back To Customer Search</a>
  				</c:if>
