@@ -137,7 +137,7 @@ Current Balance : ${customer.bookmarksAccount.currentBalance}
 	   <display:setProperty name="export.csv.filename" value="sale.txt"/> 			   				
 					  <display:column property="date" sortable="true" sortName="s.creationDate" title="Sale Date"/>
 					  <display:column property="isbn" title="ISBN"/>
-					  <display:column property="title" title="Title"/>
+					  <display:column property="ref" title="Ref"/>
 					  <display:column property="sale.quantity" title="Quantity"/>
 					  <display:column property="discount" sortable="true" sortName="s.sellPrice" title="Discount"/>
 					  <display:column property="deliveryType" title="Delivery"/>

@@ -50,11 +50,19 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 			return currencyFormatter.print(invoiceReportLine.getCurrentBalance(), Locale.UK);
 	}
 
-	public String getTitle() {
+	public String getRef() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
+
+		//Invoice
 		if(!invoiceReportLine.isCredit()) {
 			return invoiceReportLine.getSale().getStockItem().getTitle();
 		}
+
+		//Credit Note
+		if(invoiceReportLine.getCreditNote().getTransactionDescription() == null) {
+			return invoiceReportLine.getCreditNote().getNote();
+		}
+
 		return invoiceReportLine.getCreditNote().getTransactionDescription();
 	}
 
