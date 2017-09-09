@@ -40,12 +40,15 @@
 			   defaultorder="ascending"
 			   export="true"
 			   partialList="true"
-			   size="${searchResultCount}"
-			   pagesize="10"
+
+               pagesize="${pageSize}"
+               size="${searchResultCount}"
 			   id="searchTable">	
 	   <display:setProperty name="export.pdf" value="true" /> 
 	   <display:setProperty name="export.xml" value="false" /> 
 	   <display:setProperty name="export.pdf.filename" value="events.pdf"/> 	
+       <display:setProperty name="export.csv.filename" value="events.csv"/>
+       
 					 <display:column property="id" sortable="true" sortName="e.id" title="ID"/>	
 					  <display:column property="name" sortable="true" sortName="e.name" title="Name"/>
 					  <display:column property="type.displayName" sortable="true" sortName="e.type" title="Type"/>

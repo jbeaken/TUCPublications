@@ -361,6 +361,9 @@ public class EventController extends AbstractBookmarksController {
 		setPaginationFromRequest(eventSearchBean, request);
 
 		Collection<Event> events = eventService.search(eventSearchBean);
+		
+		// Don't like, fix for shitty export
+		setPageSize(eventSearchBean, modelMap, events.size());
 
 		modelMap.addAttribute(events);
 		modelMap.addAttribute("searchResultCount", eventSearchBean.getSearchResultCount());
