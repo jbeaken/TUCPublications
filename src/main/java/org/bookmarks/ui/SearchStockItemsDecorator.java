@@ -50,6 +50,10 @@ public class SearchStockItemsDecorator extends AbstractBookmarksTableDecorator {
 		return realQuantityForMarxism.toString();
 	}
 
+	public String getQuantityInStock() {
+		StockItem stockItem = (StockItem)getCurrentRowObject();
+		return stockItem.getQuantityInStock().toString();
+	}
 
 	public String getPriceMissingForMarxism() {
 		StockItem stockItem = (StockItem)getCurrentRowObject();
@@ -76,6 +80,11 @@ public class SearchStockItemsDecorator extends AbstractBookmarksTableDecorator {
 	public String getPublisherPrice() {
 		StockItem stockItem = (StockItem)getCurrentRowObject();
 		return getPublisherPrice(stockItem);
+	}
+
+	public String getUnformattedPublisherPrice() {
+		StockItem stockItem = (StockItem)getCurrentRowObject();
+		return stockItem.getPublisherPrice().toString();
 	}
 
 	public String getPublisherPrice(StockItem stockItem) {

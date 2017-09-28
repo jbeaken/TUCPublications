@@ -60,6 +60,8 @@ Nothing Found
   <display:column property="prices" sortable="true" sortName="s.sellPrice" title="Sell/Pub/Cost"/>
   <display:column property="quantities" sortable="true" sortName="s.quantityInStock" title="S/O/C/R/M" />
   <display:column property="priceForMarxism" media="excel csv pdf" title="Marxism Price" />
+  <display:column property="quantityInStock" media="excel csv pdf" title="Quantity In Stock" />
+  <display:column property="unformattedPublisherPrice" media="excel csv pdf" title="Publisher Price" />
   <display:column property="realQuantityForMarxism" media="excel csv pdf" title="Real Quantity For Marxism" />
   <display:column property="priceMissingForMarxism" media="excel csv pdf" title="Real Marxism Price" />
 <display:column title="Actions" media="html" style="width:10%">
