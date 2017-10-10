@@ -55,8 +55,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AZLookupServiceImpl implements AZLookupService {
 
-	public final String azUrl = "https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=";
-	
+	// public final String azUrl = "https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=";
+	public final String azUrl = "https://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=";
 	@Value("#{ applicationProperties['imageFileLocation'] }")
 	private String imageFileLocation;
 
@@ -272,7 +272,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 
 	private Document getDrilldownPageDocument(Document doc) throws IOException {
 
-		logger.debug(doc.html());
+		// logger.debug(doc.html());
 
 		Elements elements = doc.select(".newaps");
 
@@ -280,18 +280,20 @@ public class AZLookupServiceImpl implements AZLookupService {
 		String drilldownUrl = elements.select("a[href]").attr("href");
 
 		if(drilldownUrl.isEmpty()) {
-			logger.debug("Cannot find drilldown using .newapps, attempting with a-link-normal");
+			logger.debug("Cannot find drilldown using .newapps, attempting with .s-access-detail-page");
 			//2nd look
 			//<a class="a-link-normal s-access-detail-page  a-text-normal"
 
 			elements = doc.select(".s-access-detail-page");
 			logger.debug("Elements size : " + elements.size());
+			for(Element e : elements) {
+				logger.debug("Have href : " + e.attr("href"));
+			}
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
-
 		}
 
 		if(drilldownUrl.isEmpty()) {
-			logger.debug("Cannot find drilldown using a-link-normal, attempting with a.s-access-detail-page");
+			logger.debug("Cannot find drilldown using .s-access-detail-page, attempting with a.s-access-detail-page");
 			//3nd look
 			elements = doc.select("a.s-access-detail-page");
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
@@ -466,7 +468,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 			logger.debug("Have set availablity to : " + stockItem.getAvailability().getDisplayName());
 		} catch(Exception e) {
 			try {
-				logger.error("Cannot get price from first lookup, falling back", e);
+				logger.warn("Cannot get price from first lookup, falling back");
 				String azPrice = doc.select("span.offer-price").first().text().replace("£", "");
 				Float price = Float.parseFloat(azPrice);
 				stockItem.setSellPrice(new BigDecimal(price));

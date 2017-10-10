@@ -239,7 +239,7 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 			}
 		} else {
 			addWarning("Have successfully added " + stockItem.getTitle() + ", but has not been put on website as it is turned off. Please edit to turn on.", modelMap);
-		}		
+		}
 
 		//Depending on flow, redirect
 		if(flow != null && flow.equals("supplierDelivery")) {
@@ -274,6 +274,75 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 	public String azlookupFromSearchPage(StockItemSearchBean stockItemSearchBean, BindingResult bindingResult, HttpSession session, ModelMap modelMap) {
 		return azLookup(stockItemSearchBean.getStockItem(), bindingResult, null, session, modelMap);
  	}
+
+	@RequestMapping(value="/azlookupUsingIsbn", method=RequestMethod.GET)
+	public String azlookupUsingIsbn(String isbn, String flow, HttpSession session, ModelMap modelMap) {
+
+
+		StockItem stockItem = new StockItem();
+		stockItem.setIsbn( isbn );
+
+		//Check validity of isbn
+		//stockItemValidator.validateISBN(stockItem, bindingResult, "isbn");
+
+		if(stockItem.getIsbn().isEmpty() || stockItem.getIsbn().length() < 10) {
+			addInfo("A valid isbn is required for a lookup", modelMap);
+			modelMap.addAttribute(stockItem);
+			fillStockSearchModel(session, modelMap);
+			return "addStock";
+		}
+
+		//Looup from AZ
+		StockItem stockItemFromLookup = null;
+		try {
+			stockItemFromLookup = azLookupService.lookupWithJSoup(stockItem.getIsbn());
+		} catch (Exception e) {
+			logger.error("Cannot lookup from AZLookupService", e);
+		}
+
+		//Has it been successful?
+		if(stockItemFromLookup == null) {
+			addError("Cannot find this isbn at AZ", modelMap);
+			StockItem sessionStockItem = (StockItem) session.getAttribute("sessionStockItem");
+			if(sessionStockItem == null) {
+				sessionStockItem = new StockItem();
+				session.setAttribute("sessionStockItem", sessionStockItem);
+			}
+
+			sessionStockItem.setIsOnAZ(false);
+			fillStockSearchModel(session, modelMap);
+			stockItem.setType(StockItemType.BOOK);
+			stockItem.setAvailability(Availablity.PUBLISHED);
+			modelMap.addAttribute(stockItem);
+			return "addStock";
+		}
+
+		//Does this ISBN already exist
+		StockItem exists = stockItemService.get(stockItem.getIsbn());
+		if(exists != null) {
+			addError("This isbn is already in the database!", modelMap);
+		} else {
+			addSuccess("Have successfully looked up  " + stockItemFromLookup.getTitle(), modelMap);
+		}
+
+		stockItemFromLookup.setId(stockItem.getId()); //In case this lookup is an overwrite
+
+		fillStockSearchModel(session, modelMap);
+
+		//Transfer to the session stockItem
+		StockItem sessionStockItem = (StockItem) session.getAttribute("sessionStockItem");
+		if(sessionStockItem == null) { //Can be from lookup from stockSearch.jsp of supplierDelivery.jsp
+			sessionStockItem = stockItemFromLookup;
+			session.setAttribute("sessionStockItem", stockItemFromLookup);
+		}
+		sessionStockItem.setAuthors(stockItemFromLookup.getAuthors());
+		sessionStockItem.setPublisher(stockItemFromLookup.getPublisher());
+
+		modelMap.addAttribute("stockItem", stockItemFromLookup);
+		modelMap.addAttribute("focusId", "category.id");
+
+		return "addStock";
+	}
 
 
 	@RequestMapping(value="/azlookup", method=RequestMethod.POST)
