@@ -33,27 +33,36 @@ import org.springframework.format.annotation.NumberFormat;
 
 import flexjson.JSONSerializer;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
- * 
+ *
  * @author jack
  * http://g-ecx.images-amazon.com/images/G/02/misc/no-img-lg-uk.gif - From AZ, no image
- * 
+ *
  * http://ecx.images-amazon.com/images/I/51d9UZ7a2vL.jpg
- * 
- * http://ecx.images-amazon.com/images/I/516GPonE4CL._BO2,204,203,200_PIsitb-,TopRight,35,-76_AA300_SH20_OU02_.jpg 
+ *
+ * http://ecx.images-amazon.com/images/I/516GPonE4CL._BO2,204,203,200_PIsitb-,TopRight,35,-76_AA300_SH20_OU02_.jpg
  * <img th:src="@{'/imageFiles/' + ${stockItem.isbn} + '.jpg'}"
  */
+<<<<<<< HEAD
 @Entity
 @Indexed
 public class StockItem extends AbstractEntity { 
+=======
+//@Entity
+//@Indexed
+@JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonIgnoreProperties(value = { "bouncyIndex", "reviewAsText", "reviewShort", "reviewAsHTML", "", "", "putImageOnWebsite", "putReviewOnWebsite", "stickyCategoryIndex", "putOnWebsite" })
+public class StockItem extends AbstractEntity {
 
-	
+>>>>>>> 1232860... Adding ignore unknown to stockItem
+
 	//No ameobic
 	public Boolean hasImage() {
 		if(imageFilename != null) return true;
 		return false;
 	}
-	
+
 	public String getViewUrl() throws UnsupportedEncodingException {
 		String title = getTitle();
 		title = title.replace("/", "");
@@ -65,44 +74,44 @@ public class StockItem extends AbstractEntity {
 		return "/imageFiles/isbn/" + getImageFilename(); //Local
 //		return getImageURL(); //AZ
 	}
-	
+
 	public String getThumbnailImageUrl() {
 		return "/imageFiles/200/" + getImageFilename(); //Local
 //		return getImageURL(); //AZ
-	}	
-	
+	}
+
 	public String getOriginalImageUrl() {
 		return "/imageFiles/original/" + getImageFilename(); //Local
 //		return getImageURL(); //AZ
-	}	
-	
+	}
+
 	public String getSmallerImageUrl() {
 		return "/imageFiles/150/" + getImageFilename(); //Local
 //		return getImageURL(); //AZ
-	}		
-	
-	
-	
+	}
+
+
+
 	public String getImageUrlForEmail() {
-		return "http://109.109.239.50/imageFiles/isbn/" + getImageFilename(); 
+		return "http://109.109.239.50/imageFiles/isbn/" + getImageFilename();
 //		return getImageURL(); //AZ
-	}	
-	
+	}
+
 	public String getBouncyImageUrl() {
 		return "/imageFiles/bouncy/" + getImageFilename(); //Local
 //		return getImageURL(); //AZ
-	}	
-	
+	}
+
 	public boolean getHasImage() {
 		return (imageFilename == null)? false : true;
 	}
-	
+
 	public String getAvailabilityMessage() {
 		Long qis = getQuantityInStock();
 		if(qis != null && qis > 0) {
 			return "<span class=\"in_stock\">In stock</span>";
 		}
-		
+
 		String message = null;
 		switch(getAvailability()) {
 			case OUT_OF_PRINT :
@@ -120,41 +129,41 @@ public class StockItem extends AbstractEntity {
 		}
 		return message;
 	}
-	
+
 	//Stickies
 	@Column(name="sticky_category_idx") private Long stickyCategory;
 	@Column(name="sticky_type_idx") private Long stickyType;
-	
+
 	//Bouncy
-	@Column(name="bouncy_idx") private Long bouncyIndex;	
-	
-    @NotNull  
+	@Column(name="bouncy_idx") private Long bouncyIndex;
+
+    @NotNull
     @Size(min = 1, max = 255)
     @Field(index=Index.YES, store=Store.YES)
     private String title;
-    
+
     @NotNull
     private BigDecimal postage;
-    
+
     @Field(index=Index.NO, store=Store.YES)
 	@Column(name="img_url")
 	private String imageURL;
-		
+
     @Field(index=Index.NO, store=Store.YES)
 	@Column(name="img_filename")
-	private String imageFilename;    
-    
+	private String imageFilename;
+
     @Field(index=Index.NO, store=Store.YES)
     private Integer noOfPages;
 
     @NotNull
     @Field(index=Index.YES, store=Store.YES)
     private Long quantityInStock;
-    
-    
+
+
 
     @ManyToMany(cascade={javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.MERGE}, fetch=FetchType.EAGER)
-    @JoinTable(joinColumns = { @JoinColumn(name = "stockitem_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })    
+    @JoinTable(joinColumns = { @JoinColumn(name = "stockitem_id") }, inverseJoinColumns = { @JoinColumn(name = "author_id") })
     @NotNull
     @IndexedEmbedded
     private Set<Author> authors;
@@ -164,38 +173,38 @@ public class StockItem extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
-    
+
     private String categoryName;
 
     @Column(name="parent_category_id")
-    private Long parentCategoryId;    
-    
-    
+    private Long parentCategoryId;
+
+
 /*    @ManyToMany(cascade={javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.MERGE})
     @JoinTable(joinColumns = { @JoinColumn(name="stockitem_id") }, inverseJoinColumns = { @JoinColumn(name = "reading_list_id") })
     @NotNull
-    private List<ReadingList> readingLists;   */ 
+    private List<ReadingList> readingLists;   */
 
     @Enumerated(EnumType.STRING)
     @NotNull
     @Field(index=Index.NO, store=Store.YES)
     private StockItemType type = StockItemType.BOOK;
-    
-    private Long width; 
-     
+
+    private Long width;
+
     private Long height;
-     
+
     private Long depth;
-    
+
     @Column(columnDefinition="text")
     private String reviewAsText;
-    
+
     @Field(index=Index.NO, store=Store.YES)
     private String reviewShort;
-    
+
     @Column(columnDefinition="text")
-    private String reviewAsHtml;    
-    
+    private String reviewAsHtml;
+
 //    @Field(index=Index.NO, store=Store.YES)
     private String dimensions;
 
@@ -209,27 +218,27 @@ public class StockItem extends AbstractEntity {
     @NumberFormat(pattern = "#.##")
     @Field(index=Index.NO, store=Store.YES)
     private BigDecimal sellPrice;
-    
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Field(index=Index.NO, store=Store.YES)
-	private BigDecimal priceThirdPartySecondHand;	
-	
+	private BigDecimal priceThirdPartySecondHand;
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Field(index=Index.NO, store=Store.YES)
 	private BigDecimal priceThirdPartyCollectable;
-	
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Field(index=Index.NO, store=Store.YES)
-	private BigDecimal priceThirdPartyNew;	
-	
+	private BigDecimal priceThirdPartyNew;
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	@Field(index=Index.NO, store=Store.YES)
 	@Column(name="price_at_az")
-	private BigDecimal priceAtAZ;	    
+	private BigDecimal priceAtAZ;
 
     @DateTimeFormat(pattern = "dd-MM-yy")
     @Field(index=Index.NO, store=Store.YES)
@@ -239,11 +248,11 @@ public class StockItem extends AbstractEntity {
     @Column(unique = true)
     @Field(index=Index.NO, store=Store.YES)
     private String isbn;
-    
+
     @NotNull
     @Field(index=Index.YES, store=Store.YES)
     private Integer salesLastYear;
-    
+
     @NotNull
     @Field(index=Index.NO, store=Store.YES)
     private Integer salesTotal;
@@ -260,7 +269,7 @@ public class StockItem extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @NotNull
     @Field(index=Index.NO, store=Store.YES)
-    private Binding binding; 
+    private Binding binding;
 
 //    @ManyToOne(cascade={javax.persistence.CascadeType.PERSIST, javax.persistence.CascadeType.MERGE}, fetch=FetchType.LAZY)
     @NotNull
@@ -268,7 +277,7 @@ public class StockItem extends AbstractEntity {
 //    @JoinColumn(name="publisher_id")
     @IndexedEmbedded
     private Publisher publisher;
-    
+
     //ACCESORS
     public Integer getSalesLastYear() {
 		return salesLastYear;
@@ -277,7 +286,7 @@ public class StockItem extends AbstractEntity {
 	public void setSalesLastYear(Integer salesLastYear) {
 		this.salesLastYear = salesLastYear;
 	}
-	
+
 	public Integer getSalesTotal() {
 		return salesTotal;
 	}
@@ -293,7 +302,7 @@ public class StockItem extends AbstractEntity {
 	public void setNoOfPages(Integer noOfPages) {
 		this.noOfPages = noOfPages;
 	}
-	
+
 	public String getTitle() {
 		if(availability == Availability.OUT_OF_PRINT) {
 			return title + " (Second Hand)";
@@ -521,7 +530,7 @@ public class StockItem extends AbstractEntity {
 	public void setReviewAsHtml(String reviewAsHtml) {
 		this.reviewAsHtml = reviewAsHtml;
 	}
-	
+
 	public String getReviewShort() {
 		if(reviewShort == null) return null;
 		return reviewShort + "...";
@@ -530,7 +539,7 @@ public class StockItem extends AbstractEntity {
 	public void setReviewShort(String reviewShort) {
 		this.reviewShort = reviewShort;
 	}
-	
+
 	public Long getStickyCategory() {
 		return stickyCategory;
 	}
@@ -570,18 +579,18 @@ public class StockItem extends AbstractEntity {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
+
 	public String toString() {
 		return getId() + " " + getTitle();
 	}
-	
+
 	//Constructors out of the way
-	
+
 	public StockItem() {
 		super();
 	}
 
-   //new StockItem(si.id, si.isbn, si.title, si.imageFilename, si.reviewShort, si.sellPrice, si.availability, si.publishedDate, si.binding, si.publisher.name, si.publisher.id, si.category.id, si.categoryName)	
+   //new StockItem(si.id, si.isbn, si.title, si.imageFilename, si.reviewShort, si.sellPrice, si.availability, si.publishedDate, si.binding, si.publisher.name, si.publisher.id, si.category.id, si.categoryName)
 	public StockItem(Long id, String isbn, String title, String imageFilename, String reviewShort, BigDecimal sellPrice, BigDecimal postage, Availability availability, Date publishedDate, Binding binding, String publisherName, Long publisherId, Long quantityInStock, Long categoryId, String categoryName) {
 		this();
 		setId(id);
@@ -597,26 +606,26 @@ public class StockItem extends AbstractEntity {
 		setPublishedDate(publishedDate);
 		setBinding(binding);
 		setQuantityInStock(quantityInStock);
-		
+
 		Publisher publisher = new Publisher();
 		publisher.setName(publisherName);
 		publisher.setId(publisherId);
 		setPublisher(publisher);
-		
+
 		Category category = new Category();
 		category.setName(categoryName);
 		category.setId(categoryId);
-		setCategory(category);		
+		setCategory(category);
 	}
-	
+
 	public StockItem(Long id, Set<Author> authors) {
-		
+
 	}
-	
+
 	public StockItem(Long id, Author authors) {
-		
-	}	
-	
+
+	}
+
 //	findByCategoryWithImage
 	public StockItem(Long id, String title, String imageFilename, BigDecimal sellPrice) {
 		this();
@@ -625,7 +634,7 @@ public class StockItem extends AbstractEntity {
 		setImageFilename(imageFilename);
 		setSellPrice(sellPrice);
 	}
-	
+
 //	getBouncies
 	public StockItem(Long id, String title, String imageFilename) {
 		this();
@@ -640,5 +649,5 @@ public class StockItem extends AbstractEntity {
 
 	public void setParentCategoryId(Long parentCategoryId) {
 		this.parentCategoryId = parentCategoryId;
-	}		
+	}
 }

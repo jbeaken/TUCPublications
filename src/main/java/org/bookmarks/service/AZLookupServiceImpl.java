@@ -285,26 +285,24 @@ public class AZLookupServiceImpl implements AZLookupService {
 			//<a class="a-link-normal s-access-detail-page  a-text-normal"
 
 			elements = doc.select(".s-access-detail-page");
-			logger.debug("Elements size : " + elements.size());
+
+			logger.debug("Using .s-access-detail-page, have elements size : " + elements.size());
+
 			for(Element e : elements) {
-				logger.debug("Have href : " + e.attr("href"));
+				logger.debug("Element href : " + e.attr("href"));
 			}
+
 			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
 		}
 
-		if(drilldownUrl.isEmpty()) {
-			logger.debug("Cannot find drilldown using .s-access-detail-page, attempting with a.s-access-detail-page");
-			//3nd look
-			elements = doc.select("a.s-access-detail-page");
-			if(!elements.isEmpty()) drilldownUrl = elements.first().attr("href");
-
-		}
 		if(drilldownUrl.isEmpty()) throw new BookmarksException("Cannot get drill down page");
 
 		if(drilldownUrl.indexOf("https://www.amazon.co.uk") == -1) {
 			drilldownUrl = "https://www.amazon.co.uk" + drilldownUrl;
 		}
+
 		logger.debug("Drilldown : " + drilldownUrl);
+
 		doc = Jsoup.connect(drilldownUrl)
 			.data("query", "Java")
 			.data("Cache-Control", "max-age=0")
