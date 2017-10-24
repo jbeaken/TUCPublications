@@ -50,7 +50,7 @@ public class ChipsController extends AbstractBookmarksController {
 		String response = null;
 		
 		try {
-//			response = chipsService.updateChips();
+			response = chipsService.updateChips();
 			logger.debug("Update response : {}", response);
 		} catch (Exception e) {
 			logger.error("Cannot update chips ", e);
@@ -78,8 +78,8 @@ public class ChipsController extends AbstractBookmarksController {
 			addSuccess("Have updated events", modelMap);	
 			logger.info("Successfully updated events on chips!");
 		} else {
-			logger.error("Cannot update reading lists! {}", result);
-			addError("Cannot update reading lists " + result, modelMap);			
+			logger.error("Cannot update events! {}", result);
+			addError("Cannot update events " + result, modelMap);			
 		}
 
 		return "welcome";

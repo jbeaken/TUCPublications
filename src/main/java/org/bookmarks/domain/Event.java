@@ -24,8 +24,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="event")
+@JsonIgnoreProperties(value = { "sales" })
 public class Event extends AbstractNamedEntity {
 
 	@NotNull

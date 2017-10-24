@@ -1274,20 +1274,20 @@ RestTemplate restTemplate = getRestTemplate();
 =======
 	public String updateEvents() {
 
-
 		Collection<Event> events = eventService.getChipsEvents();
+		
+		String url = chipsUrl + "/website/updateEvents";
 
-		logger.info("Have got {} reading lists to put on chips with url {}", events.size(), chipsUrl);
+		logger.info("Have got {} events to post to chips with url {}", events.size(), url);
 
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( events );
 >>>>>>> 3a5e91c... Fixing updateEvents
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());
 
-		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateEvents", HttpMethod.POST, requestEntity, String.class);
+		ResponseEntity<String> result = chipsRestTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-		logger.info("Readling lists return result : {}", result);
-
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> fc67d45... Adding showHome
 		try {
@@ -1299,6 +1299,14 @@ RestTemplate restTemplate = getRestTemplate();
 }
 =======
 		return result.getBody();
+=======
+		String response = result.getBody();
+		
+		logger.debug("Events exchange result : {}", result);
+		logger.info("Events exchange response : {}", response);
+		
+		return response;
+>>>>>>> 1e9a053... Fixed updateChips and updateEvents
 	}
 }
 >>>>>>> 3a5e91c... Fixing updateEvents
