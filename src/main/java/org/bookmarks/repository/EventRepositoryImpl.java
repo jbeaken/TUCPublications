@@ -72,8 +72,9 @@ public class EventRepositoryImpl extends AbstractRepository<Event> implements Ev
 		cal.add(Calendar.DAY_OF_MONTH, -1);
 		Query query = sessionFactory
 				.getCurrentSession()
-				.createQuery("select e from Event e where e.startDate > :now and onWebsite = true");
-		query.setParameter("now", cal.getTime());
+				.createQuery("select e from Event e where e.startDate > now() and onWebsite = true");
+//				.createQuery("select e from Event e where e.startDate > :now and onWebsite = true");
+//		query.setParameter("now", cal.getTime());
 		return query.list();
 	}
 
