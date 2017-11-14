@@ -1,3 +1,12 @@
+-- Get sales from invoices for a customer
+ select id, discount from sale 
+ 	where id in (select sales_id from invoice_sale 
+ 		where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) ); 
+
+-- update discount of account holders
+update sale set discount = 10 where id in (select sales_id from invoice_sale where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) ); 
+
+
 -- Reset reorder review for an event
 update sale s, stockitem si set lastReorderReviewDate = '2016-01-01 00:00:00'
   where s.stockItem_id = si.id and s.event_id in (636, 635);

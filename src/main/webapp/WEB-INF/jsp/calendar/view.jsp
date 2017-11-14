@@ -7,15 +7,19 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.css" />" />
 <script type="text/javascript" src="<c:url value="/bower/components/moment/min/moment.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.js" />"></script>
+<script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.js" />"></script>
+<script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/gcal.js" />"></script>
 <script>
 $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
-        // put your options and callbacks here
-    	 events: '/bookmarks/events/getJson',
-    	 dayClick: function(date, jsEvent, view) {
+        googleCalendarApiKey: 'AIzaSyCmtDqD8E42j3EturGOsxtP4AipwBJwmhQ',
+        events: {
+            googleCalendarId: 'bookmarksbookshop@gmail.com'
+        },
+    	dayClick: function(date, jsEvent, view) {
 
 	      //  alert('Clicked on: ' + date.format());
 
@@ -30,7 +34,7 @@ $(document).ready(function() {
 	       // $(this).css('background-color', 'red');
 
     	}
-    })
+    });
 
 });
 </script>
