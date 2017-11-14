@@ -105,7 +105,7 @@
                       <display:column property="id" title="ID" media="excel csv html" />
                       <display:column property="name" sortable="true" sortName="c.lastName"  maxLength="25" title="Name"/>
                       <display:column property="address" sortable="true" sortName="c.address.address1"  maxLength="13"  title="Address"/>
-                      <display:column property="phoneNumber" maxLength="12" title="Phone"/>
+                      <display:column property="phoneNumber" maxLength="15" title="Phone"/>
                       <display:column property="contactDetails.email" sortable="true" sortName="c.contactDetails.email" maxLength="19" title="Email"/>
                       <display:column property="account" sortable="true" sortName="c.bookmarksAccount.amount"  title="Account" />
 
