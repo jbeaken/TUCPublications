@@ -7,19 +7,28 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.css" />" />
 <script type="text/javascript" src="<c:url value="/bower/components/moment/min/moment.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.js" />"></script>
-<script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/fullcalendar.js" />"></script>
-<script type="text/javascript" src="<c:url value="/bower/components/fullcalendar/dist/gcal.js" />"></script>
 <script>
 $(document).ready(function() {
 
     // page is now ready, initialize the calendar...
 
     $('#calendar').fullCalendar({
-        googleCalendarApiKey: 'AIzaSyCmtDqD8E42j3EturGOsxtP4AipwBJwmhQ',
-        events: {
-            googleCalendarId: 'bookmarksbookshop@gmail.com'
-        },
-    	dayClick: function(date, jsEvent, view) {
+        // put your options and callbacks here
+    	 events: '/bookmarks/events/getJson',
+
+       eventClick: function(calEvent, jsEvent, view) {
+
+           alert('Event: ' + calEvent.title);
+           alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+           alert('View: ' + view.name);
+
+           // change the border color just for fun
+           $(this).css('border-color', 'red');
+
+           return false;
+
+       },
+    	 dayClick: function(date, jsEvent, view) {
 
 	      //  alert('Clicked on: ' + date.format());
 
@@ -28,13 +37,13 @@ $(document).ready(function() {
 	       // alert('Current view: ' + view.name);
 
 	        // change the day's background color just for fun
-	        var startDate = moment(date).format('DD/MM/YYYY'); 
+	        var startDate = moment(date).format('DD/MM/YYYY');
 	        console.log(startDate)
 	        window.location.href = "/bookmarks/events/displayAddFromCalendar?startDate=" + startDate;
 	       // $(this).css('background-color', 'red');
 
     	}
-    });
+    })
 
 });
 </script>
@@ -44,6 +53,3 @@ $(document).ready(function() {
 
 	<div id="calendar"></div>
 </body>
-
-
-

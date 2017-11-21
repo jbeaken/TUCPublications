@@ -75,6 +75,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.format.number.CurrencyStyleFormatter;
@@ -330,19 +334,41 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value = "/getJson", method = RequestMethod.GET)
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	@ResponseBody
+<<<<<<< HEAD
 	public Collection<CalendarEvent> getJson() {
 		
+=======
+	public Collection<CalendarEvent> getJson(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date start, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end) {
+
+		logger.info("Search for calendar using date range {} - {}", start, end);
+
+>>>>>>> 6df053c... Event calendar now using events json
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.DAY_OF_YEAR, -30);
+<<<<<<< HEAD
 		eventSearchBean.getEvent().setStartDate(c.getTime());
+=======
+
+		eventSearchBean.getEvent().setStartDate(start);
+		eventSearchBean.getEvent().setEndDate(end);
+
+		logger.debug("Search for calendar using search bean {}", eventSearchBean);
+
+>>>>>>> 6df053c... Event calendar now using events json
 		Collection<Event> events = eventService.search(eventSearchBean);
 		
 		Collection<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
+
+		logger.debug("Have {} events in date range", events.size());
+
 		for (Event e : events) {
 			CalendarEvent ce = new CalendarEvent(e);
 			calendarEvents.add(ce);
+			logger.debug("Adding {}", ce);
 		}
+
+		logger.debug("Have {} events to send to client", calendarEvents.size());
 
 		return calendarEvents;
 <<<<<<< HEAD
@@ -361,7 +387,7 @@ public class EventController extends AbstractBookmarksController {
 		setPaginationFromRequest(eventSearchBean, request);
 
 		Collection<Event> events = eventService.search(eventSearchBean);
-		
+
 		// Don't like, fix for shitty export
 		setPageSize(eventSearchBean, modelMap, events.size());
 
@@ -625,8 +651,8 @@ public class EventController extends AbstractBookmarksController {
 		return "redirect:searchFromSession";
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String edit(Long id, ModelMap modelMap) {
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public String edit(@PathVariable("id") Long id, ModelMap modelMap) {
 		Event event = eventService.get(id);
 
 <<<<<<< HEAD

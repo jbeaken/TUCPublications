@@ -7,7 +7,7 @@ import org.bookmarks.domain.Event;
 import org.springframework.format.datetime.DateFormatter;
 
 public class CalendarEvent {
-	
+
 	private static DateFormatter dateFormatter = new DateFormatter("yyyy-MM-dd");
 	private Long id;
 	private String title;
@@ -17,7 +17,7 @@ public class CalendarEvent {
 	private String url;
 	private String color;
 	private String textColor;
-	
+
 	public CalendarEvent(Event e) {
 		this();
 		this.id = e.getId();
@@ -27,6 +27,16 @@ public class CalendarEvent {
 		allDay = false;
 		color = "red";
 		textColor = "white";
+
+		switch(e.getType()) {
+			case SHOP :
+				color = "black";
+				break;
+			case TRADE_UNION :
+				color = "grey";
+				textColor = "black";
+				break;
+		}
 	}
 	public CalendarEvent() {
 		super();
@@ -49,9 +59,8 @@ public class CalendarEvent {
 	public void setAllDay(Boolean allDay) {
 		this.allDay = allDay;
 	}
-	
 	public String getUrl() {
-		return url;
+		return "/bookmarks/events/edit/" + getId();
 	}
 	public void setUrl(String url) {
 		this.url = url;
