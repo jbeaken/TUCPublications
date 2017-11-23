@@ -625,6 +625,7 @@ public class ChipsServiceImpl implements ChipsService {
 		// Transfer to reduce amount of unneeded fluff
 		for (StockItem si : stockItems) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if (si.getPutOnWebsite() == false)
 <<<<<<< HEAD
 				continue; 
@@ -635,11 +636,14 @@ public class ChipsServiceImpl implements ChipsService {
 			StockItem bouncy = new StockItem(si.getId());
 =======
 			
+=======
+
+>>>>>>> 1397b0e... Adding add note to events
 			if (si.getPutOnWebsite() == false || si.getBouncyIndex() == null)
 				continue;
-			
+
 			StockItem bouncy = new StockItem();
-			
+
 			bouncy.setId(si.getId());
 >>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 			bouncy.setTitle(si.getTitle());
@@ -658,6 +662,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 			strippedStockItems.add(bouncy);
 		}
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 		
@@ -692,6 +697,9 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 =======
 		
+=======
+
+>>>>>>> 1397b0e... Adding add note to events
 		// Check have enough
 		if (strippedStockItems.size() < 16) {
 			return "Need more bouncies, only have " + strippedStockItems.size() + ". Add more at 'Manage Bouncies'";
@@ -1275,7 +1283,7 @@ RestTemplate restTemplate = getRestTemplate();
 	public String updateEvents() {
 
 		Collection<Event> events = eventService.getChipsEvents();
-		
+
 		String url = chipsUrl + "/website/updateEvents";
 
 		logger.info("Have got {} events to post to chips with url {}", events.size(), url);
@@ -1301,10 +1309,10 @@ RestTemplate restTemplate = getRestTemplate();
 		return result.getBody();
 =======
 		String response = result.getBody();
-		
+
 		logger.debug("Events exchange result : {}", result);
 		logger.info("Events exchange response : {}", response);
-		
+
 		return response;
 >>>>>>> 1e9a053... Fixed updateChips and updateEvents
 	}

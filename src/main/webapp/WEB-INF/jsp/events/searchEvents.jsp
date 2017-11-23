@@ -67,6 +67,8 @@
 
 												    <li><a href="${pageContext.request.contextPath}/events/edit/${searchTable.id}">Edit</a></li>
 
+														<li><a href="${pageContext.request.contextPath}/events/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
+
 												    <li class="divider"></li>
 
 												    <li><a href="${pageContext.request.contextPath}/events/startSelling/${searchTable.id}">Start Selling</a></li>
