@@ -303,10 +303,12 @@ public class EventController extends AbstractBookmarksController {
 	/**
 	 * Text file to upload from mini beans, persist external event sales
 	 **/
-	@RequestMapping(value = "/uploadSales", method = RequestMethod.GET)
-	public String uploadSales(Long eventId, ModelMap modelMap) throws IOException {
-		Event event = eventService.get(eventId);
+	@RequestMapping(value = "/uploadSales/{id}", method = RequestMethod.GET)
+	public String uploadSales(@PathVariable("id") Long id, ModelMap modelMap) throws IOException {
+		Event event = eventService.get(id);
+
 		modelMap.addAttribute("event", event);
+
 		return "uploadSales";
 	}
 
@@ -402,9 +404,14 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value="/delete")
 =======
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/delete")
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String delete(Long id, HttpServletRequest request, ModelMap modelMap) {
+=======
+	@RequestMapping(value = "/delete/{id}")
+	public String delete(@PathVariable("id") Long id, HttpServletRequest request, ModelMap modelMap) {
+>>>>>>> a04b3d1... Fixing event rest
 
 		Event event = eventService.get(id);
 
@@ -428,6 +435,7 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value="/startSelling")
 =======
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/startSelling")
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String startSelling(Long eventId, String eventName, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -435,6 +443,15 @@ public class EventController extends AbstractBookmarksController {
 		event.setId(eventId);
 		event.setName(eventName);
 		
+=======
+	@RequestMapping(value = "/startSelling/{id}")
+	public String startSelling(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+
+		Event event = eventService.get( id );
+
+		addSuccess("Any sales or invoices created will now be attached to event " + event.getName() + ". To stop, click 'Events - Stop Selling'", modelMap);
+
+>>>>>>> a04b3d1... Fixing event rest
 		session.setAttribute("event", event);
 		
 		return saleController.displaySellStockItem(modelMap, session);
@@ -445,6 +462,7 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value="/showSales")
 =======
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/showSales")
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String showSales(Long eventId, String eventName, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -452,6 +470,12 @@ public class EventController extends AbstractBookmarksController {
 		event.setId(eventId);
 		event.setName(eventName);
 		
+=======
+	@RequestMapping(value = "/showSales/{id}")
+	public String showSales(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+		Event event = eventService.get( id );
+
+>>>>>>> a04b3d1... Fixing event rest
 		SaleReportBean saleReportBean = new SaleReportBean(event);
 <<<<<<< HEAD
 		
@@ -468,22 +492,23 @@ public class EventController extends AbstractBookmarksController {
 	@RequestMapping(value="/stopSelling")
 =======
 
-		// modelMap.addAttribute(saleReportBean);
-
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(SalesReportType.values());
 		modelMap.addAttribute(getCategories(session));
-		return "salesReport";
 
-		// return reportController.saleListReport(saleReportBean, request,
-		// session, modelMap);
+		return "salesReport";
 	}
 
 	@RequestMapping(value = "/stopSelling")
 >>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String stopSelling(HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		session.removeAttribute("event");
+<<<<<<< HEAD
 		
+=======
+
+		addSuccess("Have stopped selling for event", modelMap);
+>>>>>>> a04b3d1... Fixing event rest
 		return "home";
 	}
 
@@ -666,10 +691,15 @@ public class EventController extends AbstractBookmarksController {
 		return "editEvent";
 	}
 
+<<<<<<< HEAD
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
 	public String displayView(Long id, ModelMap modelMap) {
 <<<<<<< HEAD
 =======
+=======
+	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
+	public String view(@PathVariable("id") Long id, ModelMap modelMap) {
+>>>>>>> a04b3d1... Fixing event rest
 
 >>>>>>> 27fd69b... First cut of csv sales download
 		Event event = eventService.get(id);
