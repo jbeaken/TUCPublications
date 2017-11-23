@@ -60,7 +60,7 @@
 	 	 </div>
 	</div>
 
-<form:form modelAttribute="event" action="edit" method="post">
+<form:form modelAttribute="event" action="${pageContext.request.contextPath}/events/edit" method="post">
 <form:hidden path="id"/>
 <form:hidden path="creationDate"/>
 <form:hidden path="note"/>
