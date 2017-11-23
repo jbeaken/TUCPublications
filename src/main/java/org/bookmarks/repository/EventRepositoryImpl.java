@@ -50,6 +50,7 @@ public class EventRepositoryImpl extends AbstractRepository<Event> implements Ev
 
 		qb.appendAndEscape(eventSearchBean.getEvent().getName(), "e.name");
 		qb.append(eventSearchBean.getEvent().getType());
+    qb.append(eventSearchBean.getEvent().getOnWebsite(), "e.onWebsite");
 
 		query.append(qb.getQuery());
 	}

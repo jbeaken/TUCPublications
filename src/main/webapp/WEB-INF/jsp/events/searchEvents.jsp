@@ -10,7 +10,7 @@
 				<form:input path="event.name" id="focus"/> <form:errors path="event.name" />
 	  </div>
 	  <div class="column w-33-percent">
-				 <form:label for="event.onWebsite" path="event.onWebsite" cssErrorClass="error">On Website</form:label><br/>
+				 <form:label for="event.onWebsite" path="event.onWebsite" cssErrorClass="error">Is On Website?</form:label><br/>
                  <form:checkbox path="event.onWebsite" />
 		  </div>
           <div class="column w-33-percent">

@@ -35,7 +35,7 @@ public class QueryBuilder {
 		}
 	}
 	public void append(Boolean value, String property) {
-		if(value == false) return; //For search, false means return both types
+		if(value == null || value == false) return; //For search, false means return both types
 		if(whereAlreadyAppended) {
 			query.append(" and " + property + " = " + value);
 		} else {
