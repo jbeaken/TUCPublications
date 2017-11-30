@@ -100,6 +100,7 @@
 			<li><a href="<c:url value="/bouncies/manage" />" title="Manage Bouncies"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Bouncies"/>Manage Bouncies</a></li>
 			<li><a href="<c:url value="/bounciesMerchandise/manage" />" title="Manage Merchandise"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Merchandise"/>Manage Merchandise</a></li>
 			<li><a href="<c:url value="/chips/getOrders" />" title="Get Chips Orders"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Send Email Report"/>Get Chips Orders</a></li>
+			<li><a href="<c:url value="/staff/search" />" title="Search Staff"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Staff"/>Staff</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateChips")' title="Update Chips"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Chips"/>Update Chips</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateEvents")' title="Update Events"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Events"/>Update Events</a></li>
 			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/uploadBrochure")' title="Upload Brochure"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Brochure"/>Upload Brochure</a></li>

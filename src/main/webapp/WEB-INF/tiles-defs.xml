@@ -430,11 +430,33 @@
       <put-attribute name="body" value="/WEB-INF/jsp/supplier/viewSupplier.jsp"/>
   </definition>
 
+  <!-- STAFF -->
+
+    <definition name="editStaff" extends="bootstrap3Layout">
+        <put-attribute name="title" value="Edit Staff"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/staff/editStaff.jsp"/>
+    </definition>
+
+    <definition name="addStaff" extends="bootstrap3Layout">
+        <put-attribute name="title" value="Add Staff"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/staff/addStaff.jsp"/>
+    </definition>
+
+    <definition name="searchStaff" extends="bootstrap3Layout">
+        <put-attribute name="title" value="Search Staff"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/staff/searchStaff.jsp"/>
+    </definition>
+
+    <definition name="viewStaff" extends="bootstrap3Layout">
+        <put-attribute name="title" value="View Staff"/>
+        <put-attribute name="body" value="/WEB-INF/jsp/staff/viewStaff.jsp"/>
+
+    </definition>
     <!-- EVENT -->
 
   <definition name="editEvent" extends="baseLayout">
       <put-attribute name="title" value="Edit Event"/>
-      <put-attribute name="body" value="/WEB-INF/jsp/events/editEvent.jsp"/>
+      <put-attribute name="body" value="/WEB-INF/jsp/staffs/editEvent.jsp"/>
   </definition>
 
   <definition name="addEvent" extends="baseLayout">

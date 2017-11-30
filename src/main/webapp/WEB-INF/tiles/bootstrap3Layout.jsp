@@ -5,16 +5,16 @@
 <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
- 
+
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
@@ -23,13 +23,13 @@
 <script type="text/javascript" src="<c:url value="/resources/js/bookmarks.js" />" ></script>
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script> 
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
 	  body {
 	  	min-height: 2000px;
 	  	padding-top: 70px;
 		}
-  </style> 
+  </style>
 	<script type="text/javascript">
 	$(function() {
 			<c:if test="${message != null}">
@@ -59,7 +59,7 @@
 			</c:if>
 			<c:if test="${focusId == null}">
 				$('#focus').focus();
-			</c:if>	
+			</c:if>
 	});
 		function submitForm(action) {
 			document.forms[0].action = action;
@@ -74,45 +74,45 @@
 		function confirmDeletion(action) {
 			confirmation(action, "Are you sure you want to delete? Cannot be undone!");
 		}
-	</script>    
+	</script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><tiles:insertAttribute name="title" ignore="true" /></title>
     </head>
-    
+
 	<body>
 		<tiles:insertAttribute name="navbar" />
-   
+
 		<div class="container">
             <c:if test="${info != null}">
             	<div class="alert alert-info">
-              		<button type="button" class="close" data-dismiss="alert">×</button>
+              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
               		<h4>Information</h4>
               		<p>${info}</p>
             	</div>
             </c:if>
             <c:if test="${warning != null}">
             	<div class="alert alert-warning">
-              		<button type="button" class="close" data-dismiss="alert">×</button>
+              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
               		<h4>Warning!</h4>
               		<p>${warning}</p>
             	</div>
             </c:if>
             <c:if test="${error != null}">
             	<div class="alert alert-danger">
-              		<button type="button" class="close" data-dismiss="alert">×</button>
+              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
               		<h4>Error!</h4>
               		<p>${error}</p>
             	</div>
             </c:if>
             <c:if test="${success != null}">
             	<div class="alert alert-success">
-              		<button type="button" class="close" data-dismiss="alert">×</button>
+              		<button type="button" class="close" data-dismiss="alert">ï¿½</button>
               		<h4>Success!</h4>
               		<p>${success}</p>
             	</div>
-            </c:if>		
+            </c:if>
 			<tiles:insertAttribute name="body" />
 		</div>
-		
+
     </body>
 </html>
