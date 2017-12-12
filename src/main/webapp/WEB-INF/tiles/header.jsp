@@ -96,6 +96,7 @@
 			<li><a href="<c:url value="/category/displaySearch" />" title="Search Category"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Search Category"/>Search Category</a></li>
 			<li><a href="<c:url value="/readingList/add" />" title="Add Reading List"><img src="<c:url value="/resources/images/blue-sitemap2.png" />" alt="Add Reading List"/>Add Reading List</a></li>
 			<li><a href="<c:url value="/readingList/displaySearch" />" title="Search Reading List"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Search Reading List"/>Search Reading List</a></li>
+			<li><a href="<c:url value="/mailchimp/subscribe" />" title="Subscribe To Mailchimp"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Subscribe To Mailchimp"/>Subscribe To Mailchimp</a></li>
 			<li><a href="<c:url value="/stickies/displayStockItemTypes" />" title="Manage Stickies"><img src="<c:url value="/resources/images/blue-health.png" />" alt="Stickies"/>Manage Stickies</a></li>
 			<li><a href="<c:url value="/bouncies/manage" />" title="Manage Bouncies"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Bouncies"/>Manage Bouncies</a></li>
 			<li><a href="<c:url value="/bounciesMerchandise/manage" />" title="Manage Merchandise"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Merchandise"/>Manage Merchandise</a></li>

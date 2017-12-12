@@ -51,6 +51,16 @@ public class Staff extends AbstractNamedEntity {
 	@NotNull
 	private String telephone;
 
+	private String slackHandle;
+
+	public String getSlackHandle() {
+		return slackHandle;
+	}
+
+	public void setSlackHandle(String slackHandle) {
+		this.slackHandle = slackHandle;
+	}	
+
 	public String getTelephone() {
 		return telephone;
 	}

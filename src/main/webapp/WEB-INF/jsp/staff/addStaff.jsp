@@ -31,11 +31,15 @@
 	  	 </div>
       </div>
       <div class="row">
-		  <div class="column w-50-percent">
-              Email<br/>
-              <form:input path="email" required="required"/> <form:errors path="email" />
-		  </div>
-	</div>
+    		  <div class="column w-50-percent">
+                  Email<br/>
+                  <form:input path="email" required="required"/> <form:errors path="email" />
+    		  </div>
+          <div class="column w-50-percent">
+                  Slack Handle<br/>
+                  <form:input path="slackHandle" required="required"/> <form:errors path="slackHandle" />
+          </div>          
+	     </div>
 
       <div class="row" style="padding-top : 10px;">
           <div class="column w-70-percent">

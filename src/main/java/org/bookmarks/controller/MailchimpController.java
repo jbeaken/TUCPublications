@@ -45,11 +45,14 @@ public class MailchimpController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/subscribe", method = RequestMethod.POST)
-	public String subscribe(String email, ModelMap modelMap) {
+	public String subscribe(String email, String firstname, String lastname, ModelMap modelMap) {
+
+		logger.info("Attempting to subscribe email : {}  name : {} {}", email, firstname, lastname);
 
 		try {
-			mailchimpService.subscribe(email);
+			mailchimpService.subscribe(email, firstname, lastname);
 			addSuccess("Successfully subscribed " + email, modelMap);
+			logger.info("Successfully subscribed {}", email);
 		} catch(Exception e) {
 				logger.error("Cannot subscribe to mailchimp", e);
 				addError("There is a problem subscribing to mailchimp", modelMap);

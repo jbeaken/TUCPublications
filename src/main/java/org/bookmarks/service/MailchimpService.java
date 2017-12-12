@@ -79,25 +79,23 @@ public class MailchimpService {
 	@Value("#{ applicationProperties['mailchimp-api-key'] }")
 	private String apiKey;
 
-	@Autowired
-	private Environment environment;
+	@Value("#{ applicationProperties['mailchimp-list-id'] }")
+	private String listId;	
 
 	private final Logger logger = LoggerFactory.getLogger(MailchimpService.class);
 
-	public void subscribe(String email) throws Exception {
-			 MailchimpClient client = new MailchimpClient( apiKey );
-			 String listId = "447701";
-			 try {
-					 EditMemberMethod.CreateOrUpdate method = new EditMemberMethod.CreateOrUpdate(listId, "vasya.pupkin@gmail.com");
-					 method.status = "subscribed";
-					 method.merge_fields = new MailchimpObject();
-					 method.merge_fields.mapping.put("FNAME", "Vasya");
-					 method.merge_fields.mapping.put("LNAME", "Pupkin");
+	public void subscribe(String email, String firstname, String lastname) throws Exception {
+		 MailchimpClient client = new MailchimpClient( apiKey );
+		 try {
+				 EditMemberMethod.CreateOrUpdate method = new EditMemberMethod.CreateOrUpdate(listId, email);
+				 method.status = "subscribed";
+				 method.merge_fields = new MailchimpObject();
+				 method.merge_fields.mapping.put("FNAME", firstname);
+				 method.merge_fields.mapping.put("LNAME", lastname);
 
-					 MemberInfo member = client.execute(method);
-					 System.err.println("The user has been successfully subscribed: " + member);
-			 } finally {
-					 client.close();
-			 }
-}
+				 MemberInfo member = client.execute(method);
+		 } finally {
+				 client.close();
+		 }
+	}
 }
