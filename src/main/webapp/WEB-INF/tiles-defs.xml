@@ -23,6 +23,12 @@
       <put-attribute name="body"   value="/WEB-INF/tiles/body.jsp"/>
   </definition>
 
+  <!-- Mailchimp -->
+  <definition name="subscribeMailchimp" extends="bootstrap3Layout">
+       <put-attribute name="title" value="Subscribe Mailchimp"/>
+       <put-attribute name="body" value="/WEB-INF/jsp/mailchimp/subscribe.jsp"/>
+   </definition>
+
   <!-- PRINTS -->
  <definition name="printInvoice" extends="printLayout">
       <put-attribute name="title" value="Print Invoice"/>
