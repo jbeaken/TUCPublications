@@ -141,7 +141,17 @@
 
 	<dependencies>
 
+<<<<<<< HEAD
 >>>>>>> d3fdae2... adding conf tomcat files
+=======
+		<!-- Mailchimp -->
+		<dependency>
+		    <groupId>com.ecwid</groupId>
+		    <artifactId>maleorang</artifactId>
+		    <version>3.0-0.9.6</version>
+		</dependency>		
+
+>>>>>>> 2165655... Adding last credit note date info, and mailchimp integration
 		<!-- Talking to Chips -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

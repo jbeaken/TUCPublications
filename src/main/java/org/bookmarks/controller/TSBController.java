@@ -369,7 +369,14 @@ public class TSBController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/uploadAccountsFromTSB", method = RequestMethod.GET)
 	public String uploadAccountsFromTSB(ModelMap modelMap) throws IOException {
+
+		Date lastCreditNoteDate = accountRepository.getLastCreditNoteDate();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		modelMap.addAttribute("creditNote", new CreditNote());
+
+		addInfo("The date of the last credit note uploaded was " +  formatter.format( lastCreditNoteDate ) + ". Please import from TSB covering this date range including this date.", modelMap);
+
 		return "uploadAccountsFromTSB";
 	}
 

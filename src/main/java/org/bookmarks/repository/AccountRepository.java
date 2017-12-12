@@ -111,8 +111,13 @@ public Collection<Customer> getAccountCustomers() {
         .getCurrentSession()
         .createQuery("select max(cn.date) from CreditNote cn where cn.customer.id = :customerId")
         .setParameter("customerId", customer.getId());
+    return (Date)query.uniqueResult();
+  }
 
-
+  public Date getLastCreditNoteDate() {
+    Query  query = sessionFactory
+        .getCurrentSession()
+        .createQuery("select max(cn.date) from CreditNote cn");
     return (Date)query.uniqueResult();
   }
 
