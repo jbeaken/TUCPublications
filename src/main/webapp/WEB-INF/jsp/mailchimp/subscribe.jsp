@@ -1,10 +1,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<form:form modelAttribute="author" action="add" method="post">
+<form:form action="add" method="post">
 
 	 <div class="row">
         <div class="form-group">
 		     <label>Email</label>
-		     <form:input path="name" autofocus="autofocus" required="required" class="form-control"/>
+		     <input type="text" name="email" required="required" class="form-control"/>
   	    </div>
 	</div>
 
