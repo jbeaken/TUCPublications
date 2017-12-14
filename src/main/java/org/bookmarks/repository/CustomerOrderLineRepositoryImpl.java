@@ -66,7 +66,8 @@ public class CustomerOrderLineRepositoryImpl extends AbstractRepository<Customer
 							"cus.lastName," +
 							"cus.contactDetails.mobileNumber," +
 							"cus.contactDetails.workNumber," +
-							"cus.contactDetails.homeNumber," +
+              "cus.contactDetails.homeNumber," +
+							"cus.contactDetails.email," +
 							"col.status," +
 							"col.deliveryType," +
 							"col.paymentType," +

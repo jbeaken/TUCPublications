@@ -139,6 +139,11 @@ public class Customer extends AbstractEntity {
 			getContactDetails().setWorkNumber(work);
 	}
 
+	public Customer(String firstName, String lastName, String mobile, String work, String home, String email) {
+			this(firstName, lastName, mobile, work, home);
+			getContactDetails().setEmail(email);
+	}
+
 	//From AutoComplete
 	//new Customer(c.id, c.firstName, c.surname, c.address.postcode)
 	public Customer(Long id, String firstName, String lastName, String postcode, BigDecimal currentBalance) {

@@ -153,6 +153,7 @@ public class CustomerOrderLine extends OrderLine {
 			String mobile,
 			String work,
 			String home,
+      String email,
 			CustomerOrderLineStatus customerOrderStatus,
 			DeliveryType deliveryType,
 			PaymentType paymentType,
@@ -168,7 +169,7 @@ public class CustomerOrderLine extends OrderLine {
 			String prefSupplierName,
 			Long supplierId) {
 
-		Customer customer = new Customer(firstName, lastName, mobile, work, home);
+		Customer customer = new Customer(firstName, lastName, mobile, work, home, email);
 		customer.setId(customerId);
 		Supplier supplier = new Supplier(supplierId);
 		if(prefSupplierName != null) supplierName = prefSupplierName;
@@ -526,7 +527,7 @@ public class CustomerOrderLine extends OrderLine {
 		}
 		if(address.getCountry() != null && !address.getCountry().isEmpty()) {
 			buffer.append("<br/>" + address.getCountry());
-		}		
+		}
 		if(address.getPostcode() != null && !address.getPostcode().isEmpty()) {
 			buffer.append("<br/>" + address.getPostcode());
 		}
