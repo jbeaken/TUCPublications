@@ -183,7 +183,7 @@ $(function() {
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?customerOrderLine.id=${searchTable.id}">View Supplier Order</a></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
-									<li><a href="mailto:${searchTable.customer.email}?Subject=Your%20Bookmarks%20Bookshop%20Order&body=${searchTable.stockItem.title}">Email Customer</a></li>
+									<li><a href="mailto:${searchTable.customer.contactDetails.email}?Subject=Your%20Bookmarks%20Bookshop%20Order&body=${searchTable.stockItem.title}">Email Customer</a></li>
 								</c:if>
 						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
