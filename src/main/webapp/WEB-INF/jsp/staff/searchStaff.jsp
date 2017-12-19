@@ -20,7 +20,7 @@
 </form:form>
 		<br/>
 					<display:table name="staffList"
-			   requestURI="search"
+			   requestURI="${pageContext.request.contextPath}/staff/search"
 				 class="table table-striped table-bordered"
         decorator="org.bookmarks.ui.SearchStaffDecorator"
 			   sort="external"
