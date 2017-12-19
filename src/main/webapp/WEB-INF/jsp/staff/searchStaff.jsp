@@ -54,7 +54,7 @@
 
 												    <li class="divider"></li>
 
-														<li><a href="${pageContext.request.contextPath}/staff/delete/${searchTable.id}">Delete</a></li>
+														<li><a onclick="javascript:authoriseSuperUser( '${pageContext.request.contextPath}/staff/delete/${searchTable.id}' )">Delete</a></li>
 												  </ul>
 												</div>
 						</display:column>
