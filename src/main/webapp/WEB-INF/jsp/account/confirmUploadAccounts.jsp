@@ -103,7 +103,7 @@
                   <a href="/bookmarks/tsb/saveAccountsFromTSB?credit=true" class="btn btn-danger">Save And Credit</a>
               </div>
               <div class="column w-33-percent">
-                  <a href="/bookmarks/tsb/saveAccountsFromTSB?credit=false" class="btn btn-primary">Save Without Crediting</a>
+                  <a href="/bookmarks/tsb/saveAccountsFromTSB?credit=false">Save Without Crediting</a>
               </div>
         </div>
       </div>

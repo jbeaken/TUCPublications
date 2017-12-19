@@ -2,26 +2,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
+
 		<form:form modelAttribute="staffSearchBean" action="search" method="post">
 <div class="rows">
         <div class="row">
-          <div class="column w-33-percent">
 				<form:label for="staff.name" path="staff.name" cssErrorClass="error">Staff Name</form:label><br/>
 				<form:input path="staff.name" id="focus"/> <form:errors path="staff.name" />
-	  </div>
 
-      <div class="row">
-          <div class="column w-70-percent">
+      <div class="row" style="padding : 10px;">
  				<input type="submit" class="btn btn-primary" id="searchStaffsButton" value="Search Staff"/>
  				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('reset')">Reset</button>
+
+				<a class="btn btn-default pull-right" href="add">Add Staff</a>
 	 	 </div>
 
-	</div>
 </div>
 </form:form>
 		<br/>
 					<display:table name="staffList"
 			   requestURI="search"
+				 class="table table-striped table-bordered"
         decorator="org.bookmarks.ui.SearchStaffDecorator"
 			   sort="external"
 			   defaultsort="2"

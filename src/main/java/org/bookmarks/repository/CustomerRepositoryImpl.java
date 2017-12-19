@@ -66,8 +66,6 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 			//queryBuilder.append(a.getCity(), "c.address.city");
 			//queryBuilder.append(a.getPostcode(), "c.address.postcode");
 
-      System.out.println("ba.getPaysInMonthly() : " + ba.getPaysInMonthly());
-
       if(ba.getPaysInMonthly() != null && ba.getPaysInMonthly() == true) {
         queryBuilder.append("c.bookmarksAccount.amountPaidInMonthly is not null and c.bookmarksAccount.amountPaidInMonthly > 0");
       }

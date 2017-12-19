@@ -69,8 +69,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Spring -->
-		<spring.version>4.3.8.RELEASE</spring.version>
-		<spring.security.version>4.1.1.RELEASE</spring.security.version>
+		<spring.version>4.3.13.RELEASE</spring.version>
+		<spring.security.version>4.1.4.RELEASE</spring.security.version>
 		<spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>
 
 		<!-- Spring Data -->
@@ -149,7 +149,7 @@
 		    <groupId>com.ecwid</groupId>
 		    <artifactId>maleorang</artifactId>
 		    <version>3.0-0.9.6</version>
-		</dependency>		
+		</dependency>
 
 >>>>>>> 2165655... Adding last credit note date info, and mailchimp integration
 		<!-- Talking to Chips -->
