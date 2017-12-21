@@ -50,7 +50,7 @@ public class SaleRepositoryImpl extends AbstractRepository<Sale> implements Sale
     			"join s.stockItem as si " +
     			"join si.category as c " +
 				"join si.publisher as p");
-		}		
+		}
 
 		if(saleSearchBean.getGroupBy()) {
 			if(saleSearchBean.getSortColumn() ==  null) saleSearchBean.setSortColumn("sum(s.quantity)");

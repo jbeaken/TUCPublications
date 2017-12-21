@@ -76,23 +76,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/saleReport")
 public class SaleReportController extends AbstractBookmarksController {
-	
+
 	@Autowired
 	private SaleReportService saleReportService;
-	
+
 	@Autowired
 	private SaleService saleService;
 
 
 	@Autowired
 	private InvoiceService invoiceService;
-	
+
 	@Autowired
-	private StockItemService stockItemService;	
-	
+	private StockItemService stockItemService;
+
 	@Autowired
 	private SaleReportBeanValidator saleReportBeanValidator;
-	
+
 	/**
 	 * Main entry point, analyses report bean to see which report to call
 	 * @param saleReportBean
@@ -110,16 +110,16 @@ public class SaleReportController extends AbstractBookmarksController {
 			modelMap.addAttribute(getPublishers());
 			modelMap.addAttribute(getCategories());
 			return "salesReport";
-		}		
+		}
 		session.setAttribute("saleReportBean", saleReportBean);
-		
+
 		switch (saleReportBean.getSalesReportType()) {
 			case SALE_LIST:
 				return saleListReport(saleReportBean, request, modelMap);
 			case BY_CATEGORY:
 				return categoryReport(saleReportBean, request, session, modelMap);
 			case BY_SOURCE:
-				return sourceReport(saleReportBean, request, session, modelMap);	
+				return sourceReport(saleReportBean, request, session, modelMap);
 			case CATEGORY_STOCK_TAKE:
 				return categoryStockTakeReport(saleReportBean, request, session, modelMap);
 			case TIME_OF_DAY:
@@ -131,10 +131,10 @@ public class SaleReportController extends AbstractBookmarksController {
 			case VAT:
 				return vat(saleReportBean, request, modelMap);
 			case PUBLISHER_STOCK_TAKE:
-				return publisherStockTakeReport(saleReportBean, request, session, modelMap);				
+				return publisherStockTakeReport(saleReportBean, request, session, modelMap);
 			default:
 				return null;
-		}		
+		}
 	}
 
 	private String timeOfDayReport(SaleReportBean saleReportBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -144,7 +144,7 @@ public class SaleReportController extends AbstractBookmarksController {
 		fillModel(modelMap);
 		return "salesReport";
 	}
-	
+
 
 
 	@RequestMapping(value="/saleReport.png")
@@ -153,24 +153,24 @@ public class SaleReportController extends AbstractBookmarksController {
 		JFreeChart chart = saleReportService.getSaleReportBarChart(id);
 		ChartUtilities.writeChartAsPNG(stream, chart, 900, 400);
 	}
-	
+
 	@RequestMapping(value="/displayStockItemMonthlySaleReport")
 	public String displayStockItemMonthlySaleReport(Long id, ModelMap modelMap) throws Exception {
 		StockItem stockItem = stockItemService.get(id);
 		MonthlySaleReportBean monthlySaleReportBean = saleReportService.getMonthlySaleReportBean(stockItem);
-		modelMap.addAttribute(monthlySaleReportBean); 
+		modelMap.addAttribute(monthlySaleReportBean);
 		return "displayStockItemMonthlySaleReport";
-	}	
-	
+	}
+
 	@RequestMapping(value="/delete")
 	public String delete(Long id, HttpSession session, HttpServletRequest request, ModelMap modelMap) throws Exception {
 		Sale sale = saleService.get(id);
 		saleService.delete(sale);
 		SaleReportBean saleReportBean = (SaleReportBean)session.getAttribute("saleReportBean");
 		return saleListReport(saleReportBean, request, modelMap);
-	}	
-	
-	
+	}
+
+
 	@RequestMapping(value="/edit")
 	public String edit(Long id, HttpSession session, HttpServletRequest request, ModelMap modelMap) throws Exception {
 		Sale sale = saleService.get(id);
@@ -178,82 +178,82 @@ public class SaleReportController extends AbstractBookmarksController {
 
 		modelMap.addAttribute(sale);
 		return "editSale";
-	}		
-	
+	}
+
 	@RequestMapping(value="/categoryReport.png")
 	@ResponseBody
 	public void categoryReport(OutputStream stream, HttpSession session) throws Exception {
 		// Get pie dataset stored in session earlier and create a chart to render
 		DefaultPieDataset categoryReportPieDataset = (DefaultPieDataset) session.getAttribute("categoryReportPieDataset");
-		
+
 		JFreeChart chart = saleReportService.getCategoryReportPieChart(categoryReportPieDataset);
-		
+
 		ChartUtilities.writeChartAsPNG(stream, chart, 900, 400);
-		
+
 		session.removeAttribute("categoryReportPieDataset");
-	}	
-	
+	}
+
 	@RequestMapping(value="/showTimeOfDayReport.png")
 	@ResponseBody
 	public void timeOfDayReport(OutputStream stream, HttpSession session) throws Exception {
 		DefaultCategoryDataset timeOfDayCategoryDataset = (DefaultCategoryDataset) session.getAttribute("timeOfDayCategoryDataset");
-		
+
 		JFreeChart chart = saleReportService.getTimeOfDayReportBarChart(timeOfDayCategoryDataset);
-		
+
 		ChartUtilities.writeChartAsPNG(stream, chart, 900, 400);
-		
+
 		session.removeAttribute("timeOfDayCategoryDataset");
 	}
-	
+
 	/**
 	 * Report for invoice : has to be a mapping as well due to pagination and sorting
 	 */
 	@RequestMapping(value="/unsold")
 	public String unsold(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
-		setPaginationFromRequest(saleReportBean, request); 
-		
+		setPaginationFromRequest(saleReportBean, request);
+
 		//Get a invoice search bean
 		InvoiceSearchBean invoiceSearchBean = new InvoiceSearchBean();
 		invoiceSearchBean.setEndDate(saleReportBean.getEndDate());
 		invoiceSearchBean.setStartDate(saleReportBean.getStartDate());
-		
+
 		//Don't like, fix for shitty export
 		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
-		
+
 		Collection<StockItem> stockItems = saleReportService.unsold(invoiceSearchBean);
-		
+
 		modelMap.addAttribute(stockItems);
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
-		
+
 		return "salesReport";
-	}		
-	
+	}
+
 	/**
 	 * Report for invoice : has to be a mapping as well due to pagination and sorting
 	 */
 	@RequestMapping(value="/invoice")
 	public String invoice(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
-		setPaginationFromRequest(saleReportBean, request); 
-		
+		setPaginationFromRequest(saleReportBean, request);
+
 		//Get a invoice search bean
 		InvoiceSearchBean invoiceSearchBean = new InvoiceSearchBean();
 		invoiceSearchBean.setEndDate(saleReportBean.getEndDate());
 		invoiceSearchBean.setStartDate(saleReportBean.getStartDate());
-		
+
 		//Don't like, fix for shitty export
 		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
-		
+
 		Collection<InvoiceReportBean> invoiceReportBeans = invoiceService.getInvoiceReportBeans(invoiceSearchBean);
-		
+
 		modelMap.addAttribute(invoiceReportBeans);
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
-		
+
 		return "salesReport";
-	}		
+	}
 
 	/**
 	 * Report for SaleList : has to be a mapping as well due to pagination and sorting
@@ -261,48 +261,62 @@ public class SaleReportController extends AbstractBookmarksController {
 	@RequestMapping(value="/vat")
 	public String vat(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
 		setPaginationFromRequest(saleReportBean, request);
-		
+
 		Collection<Sale> sales = saleService.search(saleReportBean);
-		
+
 		SaleTotalBean saleTotalBean = saleReportService.getSaleTotalBean(saleReportBean);
-		
+
 		//Don't like, fix for shitty export
 		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
-		
+
 		modelMap.addAttribute(sales);
 		modelMap.addAttribute("searchResultCount", saleReportBean.getSearchResultCount());
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
 		modelMap.addAttribute(saleTotalBean);
-		
+
 		return "salesReport";
-	}		
-	
+	}
+
 	/**
 	 * Report for SaleList : has to be a mapping as well due to pagination and sorting
 	 */
 	@RequestMapping(value="/saleList")
 	public String saleListReport(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
 		setPaginationFromRequest(saleReportBean, request);
-		
+
+		if(saleReportBean.getStartDate() == null) {
+			// Set to today at 0:01 am
+			Calendar startCal = new GregorianCalendar();
+			startCal = resetToMidnight(startCal);
+			saleReportBean.setStartDate( startCal.getTime() );
+		}
+
+		if(saleReportBean.getEndDate() == null) {
+			// Set to today at midnight
+			Calendar endCal = new GregorianCalendar();
+			endCal = resetToEndOfDay(endCal);
+			saleReportBean.setEndDate( endCal.getTime() );
+		}
+
 		Collection<Sale> sales = saleService.search(saleReportBean);
-		
+
 		SaleTotalBean saleTotalBean = saleReportService.getSaleTotalBean(saleReportBean);
-		
+
 		//Don't like, fix for shitty export
 		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
-		
+
 		modelMap.addAttribute(sales);
 		modelMap.addAttribute("searchResultCount", saleReportBean.getSearchResultCount());
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
 		modelMap.addAttribute(saleTotalBean);
-		
+
 		return "salesReport";
-	}	
-	
+	}
+
 	private void fillModel(ModelMap modelMap) {
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
@@ -317,13 +331,13 @@ public class SaleReportController extends AbstractBookmarksController {
 	 * @return
 	 */
 	private String categoryStockTakeReport(SaleReportBean saleReportBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		Collection<CategoryStockTakeBean> categoryStockTakeBeans = saleReportService.getCategoryStockTakeBeans(); 
-		
+		Collection<CategoryStockTakeBean> categoryStockTakeBeans = saleReportService.getCategoryStockTakeBeans();
+
 		modelMap.addAttribute(categoryStockTakeBeans);
-		
+
 		return "salesReport";
 	}
-	
+
 	/**
 	 * Show entire stock record by published, showing total publisher price and total sale price
 	 * ie. quantityInStock * publisherPrice (and sellPrice)
@@ -334,13 +348,13 @@ public class SaleReportController extends AbstractBookmarksController {
 	 * @return
 	 */
 	private String publisherStockTakeReport(SaleReportBean saleReportBean, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		Collection<PublisherStockTakeBean> publisherStockTakeBeans = saleReportService.getPublisherStockTakeBeans(); 
-		
+		Collection<PublisherStockTakeBean> publisherStockTakeBeans = saleReportService.getPublisherStockTakeBeans();
+
 		modelMap.addAttribute(publisherStockTakeBeans);
-		
+
 		return "salesReport";
-	}	
-	
+	}
+
 	/**
 	 * Category report
 	 * Get all sales in date range, sort into catgories
@@ -358,21 +372,21 @@ public class SaleReportController extends AbstractBookmarksController {
 		saleReportBean.setExport( true );
 
 		saleReportBean.setIsCategorySearch( true );
-		
+
 		Collection<Sale> sales = saleService.search(saleReportBean);
-		
+
 		SaleTotalBean saleTotalBean = saleReportService.getSaleTotalBean(saleReportBean);
-		
+
 		//Don't like, fix for shitty export
 		setPageSize(saleReportBean, modelMap, saleReportBean.getSearchResultCount());
 
 		DefaultPieDataset categoryPieDataset = saleReportService.getCategoryPieDataset( sales );
-		
+
 		session.setAttribute("categoryReportPieDataset", categoryPieDataset);
 		modelMap.addAttribute("showCategoryReport", true);
 		return "salesReport";
 	}
-	
+
 	/**
 	 * source report
 	 * Get all sales by source
@@ -384,11 +398,11 @@ public class SaleReportController extends AbstractBookmarksController {
 	 */
 	private String sourceReport(SaleReportBean saleReportBean,	HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		DefaultPieDataset categoryPieDataset = saleReportService.getSourcePieDataset(saleReportBean);
-		
+
 		session.setAttribute("sourceReportPieDataset", categoryPieDataset);
 		modelMap.addAttribute("showCategoryReport", true);
 		return "salesReport";
-	}	
+	}
 
 	/**
 	 * Report for Daily Report
@@ -404,15 +418,15 @@ public class SaleReportController extends AbstractBookmarksController {
 		Calendar startCal = new GregorianCalendar();
 		startCal.setTime(saleReportBean.getStartDate());
 		resetToMidnight(startCal);
-		
+
 		Calendar endCal = new GregorianCalendar();
 		endCal.setTime(saleReportBean.getStartDate());
 		resetToEndOfDay(endCal);
-		
+
 		Collection<Sale> sales = saleService.getAll(startCal.getTime(), endCal.getTime());
 		return null;
 	}
-	
+
 	@RequestMapping(value="/init", method=RequestMethod.GET)
 	public String init(ModelMap modelMap) {
 		modelMap.addAttribute(new SaleReportBean());
@@ -421,7 +435,7 @@ public class SaleReportController extends AbstractBookmarksController {
 		modelMap.addAttribute(getPublishers());
 		return "salesReport";
 	}
-	
+
 	@RequestMapping(value="/buildSalesReport")
 	public String buildSalesReport(SaleReportBean saleSearchBean, HttpServletRequest request, ModelMap modelMap) {
 		setPaginationFromRequest(saleSearchBean, request);
@@ -431,28 +445,28 @@ public class SaleReportController extends AbstractBookmarksController {
 		modelMap.addAttribute(new CustomerReportBean());
 		return "displaySalesReport";
 	}
-	
+
 	public Calendar getOneYearAgo() {
 		Calendar yearAgo = new GregorianCalendar();
 		yearAgo.setTime(new Date());
 		yearAgo.add(Calendar.YEAR, -1);
 		resetToFirstDayOfMonth(yearAgo);
 		return yearAgo;
-	}	
-	
+	}
+
 	public Calendar resetToFirstDayOfMonth(Calendar cal) {
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		resetToMidnight(cal);
 		return cal;
 	}
-	
+
 	public Calendar resetToMidnight(Calendar cal) {
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		return cal;
 	}
-	
+
 	public Calendar resetToEndOfDay(Calendar cal) {
 		cal.set(Calendar.HOUR_OF_DAY, 23);
 		cal.set(Calendar.MINUTE, 59);
@@ -463,7 +477,7 @@ public class SaleReportController extends AbstractBookmarksController {
 	@Override
 	public Service<Customer> getService() {
 		return null;
-	}	
-	
-	
+	}
+
+
 }
