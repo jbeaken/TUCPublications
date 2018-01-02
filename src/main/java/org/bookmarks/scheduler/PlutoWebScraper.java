@@ -44,13 +44,13 @@ public class PlutoWebScraper extends WebScraper {
 	
 	private Logger logger = LoggerFactory.getLogger(PlutoWebScraper.class);
 	
-	private String base = "https://www.plutobooks.com/books/?page_number=1";
+	private String base = "https://www.plutobooks.com/books/?page_number=2";
 
 	/**
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 50 22 * * TUE")
+	@Scheduled(cron = "0 20 15 * * TUE")
 	public void scrape() throws Exception {
 
 		logger.info("Scraping Pluto!! Search Url : {}", base);
@@ -81,7 +81,7 @@ public class PlutoWebScraper extends WebScraper {
 		
 		Set<String> isbnSet = new HashSet<String>();
 		
-		Document doc = Jsoup.connect(base).userAgent("Mozilla").timeout(136000).get();
+		Document doc = Jsoup.connect( base ).userAgent("Mozilla").timeout(136000).get();
 		 
 		//Of form:
 	    //display.asp?K=9780745334677
