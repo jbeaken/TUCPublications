@@ -44,13 +44,13 @@ public class PlutoWebScraper extends WebScraper {
 	
 	private Logger logger = LoggerFactory.getLogger(PlutoWebScraper.class);
 	
-	private String base = "https://www.plutobooks.com/books/?page_number=2";
+	private String base = "https://www.plutobooks.com/books";
 
 	/**
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 20 15 * * TUE")
+	@Scheduled(cron = "0 27 15 * * TUE")
 	public void scrape() throws Exception {
 
 		logger.info("Scraping Pluto!! Search Url : {}", base);
@@ -60,6 +60,10 @@ public class PlutoWebScraper extends WebScraper {
 		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
 		
 		Set<String> isbnSet = getIsbnList(base);
+
+		Set<String> forthcoming = getIsbnList("https://www.plutobooks.com/books/?collection=forthcoming");
+
+		isbnSet.addAll( forthcoming );
 		
 		persist(isbnSet, "", webScraperResultBean);
 		
