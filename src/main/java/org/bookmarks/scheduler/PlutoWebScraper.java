@@ -27,45 +27,49 @@ import org.springframework.stereotype.Service;
 /**
  * Just scrapes new releases once a week,
  * One page, has collection of elements :
- * <a href="display.asp?K=9780745333991&dtspan=60%3A0&ds=New+Releases&sort=sort%5Fpluto&sf1=format%5Fcode&st1=bp&%3c%=PROP%25%3E&m=1&dc=7">
- * @author pod
- *
+* <div class="book-wrapper">
+* <div class="image-wrapper">
+* <p class="sp__the-cover"><a href='/9780745399850/making-workers'>
+* <img data-baseline-images="image" src="https://d28akss8xdipta.cloudfront.net/resized/width-298/path-assets/covers/v1/9780745399850.jpg" alt="Making Workers" /></a></p></div><a class="pp-link__title" href="/9780745399850/making-workers"><h2 class="pp-book__title">Making Workers</h2><h3 class="pp-book__subtitle">Radical Geographies of Education</h3> </a><p class="pp-book__author">Katharyne Mitchell</p><div class="sp__the-description">Shines a light on how modern education shapes students into becoming compliant workers.</div>
+* <p class="sp__the-price ">£18.99</p>
+* <a class="more-link" href="/9780745399850/making-workers">View</a></div>*
  */
 @Component
 public class PlutoWebScraper extends WebScraper {
 	
 	private Logger logger = LoggerFactory.getLogger(PlutoWebScraper.class);
 	
-	private String base = "http://www.plutobooks.com/results.asp?dtspan=60:0&ds=New%20Releases&SORT=sort_pluto&SF1=format_code&ST1=bp&%3C%=PROP%%3E";
+	private String base = "https://www.plutobooks.com/books/?page_number=1";
 
 	/**
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 0 19 * * SUN")
+	@Scheduled(cron = "0 50 14 * * TUE")
 	public void scrape() throws Exception {
+
+		logger.info("Scraping Pluto!!");
+
+		logger.info("Search Url : " + base);
 			
-			if(isProduction() == false) return; //Should only run in production
+		if(isProduction() == false) return; //Should only run in production
 		
-			logger.info("Scraping Pluto!!");
-			logger.info("Search Url : " + base);
-			
-			WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
-			
-			Set<String> isbnSet = getIsbnList(base);
-			
-			persist(isbnSet, "", webScraperResultBean);
-			
-			log(webScraperResultBean);
-			
-			sendEmail(webScraperResultBean);
+		
+		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
+		
+		Set<String> isbnSet = getIsbnList(base);
+		
+		persist(isbnSet, "", webScraperResultBean);
+		
+		log(webScraperResultBean);
+		
+		sendEmail(webScraperResultBean);
 	}
 	
 
 
 	/**
 	 * Pages have pagination, last page is represented by
-	 * <li class="pager-item"><a href="/subjects/Economics?page=3" title="Go to page 4" class="active">4</a></li>
 	 * This is placed into intLastPage, needed as setting page parameter high still brings back last page. Need to know
 	 * when to stop
 	 * Some categories have no pagination (one page only) so need to check for this
@@ -80,18 +84,19 @@ public class PlutoWebScraper extends WebScraper {
 		//Of form:
 	    //display.asp?K=9780745334677
 		//display.asp?K=9780745333991&dtspan=60%3A0&ds=New+Releases&sort=sort%5Fpluto&sf1=format%5Fcode&st1=bp&%3c%=PROP%25%3E&m=1&dc=7
-		Elements anchorElements = doc.select("a[href^=display.asp");
+		Elements anchorElements = doc.select("div.book-wrapper");
 		
 		Pattern pattern = Pattern.compile("\\d{13}");
 		
-		for(Element a : anchorElements) {
+		for(Element e : anchorElements) {
+			Element a = e.select("a.pp-link__title").first();
 			String href = a.attr("href");
-			
+
 			Matcher matcher = pattern.matcher(href);
 			
 			while(matcher.find()) {
 				String isbn = matcher.group();
-				System.out.println(isbn);
+				logger.debug("Adding {}", isbn);
 				isbnSet.add(isbn);
 			}
 		}
