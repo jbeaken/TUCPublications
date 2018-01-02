@@ -30,7 +30,12 @@ import org.springframework.stereotype.Service;
 * <div class="book-wrapper">
 * <div class="image-wrapper">
 * <p class="sp__the-cover"><a href='/9780745399850/making-workers'>
-* <img data-baseline-images="image" src="https://d28akss8xdipta.cloudfront.net/resized/width-298/path-assets/covers/v1/9780745399850.jpg" alt="Making Workers" /></a></p></div><a class="pp-link__title" href="/9780745399850/making-workers"><h2 class="pp-book__title">Making Workers</h2><h3 class="pp-book__subtitle">Radical Geographies of Education</h3> </a><p class="pp-book__author">Katharyne Mitchell</p><div class="sp__the-description">Shines a light on how modern education shapes students into becoming compliant workers.</div>
+* <img data-baseline-images="image" src="https://d28akss8xdipta.cloudfront.net/resized/width-298/path-assets/covers/v1/9780745399850.jpg" alt="Making Workers" /></a></p></div>
+* <a class="pp-link__title" href="/9780745399850/making-workers">
+* <h2 class="pp-book__title">Making Workers</h2>
+* <h3 class="pp-book__subtitle">Radical Geographies of Education</h3> </a>
+* <p class="pp-book__author">Katharyne Mitchell</p>
+* <div class="sp__the-description">Shines a light on how modern education shapes students into becoming compliant workers.</div>
 * <p class="sp__the-price ">£18.99</p>
 * <a class="more-link" href="/9780745399850/making-workers">View</a></div>*
  */
@@ -45,16 +50,13 @@ public class PlutoWebScraper extends WebScraper {
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 50 14 * * TUE")
+	@Scheduled(cron = "0 50 22 * * TUE")
 	public void scrape() throws Exception {
 
-		logger.info("Scraping Pluto!!");
-
-		logger.info("Search Url : " + base);
+		logger.info("Scraping Pluto!! Search Url : {}", base);
 			
 		if(isProduction() == false) return; //Should only run in production
-		
-		
+				
 		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
 		
 		Set<String> isbnSet = getIsbnList(base);
@@ -96,9 +98,14 @@ public class PlutoWebScraper extends WebScraper {
 			
 			while(matcher.find()) {
 				String isbn = matcher.group();
-				logger.debug("Adding {}", isbn);
+				
+				String price = e.select("p.sp__the-price").first().text();
+
+				logger.debug("Adding {} with price {}", isbn, price);
+
 				isbnSet.add(isbn);
 			}
+			
 		}
 		return isbnSet;
 	}
