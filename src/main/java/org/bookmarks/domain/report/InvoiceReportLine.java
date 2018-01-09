@@ -40,6 +40,27 @@ public class InvoiceReportLine implements Comparable {
 		this.creditNote = creditNote;
 	}
 	
+	public String getRef() {
+		//Invoice
+		if(!isCredit()) {
+			return getSale().getStockItem().getTitle();
+		}
+
+		//Credit Note
+		if(getCreditNote().getTransactionDescription() == null) {
+			return getCreditNote().getNote();
+		}
+
+		return getCreditNote().getTransactionDescription();
+	}
+
+	public String getIsbn() {
+		if(!isCredit()) {
+			return getSale().getStockItem().getIsbn();
+		}
+		return getCreditNote().getTransactionReference();
+	}	
+
 	@Override
 	public int compareTo(Object o) {
 		InvoiceReportLine that = (InvoiceReportLine) o;
@@ -57,6 +78,20 @@ public class InvoiceReportLine implements Comparable {
 			return getSale().getCreationDate();
 		}
 	}
+
+	public String getDiscount() {
+		if(!isCredit()) {
+			return getSale().getDiscount() + "%";
+		}
+		return "-";
+	}	
+
+
+	public String getDeliveryTypeDisplay() {
+		if(getDeliveryType() == null) return "";
+		return getDeliveryType().getDisplayName();
+	}	
+
 	
 	/**
 	 * Is this a credit (creditNote not null) or a debit (sale not null)

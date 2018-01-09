@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 * <div class="sp__the-description">Shines a light on how modern education shapes students into becoming compliant workers.</div>
 * <p class="sp__the-price ">£18.99</p>
 * <a class="more-link" href="/9780745399850/making-workers">View</a></div>*
- */
+*/
 @Component
 public class PlutoWebScraper extends WebScraper {
 	
@@ -59,13 +59,13 @@ public class PlutoWebScraper extends WebScraper {
 				
 		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
 		
-		Set<String> isbnSet = getIsbnList(base);
+		Set<String> newBooks = getIsbnList(base);
 
 		Set<String> forthcoming = getIsbnList("https://www.plutobooks.com/books/?collection=forthcoming");
 
-		isbnSet.addAll( forthcoming );
+		newBooks.addAll( forthcoming );
 		
-		persist(isbnSet, "", webScraperResultBean);
+		persist(newBooks, "", webScraperResultBean);
 		
 		log(webScraperResultBean);
 		

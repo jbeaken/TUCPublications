@@ -9,10 +9,7 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getIsbn() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
-		if(!invoiceReportLine.isCredit()) {
-			return invoiceReportLine.getSale().getStockItem().getIsbn();
-		}
-		return invoiceReportLine.getCreditNote().getTransactionReference();
+		return invoiceReportLine.getIsbn();
 	}
 
 	public String getDate() {
@@ -53,17 +50,19 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 	public String getRef() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
 
-		//Invoice
-		if(!invoiceReportLine.isCredit()) {
-			return invoiceReportLine.getSale().getStockItem().getTitle();
-		}
+		return invoiceReportLine.getRef();
 
-		//Credit Note
-		if(invoiceReportLine.getCreditNote().getTransactionDescription() == null) {
-			return invoiceReportLine.getCreditNote().getNote();
-		}
+		// //Invoice
+		// if(!invoiceReportLine.isCredit()) {
+		// 	return invoiceReportLine.getSale().getStockItem().getTitle();
+		// }
 
-		return invoiceReportLine.getCreditNote().getTransactionDescription();
+		// //Credit Note
+		// if(invoiceReportLine.getCreditNote().getTransactionDescription() == null) {
+		// 	return invoiceReportLine.getCreditNote().getNote();
+		// }
+
+		// return invoiceReportLine.getCreditNote().getTransactionDescription();
 	}
 
 	public String getCredit() {

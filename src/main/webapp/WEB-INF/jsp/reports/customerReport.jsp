@@ -105,6 +105,7 @@
           <div class="column w-100-percent">
 				<button type="button" class="btn btn-danger" id="saleReportSubmitButton" onclick="javascript:submitForm('/bookmarks/customerReport/report')" id="focus">Show Report</button>
  				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('reset')">Reset</button>
+ 				<a href="/bookmarks/customerReport/generatePdf?customer.id=${customer.id}&customerReportType=INVOICE" class="btn btn-default">Generate PDF</a>
 	 	 </div>
 	</div>		
 </div>		
@@ -112,7 +113,7 @@
 
 		<br/>
 
-Opening Balance : ${customer.bookmarksAccount.openingBalance}		
+Opening Balance for ${customer.fullName} : ${customer.bookmarksAccount.openingBalance}		
 <br/>
 Current Balance : ${customer.bookmarksAccount.currentBalance}		
 
