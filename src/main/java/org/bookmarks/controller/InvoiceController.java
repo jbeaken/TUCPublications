@@ -110,7 +110,6 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	}
 
 	private void fillModel(Invoice invoice,	Map<Long, Sale> saleMap, ModelMap modelMap, boolean calculateDiscount) {
-		logger.debug("In fillModel");
 
 		invoice.calculate(saleMap.values(), calculateDiscount);
 
@@ -134,6 +133,11 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
 		Map<Long, CustomerOrderLine> customerOrderLineMapForInvoice = (Map<Long, CustomerOrderLine>) session.getAttribute("customerOrderLineMapForInvoice");
 
+		//check for null (another invoice might have been started which would null previous one)
+		if(saleMap == null) {
+			addError("This invoice no longer exists, please start again or check invoice hasn't already been saved", modelMap);
+			return "welcome";
+		}
 		Customer customer = invoice.getCustomer();
 
 		//Need a validator
@@ -201,7 +205,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		addSuccess("Invoice successfully created for " + customer.getFullName(), modelMap);
 
 		if(customer.getBookmarksAccount().getAccountHolder() == true) {
-			logger.info("New Balance : {}", customer.getBookmarksAccount().getCurrentBalance());
+			BigDecimal newBalance = customer.getBookmarksAccount().getCurrentBalance().subtract( invoice.getTotalPrice() );
+			logger.info("New Balance : {}", newBalance);
 		}
 
 		logger.info("Invoice successfully created for {}", customer.getFullName());

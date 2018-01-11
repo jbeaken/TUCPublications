@@ -1,10 +1,18 @@
+-- Minibeans hasn't been reset, delete sales below given sale id
+SET @saleId = 300041;
+set foreign_key_checks = 0;
+delete from invoice where id in ( select Invoice_id from invoice_sale where sales_id < @saleId );
+delete from invoice_sale where sales_id < @saleId;
+delete from sale where id < @saleId;
+set foreign_key_checks = 1;
+
 -- Get sales from invoices for a customer
- select id, discount from sale 
- 	where id in (select sales_id from invoice_sale 
- 		where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) ); 
+ select id, discount from sale
+ 	where id in (select sales_id from invoice_sale
+ 		where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) );
 
 -- update discount of account holders
-update sale set discount = 10 where id in (select sales_id from invoice_sale where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) ); 
+update sale set discount = 10 where id in (select sales_id from invoice_sale where Invoice_id in (select id from invoice where customer_id = 40635 and deliveryType = 1) );
 
 
 -- Reset reorder review for an event

@@ -316,15 +316,23 @@ public class EventController extends AbstractBookmarksController {
 	 * Generate text file of all sales and invoices on minibeans
 	 **/
 	@RequestMapping(value = "/downloadSales", method = RequestMethod.GET)
-	public @ResponseBody CSVResponse downloadSales(ModelMap modelMap) throws IOException {
+	public @ResponseBody CSVResponse downloadSales() throws IOException {
+
+		logger.info("Request to download sales");
 
 		// sa.quantity, sa.discount, sa.sellPrice, sa.vat, si.id
 		List<String[]> sales = saleService.getAllForCsv();
 
+		logger.info("Have {} sales", sales.size());
+
 		// sa.quantity, sa.discount, sa.sellPrice, sa.vat, si.id, i.customerId
 		List<String[]> invoices = invoiceService.getAllForCsv();
 
+		logger.info("Have {} invoices", invoices.size());
+
 		sales.addAll(invoices);
+
+		logger.info("Saving response to mini-beans.csv");
 
 		return new CSVResponse(sales, "mini-beans.csv");
 	}

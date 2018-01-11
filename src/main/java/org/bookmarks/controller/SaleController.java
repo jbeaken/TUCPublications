@@ -237,7 +237,7 @@ public class SaleController extends AbstractBookmarksController {
 		//Put into sale map
 		saleMap.put(sale.getId(), sale);
 
-		logger.info( "Sold - " + sale.getStockItem().getId() + " : " + sale.getStockItem().getIsbn() + " : " + sale.getStockItem().getTitle() );
+		logger.info( "Sold - " + sale.getStockItem().getSellPrice() + " : " + sale.getStockItem().getId() + " : " + sale.getStockItem().getIsbn() + " : " + sale.getStockItem().getTitle() );
 
 		return sale;
 	}

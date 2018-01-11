@@ -4,8 +4,6 @@
 
 # Get latest from repository
 
-git pull
-
 if [ "$?" = "1" ]; then
 	echo "git error, aborting!" 
 	exit 1
@@ -18,15 +16,12 @@ if [ "$?" = "1" ]; then
         exit 1
 fi
 
-# Back up
-cp /usr/local/share/tomcat/webapps/bookmarks.war /home/bak/
-
 # Stop tomcat
-systemctl stop tomcat
+sudo systemctl stop tomcat
 
-rm -rf /usr/local/share/tomcat/webapps/bookmarks*
+sudo rm -rf /opt/tomcat/webapps/bookmarks*
 
-cp target/bookmarks.war /usr/local/share/tomcat/webapps/bookmarks.war
+sudo cp target/bookmarks.war /opt/tomcat/webapps/bookmarks.war
 
 # Start tomcat
-systemctl start tomcat
+sudo systemctl start tomcat

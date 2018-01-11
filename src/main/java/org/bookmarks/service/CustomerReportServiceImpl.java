@@ -117,16 +117,16 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 		if(filter != null) {
 			if(filter.equals("DEBITS")) {
 				invoiceReportLines = invoiceReportLines.stream()
-					.filter( irl -> irl.getCreditAmount().signum() < 0 )
+					.filter( irl -> irl.getCredit().signum() < 0 )
 					.collect(Collectors.toList());
-					
+
 			}
 			if(filter.equals("CREDITS")) {
 				invoiceReportLines = invoiceReportLines.stream()
-					.filter( irl -> irl.getCreditAmount().signum() > 0 )
+					.filter( irl -> irl.getCredit().signum() > 0 )
 					.collect(Collectors.toList());
-					
-			}			
+
+			}
 		}
 
 		//Sort them by date, most recent first
@@ -138,7 +138,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 		//Starting with the latest work backwards, setting balance at time of sale/credit note
 		for(InvoiceReportLine invoiceReportLine : invoiceReportLines) {
 			invoiceReportLine.setCurrentBalance(latestBalance);
-			latestBalance = latestBalance.subtract(invoiceReportLine.getCreditAmount());
+			latestBalance = latestBalance.subtract(invoiceReportLine.getCredit());
 		}
 
 
