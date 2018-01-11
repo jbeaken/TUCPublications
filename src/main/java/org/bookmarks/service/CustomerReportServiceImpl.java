@@ -47,6 +47,10 @@ import org.bookmarks.controller.bean.CustomerReportBean;
 import org.bookmarks.controller.bean.SaleReportBean;
 import org.bookmarks.controller.bean.SaleTotalBean;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 @Service
 @Transactional
 public class CustomerReportServiceImpl implements CustomerReportService {
@@ -58,10 +62,26 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 	@Autowired
 	private CreditNoteRepository creditNoteRepository;
 
+	private Logger logger = LoggerFactory.getLogger(CustomerReportServiceImpl.class);
+
 	@Override
 	public Collection<InvoiceReportLine> getInvoiceReport(CustomerReportBean customerReportBean) {
+
+		long start = System.currentTimeMillis();
+		long realStart = start;
+
 		Collection<Invoice> invoices = invoiceRepository.getInvoiceReport(customerReportBean);
+		long end = System.currentTimeMillis();
+		float time = ((end - start));
+		logger.debug("Get Invoices took " + time + " milli seconds");
+		start = end;
+
 		Collection<CreditNote> creditNotes = creditNoteRepository.getCreditNotes(customerReportBean);
+
+		end = System.currentTimeMillis();
+		time = ((end - start));
+		logger.debug("Get creditNotes took " + time + " milli seconds");
+		start = end;
 
 		//Put them into InvoiceReportLine objects
 		List<InvoiceReportLine> invoiceReportLines = new ArrayList<InvoiceReportLine>();
@@ -106,6 +126,7 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 				invoiceReportLines.add(irl);
 			}
 		}
+
 		for(CreditNote creditNote : creditNotes) {
 			InvoiceReportLine irl = new InvoiceReportLine();
 			irl.setCreditNote(creditNote);
@@ -141,11 +162,11 @@ public class CustomerReportServiceImpl implements CustomerReportService {
 			latestBalance = latestBalance.subtract(invoiceReportLine.getCredit());
 		}
 
+		end = System.currentTimeMillis();
+		time = ((end - realStart));
+		logger.debug("setCurrentBalance took " + time + " milli seconds");
+
 
 		return invoiceReportLines;
 	}
-
-
-
-
 }

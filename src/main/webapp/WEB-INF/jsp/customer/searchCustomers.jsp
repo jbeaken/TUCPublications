@@ -140,7 +140,9 @@
 
 						    <li class="divider"></li>
 
-								<li><a href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.id}&customerReportType=INVOICE">View Statement</a></li>
+								<li><a href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement</a></li>
+
+								<li><a href="${pageContext.request.contextPath}/customerReport/generatePdf?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement (PDF)</a></li>
 
 						    <li><a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}">Add Credit</a></li>
 

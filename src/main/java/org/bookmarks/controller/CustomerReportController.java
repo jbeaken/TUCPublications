@@ -94,6 +94,15 @@ import org.bookmarks.report.bean.Rotate;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfPage;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPage;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -158,6 +167,11 @@ public class CustomerReportController extends AbstractBookmarksController {
 		float fixedHeight = 125f;
 		float marginTop = 0f;
 		float marginLeft = 10f;
+		String nl = System.getProperty("line.separator");
+		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+		Font font = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
+
+		//PDF
 
 		Document doc = new Document(PageSize.A4.rotate());
 
@@ -179,7 +193,33 @@ public class CustomerReportController extends AbstractBookmarksController {
 
 		rotation.setRotation(PdfPage.LANDSCAPE);
 
+		//Customer name
+		addParagraph("Bookmarks Account For " + customer.getFullName() + " " + new SimpleDateFormat("dd MMM yyyy").format(new Date()), doc);
 
+		//balance
+		String currentBalance = currencyFormatter.print(customer.getBookmarksAccount().getCurrentBalance(), Locale.UK);
+		Paragraph balance = new Paragraph("Current Balance : " + currentBalance, font);
+		balance.setAlignment(Element.ALIGN_LEFT);
+		balance.setSpacingAfter(10);
+		doc.add( balance );
+
+		//Customer details table
+		PdfPTable customerDetailstable = new PdfPTable(2);
+		customerDetailstable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+
+		StringBuilder labelText = new StringBuilder();
+		labelText.append(customer.getFullName());
+		labelText.append(nl);
+		labelText.append(customer.getFullAddress());
+
+		PdfPCell cell = new PdfPCell(new Phrase(labelText.toString(), font));
+		customerDetailstable.addCell( cell );
+		customerDetailstable.addCell( new SimpleDateFormat("dd/MM/yyyy").format(new Date()) );
+
+		// doc.add( customerDetailstable );
+
+
+		//Invoice lines table
 		PdfPTable table = new PdfPTable(8);
 		//date, title, quantity, discount, delivery type, price, current balance, credit amount
 		//date, title, quantity, discount, delivery type, credit, debit, current balance
@@ -187,15 +227,18 @@ public class CustomerReportController extends AbstractBookmarksController {
 
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		table.setWidthPercentage(100);
-		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-		String nl = System.getProperty("line.separator");
-
-		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+		//header
+		table.addCell("Date");
+		table.addCell("Ref.");
+		table.addCell("Qty");
+		table.addCell("Discount");
+		table.addCell("Delivery");
+		table.addCell("Credit");
+		table.addCell("Debit");
+		table.addCell("Balance");
 
 		for (InvoiceReportLine irl : invoiceReportLines) {
-
-			Font DOC_FONT = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
 
 			table.addCell( new SimpleDateFormat("dd/MM/yyyy").format( irl.getDate() ) );
 
@@ -216,9 +259,6 @@ public class CustomerReportController extends AbstractBookmarksController {
 			table.addCell( irl.getDebitAmount(currencyFormatter) );
 
 			table.addCell( currencyFormatter.print(irl.getCurrentBalance(), Locale.UK)  );
-
-
-
 		}
 
 		doc.add(table);
@@ -234,6 +274,19 @@ public class CustomerReportController extends AbstractBookmarksController {
 		os.flush();
 		os.close();
 	}
+
+	private void addParagraph(String text, Document doc, Font font) throws DocumentException {
+		Paragraph paragraph = new Paragraph(text, font);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		paragraph.setSpacingAfter(10);
+		doc.add(paragraph);
+	}
+
+	private void addParagraph(String text, Document doc) throws DocumentException {
+		addParagraph(text, doc, new Font(Font.FontFamily.COURIER, 16));
+	}
+
+
 
 	private Collection<InvoiceReportLine> getInvoiceReportLines(CustomerReportBean customerReportBean) {
 
