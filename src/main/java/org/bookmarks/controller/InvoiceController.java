@@ -238,6 +238,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		table.setWidthPercentage(100);
+		table.setSpacingAfter(10);
 
 		//header
 		table.addCell( new Phrase("Stock", font) );
@@ -287,7 +288,19 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			table.addCell( serviceChargePriceCell );
 		}
 
+		//Total
+		PdfPCell totalCell = new PdfPCell(new Phrase("", font));
+		totalCell.setBorder(Rectangle.NO_BORDER);
+		totalCell.setColspan(6);
+		table.addCell( totalCell );
+		PdfPCell totalPriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getTotalPrice(), Locale.UK) ));
+		totalPriceCell.setBorder(Rectangle.NO_BORDER);
+		table.addCell( totalPriceCell );
+
 		doc.add(table);
+
+		doc.add( new Chunk( nl ));
+		doc.add( new Chunk("TOTAL " + currencyFormatter.print(invoice.getTotalPrice(), Locale.UK)) );		
 
 		doc.close();
 
