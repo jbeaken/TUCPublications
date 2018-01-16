@@ -4,8 +4,44 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.util.Locale;
+
+import java.text.SimpleDateFormat;
+
+import org.springframework.format.number.CurrencyStyleFormatter;
+import org.springframework.format.number.PercentStyleFormatter;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import org.bookmarks.report.bean.Rotate;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfPage;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPage;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,6 +59,7 @@ import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.service.InvoiceService;
 import org.bookmarks.service.Service;
+import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.StockItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +70,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.bookmarks.exceptions.BookmarksException;
 
@@ -47,12 +85,27 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	private InvoiceService invoiceService;
 
 	@Autowired
+	private CustomerService customerService;
+
+	@Autowired
 	private InvoiceValidator invoiceValidator;
 
 	@Value("#{applicationProperties['vatNumber']}")
 	private String vatNumber;
 
 	private Logger logger = LoggerFactory.getLogger(InvoiceController.class);
+
+
+	private void addParagraph(String text, Document doc, Font font) throws DocumentException {
+		Paragraph paragraph = new Paragraph(text, font);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
+		paragraph.setSpacingAfter(10);
+		doc.add(paragraph);
+	}
+
+	private void addParagraph(String text, Document doc) throws DocumentException {
+		addParagraph(text, doc, new Font(Font.FontFamily.COURIER, 16));
+	}
 
 	/**
 	 * From createInvoice.jsp
@@ -103,6 +156,129 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			return "editInvoice";
 		}
 		return "createInvoice";
+	}
+
+	@RequestMapping(value="/generatePdf")
+	public @ResponseBody void generatePdf(Long invoiceId, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		Invoice invoice = invoiceService.get( invoiceId );
+
+		Customer customer = customerService.get(invoice.getCustomer());
+
+		//PDF
+
+		// Page variables
+		float fixedHeight = 125f;
+		float marginTop = 0f;
+		float marginLeft = 10f;
+		String nl = System.getProperty("line.separator");
+		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+		PercentStyleFormatter percentFormatter = new PercentStyleFormatter();
+		Font font = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
+
+		Document doc = new Document(PageSize.A4.rotate());
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		PdfWriter writer = PdfWriter.getInstance(doc, baos);
+
+		doc.open();
+
+		Rotate rotation = new Rotate();
+		writer.setPageEvent(rotation);
+
+		doc.newPage();
+
+		rotation.setRotation(PdfPage.LANDSCAPE);
+
+		//Customer name
+		addParagraph("Invoice For " + customer.getFullName() + " " + new SimpleDateFormat("dd MMM yyyy").format(new Date()), doc);
+
+		//balance
+		Paragraph invoiceDate = new Paragraph("Invoice Date : " + new SimpleDateFormat("dd/MM/yyyy").format( invoice.getCreationDate() ), font);
+		invoiceDate.setAlignment(Element.ALIGN_LEFT);
+		invoiceDate.setSpacingAfter(10);
+
+		doc.add( new Chunk( "Invoice Date : " + new SimpleDateFormat("dd/MM/yyyy").format( invoice.getCreationDate() ) ));
+		doc.add( new Chunk( nl ));
+		doc.add( new Chunk("Invoice No. " + invoice.getId().toString()) );
+
+		//Customer details table
+		PdfPTable customerDetailstable = new PdfPTable(2);
+		customerDetailstable.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+
+		StringBuilder labelText = new StringBuilder();
+		labelText.append(customer.getFullName());
+		labelText.append(nl);
+		labelText.append(customer.getFullAddress());
+
+		PdfPCell cell = new PdfPCell(new Phrase(labelText.toString(), font));
+		customerDetailstable.addCell( cell );
+		customerDetailstable.addCell( new SimpleDateFormat("dd/MM/yyyy").format(new Date()) );
+
+		// doc.add( customerDetailstable );
+
+		//Invoice lines table
+		PdfPTable table = new PdfPTable( 5 );
+		table.setWidths(new int[] { 8, 1, 2, 2, 2 });
+
+		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+		table.setWidthPercentage(100);
+
+		//header
+		table.addCell("Stock");
+		table.addCell("Qty");
+		table.addCell("Discount");
+		table.addCell("Price");
+		table.addCell("Total");
+
+		for (Sale s : invoice.getSales()) {
+
+			table.addCell( s.getStockItem().getTitle() );
+
+			table.addCell( s.getQuantity() + "" );
+
+			table.addCell( percentFormatter.print(s.getDiscount().divide( new BigDecimal(100) ), Locale.UK) );
+
+			table.addCell( currencyFormatter.print(s.getSellPrice(), Locale.UK) );
+
+			table.addCell( currencyFormatter.print(s.getTotalPrice(), Locale.UK) );
+		}
+
+		//Second hand
+		if(invoice.getSecondHandPrice() != null && invoice.getSecondHandPrice().floatValue() != 0f) {
+			PdfPCell secondHandCell = new PdfPCell(new Phrase("Second Hand"));
+			secondHandCell.setBorder(Rectangle.NO_BORDER);
+      secondHandCell.setColspan(4);
+			table.addCell( secondHandCell );
+			PdfPCell secondHandPriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getSecondHandPrice(), Locale.UK) ));
+			secondHandPriceCell.setBorder(Rectangle.NO_BORDER);
+			table.addCell( secondHandPriceCell );
+		}
+
+		//Service Charge
+		if(invoice.getServiceCharge() != null && invoice.getServiceCharge().floatValue() != 0f) {
+			PdfPCell serviceChargeCell = new PdfPCell(new Phrase("Service Charge"));
+			serviceChargeCell.setBorder(Rectangle.NO_BORDER);
+      serviceChargeCell.setColspan(4);
+			table.addCell( serviceChargeCell );
+			PdfPCell serviceChargePriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getServiceCharge(), Locale.UK) ));
+			serviceChargePriceCell.setBorder(Rectangle.NO_BORDER);
+			table.addCell( serviceChargePriceCell );
+		}
+
+		doc.add(table);
+
+		doc.close();
+
+		response.setContentType("application/pdf");
+		response.setHeader("Content-Disposition", "attachment; filename=\"account.pdf\"");
+		response.setContentLength(baos.size());
+
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
 	}
 
 	private void fillModel(Invoice invoice,	Map<Long, Sale> saleMap, ModelMap modelMap) {
