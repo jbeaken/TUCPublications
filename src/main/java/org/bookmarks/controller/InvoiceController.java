@@ -93,6 +93,12 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 	@Value("#{applicationProperties['vatNumber']}")
 	private String vatNumber;
 
+	@Value("#{applicationProperties['telephoneNumber']}")
+	private String telephoneNumber;
+
+	@Value("#{applicationProperties['email']}")
+	private String email;
+
 	private Logger logger = LoggerFactory.getLogger(InvoiceController.class);
 
 
@@ -172,9 +178,11 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		float marginTop = 0f;
 		float marginLeft = 10f;
 		String nl = System.getProperty("line.separator");
+
 		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
 		PercentStyleFormatter percentFormatter = new PercentStyleFormatter();
-		Font font = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
+
+		Font font = new Font(Font.FontFamily.COURIER, 16, Font.NORMAL);
 
 		Document doc = new Document(PageSize.A4.rotate());
 
@@ -202,6 +210,12 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		doc.add( new Chunk( "Invoice Date : " + new SimpleDateFormat("dd/MM/yyyy").format( invoice.getCreationDate() ) ));
 		doc.add( new Chunk( nl ));
 		doc.add( new Chunk("Invoice No. " + invoice.getId().toString()) );
+		doc.add( new Chunk( nl ));
+		doc.add( new Chunk("VAT No. " + vatNumber) );
+		doc.add( new Chunk( nl ));
+		doc.add( new Chunk("Telephone No. " + telephoneNumber) );
+		doc.add( new Chunk( nl ));
+		doc.add( new Chunk("Email " + email) );
 
 		//Customer details table
 		PdfPTable customerDetailstable = new PdfPTable(2);
@@ -219,18 +233,20 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		// doc.add( customerDetailstable );
 
 		//Invoice lines table
-		PdfPTable table = new PdfPTable( 5 );
-		table.setWidths(new int[] { 8, 1, 2, 2, 2 });
+		PdfPTable table = new PdfPTable( 7 );
+		table.setWidths(new int[] { 8, 1, 2, 2, 2, 2, 2 });
 
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		table.setWidthPercentage(100);
 
 		//header
-		table.addCell("Stock");
-		table.addCell("Qty");
-		table.addCell("Discount");
-		table.addCell("Price");
-		table.addCell("Total");
+		table.addCell( new Phrase("Stock", font) );
+		table.addCell( new Phrase("Qty", font) );
+		table.addCell( new Phrase("Discount", font) );
+		table.addCell( new Phrase("VAT %", font) );
+		table.addCell( new Phrase("VAT £", font) );
+		table.addCell( new Phrase("Price", font) );
+		table.addCell( new Phrase("Total", font) );
 
 		for (Sale s : invoice.getSales()) {
 
@@ -239,6 +255,10 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			table.addCell( s.getQuantity() + "" );
 
 			table.addCell( percentFormatter.print(s.getDiscount().divide( new BigDecimal(100) ), Locale.UK) );
+
+			table.addCell( percentFormatter.print(s.getVat().divide( new BigDecimal(100) ), Locale.UK) );
+
+			table.addCell( currencyFormatter.print(s.getVatAmount(), Locale.UK) );
 
 			table.addCell( currencyFormatter.print(s.getSellPrice(), Locale.UK) );
 
@@ -249,7 +269,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		if(invoice.getSecondHandPrice() != null && invoice.getSecondHandPrice().floatValue() != 0f) {
 			PdfPCell secondHandCell = new PdfPCell(new Phrase("Second Hand"));
 			secondHandCell.setBorder(Rectangle.NO_BORDER);
-      secondHandCell.setColspan(4);
+      secondHandCell.setColspan(6);
 			table.addCell( secondHandCell );
 			PdfPCell secondHandPriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getSecondHandPrice(), Locale.UK) ));
 			secondHandPriceCell.setBorder(Rectangle.NO_BORDER);
@@ -260,7 +280,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		if(invoice.getServiceCharge() != null && invoice.getServiceCharge().floatValue() != 0f) {
 			PdfPCell serviceChargeCell = new PdfPCell(new Phrase("Service Charge"));
 			serviceChargeCell.setBorder(Rectangle.NO_BORDER);
-      serviceChargeCell.setColspan(4);
+      serviceChargeCell.setColspan(6);
 			table.addCell( serviceChargeCell );
 			PdfPCell serviceChargePriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getServiceCharge(), Locale.UK) ));
 			serviceChargePriceCell.setBorder(Rectangle.NO_BORDER);
@@ -550,6 +570,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		modelMap.addAttribute("customer", invoice.getCustomer());
 		modelMap.addAttribute("totalPrice", invoice.getTotalPrice());
 		modelMap.addAttribute("vatNumber", vatNumber);
+		modelMap.addAttribute("telephoneNumber", telephoneNumber);
+		modelMap.addAttribute("email", email);
 
 		return "printInvoice";
 	}

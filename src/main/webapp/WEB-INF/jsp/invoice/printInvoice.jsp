@@ -23,7 +23,7 @@
 	 				<label>Our Address: </label><br/>Bookmarks<br/>1 Bloomsbury St<br/>WC1B 3QE
 		 	 </div>
 	          <div class="column w-33-percent">
-	 				<label>Our Contact Details: </label><br/>0207 637 1848<br/>info@bookmarksbookshop.co.uk
+	 				<label>Our Contact Details: </label><br/>${telephoneNumber}<br/>${email}
 		 	 </div>
           <div class="column w-33-percent">
  				<label>VAT Number: </label>${vatNumber}
