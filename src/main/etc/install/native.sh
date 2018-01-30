@@ -1,13 +1,17 @@
 JAVA_HOME=/usr/lib/jvm/java-8-oracle
+TOMCAT_NATIVE_VERSION=1.2.16
 
 apt-get install -y libapr1-dev libssl-dev
 
-wget mirrors.muzzy.org.uk/apache/tomcat/tomcat-connectors/native/1.2.12/source/tomcat-native-1.2.23-src.tar.gz
+wget www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-connectors/native/$TOMCAT_NATIVE_VERSION/source/tomcat-native-$TOMCAT_NATIVE_VERSION-src.tar.gz
 
-tar xzf tomcat-native-1.2.12-src.tar.gz -C /usr/local/share
+tar xzf tomcat-native-$TOMCAT_NATIVE_VERSION-src.tar.gz -C /opt
 
-cd /usr/local/share/tomcat-native-1.2.12-src/native
+cd /opt/tomcat-native-$TOMCAT_NATIVE_VERSION-src/native
 
 ./configure --with-java-home=$JAVA_HOME
 
 make && make install
+cd ~
+
+
