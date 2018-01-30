@@ -1,12 +1,13 @@
 ## Synopsis
 
-Code base for Bookmarks Bookshop internal system codename 'BEANS'. 
+Code base for Bookmarks Bookshop internal system codename 'BEANS'.
 
 ## Installation
 
-A pom.xml is provided
+Install java sdk, maven
 
-run :
+cd /home/git/bookmarks
+
 mvn clean prod war
 
 

@@ -84,11 +84,16 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	public String delete(Long id, RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNote creditNote = creditNoteService.get(id);
 		try {
+			//Reverse account balance
+			customerService.debitAccount( creditNote.getCustomer(), creditNote.getAmount().multiply(new BigDecimal( -1 )) );
+
+			//Delete
 			creditNoteService.delete(creditNote);
+			
 			redirectAttributes.addFlashAttribute("success", creditNote.getTransactionDescription() + " has been deleted");
 		} catch (Exception e) {
 			//Most likely due to this invoice being referenced from col
-			addError("Cannot delete! Perhaps this creditNote has creditNoteed", modelMap);
+			addError("Cannot delete!", modelMap);
 			return searchFromSession(session, request, modelMap);
 		}
 
@@ -118,7 +123,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 
 		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
 
-		redirectAttributes.addFlashAttribute("success", "Have added creditNote " + creditNote.getTransactionDescription());
+		redirectAttributes.addFlashAttribute("success", "Have added credit note " + creditNote.getTransactionDescription());
 
 		return "redirect:searchFromSession";
 	}
