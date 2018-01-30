@@ -35,7 +35,7 @@
 	</div>
       <div class="row">
           <div class="column w-100-percent">
-	           <form:label for="text" path="note" cssErrorClass="error">Note (REMEMBER This will appear on customer statment)</form:label><br/>
+	           <form:label for="text" path="note" cssErrorClass="error">Note (REMEMBER This will appear on the customer's statement)</form:label><br/>
 	           <form:textarea path="note" cols="50" rows="20" required="required"/> <form:errors path="note" />
 	 	 </div>
 	</div>
