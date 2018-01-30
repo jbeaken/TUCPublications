@@ -15,7 +15,7 @@
 			changeYear: true,
 			dateFormat: 'dd/mm/yy'
 		});
-		
+
 
 	});
 	</script>
@@ -24,19 +24,19 @@
       <div class="row">
           <div class="column w-50-percent">
           		<form:hidden path="customer.id"/>
-							
+
               <form:label for="text" path="amount" cssErrorClass="error">Amount</form:label><br/>
-	            <form:input path="amount"/> <form:errors path="amount" />
+	            <form:input path="amount" required="required"/> <form:errors path="amount" />
 	 	 </div>
           <div class="column w-50-percent">
 	           <form:label for="date" path="date" cssErrorClass="error">Date</form:label><br/>
 				<form:input path="date" required="required" />
 	 	 </div>
-	</div>		
+	</div>
       <div class="row">
           <div class="column w-100-percent">
-	           <form:label for="text" path="note" cssErrorClass="error">Note</form:label><br/>
-	           <form:textarea path="note" cols="50" rows="20"/> <form:errors path="note" />
+	           <form:label for="text" path="note" cssErrorClass="error">Note (REMEMBER This will appear on customer statment)</form:label><br/>
+	           <form:textarea path="note" cols="50" rows="20" required="required"/> <form:errors path="note" />
 	 	 </div>
 	</div>
 

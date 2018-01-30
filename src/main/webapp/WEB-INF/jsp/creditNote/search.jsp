@@ -32,7 +32,7 @@
 				<form:errors path="creditNote.transactionReference" />
 			</div>
 		</div>
-		
+
 		<div class="row">
 
 			<div class="column w-33-percent">
@@ -43,7 +43,7 @@
 				<form:errors path="creditNote.transactionDescription" />
 			</div>
 		</div>
-				
+
 	</div>
 	<!-- /.rows -->
 
@@ -97,6 +97,7 @@
 					<li class="divider"></li>
 					<li><a
 						href="${pageContext.request.contextPath}/creditNote/delete?id=${searchTable.id}">Delete</a></li>
+					<li><a href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.customer.id}&customerReportType=INVOICE">Statement</a></li>
 				</ul>
 			</div>
 		</display:column>

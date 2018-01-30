@@ -21,7 +21,6 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	@Autowired
 	private CustomerRepository customerRepository;
 
-
 	@Autowired
 	private CreditNoteService creditNoteService;
 
@@ -39,7 +38,7 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 	@Override
 	public Customer findSecondaryMatchedCustomer(String match) {
 		return 	customerRepository.findSecondaryMatchedCustomer(match);
-	}	
+	}
 
 	@Override
 	public void merge(Customer customerToKeep, Customer customerToDiscard) {
@@ -63,7 +62,6 @@ public class CustomerServiceImpl extends AbstractService<Customer> implements Cu
 
 	@Override
 	public void debitAccount(CreditNote creditNote) {
-		creditNoteService.save(creditNote);
 		debitAccount(creditNote.getCustomer(), creditNote.getAmount());
 	}
 

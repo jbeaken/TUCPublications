@@ -56,6 +56,7 @@ import org.bookmarks.domain.SponsorshipType;
 
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
+import org.bookmarks.service.CreditNoteService;
 import org.bookmarks.repository.AccountRepository;
 import org.bookmarks.website.domain.Address;
 import org.bookmarks.controller.bean.CustomerMergeFormObject;
@@ -111,6 +112,9 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@Autowired
 	private AccountRepository accountRepository;
+
+	@Autowired
+	private CreditNoteService creditNoteService;
 
 	private Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
@@ -231,18 +235,6 @@ public class CustomerController extends AbstractBookmarksController {
 		return "searchCustomers";
 	}
 
-	@RequestMapping(value = "/addCredit", method = RequestMethod.GET)
-	public String addCredit(Long customerId, ModelMap modelMap) {
-
-		CreditNote creditNote = new CreditNote(customerId);
-
-		creditNote.setDate( new Date() );
-
-		modelMap.addAttribute(creditNote);
-
-		return "addCredit";
-	}
-
 	@ResponseBody
 	@RequestMapping(value = "/autoCompleteSurname", method = RequestMethod.GET)
 	public String autoCompleteSurname(String term, Boolean accountHolders, HttpServletRequest request,
@@ -303,10 +295,30 @@ public class CustomerController extends AbstractBookmarksController {
 		return invoiceController.init(customer.getId(), modelMap, session);
 	}
 
+	@RequestMapping(value = "/addCredit", method = RequestMethod.GET)
+	public String addCredit(Long customerId, ModelMap modelMap) {
+
+		CreditNote creditNote = new CreditNote(customerId);
+
+		creditNote.setDate( new Date() );
+
+		modelMap.addAttribute(creditNote);
+
+		return "addCredit";
+	}
+
 	@RequestMapping(value = "/addCredit", method = RequestMethod.POST)
-	public String addCredit(CreditNote creditNote, ModelMap modelMap) {
+	public String addCredit(@Valid CreditNote creditNote, BindingResult bindingResult, ModelMap modelMap) {
 
 		logger.info( "Saving creditNote : {}", creditNote );
+
+		// Check for errors
+		if (bindingResult.hasErrors()) {
+			modelMap.addAttribute(creditNote);
+			return "addCredit";
+		}
+
+		creditNoteService.save(creditNote);
 
 		customerService.debitAccount( creditNote );
 
