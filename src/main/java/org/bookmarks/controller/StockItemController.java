@@ -746,15 +746,18 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		}
 
 		try {
-			chipsService.syncStockItemWithChips(stockItem);
+			String result = chipsService.syncStockItemWithChips(stockItem);
+			if(result.equals("imagefailure")) {
+				addWarning("Cannot upload image to chips!!", modelMap);
+			}
 		} catch (Exception e) {
 			logger.info("Successfully edited : {} but haven been unable to sync with website {}", stockItem,  e.getMessage());
 			logger.error("Cannot sync stockitem after edit ", e);
 			addWarning("Have successfully edited, but haven been unable to update website : " + e.getMessage(), modelMap);
-		  return "welcome";
+		    return "welcome";
 		}
 
-		logger.info("Successfully edited : {}", stockItem);
+		logger.info("Successfully edited and put on website : {}", stockItem);
 
 		modelMap.addAttribute("closeWindowNoRefresh", true);
 		return "closeWindow";
