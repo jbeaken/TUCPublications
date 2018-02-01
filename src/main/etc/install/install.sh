@@ -1,8 +1,14 @@
+#! /usr/bin/bash
+
 # Make sure root
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
 fi
+
+#Varibles
+MAVENVERSION=3.5.2
+TOMCATVERSION=8.5.24
 
 # Install Java, accept license automatically
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -20,22 +26,22 @@ mkdir /home/bak
 mkdir -p /home/bookmarks/logs
 
 # Maven
-wget ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
-tar -xf apache-maven-3.3.9-bin.tar.gz -C /usr/local/share
-ln -s /usr/local/share/apache-maven-3.3.9 /usr/local/share/maven
+echo Installing maven  $MAVENVERSION
+wget apache.mirror.anlx.net/maven/maven-3/$MAVENVERSION/binaries/apache-maven-$MAVENVERSION-bin.tar.gz
+tar xf apache-maven-$MAVENVERSION-bin.tar.gz -C /opt
+rm /opt/maven
+ln -s /opt/apache-maven-$MAVENVERSION /opt/maven
 
 # Mysql
 apt-get -y install mysql-server
 
 # Tomcat
-wget mirror.vorboss.net/apache/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
-tar xf apache-tomcat-8.5.5.tar.gz -C /usr/local/share
-ln -s /usr/local/share/apache-tomcat-8.5.5 /usr/local/share/tomcat
+wget mirror.vorboss.net/apache/tomcat/tomcat-8/v$TOMCATVERSION/bin/apache-tomcat-$TOMCATVERSION.tar.gz
+tar xf apache-tomcat-$TOMCATVERSION.tar.gz -C /usr/local/share
+ln -s /usr/local/share/apache-tomcat-$TOMCATVERSION /usr/local/share/tomcat
 rm -rf /usr/local/share/tomcat/webapps/*
 cp /home/git/bookmarks/src/main/etc/conf/server.xml /usr/local/share/tomcat/conf/server.xml
 cp /home/git/bookmarks/src/main/etc/conf/setenv-dev.sh /usr/local/share/tomcat/bin/setenv.sh
-useradd -u 220 -r -s /bin/false tomcat
-chown tomcat:tomcat -R /usr/local/share/apache-tomcat-8.5.5
 
 # Tomcat systemd
 cp /home/git/bookmarks/src/main/etc/install/tomcat.service /lib/systemd/system/

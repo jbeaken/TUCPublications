@@ -375,6 +375,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 			logger.info("Image upload successful");
 
+<<<<<<< HEAD
 		} catch (Exception e) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -386,6 +387,9 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			logger.error("JSCH error. Image upload failed!", e);
 >>>>>>> 1e478db... Added shh key for sftp
+=======
+
+>>>>>>> f80c3dc... Adding check for failed image upload on stockitem sync
 		} finally {
 			if(session != null) session.disconnect();
 		}
@@ -405,10 +409,20 @@ public class ChipsServiceImpl implements ChipsService {
 
 		logger.info("Attempting to sync stockitem with chips : {}", stockItem);
 
+		String result = "";
+
 		// First upload image if necessary
 		if (stockItem.getPutImageOnWebsite() && stockItem.getImageFilename() != null && !stockItem.getImageFilename().isEmpty()) {
+<<<<<<< HEAD
 >>>>>>> 88dbf5a... ADding logging
+=======
+			try {
+>>>>>>> f80c3dc... Adding check for failed image upload on stockitem sync
 			uploadImageToChips(stockItem);
+			} catch (Exception e) {
+				logger.error("JSCH error. Image upload failed!", e);
+				result = "imagefailure";
+			}
 		}
 		
 		//Checks
@@ -488,7 +502,9 @@ public class ChipsServiceImpl implements ChipsService {
 
 		logger.info("Chips response : {}", response);
 
-		return response.getBody();
+		if(result.equals("")) return response.getBody();
+
+		return result;
 
 <<<<<<< HEAD
 		try {

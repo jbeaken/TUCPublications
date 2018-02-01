@@ -178,7 +178,9 @@ public class ChipsController extends AbstractBookmarksController {
 				} else {
 					addSuccess("Have removed stock item " + stockItem.getTitle(), modelMap);
 				}
-			} else {
+			} else if(response.equals("imagefailure")) {
+				addError("Put item on website but unable to upload image! " + response, modelMap);
+			} else  {
 				addError("Cannot sync with chips! " + response, modelMap);
 			}
 			
