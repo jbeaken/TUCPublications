@@ -281,6 +281,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			String knownHostsFilename = "/home/hal/.ssh/known_hosts";
 			jsch.setKnownHosts( knownHostsFilename );
 =======
@@ -339,6 +340,12 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> 7fc11cb... getOrders now working
 =======
 >>>>>>> 407a726... Cleaned up basic auth
+=======
+			jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
+			jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
+
+			session = jsch.getSession(sftpUsername, sftpHost, 22);
+>>>>>>> 0ff98b8... Adding new sftp files
 
 			session.connect();
 
@@ -417,8 +424,12 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> 88dbf5a... ADding logging
 =======
 			try {
+<<<<<<< HEAD
 >>>>>>> f80c3dc... Adding check for failed image upload on stockitem sync
 			uploadImageToChips(stockItem);
+=======
+				uploadImageToChips(stockItem);
+>>>>>>> 0ff98b8... Adding new sftp files
 			} catch (Exception e) {
 				logger.error("JSCH error. Image upload failed!");
 				result = "imagefailure";
