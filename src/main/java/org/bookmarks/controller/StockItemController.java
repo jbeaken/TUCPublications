@@ -748,7 +748,8 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 		try {
 			String result = chipsService.syncStockItemWithChips(stockItem);
 			if(result.equals("imagefailure")) {
-				addWarning("Cannot upload image to chips!!", modelMap);
+				addWarning("Successfully edited and put on website but cannot upload image to chips!!", modelMap);
+				return "welcome";
 			}
 		} catch (Exception e) {
 			logger.info("Successfully edited : {} but haven been unable to sync with website {}", stockItem,  e.getMessage());
