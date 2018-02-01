@@ -271,7 +271,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		logger.info("Attempting to upload image {} to host {}", filename, sftpHost);
 		logger.debug("Username {}", sftpUsername);
-		logger.debug("port {}", 2298);
+		logger.debug("port {}", 22);
 
 >>>>>>> d383330... ADding logging
 		Session session = null;
@@ -431,7 +431,7 @@ public class ChipsServiceImpl implements ChipsService {
 				uploadImageToChips(stockItem);
 >>>>>>> 0ff98b8... Adding new sftp files
 			} catch (Exception e) {
-				logger.error("JSCH error. Image upload failed!");
+				logger.error("JSCH error. Image upload failed!", e);
 				result = "imagefailure";
 			}
 		}
