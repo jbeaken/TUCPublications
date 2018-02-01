@@ -420,7 +420,7 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> f80c3dc... Adding check for failed image upload on stockitem sync
 			uploadImageToChips(stockItem);
 			} catch (Exception e) {
-				logger.error("JSCH error. Image upload failed!", e);
+				logger.error("JSCH error. Image upload failed!");
 				result = "imagefailure";
 			}
 		}
