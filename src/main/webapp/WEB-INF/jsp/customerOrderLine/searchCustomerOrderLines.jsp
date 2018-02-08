@@ -169,14 +169,6 @@ $(function() {
 						  	<c:if test="${searchTable.canBeFilled}">
 						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
 						  	</c:if>
-						  	<c:if test="${searchTable.canComplete}">
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice &amp; Go</a></li>
-						  		<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
-						  		</c:if>
-						  	</c:if>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice &amp; Stay</a></li>
-						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?customerOrderLine.id=${searchTable.id}">View Supplier Order</a></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
@@ -253,12 +245,12 @@ $(function() {
 						  		<c:if test="${searchTable.paymentType == 'ACCOUNT'}">
 						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
 						  		</c:if>
+							  	<c:if test="${searchTable.canComplete && searchTable.paymentType == 'ACCOUNT'}">
+							    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
+							  	</c:if>						  		
 						  		<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
 						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
 						  		</c:if>
-						  	</c:if>
-						  	<c:if test="${searchTable.canComplete && searchTable.paymentType == 'ACCOUNT'}">
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
 						  	</c:if>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
