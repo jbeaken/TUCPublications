@@ -360,6 +360,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
 			jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
+<<<<<<< HEAD
 =======
 			jsch.setKnownHosts("/home/till/.ssh/known_hosts");
 			jsch.addIdentity("/home/till/.ssh/id_rsa");
@@ -369,6 +370,9 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> 131a90a... Turing off
 			jsch.setConfig( "StrictHostKeyChecking", "no" );
 >>>>>>> 3ed7283... Turing off
+=======
+//			jsch.setConfig( "StrictHostKeyChecking", "no" );
+>>>>>>> f3710eb... Think sftp is now working
 
 <<<<<<< HEAD
 			session = jsch.getSession(sftpUsername, sftpHost, 22);
