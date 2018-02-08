@@ -240,19 +240,24 @@ $(function() {
 						  <ul class="dropdown-menu" role="menu">
 						  	<c:if test="${searchTable.canBeFilled}">
 						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
+						    	<li class="divider"></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
 					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
 						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
-						  		<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
-						  		</c:if>
+						  		<li class="divider"></li>
 						  	</c:if>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
 									<li><a href="mailto:${searchTable.customer.contactDetails.email}?Subject=Your%20Bookmarks%20Bookshop%20Order&body=${searchTable.stockItem.title}">Email Customer</a></li>
 								</c:if>
+							<c:if test="${searchTable.canComplete}">
+								<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
+						  			<li class="divider"></li>
+						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
+						  		</c:if>
+							</c:if>
 						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
