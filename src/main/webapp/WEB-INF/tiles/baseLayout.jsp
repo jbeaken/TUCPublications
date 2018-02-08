@@ -90,6 +90,12 @@ h1 {
 				submitForm(action);
 			}
 		}
+		function confirmationWithUrl(url, text) {
+			var c = confirm(text);
+			if(c == true) {
+				window.location.href = url
+			}
+		}		
 		function confirmDeletion(action) {
 			confirmation(action, "Are you sure you want to delete? Cannot be undone!");
 		}

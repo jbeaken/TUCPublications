@@ -40,6 +40,7 @@ import org.bookmarks.exceptions.BookmarksException;
 import org.bookmarks.service.CustomerOrderLineService;
 import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.InvoiceService;
+import org.bookmarks.service.StockItemService;
 import org.bookmarks.service.SupplierOrderLineService;
 import org.bookmarks.service.SupplierOrderService;
 import org.bookmarks.util.PDFLabels;
@@ -88,6 +89,9 @@ public class CustomerOrderLineController extends OrderLineController {
 	@Autowired
 	private InvoiceService invoiceService;
 	
+	@Autowired
+	private StockItemService stockItemService;
+
 	@Autowired
 	private InvoiceController invoiceController;
 
@@ -587,7 +591,10 @@ public class CustomerOrderLineController extends OrderLineController {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * From 
+=======
+>>>>>>> 175de40... Added cancel and ability to raise non account invoices
 	 * Two variations, account or other.
 	 * For other, goes to customerOrderLinesSerive.complete, which decrements quantityReadyForCustomer BUT
 	 * NOT QIS, 
@@ -608,14 +615,47 @@ public class CustomerOrderLineController extends OrderLineController {
 		if(customerOrderLine.getPaymentType() == PaymentType.ACCOUNT) {
 			return raiseInvoice(customerOrderLine, request, session, flow, modelMap);
 		} else {
+<<<<<<< HEAD
 		try {
 			customerOrderLineService.complete(customerOrderLine);
 		} catch(BookmarksException e) {
 			addError("Cannot complete this order, has it already been completed?", modelMap);
+=======
+			try {
+				//Non-account
+				customerOrderLineService.complete(customerOrderLine);
+			} catch(BookmarksException e) {
+				addError("Cannot complete this order, has it already been completed?", modelMap);
+			}
+				
+			return searchFromSession(session, request, modelMap);
+		}
+	}
+
+	@RequestMapping(value="/cancel", method=RequestMethod.GET)
+	public String cancel(Long customerOrderLineId, String flow, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+		//Two variations, if an invoice has already been created, add this stock, else create a new stock
+		//If invoice already exists, check customer is the same otherwise show message
+
+		CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
+
+		if(customerOrderLine.getCanCancel() == false) {
+			return "error";
+>>>>>>> 175de40... Added cancel and ability to raise non account invoices
 		}
 			return searchFromSession(session, request, modelMap);
 		}
 	}
+
+		if(customerOrderLine.canBeFilled() == false) {
+			//Put back into stock
+			stockItemService.updateQuantityInStock(customerOrderLine.getStockItem(), customerOrderLine.getAmount());
+		}
+
+		customerOrderLineService.updateStatus(customerOrderLineId, CustomerOrderLineStatus.CANCELLED);
+
+		return searchFromSession(session, request, modelMap);
+	}	
 
 	@SuppressWarnings("unchecked")
 	private String raiseInvoice(CustomerOrderLine customerOrderLine, HttpServletRequest request, HttpSession session, String flow, ModelMap modelMap) {

@@ -170,16 +170,13 @@ $(function() {
 						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
-						  		<c:if test="${searchTable.paymentType == 'ACCOUNT'}">
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
-						  		</c:if>
+						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice &amp; Go</a></li>
 						  		<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
 						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
 						  		</c:if>
 						  	</c:if>
-						  	<c:if test="${searchTable.canComplete && searchTable.paymentType == 'ACCOUNT'}">
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
-						  	</c:if>
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice &amp; Stay</a></li>
+						    <li class="divider"></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?customerOrderLine.id=${searchTable.id}">View Supplier Order</a></li>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
@@ -189,8 +186,10 @@ $(function() {
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
-						    <li><a href="javascript:window.open('http://www.amazon.co.uk/s/ref=nb_sb_noss?url=search-alias%3Dstripbooks&field-keywords=${searchTable.stockItem.isbn}&rh=n%3A266239%2Ck%3A9780952203834','_blank');javascript:window.open('/bookmarks/customerOrderLine/gotoGardners','_blank');">Supplier Lookup</a></li>
 						    <li class="divider"></li>
+							<c:if test="${searchTable.canCancel}">
+						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
+						  	</c:if>						    
 						  </ul>
 						</div>
 					  </display:column>
@@ -270,6 +269,9 @@ $(function() {
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
+							<c:if test="${searchTable.canCancel}">
+						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
+						  	</c:if>							    
 						  </ul>
 						</div>
 					  </display:column>

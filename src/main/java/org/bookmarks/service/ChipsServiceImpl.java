@@ -253,8 +253,15 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 >>>>>>> 407a726... Cleaned up basic auth
 	private void uploadImageToChips(StockItem stockItem) throws SftpException, JSchException, IOException {
+<<<<<<< HEAD
 		
 		if(!isProduction()) {
+=======
+
+		Integer port = 22;
+		
+		if (!isProduction()) {
+>>>>>>> 175de40... Added cancel and ability to raise non account invoices
 			logger.info("Not uploading image as this isn't production");
 <<<<<<< HEAD
 			//Don't do it!
@@ -271,7 +278,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		logger.info("Attempting to upload image {} to host {}", filename, sftpHost);
 		logger.debug("Username {}", sftpUsername);
-		logger.debug("port {}", 22);
+		logger.debug("port {}", port);
 
 >>>>>>> d383330... ADding logging
 		Session session = null;
@@ -344,8 +351,12 @@ public class ChipsServiceImpl implements ChipsService {
 			jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
 			jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
 
+<<<<<<< HEAD
 			session = jsch.getSession(sftpUsername, sftpHost, 22);
 >>>>>>> 0ff98b8... Adding new sftp files
+=======
+			session = jsch.getSession(sftpUsername, sftpHost, port);
+>>>>>>> 175de40... Added cancel and ability to raise non account invoices
 
 			session.connect();
 

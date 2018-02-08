@@ -398,16 +398,18 @@ public class CustomerOrderLine extends OrderLine {
 				|| getStatus() == CustomerOrderLineStatus.RESEARCH
 				|| getStatus() == CustomerOrderLineStatus.OUT_OF_STOCK
 				|| getStatus() == CustomerOrderLineStatus.IN_STOCK) {
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.AWAITING_COLLECTION
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.LEFT_PHONE_MESSAGE
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.EMAILED_CUSTOMER
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.SPOKE_TO_CUSTOMER
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.INFORM_CUSTOMER_TO_COLLECT
-//					|| getCustomerOrderStatus() == CustomerOrderStatus.AWAITING_CUSTOMER_FEEDBACK) {
 			return false;
 		}
 		return true;
 	}
+
+	public boolean getCanCancel() {
+		System.out.println(getStatus());
+		if(getStatus() == CustomerOrderLineStatus.COMPLETE) {
+			return false;
+		}
+		return true;
+	}	
 
 	public boolean canMarkAsPaid() {
 		if(getIsPaid() == false) return true;
@@ -427,7 +429,18 @@ public class CustomerOrderLine extends OrderLine {
 		}
 		return false;
 	}
+<<<<<<< HEAD
 	
+=======
+
+	public boolean canRaiseInvoice() {
+		if(getStatus() == CustomerOrderLineStatus.COMPLETE) {
+			return false;
+		}
+		return true;
+	}	
+
+>>>>>>> 175de40... Added cancel and ability to raise non account invoices
 	public boolean getCanBeFilled() {
 		return canBeFilled();
 	}	
