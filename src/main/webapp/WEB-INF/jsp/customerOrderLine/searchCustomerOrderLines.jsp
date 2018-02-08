@@ -242,12 +242,8 @@ $(function() {
 						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
-						  		<c:if test="${searchTable.paymentType == 'ACCOUNT'}">
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
-						  		</c:if>
-							  	<c:if test="${searchTable.canComplete && searchTable.paymentType == 'ACCOUNT'}">
-							    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
-							  	</c:if>						  		
+					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
+						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
 						  		<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
 						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
 						  		</c:if>
