@@ -264,11 +264,15 @@ public class ChipsServiceImpl implements ChipsService {
 >>>>>>> 175de40... Added cancel and ability to raise non account invoices
 			logger.info("Not uploading image as this isn't production");
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//Don't do it!
 			//return;
 =======
 			return;
 >>>>>>> ed4726e... Adding logging to edit stockitem
+=======
+			// return;
+>>>>>>> 3ed7283... Turing off
 		}
 <<<<<<< HEAD
 		
@@ -286,6 +290,7 @@ public class ChipsServiceImpl implements ChipsService {
 		try {
 			JSch jsch = new JSch();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -350,6 +355,11 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
 			jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
+=======
+			jsch.setKnownHosts("/home/till/.ssh/known_hosts");
+			jsch.addIdentity("/home/till/.ssh/id_rsa");
+			jsch.setConfig( "StrictHostKeyChecking", "no" );
+>>>>>>> 3ed7283... Turing off
 
 <<<<<<< HEAD
 			session = jsch.getSession(sftpUsername, sftpHost, 22);

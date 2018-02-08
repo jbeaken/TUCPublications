@@ -89,7 +89,7 @@ public class SupplierDeliveryController extends OrderLineController {
 	@Autowired
 	private SupplierDeliveryLineValidator supplierDeliveryLineValidator;
 
-	private Logger logger = LoggerFactory.getLogger(StockItemController.class);
+	private Logger logger = LoggerFactory.getLogger(SupplierDeliveryController.class);
 
 	@RequestMapping(value="/displaySearch", method=RequestMethod.GET)
 	public String displaySearch(HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -500,7 +500,7 @@ public class SupplierDeliveryController extends OrderLineController {
 		Enumeration<String> enumeration = request.getParameterNames();
 		while(enumeration.hasMoreElements()) {
 			String pName = enumeration.nextElement();
-			logger.debug("enumeration.hasMoreElements() : have param " + pName);
+			logger.trace("enumeration.hasMoreElements() : have param " + pName);
 			if(pName.equals("_csrf")) continue;
 			Long customerOrderLineId = Long.parseLong(pName);
 			String[] amountArray = request.getParameterValues(customerOrderLineId.toString());
