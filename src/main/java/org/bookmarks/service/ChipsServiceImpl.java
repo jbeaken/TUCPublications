@@ -265,6 +265,7 @@ public class ChipsServiceImpl implements ChipsService {
 			logger.info("Not uploading image as this isn't production");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			//Don't do it!
 			//return;
 =======
@@ -273,6 +274,9 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			// return;
 >>>>>>> 3ed7283... Turing off
+=======
+			return;
+>>>>>>> 131a90a... Turing off
 		}
 <<<<<<< HEAD
 		
@@ -290,6 +294,7 @@ public class ChipsServiceImpl implements ChipsService {
 		try {
 			JSch jsch = new JSch();
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -358,6 +363,10 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 			jsch.setKnownHosts("/home/till/.ssh/known_hosts");
 			jsch.addIdentity("/home/till/.ssh/id_rsa");
+=======
+			jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
+			jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
+>>>>>>> 131a90a... Turing off
 			jsch.setConfig( "StrictHostKeyChecking", "no" );
 >>>>>>> 3ed7283... Turing off
 
