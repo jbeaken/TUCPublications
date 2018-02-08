@@ -243,8 +243,8 @@ $(function() {
 						    	<li class="divider"></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
-					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Raise Invoice & Go</a></li>
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Raise Invoice & Stay</a></li>
+					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Invoice &amp; Go</a></li>
+						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Invoice &amp; Stay</a></li>
 						  		<li class="divider"></li>
 						  	</c:if>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
