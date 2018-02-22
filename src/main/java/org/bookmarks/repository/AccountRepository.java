@@ -117,7 +117,7 @@ public Collection<Customer> getAccountCustomers() {
   public Date getLastCreditNoteDate() {
     Query  query = sessionFactory
         .getCurrentSession()
-        .createQuery("select max(cn.date) from CreditNote cn");
+        .createQuery("select max(cn.date) from CreditNote cn where cn.transactionType = 'TRF'");
     return (Date)query.uniqueResult();
   }
 

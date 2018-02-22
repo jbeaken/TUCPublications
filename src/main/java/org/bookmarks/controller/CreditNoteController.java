@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.Customer;
+import org.bookmarks.domain.TransactionType;
+
 import org.bookmarks.service.AZLookupServiceImpl;
 import org.bookmarks.service.CreditNoteService;
 import org.bookmarks.service.CustomerService;
@@ -63,6 +65,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 		session.setAttribute("creditNoteSearchBean", creditNoteSearchBean);
 
 		modelMap.addAttribute("creditNoteList", creditNoteList);
+		modelMap.addAttribute(TransactionType.values());
 		//modelMap.addAttribute("clubAccountOutgoings", clubAccountOutgoings);
 		//modelMap.addAttribute("clubAccountIncomings", clubAccountIncomings);
 		//modelMap.addAttribute("clubAccountBalance", clubAccountBalance);
@@ -76,6 +79,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 	public String displaySearch(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		CreditNoteSearchBean creditNoteSearchBean = new CreditNoteSearchBean();
 		modelMap.addAttribute(creditNoteSearchBean);
+		modelMap.addAttribute(TransactionType.values());
 
 		return search(creditNoteSearchBean, request, session, modelMap);
 	}
@@ -89,7 +93,7 @@ public class CreditNoteController extends AbstractBookmarksController<CreditNote
 
 			//Delete
 			creditNoteService.delete(creditNote);
-			
+
 			redirectAttributes.addFlashAttribute("success", creditNote.getTransactionDescription() + " has been deleted");
 		} catch (Exception e) {
 			//Most likely due to this invoice being referenced from col

@@ -44,6 +44,18 @@
 			</div>
 		</div>
 
+		<div class="column w-33-percent">
+			<form:label for="creditNote.transactionType" path="creditNote.transactionType"
+				cssErrorClass="error">Type</form:label>
+			<br />
+			<form:select path="transactionType">
+				<form:option value="" label="All"/>
+				<form:options items="${transactionTypeList}" itemLabel="displayName"/>
+			</form:select>
+			<form:errors path="creditNote.transactionType" />
+		</div>
+	</div>
+
 	</div>
 	<!-- /.rows -->
 
