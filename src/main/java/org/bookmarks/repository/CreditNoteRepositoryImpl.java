@@ -99,6 +99,10 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 			queryBuilder.append("cn.transactionReference like '%" + trimmedValue + "%'");
 		}
 
+		if(cn.getTransactionType() != null) {
+			queryBuilder.append("cn.transactionType = '" + cn.getTransactionType() + "'");
+		}
+
 		if(cn.getTransactionDescription() != null && !cn.getTransactionDescription().isEmpty()) {
 			String trimmedValue = cn.getTransactionDescription().trim().replace("'", "''");
 			queryBuilder.append("cn.transactionDescription like '%" + trimmedValue + "%'");
