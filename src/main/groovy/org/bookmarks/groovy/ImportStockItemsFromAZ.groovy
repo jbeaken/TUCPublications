@@ -29,14 +29,14 @@ import groovy.sql.Sql
 	service.lookupWithJSoup(stockItem)
 
 	def authors = stockItem.authors
-	
+
 	//PERSIT
 	authors.each {
 		def aId
 		bmw.eachRow("select id from author where name = :name", [name : it.text()]) {authorRow ->
 			aId = authorRow[0]
 		}
-		
+
 		if(!aId) {
 			def keys = bmw.executeInsert("insert into author (name) values (:name)", [name : it.text()])
 			aId = keys[0][0]
@@ -46,22 +46,22 @@ import groovy.sql.Sql
 		} catch (Exception e) {}
 		System.out.println("Author : ${it.text()}")
 	}
-	
+
 	def pId
 	bmw.eachRow("select id from publisher where name = :name", [name : publisher]) {publisherRow ->
 		pId = publisherRow[0]
 	}
-	
+
 	if(!pId) {
 		def keys = bmw.executeInsert("insert into publisher (name) values (:name)", [name : publisher])
 		pId = keys[0][0]
 	}
-	
+
 	bmw.execute("update stock_item set title = :title, published_date = :publishedDate, publisher = :pId, image_filename = :imageUrl, review = :review where id = :sId", [title : title, publishedDate : publishedDate, pId : pId, sId : sId, review : review, imageUrl : imageUrl])
 	System.out.println()
 } //End eachRow
 
 
 def persistAuthors = {
-	
+
 }

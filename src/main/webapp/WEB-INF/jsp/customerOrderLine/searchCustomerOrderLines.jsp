@@ -181,7 +181,7 @@ $(function() {
 						    <li class="divider"></li>
 							<c:if test="${searchTable.canCancel}">
 						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
-						  	</c:if>						    
+						  	</c:if>
 						  </ul>
 						</div>
 					  </display:column>
@@ -243,8 +243,8 @@ $(function() {
 						    	<li class="divider"></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
-					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Invoice &amp; Go</a></li>
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Invoice &amp; Stay</a></li>
+					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Invoice &amp; Go</a></li>
+						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Invoice &amp; Stay</a></li>
 						  		<li class="divider"></li>
 						  	</c:if>
 						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
@@ -255,7 +255,7 @@ $(function() {
 							<c:if test="${searchTable.canComplete}">
 								<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
 						  			<li class="divider"></li>
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/complete?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
+						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/sellOut?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
 						  		</c:if>
 							</c:if>
 						    <li class="divider"></li>
@@ -264,7 +264,7 @@ $(function() {
 						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
 							<c:if test="${searchTable.canCancel}">
 						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
-						  	</c:if>							    
+						  	</c:if>
 						  </ul>
 						</div>
 					  </display:column>

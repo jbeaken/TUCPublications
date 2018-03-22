@@ -26,7 +26,7 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 
 	@Autowired
 	private SupplierService supplierService;
-	
+
 	@ResponseBody
 	@RequestMapping(value="/autoCompleteSupplierName", method=RequestMethod.GET)
 	public String autoCompletePublisherName(String term, HttpServletRequest request, ModelMap modelMap) {
@@ -38,9 +38,8 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 		}
 		String json = buffer.toString();
 		json = json.substring(0, json.length() - 2) + "  ]";
-		System.out.println(json);
 		return json;
-	}	
+	}
 
 	@RequestMapping(value="/search")
 	public String search(SupplierSearchBean supplierSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
@@ -70,7 +69,7 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 		modelMap.addAttribute("searchResultCount", 10);  //WHY? Not needed in displaySearch in CustomerController
 		return "searchSuppliers";
 	}
-	
+
 
 	@RequestMapping(value="/delete", method=RequestMethod.GET)
 	public String delete(Long id, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
@@ -80,15 +79,15 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 		modelMap.addAttribute(new SupplierSearchBean());
 		modelMap.addAttribute("searchResultCount", 10);  //WHY? Not needed in displaySearch in CustomerController
 		return searchFromSession(session, request, modelMap);
-	}	
+	}
 
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		SupplierSearchBean supplierSearchBean = (SupplierSearchBean) session.getAttribute("searchBean");
-		
+
 		supplierSearchBean.isFromSession(true);
 		modelMap.addAttribute(supplierSearchBean);
-		
+
 		return search(supplierSearchBean, null, session, request, modelMap);
 	}
 
@@ -103,16 +102,16 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 			//Supplier with this name already exists
 			bindingResult.reject("invalid", "Supplier with this name already exists");
 			return "addSupplier";
-		}		
-		
+		}
+
 		//Need a redirect
 		supplierService.save(supplier);
 		staticDataService.resetSuppliers();
-		
+
 		SupplierSearchBean searchBean = new SupplierSearchBean();
 		searchBean.setSupplier(supplier);
 		session.setAttribute("searchBean", searchBean);
-		
+
 		return "redirect:searchFromSession";
 	}
 
@@ -128,8 +127,8 @@ public class SupplierController extends AbstractBookmarksController<Supplier> {
 		if(bindingResult.hasErrors()){
 			return "editSupplier";
 		}
-		
-	
+
+
 		supplierService.update(supplier);
 		staticDataService.resetSuppliers();
 

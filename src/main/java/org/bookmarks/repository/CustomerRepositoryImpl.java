@@ -82,8 +82,6 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
 		}
 
 		query.append(queryBuilder.getQuery());
-
-    System.out.println(queryBuilder.getQuery());
 	}
 
   @Override

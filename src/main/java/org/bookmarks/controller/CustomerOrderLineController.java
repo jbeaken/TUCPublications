@@ -443,6 +443,7 @@ public class CustomerOrderLineController extends OrderLineController {
 		modelMap.addAttribute(DeliveryType.values());
 		modelMap.addAttribute(BookmarksRole.values());
 		modelMap.addAttribute(Source.values());
+		modelMap.addAttribute(customerOrderLineSearchBean);
 		modelMap.addAttribute("customerOrderStatusOptions", CustomerOrderLineStatus.values());
 		modelMap.addAttribute("searchResultCount", customerOrderLineSearchBean.getSearchResultCount());
 
@@ -567,18 +568,23 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@RequestMapping(value="/reset", method=RequestMethod.GET)
 	public String reset(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		CustomerOrderLineSearchBean customerOrderLineSearchBean = new CustomerOrderLineSearchBean();
-		modelMap.addAttribute(customerOrderLineSearchBean);
-		return search(customerOrderLineSearchBean, null, session, request, modelMap);
+		return search(new CustomerOrderLineSearchBean(), null, session, request, modelMap);
 	}
 
 	@RequestMapping(value="/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		
+
 		CustomerOrderLineSearchBean customerOrderLineSearchBean = (CustomerOrderLineSearchBean) session.getAttribute("customerOrderSearchBean");
 
+<<<<<<< HEAD
 		if(customerOrderLineSearchBean == null) return "sessionExpired";
 		
+=======
+		if(customerOrderLineSearchBean == null) {
+			customerOrderLineSearchBean = new CustomerOrderLineSearchBean();
+		}
+
+>>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		HttpServletRequest sessionRequest = (HttpServletRequest) session.getAttribute("request");
 
 		if(sessionRequest == null) { sessionRequest = request;}
@@ -586,11 +592,64 @@ public class CustomerOrderLineController extends OrderLineController {
 		customerOrderLineSearchBean.isFromSession(true);
 
 		modelMap.addAttribute(customerOrderLineSearchBean);
-		
+
 		return search(customerOrderLineSearchBean, null, session, sessionRequest, modelMap);
 	}
 
+/**
+ * Used to add non-account col to invoice
+ **/
+	@RequestMapping(value="/addToInvoice", method=RequestMethod.GET)
+	public String addToInvoice(Long customerOrderLineId, String flow, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+	  	CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
+
+			Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("orderLineMap");
+			Map<Long, CustomerOrderLine> customerOrderLineMapForInvoice = (Map<Long, CustomerOrderLine>) session.getAttribute("customerOrderLineMapForInvoice");
+			Invoice invoice = (Invoice) session.getAttribute("invoice");
+
+			//Check this customerOrderLine hasn't already been added
+			if(customerOrderLineMapForInvoice != null && customerOrderLineMapForInvoice.get(customerOrderLine.getId()) != null) {
+				addInfo("Customer Order ID: " + customerOrderLine.getId() + " has already been added to an invoice!", modelMap);
+		//			if(flow.equals("searchCustomerOrderLines")){
+		//				return searchFromSession(session, request, modelMap);
+		//			} else return edit(customerOrderLine.getId(), flow, modelMap);
+				return searchFromSession(session, request, modelMap);
+			}
+			//New invoice
+			if(invoice == null) {
+				invoice = invoiceService.getNewInvoice(customerOrderLine.getCustomer().getId());
+				invoice.setDeliveryType(customerOrderLine.getDeliveryType());
+				saleMap = new HashMap<Long, Sale>();
+				customerOrderLineMapForInvoice = new HashMap<Long, CustomerOrderLine>();
+				session.setAttribute("orderLineMap", saleMap);
+				session.setAttribute("customerOrderLineMapForInvoice", customerOrderLineMapForInvoice);
+				session.setAttribute("invoice", invoice);
+			} else {
+				//Check the customer's match
+				if(!invoice.getCustomer().getId().equals(customerOrderLine.getCustomer().getId())) {
+					addInfo("An invoice for " + invoice.getCustomer().getFullName() + " is already in progress, deal with this first!", modelMap);
+					return searchFromSession(session, request, modelMap);
+				}
+			}
+			//System.out.println("map : " + customerOrderLineMapForInvoice);
+			//System.out.println("customerOrderLine : " + customerOrderLine);
+			//Add customerorderline to invoice
+			customerOrderLineMapForInvoice.put(customerOrderLine.getId(), customerOrderLine);
+
+			invoiceService.addStockItem(customerOrderLine, saleMap, invoice);
+
+			modelMap.addAttribute("price", invoice.getTotalPrice());
+			modelMap.addAttribute(saleMap.values());
+			modelMap.addAttribute(invoice);
+			modelMap.addAttribute(new StockItemSearchBean());
+
+			if(flow.equals("searchCustomerOrderLinesStay")){
+				return searchFromSession(session, request, modelMap);
+			} else return invoiceController.raiseCustomerOrderInvoice(session, modelMap);
+	}
+
 	/**
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * From 
 =======
@@ -604,22 +663,28 @@ public class CustomerOrderLineController extends OrderLineController {
 	 * @param session
 	 * @param modelMap
 	 * @return
+=======
+	 * Non-account
+>>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 	 */
-	@RequestMapping(value="/complete", method=RequestMethod.GET)
-	public String complete(Long customerOrderLineId, String flow, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		//Two variations, if an invoice has already been created, add this stock, else create a new stock
-		//If invoice already exists, check customer is the same otherwise show message
+	@RequestMapping(value="/sellOut", method=RequestMethod.GET)
+	public String sellOut(Long customerOrderLineId, String flow, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 
 		CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
+<<<<<<< HEAD
 		
 		if(customerOrderLine.getPaymentType() == PaymentType.ACCOUNT) {
 			return raiseInvoice(customerOrderLine, request, session, flow, modelMap);
 		} else {
 <<<<<<< HEAD
+=======
+
+>>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		try {
 			customerOrderLineService.complete(customerOrderLine);
 		} catch(BookmarksException e) {
 			addError("Cannot complete this order, has it already been completed?", modelMap);
+<<<<<<< HEAD
 =======
 			try {
 				//Non-account
@@ -629,7 +694,11 @@ public class CustomerOrderLineController extends OrderLineController {
 			}
 				
 			return searchFromSession(session, request, modelMap);
+=======
+>>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		}
+
+		return searchFromSession(session, request, modelMap);
 	}
 
 	@RequestMapping(value="/cancel", method=RequestMethod.GET)
@@ -655,7 +724,7 @@ public class CustomerOrderLineController extends OrderLineController {
 		customerOrderLineService.updateStatus(customerOrderLineId, CustomerOrderLineStatus.CANCELLED);
 
 		return searchFromSession(session, request, modelMap);
-	}	
+	}
 
 	@SuppressWarnings("unchecked")
 	private String raiseInvoice(CustomerOrderLine customerOrderLine, HttpServletRequest request, HttpSession session, String flow, ModelMap modelMap) {

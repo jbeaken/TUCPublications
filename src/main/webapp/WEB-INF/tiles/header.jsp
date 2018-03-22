@@ -31,7 +31,7 @@
 		<ul>
 			<li class="subfirst"><a href="<c:url value="/customer/add" />" title="Add"><img src="<c:url value="/resources/images/blue-health.png" />" alt="Add"/>Add</a></li>
 			<li><a href="<c:url value="/customer/displaySearch" />" title="Search"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Search"/>Search</a></li>
-			<li><a href="<c:url value="/customerOrderLine/displaySearch" />" title="Search Customer Orders"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Search Customer Orders"/>Search Customer Orders</a></li>
+			<li><a href="<c:url value="/customerOrderLine/searchFromSession" />" title="Search Customer Orders"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Search Customer Orders"/>Search Customer Orders</a></li>
 			<li><a href="<c:url value="/invoice/displaySearch" />" title="Search Invoices"><img src="<c:url value="/resources/images/invoiceLarge.png" />" alt="Search Invoices"/>Search Invoices</a></li>
 			<li><a href="<c:url value="/saleOrReturn/displaySearch" />" title="Search Sale or Returns"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Search Sale Or Returns"/>Search Sale or Returns</a></li>
 			<li><a href="<c:url value="/customer/merge" />" title="Merge Customer"><img src="<c:url value="/resources/images/saleOrReturnLarge.png" />" alt="Merge Customers"/>Merge Customers</a></li>

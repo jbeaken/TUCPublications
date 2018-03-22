@@ -404,12 +404,11 @@ public class CustomerOrderLine extends OrderLine {
 	}
 
 	public boolean getCanCancel() {
-		System.out.println(getStatus());
 		if(getStatus() == CustomerOrderLineStatus.COMPLETE) {
 			return false;
 		}
 		return true;
-	}	
+	}
 
 	public boolean canMarkAsPaid() {
 		if(getIsPaid() == false) return true;
@@ -438,7 +437,7 @@ public class CustomerOrderLine extends OrderLine {
 			return false;
 		}
 		return true;
-	}	
+	}
 
 >>>>>>> 175de40... Added cancel and ability to raise non account invoices
 	public boolean getCanBeFilled() {
