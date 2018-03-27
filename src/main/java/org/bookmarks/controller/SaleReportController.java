@@ -77,6 +77,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/saleReport")
@@ -88,7 +90,6 @@ public class SaleReportController extends AbstractBookmarksController {
 	@Autowired
 	private SaleService saleService;
 
-
 	@Autowired
 	private InvoiceService invoiceService;
 
@@ -98,24 +99,44 @@ public class SaleReportController extends AbstractBookmarksController {
 	@Autowired
 	private SaleReportBeanValidator saleReportBeanValidator;
 
+	private Logger logger = LoggerFactory.getLogger(SaleReportController.class);
+
 	/**
 	 * Main entry point, analyses report bean to see which report to call
-	 * @param saleReportBean
-	 * @param bindingResult
-	 * @param request
-	 * @param session
-	 * @param modelMap
-	 * @return
 	 */
 	@RequestMapping(value="/report")
 	public String report(@Valid SaleReportBean saleReportBean, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
+
+		logger.info("Request for report {}", saleReportBean);
+
+		if(saleReportBean.getStartDate() == null) {
+			// Set to today at 0:01 am
+			Calendar startCal = new GregorianCalendar();
+			startCal = resetToMidnight(startCal);
+			saleReportBean.setStartDate( startCal.getTime() );
+			logger.info("Start Date is null, setting to {}", saleReportBean.getStartDate());
+		}
+
+		if(saleReportBean.getEndDate() == null) {
+			// Set to today at midnight
+			Calendar endCal = new GregorianCalendar();
+			endCal = resetToEndOfDay(endCal);
+			saleReportBean.setEndDate( endCal.getTime() );
+			logger.info("End Date is null, setting to {}", saleReportBean.getEndDate());
+		}
+
 		saleReportBeanValidator.validate(saleReportBean, bindingResult);
+
 		if(bindingResult.hasErrors()) {
+			logger.info("Failed validation {}", bindingResult);
+
 			modelMap.addAttribute(saleReportBean);
 			modelMap.addAttribute(getPublishers());
 			modelMap.addAttribute(getCategories());
+
 			return "salesReport";
 		}
+
 		session.setAttribute("saleReportBean", saleReportBean);
 
 		switch (saleReportBean.getSalesReportType()) {
@@ -258,7 +279,7 @@ public class SaleReportController extends AbstractBookmarksController {
 
 		Double vatTotal = invoiceReportBeans.stream()
 			.mapToDouble(InvoiceReportBean::getVat)
-			.sum();
+				.sum();
 
 		modelMap.addAttribute(invoiceReportBeans);
 		modelMap.addAttribute(saleReportBean);
@@ -300,20 +321,6 @@ public class SaleReportController extends AbstractBookmarksController {
 	@RequestMapping(value="/saleList")
 	public String saleListReport(SaleReportBean saleReportBean, HttpServletRequest request, ModelMap modelMap) {
 		setPaginationFromRequest(saleReportBean, request);
-
-		if(saleReportBean.getStartDate() == null) {
-			// Set to today at 0:01 am
-			Calendar startCal = new GregorianCalendar();
-			startCal = resetToMidnight(startCal);
-			saleReportBean.setStartDate( startCal.getTime() );
-		}
-
-		if(saleReportBean.getEndDate() == null) {
-			// Set to today at midnight
-			Calendar endCal = new GregorianCalendar();
-			endCal = resetToEndOfDay(endCal);
-			saleReportBean.setEndDate( endCal.getTime() );
-		}
 
 		Collection<Sale> sales = saleService.search(saleReportBean);
 
@@ -483,7 +490,7 @@ public class SaleReportController extends AbstractBookmarksController {
 	}
 
 	public Calendar resetToEndOfDay(Calendar cal) {
-		cal.set(Calendar.HOUR_OF_DAY, 23);
+		cal.set(Calendar.HOUR_OF_DAY, 11);
 		cal.set(Calendar.MINUTE, 59);
 		cal.set(Calendar.SECOND, 59);
 		return cal;
