@@ -194,8 +194,8 @@
 
 <c:if test="${invoiceReportBeanList != null}">
 	<br/>
-	<div id="totals">Total : ${total}</div>
-	<div id="vattotals">VAT Total : ${vatTotal}</div>
+	<div id="totals">Total : <fmt:formatNumber type="currency" value="${total}" /></div>
+	<div id="vattotals">VAT Total : <fmt:formatNumber type="currency" value="${vatTotal}" /></div>
 	<br/>
 	<display:table name="invoiceReportBeanList"
 				   requestURI="${pageContext.request.contextPath}/saleReport/report"
