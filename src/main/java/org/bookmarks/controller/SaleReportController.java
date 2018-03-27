@@ -13,6 +13,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import java.util.stream.*;
+import java.util.stream.Collectors;
+
+import java.math.BigDecimal;
+
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -247,10 +252,20 @@ public class SaleReportController extends AbstractBookmarksController {
 
 		Collection<InvoiceReportBean> invoiceReportBeans = invoiceService.getInvoiceReportBeans(invoiceSearchBean);
 
+		BigDecimal total = invoiceReportBeans.stream()
+			.map(InvoiceReportBean::getTotal)
+			.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+		Double vatTotal = invoiceReportBeans.stream()
+			.mapToDouble(InvoiceReportBean::getVat)
+			.sum();
+
 		modelMap.addAttribute(invoiceReportBeans);
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(getCategories());
 		modelMap.addAttribute(getPublishers());
+		modelMap.addAttribute("vatTotal", vatTotal);
+		modelMap.addAttribute("total", total);
 
 		return "salesReport";
 	}

@@ -194,6 +194,8 @@
 
 <c:if test="${invoiceReportBeanList != null}">
 	<br/>
+	<div id="totals">Total : ${total}</div>
+	<div id="vattotals">VAT Total : ${vatTotal}</div>
 	<br/>
 	<display:table name="invoiceReportBeanList"
 				   requestURI="${pageContext.request.contextPath}/saleReport/report"
@@ -210,6 +212,7 @@
 			 <display:column property="formattedTotal" title="Total"/>
 			 <display:column property="formattedVat" title="VAT"/>
 	</display:table>
+
 </c:if>
 
 <c:if test="${showCategoryReport != null}">
