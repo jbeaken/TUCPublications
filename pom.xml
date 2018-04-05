@@ -101,10 +101,7 @@
 
 		<!-- Encryption -->
 		<jasypt.version>1.9.3-SNAPSHOT</jasypt.version>
-		<bouncy.castle.version>1.57</bouncy.castle.version>
-
-		<!-- Image Manipulation -->
-		<imgscalr.version>4.2</imgscalr.version>
+		<bouncy.castle.version>1.59</bouncy.castle.version>
 
 <<<<<<< HEAD
 
@@ -333,13 +330,14 @@
 		<dependency>
 			<groupId>org.imgscalr</groupId>
 			<artifactId>imgscalr-lib</artifactId>
-			<version>${imgscalr.version}</version>
+			<version>4.2</version>
 		</dependency>
 <<<<<<< HEAD
                
         
 	    <!-- Spring Testing -->
 =======
+
 
 		<!-- Spring Testing -->
 >>>>>>> d3fdae2... adding conf tomcat files
@@ -544,7 +542,7 @@
 =======
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
-			 <version>3.0.8</version>
+			<version>3.0.8</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
