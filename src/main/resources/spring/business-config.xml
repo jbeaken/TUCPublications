@@ -527,6 +527,7 @@
 			<property name="hibernateProperties">
 				<props>
 					<prop key="hibernate.connection.useUnicode">true</prop>
+					<prop key="hibernate.physical_naming_strategy">org.bookmarks.config.SpringPhysicalNamingStrategy</prop>
 					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
 					<prop key="hibernate.connection.charSet">UTF-8</prop>
 					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
