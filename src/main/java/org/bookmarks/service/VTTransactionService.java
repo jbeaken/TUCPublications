@@ -2,7 +2,7 @@ package org.bookmarks.service;
 
 import org.bookmarks.domain.VTTransaction;
 import org.bookmarks.repository.Repository;
-import org.bookmarks.repository.VTTransactionRepository;
+import org.bookmarks.repository.VTTransactionRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ public class VTTransactionService extends AbstractService<VTTransaction> {
 
 	
 	@Autowired
-	private VTTransactionRepository VTTransactionRepository;
+	private VTTransactionRepositoryImpl VTTransactionRepository;
 
 
 	@Override
