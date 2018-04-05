@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.lucene.analysis.miscellaneous.PatternAnalyzer;
 import org.bookmarks.controller.bean.WebScraperResultBean;
 import org.bookmarks.domain.Category;
 import org.bookmarks.domain.Publisher;
@@ -41,9 +40,9 @@ import org.springframework.stereotype.Service;
 */
 @Component
 public class PlutoWebScraper extends WebScraper {
-	
+
 	private Logger logger = LoggerFactory.getLogger(PlutoWebScraper.class);
-	
+
 	private String base = "https://www.plutobooks.com/books";
 
 	/**
@@ -54,24 +53,24 @@ public class PlutoWebScraper extends WebScraper {
 	public void scrape() throws Exception {
 
 		logger.info("Scraping Pluto!! Search Url : {}", base);
-			
+
 		if(isProduction() == false) return; //Should only run in production
-				
+
 		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Pluto");
-		
+
 		Set<String> newBooks = getIsbnList(base);
 
 		Set<String> forthcoming = getIsbnList("https://www.plutobooks.com/books/?collection=forthcoming");
 
 		newBooks.addAll( forthcoming );
-		
+
 		persist(newBooks, "", webScraperResultBean);
-		
+
 		log(webScraperResultBean);
-		
+
 		sendEmail(webScraperResultBean);
 	}
-	
+
 
 
 	/**
@@ -82,34 +81,34 @@ public class PlutoWebScraper extends WebScraper {
 	 */
 	@Override
 	protected Set<String> getIsbnList(String drilldownURL) throws IOException {
-		
+
 		Set<String> isbnSet = new HashSet<String>();
-		
+
 		Document doc = Jsoup.connect( base ).userAgent("Mozilla").timeout(136000).get();
-		 
+
 		//Of form:
 	    //display.asp?K=9780745334677
 		//display.asp?K=9780745333991&dtspan=60%3A0&ds=New+Releases&sort=sort%5Fpluto&sf1=format%5Fcode&st1=bp&%3c%=PROP%25%3E&m=1&dc=7
 		Elements anchorElements = doc.select("div.book-wrapper");
-		
+
 		Pattern pattern = Pattern.compile("\\d{13}");
-		
+
 		for(Element e : anchorElements) {
 			Element a = e.select("a.pp-link__title").first();
 			String href = a.attr("href");
 
 			Matcher matcher = pattern.matcher(href);
-			
+
 			while(matcher.find()) {
 				String isbn = matcher.group();
-				
+
 				String price = e.select("p.sp__the-price").first().text();
 
 				logger.debug("Adding {} with price {}", isbn, price);
 
 				isbnSet.add(isbn);
 			}
-			
+
 		}
 		return isbnSet;
 	}

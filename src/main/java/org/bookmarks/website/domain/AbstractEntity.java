@@ -9,14 +9,12 @@ import java.util.Date;
 
 @MappedSuperclass
 public abstract class AbstractEntity implements java.io.Serializable {
-	
+
  	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
-	    
-	//@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDate")
-    private Date dateCreated = new Date();
+
+  private Date dateCreated = new Date();
 
 	public Long getId() {
 		return id;
