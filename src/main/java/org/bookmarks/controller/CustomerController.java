@@ -698,7 +698,11 @@ public class CustomerController extends AbstractBookmarksController {
 
 	@RequestMapping(value = "/searchFromSession")
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
-		CustomerSearchBean customerSearchBean = (CustomerSearchBean) session.getAttribute("customerSearchBean");
+		CustomerSearchBean customerSearchBean = (CustomerSearchBean)	session.getAttribute("customerSearchBean");
+		if(customerSearchBean == null) {
+			customerSearchBean = new CustomerSearchBean();
+			session.setAttribute("customerSearchBean", customerSearchBean);
+		}
 		customerSearchBean.isFromSession(true);
 		modelMap.addAttribute(customerSearchBean);
 		return search(customerSearchBean, request, session, modelMap);
