@@ -1,0 +1,55 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 1162f08..a666d32 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -15,7 +15,7 @@[m
+ [m
+ 		<!-- Spring -->[m
+ 		<spring.version>4.3.14.RELEASE</spring.version>[m
+[31m-		<spring.security.version>4.1.5.RELEASE</spring.security.version>[m
+[32m+[m		[32m<spring.security.version>4.2.5.RELEASE</spring.security.version>[m
+ 		<spring-data-jpa.version>1.9.0.RELEASE</spring-data-jpa.version>[m
+ [m
+ 		<!-- Spring Data -->[m
+[36m@@ -73,7 +73,7 @@[m
+ 			<artifactId>jcl-over-slf4j</artifactId>[m
+ 			<version>${slf4j.version}</version>[m
+ 		</dependency>[m
+[31m-		[m
+[32m+[m
+ 		<dependency>[m
+ 			<groupId>net.sf.flexjson</groupId>[m
+ 			<artifactId>flexjson</artifactId>[m
+[1mdiff --git a/src/main/java/org/bookmarks/controller/CustomerController.java b/src/main/java/org/bookmarks/controller/CustomerController.java[m
+[1mindex c0c821e..d6147a4 100644[m
+[1m--- a/src/main/java/org/bookmarks/controller/CustomerController.java[m
+[1m+++ b/src/main/java/org/bookmarks/controller/CustomerController.java[m
+[36m@@ -698,7 +698,11 @@[m [mpublic class CustomerController extends AbstractBookmarksController {[m
+ [m
+ 	@RequestMapping(value = "/searchFromSession")[m
+ 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {[m
+[31m-		CustomerSearchBean customerSearchBean = (CustomerSearchBean) session.getAttribute("customerSearchBean");[m
+[32m+[m		[32mCustomerSearchBean customerSearchBean = (CustomerSearchBean)	session.getAttribute("customerSearchBean");[m[41m[m
+[32m+[m		[32mif(customerSearchBean == null) {[m[41m[m
+[32m+[m			[32mcustomerSearchBean = new CustomerSearchBean();[m[41m[m
+[32m+[m			[32msession.setAttribute("customerSearchBean", customerSearchBean);[m[41m[m
+[32m+[m		[32m}[m[41m[m
+ 		customerSearchBean.isFromSession(true);[m
+ 		modelMap.addAttribute(customerSearchBean);[m
+ 		return search(customerSearchBean, request, session, modelMap);[m
+[1mdiff --git a/src/main/resources/spring/security-config.xml b/src/main/resources/spring/security-config.xml[m
+[1mindex 53c1ba8..5cc7306 100644[m
+[1m--- a/src/main/resources/spring/security-config.xml[m
+[1m+++ b/src/main/resources/spring/security-config.xml[m
+[36m@@ -4,9 +4,9 @@[m
+ 	xmlns:beans="http://www.springframework.org/schema/beans"[m
+ 	xmlns:sec="http://www.springframework.org/schema/security"[m
+ 	xsi:schemaLocation="http://www.springframework.org/schema/security[m
+[31m-	http://www.springframework.org/schema/security/spring-security-4.1.xsd[m
+[32m+[m	[32mhttp://www.springframework.org/schema/security/spring-security-4.2.xsd[m[41m[m
+ 	http://www.springframework.org/schema/beans[m
+[31m-  http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">[m
+[32m+[m[32m  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">[m[41m[m
+ [m
+ [m
+     <authentication-manager>[m
