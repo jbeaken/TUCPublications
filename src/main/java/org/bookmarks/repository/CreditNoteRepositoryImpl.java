@@ -16,7 +16,7 @@ import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

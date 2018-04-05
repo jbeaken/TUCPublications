@@ -15,7 +15,7 @@ import org.bookmarks.domain.BookmarksAccount;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.SupplierDeliveryLine;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

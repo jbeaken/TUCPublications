@@ -1,6 +1,6 @@
 package org.bookmarks.repository;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import java.util.Collection;
 
 import org.bookmarks.controller.SearchBean;
@@ -118,7 +118,7 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
     if(includeBookmarks == true) {
       query = sessionFactory
   				.getCurrentSession()
-  				.createSQLQuery("update stockitem si, StockTakeLine stl " +
+  				.createNativeQuery("update stockitem si, StockTakeLine stl " +
   						"set si.quantityInStock = stl.quantity " +
   						"where si.id = stl.stockItem_id " + // and si.publisher_id not in (725,729) " +
   						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");
@@ -126,7 +126,7 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
     } else {
       query = sessionFactory
   				.getCurrentSession()
-  				.createSQLQuery("update stockitem si, StockTakeLine stl " +
+  				.createNativeQuery("update stockitem si, StockTakeLine stl " +
   						"set si.quantityInStock = stl.quantity " +
   						"where si.id = stl.stockItem_id and si.publisher_id not in (725,729) " +
   						"and si.stockItemType not in ('DVD','CARD','POSTER','BAG') and  category_id != 69 ");

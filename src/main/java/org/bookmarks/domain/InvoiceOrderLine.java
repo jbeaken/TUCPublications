@@ -1,27 +1,17 @@
 package org.bookmarks.domain;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.apache.tiles.jsp.taglib.definition.SetCurrentContainerTag;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
 
 /**
- * To do, use OrderLine
- * @author Administrator
- *
+ * @author jack
  */
 @Entity
 @Table(name="invoiceorderline")

@@ -10,7 +10,7 @@ import org.bookmarks.domain.SupplierOrderLine;
 import org.bookmarks.domain.SupplierOrderLineStatus;
 import org.bookmarks.domain.SupplierOrderLineType;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 
 import org.bookmarks.controller.SearchBean;
@@ -84,7 +84,7 @@ public class SupplierOrderLineRepositoryImpl extends AbstractRepository<Supplier
 		Query query = sessionFactory.getCurrentSession().createQuery("select sol from SupplierOrderLine sol " + 
 				"join fetch sol.supplier sup left join fetch sol.customerOrderLine col " + 
 				"where sol.stockItem.id = :id and sol.supplierOrderLineStatus = 'READY_TO_SEND' and col is null");
-		query.setLong("id", id);
+		query.setParameter("id", id);
 		//Should return at most one sol, but you never know!
 		List<SupplierOrderLine> list = query.list();
 		
@@ -101,7 +101,7 @@ public class SupplierOrderLineRepositoryImpl extends AbstractRepository<Supplier
 		Query query = sessionFactory.getCurrentSession().createQuery("select sol from SupplierOrderLine sol " + 
 				"join fetch sol.supplier sup left join fetch sol.customerOrderLine col " + 
 				"where sol.stockItem.id = :id and sol.supplierOrderLineStatus = 'READY_TO_SEND' and sol.type = :type");
-		query.setLong("id", id);
+		query.setParameter("id", id);
 		query.setParameter("type", type);
 		//Should return at most one sol, but you never know!
 		List<SupplierOrderLine> list = query.list();
@@ -118,7 +118,7 @@ public class SupplierOrderLineRepositoryImpl extends AbstractRepository<Supplier
 		Query query = sessionFactory.getCurrentSession().createQuery("select sol from SupplierOrderLine sol " + 
 				"join sol.supplier sup left join sol.customerOrderLine col " + 
 				"where sol.supplierOrderLineStatus = :status and col.id = :id");
-		query.setLong("id", customerOrderLineId);
+		query.setParameter("id", customerOrderLineId);
 		query.setParameter("status", SupplierOrderLineStatus.READY_TO_SEND);
 		//Should return at most one sol, but you never know!
 		//List<SupplierOrderLine> list = query.list();
@@ -144,7 +144,7 @@ public class SupplierOrderLineRepositoryImpl extends AbstractRepository<Supplier
 	@Override
 	public void removeSupplierOrderLine(StockItem stockItem, SupplierOrderLineType type) {
 		Query query = sessionFactory.getCurrentSession().createQuery("delete from SupplierOrderLine sol where sol.stockItem.id = :stockItemId and sol.type = :type and sol.supplierOrderLineStatus = :status");
-		query.setLong("stockItemId", stockItem.getId());
+		query.setParameter("stockItemId", stockItem.getId());
 		query.setParameter("status", SupplierOrderLineStatus.READY_TO_SEND);
 		query.setParameter("type", type);
 		query.executeUpdate();

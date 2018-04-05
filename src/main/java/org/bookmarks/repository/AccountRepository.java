@@ -14,7 +14,7 @@ import java.util.Date;
 
 import java.math.BigDecimal;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -185,7 +185,7 @@ public Collection<Customer> getAccountCustomers() {
 	// public void moveAndDelete(Author authorToDelete, Author authorToKeep) {
 	// 	Query query = sessionFactory
 	// 			.getCurrentSession()
-	// 			.createSQLQuery("update stockitem_author set author_id = :idToKeep where author_id = :idToDelete")
+	// 			.createNativeQuery("update stockitem_author set author_id = :idToKeep where author_id = :idToDelete")
 	// 			.setParameter("idToKeep", authorToKeep.getId())
 	// 			.setParameter("idToDelete", authorToDelete.getId());
 	// 	query.executeUpdate();

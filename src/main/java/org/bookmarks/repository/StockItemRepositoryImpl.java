@@ -21,10 +21,11 @@ import org.bookmarks.domain.Supplier;
 import org.bookmarks.domain.StockLevel;
 import org.bookmarks.domain.Level;
 import org.bookmarks.report.bean.DailyReportBean;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
+import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
 import org.hibernate.search.Search;
@@ -170,8 +171,8 @@ public class StockItemRepositoryImpl extends AbstractRepository<StockItem> imple
 		  .matching(q)
 		  .createQuery();
 
-		// wrap Lucene query in a org.hibernate.Query
-		org.hibernate.Query hibQuery = fullTextSession.createFullTextQuery(query, StockItem.class);
+		// wrap Lucene query in a org.hibernate.query.Query
+		FullTextQuery hibQuery = fullTextSession.createFullTextQuery(query, StockItem.class);
 
 		// execute search
 		List result = hibQuery.list();

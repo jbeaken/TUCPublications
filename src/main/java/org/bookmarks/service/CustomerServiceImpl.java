@@ -10,7 +10,7 @@ import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.repository.CustomerRepository;
 import org.bookmarks.repository.Repository;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

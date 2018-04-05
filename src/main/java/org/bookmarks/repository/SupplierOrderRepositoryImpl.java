@@ -20,7 +20,7 @@ import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.SupplierOrder;
 import org.bookmarks.domain.SupplierOrderLine;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;

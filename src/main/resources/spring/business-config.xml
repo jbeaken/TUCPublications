@@ -354,7 +354,7 @@
 		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 			<property name="url"
-				value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8" />
+				value="jdbc:mysql://localhost/bookmarks?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8" />
 			<property name="username" value="${db.beans.user}" />
 			<property name="password" value="${db.beans.password}" />
 			<property name="testOnBorrow" value="true" />
@@ -447,7 +447,7 @@
 		<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 			<property name="url"
-				value="jdbc:mysql://localhost/bookmarks?useUnicode=true&amp;characterEncoding=UTF-8" />
+				value="jdbc:mysql://localhost/bookmarks?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8" />
 			<property name="username" value="${db.beans.user}" />
 			<property name="password" value="${db.beans.password}" />
 		</bean>
@@ -521,7 +521,7 @@
 		<bean id="dataSource"
 			class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 			<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-			<property name="url" value="jdbc:mysql://localhost/bookmarks_test" />
+			<property name="url" value="jdbc:mysql://localhost/bookmarks_test?useSSL=false" />
 			<property name="username" value="${db.beans.user}" />
 			<property name="password" value="${db.beans.password}" />
 		</bean>

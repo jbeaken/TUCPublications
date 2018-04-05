@@ -70,7 +70,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
@@ -85,9 +84,12 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
+<<<<<<< HEAD
 import flexjson.JSONSerializer;
 
 
+=======
+>>>>>>> 2939a45... Removed flexjson, replaced deprecated methods
 @Service
 public class ChipsServiceImpl implements ChipsService {
 	
@@ -635,17 +637,6 @@ public class ChipsServiceImpl implements ChipsService {
 
 		logger.info("Have got {} reading lists to put on chips with url {}", readingLists.size(), chipsUrl);
 
-		// JSONSerializer serializer = new JSONSerializer();
-
-		// String readingListsAsJson = serializer.include("stockItems").serialize(readingLists);
-
-		// CloseableHttpClient httpclient = getHttpClient();
-
-		// HttpPost httpPost = getHttpPost("/website/updateReadingLists", "readingListsAsJson", readingListsAsJson);
-
-		// CloseableHttpResponse response = httpclient.execute(httpPost);
-
-		// chipsRestTemplate.postForObject(chipsUrl + "/website/updateReadingLists", readingLists, Payment.class);
 		org.springframework.http.HttpEntity<Object> requestEntity = new org.springframework.http.HttpEntity<>( readingLists );
 
 		logger.debug("HttpEntity body : {}", requestEntity.getBody());

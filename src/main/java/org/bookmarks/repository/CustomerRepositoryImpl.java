@@ -14,7 +14,7 @@ import org.bookmarks.website.domain.CreditCard;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -88,31 +88,31 @@ public class CustomerRepositoryImpl extends AbstractRepository<Customer> impleme
   public void merge(Customer customerToKeep, Customer customerToDiscard) {
     Query query = sessionFactory
         .getCurrentSession()
-        .createSQLQuery("update customer_customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+        .createNativeQuery("update customer_customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
 
     query.executeUpdate();
 
     query = sessionFactory
         .getCurrentSession()
-        .createSQLQuery("update SaleOrReturn set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+        .createNativeQuery("update SaleOrReturn set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
 
     query.executeUpdate();
 
     query = sessionFactory
         .getCurrentSession()
-        .createSQLQuery("update customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+        .createNativeQuery("update customerorderline set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
 
     query.executeUpdate();
 
     query = sessionFactory
         .getCurrentSession()
-        .createSQLQuery("update invoice set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
+        .createNativeQuery("update invoice set customer_id = " + customerToKeep.getId() + " where customer_id = " + customerToDiscard.getId());
 
     query.executeUpdate();
 
     query = sessionFactory
         .getCurrentSession()
-        .createSQLQuery("delete from customer where id = " + customerToDiscard.getId());
+        .createNativeQuery("delete from customer where id = " + customerToDiscard.getId());
 
     query.executeUpdate();
   }

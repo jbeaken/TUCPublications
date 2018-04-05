@@ -4,21 +4,15 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-
-
-import flexjson.JSONSerializer;
-
 public class CustomerOrder {
 
 	private WebsiteCustomer customer;
 
-	//Constructor
 	public CustomerOrder() {
 		customer = new WebsiteCustomer();
 		customer.setOrders(new HashSet<OrderLine>());
 	}
 
-    //ACCESSORS
     public WebsiteCustomer getCustomer() {
 		return customer;
 	}
@@ -27,14 +21,6 @@ public class CustomerOrder {
 		this.customer = customer;
 	}
 
-
-	//JSON
-    public String toJson() {
-    	String json = new JSONSerializer().include("customer.orders").exclude("*.class").serialize(this);
-    	return json;
-    }
-
-    //METHODS
 	public void addOrderLine(StockItem stockItem) {
 		OrderLine orderLine = null;
 		Set<OrderLine> orderLines = customer.getOrders();

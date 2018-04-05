@@ -7,7 +7,7 @@ import org.bookmarks.controller.AuthorSearchBean;
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.domain.Author;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -93,7 +93,7 @@ public class AuthorRepositoryImpl extends AbstractRepository<Author> implements 
 	public void moveAndDelete(Author authorToDelete, Author authorToKeep) {
 		Query query = sessionFactory
 				.getCurrentSession()
-				.createSQLQuery("update stockitem_author set author_id = :idToKeep where author_id = :idToDelete")
+				.createNativeQuery("update stockitem_author set author_id = :idToKeep where author_id = :idToDelete")
 				.setParameter("idToKeep", authorToKeep.getId())
 				.setParameter("idToDelete", authorToDelete.getId());
 		query.executeUpdate();

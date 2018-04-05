@@ -1,6 +1,6 @@
 package org.bookmarks.repository;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 
 import java.util.Calendar;
 import java.util.Collection;

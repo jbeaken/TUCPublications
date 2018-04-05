@@ -11,7 +11,7 @@ import org.bookmarks.controller.StockItemSearchBean;
 import org.bookmarks.domain.AbstractEntity;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 public abstract class AbstractRepository<E> implements Repository<E> {

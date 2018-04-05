@@ -4,21 +4,15 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.bookmarks.controller.CustomerSearchBean;
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.controller.bean.SaleReportBean;
 import org.bookmarks.controller.bean.SaleTotalBean;
-import org.bookmarks.website.domain.Address;
-import org.bookmarks.domain.Category;
-import org.bookmarks.domain.BookmarksAccount;
-import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class SaleRepositoryImpl extends AbstractRepository<Sale> implements SaleRepository {

@@ -314,6 +314,7 @@
 		</dependency>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> d3fdae2... adding conf tomcat files
 =======
 		<dependency>
@@ -324,6 +325,8 @@
 
 
 >>>>>>> 1c71a76... Bump spring 4.3.14 -> 5.0.4, had to replace velocity with freemarker, tiles2 -> tiles2, jackson 2.8.8.1 -> 2.9.5
+=======
+>>>>>>> 2939a45... Removed flexjson, replaced deprecated methods
 		<!-- Image resizing -->
 		<dependency>
 			<groupId>org.imgscalr</groupId>

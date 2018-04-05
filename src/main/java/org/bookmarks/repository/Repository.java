@@ -7,7 +7,7 @@ import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.SupplierDelivery;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.SessionFactory;
 
 public interface Repository<E> {
