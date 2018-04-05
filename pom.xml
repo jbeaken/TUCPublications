@@ -73,6 +73,7 @@
 		<spring.security.version>5.0.3.RELEASE</spring.security.version>
 
 		<!-- Hibernate -->
+<<<<<<< HEAD
 		<hibernate.version>5.2.3.Final</hibernate.version>
 		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
 <<<<<<< HEAD
@@ -84,6 +85,11 @@
 =======
 		<hibernate.search.version>5.5.4.Final</hibernate.search.version>
 >>>>>>> 14fb1bc... Removed old hibernate search 4 import, exluded javax.enterprise.cdi-api from hibernate as had dependency on javax el
+=======
+		<hibernate.version>5.2.16.Final</hibernate.version>
+		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
+		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
+>>>>>>> 6a5b44f... Hibernate 5.2.3 -> 5.2.16, hib validator 5.2.4 -> 5.4.3, search 5.5.4 -> 5.9.1
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
