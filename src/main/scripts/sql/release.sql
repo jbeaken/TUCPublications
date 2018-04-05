@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+=======
+alter table reading_list_stockitem change reading_list_id ReadingList_id bigint(20);
+
+
+update temp.customerorderline set nameOnCard = null, creditCard1 = null, creditCard2 = null, creditCard3 = null, creditCard4 = null, securityCode = null, expiryYear = null, expiryMonth = null where customerOrderStatus in ('CANCELLED', 'COMPLETE');
+
+update bookmarks.customerorderline bookmarks, temp.customerorderline temp 
+set 
+bookmarks.creditCard1 = temp.creditCard1, 
+bookmarks.creditCard2 = temp.creditCard2, 
+bookmarks.creditCard3 = temp.creditCard3, 
+bookmarks.creditCard4 = temp.creditCard4, 
+bookmarks.securityCode = temp.securityCode, 
+bookmarks.expiryMonth = temp.expiryMonth, 
+bookmarks.expiryYear = temp.expiryYear, 
+bookmarks.nameOnCard = temp.nameOnCard
+where bookmarks.id = temp.id;
+
+
+select creditCard1, creditCard2, creditCard3, creditCard4, expiryMonth, expiryYear, securityCode from customerorderline where id = 9191;
+
+
+select customerOrderStatus from customerorderline where creditCard1 is not null;
+
+
+>>>>>>> 3e957da... Booting up but getting Could not obtain transaction-synchronized Session for current thread
 /*
  
  
