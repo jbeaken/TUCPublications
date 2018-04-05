@@ -6,14 +6,14 @@ import java.util.Locale;
 
 import org.bookmarks.domain.Category;
 import org.bookmarks.domain.Customer;
-import org.springframework.format.number.CurrencyFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
 
 public class InvoiceReportBean {
 	private BigDecimal total;
 	private Double vat;
 	private Customer customer;
 
-	protected CurrencyFormatter currencyFormatter = new CurrencyFormatter();
+	protected CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
 
 	public InvoiceReportBean() {
 		super();
@@ -31,11 +31,11 @@ public class InvoiceReportBean {
 	}
 
 	public String getFormattedTotal() {
-		return currencyFormatter.print(total, Locale.UK);
+		return CurrencyStyleFormatter.print(total, Locale.UK);
 	}
 
 	public String getFormattedVat() {
-		return currencyFormatter.print(vat, Locale.UK);
+		return CurrencyStyleFormatter.print(vat, Locale.UK);
 	}
 
 	public void setTotal(BigDecimal total) {

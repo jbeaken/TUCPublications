@@ -24,7 +24,7 @@ public class SaleDecorator extends AbstractBookmarksTableDecorator {
 	
 	public String getSellPrice() {
 		Sale sale =(Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getSellPrice(), Locale.UK);
 	}
 	
 	protected  String showDelete(Sale e) {

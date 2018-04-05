@@ -5,10 +5,10 @@ import java.util.Locale;
 import org.bookmarks.report.bean.CategoryStockTakeBean;
 import org.displaytag.decorator.TableDecorator;
 
-import org.springframework.format.number.CurrencyFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
 
 public class ReportCategoryStockTakeDecorator extends TableDecorator {
-	CurrencyFormatter formatter = new CurrencyFormatter();
+	CurrencyStyleFormatter formatter = new CurrencyStyleFormatter();
 	
 	public String getTotalPublisherPrice() {
 		CategoryStockTakeBean categoryStockTakeBean = (CategoryStockTakeBean)getCurrentRowObject();

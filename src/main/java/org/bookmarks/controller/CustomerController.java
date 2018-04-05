@@ -240,7 +240,7 @@ public class CustomerController extends AbstractBookmarksController {
 	public String autoCompleteSurname(String term, Boolean accountHolders, HttpServletRequest request,
 			ModelMap modelMap) {
 
-				CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+				CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
 
 		Collection<Customer> customers = customerService.getForAutoComplete(term, accountHolders);
 
@@ -251,7 +251,7 @@ public class CustomerController extends AbstractBookmarksController {
 			BigDecimal currentBalance = c.getBookmarksAccount().getCurrentBalance();
 
 			String label =  c.getLastName() + ", " + c.getFirstName() + " "	+ (postcode != null ? postcode : "");
-			if( currentBalance != null ) label += " " +  currencyFormatter.print(currentBalance, Locale.UK);
+			if( currentBalance != null ) label += " " +  CurrencyStyleFormatter.print(currentBalance, Locale.UK);
 
 			buffer.append(" { \"label\": \"" + label + "\", \"value\": \"" + c.getId() + "\" }");
 			buffer.append(", ");

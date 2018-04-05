@@ -168,7 +168,7 @@ public class CustomerReportController extends AbstractBookmarksController {
 		float marginTop = 0f;
 		float marginLeft = 10f;
 		String nl = System.getProperty("line.separator");
-		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+		CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
 		Font font = new Font(Font.FontFamily.COURIER, 12, Font.NORMAL);
 
 		//PDF
@@ -197,7 +197,7 @@ public class CustomerReportController extends AbstractBookmarksController {
 		addParagraph("Bookmarks Account For " + customer.getFullName() + " " + new SimpleDateFormat("dd MMM yyyy").format(new Date()), doc);
 
 		//balance
-		String currentBalance = currencyFormatter.print(customer.getBookmarksAccount().getCurrentBalance(), Locale.UK);
+		String currentBalance = CurrencyStyleFormatter.print(customer.getBookmarksAccount().getCurrentBalance(), Locale.UK);
 		Paragraph balance = new Paragraph("Current Balance : " + currentBalance, font);
 		balance.setAlignment(Element.ALIGN_LEFT);
 		balance.setSpacingAfter(10);
@@ -254,11 +254,11 @@ public class CustomerReportController extends AbstractBookmarksController {
 
 			table.addCell( irl.getDeliveryTypeDisplay() );
 
-			table.addCell( irl.getCreditAmount(currencyFormatter) );
+			table.addCell( irl.getCreditAmount(CurrencyStyleFormatter) );
 
-			table.addCell( irl.getDebitAmount(currencyFormatter) );
+			table.addCell( irl.getDebitAmount(CurrencyStyleFormatter) );
 
-			table.addCell( currencyFormatter.print(irl.getCurrentBalance(), Locale.UK)  );
+			table.addCell( CurrencyStyleFormatter.print(irl.getCurrentBalance(), Locale.UK)  );
 		}
 
 		doc.add(table);

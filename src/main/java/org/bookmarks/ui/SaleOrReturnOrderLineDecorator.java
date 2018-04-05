@@ -2,18 +2,13 @@ package org.bookmarks.ui;
 
 import java.util.Locale;
 
-import org.bookmarks.domain.CustomerOrderLine;
-import org.bookmarks.domain.SupplierDeliveryLine;
 import org.bookmarks.domain.SaleOrReturnOrderLine;
-import org.bookmarks.domain.StockItem;
-import org.displaytag.decorator.TableDecorator;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.number.CurrencyFormatter;
-import org.springframework.format.number.PercentFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
+import org.springframework.format.number.PercentStyleFormatter;
 
 public class SaleOrReturnOrderLineDecorator extends SearchStockItemsDecorator {
-	protected CurrencyFormatter currencyFormatter = new CurrencyFormatter();
-	protected PercentFormatter percentFormatter = new PercentFormatter();
+	protected CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
+	protected PercentStyleFormatter PercentStyleFormatter = new PercentStyleFormatter();
 	
 	public String getLink()	{
         SaleOrReturnOrderLine saleOrReturnOrderLine = (SaleOrReturnOrderLine)getCurrentRowObject();
@@ -29,12 +24,12 @@ public class SaleOrReturnOrderLineDecorator extends SearchStockItemsDecorator {
 	
 	public String getPrice() {
 		SaleOrReturnOrderLine saleOrReturnOrderLine = (SaleOrReturnOrderLine)getCurrentRowObject();
-		return currencyFormatter.print(saleOrReturnOrderLine.getPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(saleOrReturnOrderLine.getPrice(), Locale.UK);
 	}
 	
 	public String getSellPrice() {
 		SaleOrReturnOrderLine saleOrReturnOrderLine = (SaleOrReturnOrderLine)getCurrentRowObject();
-		return currencyFormatter.print(saleOrReturnOrderLine.getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(saleOrReturnOrderLine.getSellPrice(), Locale.UK);
 	}
 	
 	public String getStockItemTitle() {

@@ -19,7 +19,7 @@ import org.bookmarks.domain.TelephoneDirectory;
 import org.displaytag.decorator.TableDecorator;
 import org.displaytag.model.TableModel;
 import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.number.CurrencyFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
 import org.springframework.format.number.CurrencyStyleFormatter;
 import org.springframework.format.number.NumberStyleFormatter;
 
@@ -30,7 +30,7 @@ public abstract class AbstractBookmarksTableDecorator extends TableDecorator {
 	protected DateFormatter shortDateFormatter = new DateFormatter("dd/MM/yy");
 	protected DateFormatter dateTimeFormatter = new DateFormatter("dd/MM/yy HH:mm");
 	protected NumberStyleFormatter numberStyleFormatter = new NumberStyleFormatter("###.##");
-	protected CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
+	protected CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
 	protected String contextPath;
 
 	public void init(PageContext pageContext, Object decorated, TableModel tableModel) {

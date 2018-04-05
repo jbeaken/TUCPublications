@@ -188,7 +188,7 @@ public class SearchCustomerOrderLineDecorator extends AbstractBookmarksTableDeco
 
 	public String getPrice() {
 		CustomerOrderLine customerOrderLine = (CustomerOrderLine)getCurrentRowObject();
-		return currencyFormatter.print(customerOrderLine.getSellPrice(), Locale.UK) ;
+		return CurrencyStyleFormatter.print(customerOrderLine.getSellPrice(), Locale.UK) ;
 	}
 
 

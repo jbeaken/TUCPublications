@@ -33,16 +33,16 @@ public class SupplierReturnLineDecorator extends SearchStockItemsDecorator {
 
 	public String getPublisherPrice() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierReturnLine.getStockItem().getPublisherPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierReturnLine.getStockItem().getPublisherPrice(), Locale.UK);
 	}
 
 	public String getSellPrice() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierReturnLine.getStockItem().getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierReturnLine.getStockItem().getSellPrice(), Locale.UK);
 	}
 
 	public String getTotalPrice() {
 		SupplierReturnLine supplierReturnLine = (SupplierReturnLine) getCurrentRowObject();
-		return currencyFormatter.print(supplierReturnLine.getAmount() * supplierReturnLine.getStockItem().getSellPrice().doubleValue(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierReturnLine.getAmount() * supplierReturnLine.getStockItem().getSellPrice().doubleValue(), Locale.UK);
 	}
 }

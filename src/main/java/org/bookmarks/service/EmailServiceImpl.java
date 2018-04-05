@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 
-import org.apache.velocity.app.VelocityEngine;
 import org.bookmarks.controller.bean.WebScraperResultBean;
 import org.bookmarks.domain.CustomerOrder;
 import org.bookmarks.domain.CustomerOrderLine;
@@ -17,7 +16,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,6 +36,7 @@ public class EmailServiceImpl implements EmailService {
 		this.mailSender = mailSender;
 	}
 
+<<<<<<< HEAD
    public void setVelocityEngine(VelocityEngine velocityEngine) {
       this.velocityEngine = velocityEngine;
    }
@@ -42,6 +47,19 @@ public class EmailServiceImpl implements EmailService {
 	
 	private static final String fromEmail = "beans@bookmarks.com";
 	
+=======
+
+	private JavaMailSender mailSender;
+	
+    @Autowired
+    private FreeMarkerConfigurer freemarkerConfigurer;
+
+	@Autowired
+	private EmailReportService emailReportService;
+
+	private static final String fromEmail = "info@bookmarksbookshop.co.uk";
+
+>>>>>>> e70c6d7... CurrencyFormat to CurrencyStyleFormat, same with PercentFormat
 	@Value("#{  emailProperties['email.dailyReport.cron'] }")
 	private String cronJob;
 	
@@ -243,7 +261,8 @@ public class EmailServiceImpl implements EmailService {
 				message.setSubject("Your bookmarks bookshop order");
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("customerOrder", customerOrder);
-				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-confirmation.vm", "utf-8", model);
+				Template template = freemarkerConfigurer.createConfiguration().getTemplate("test");
+				String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 				message.setText(text, true);
 			}
 		};
@@ -300,8 +319,8 @@ public class EmailServiceImpl implements EmailService {
 				
 				model.put("customerOrderLine", customerOrderLine);
 				
-				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-posted.vm", "utf-8", model);
-				message.setText(text, true);
+//				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-posted.vm", "utf-8", model);
+//				message.setText(text, true);
 			}
 		};
 

@@ -9,8 +9,8 @@ import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
 import org.displaytag.decorator.TableDecorator;
 import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.number.CurrencyFormatter;
-import org.springframework.format.number.PercentFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
+import org.springframework.format.number.PercentStyleFormatter;
 
 public class InvoiceOrderLineDecorator extends SearchStockItemsDecorator {
 	
@@ -28,12 +28,12 @@ public class InvoiceOrderLineDecorator extends SearchStockItemsDecorator {
 	
 	public String getTotalPrice() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getDiscountedPrice().multiply(new BigDecimal(sale.getQuantity())), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getDiscountedPrice().multiply(new BigDecimal(sale.getQuantity())), Locale.UK);
 	}
 	
 	public String getVatAmount() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getVatAmount(), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getVatAmount(), Locale.UK);
 	}
 	
 	public String getVat() {
@@ -43,12 +43,12 @@ public class InvoiceOrderLineDecorator extends SearchStockItemsDecorator {
 	
 	public String getSellPrice() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getSellPrice(), Locale.UK);
 	}
 	
 	public String getDiscountedPrice() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getDiscountedPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getDiscountedPrice(), Locale.UK);
 	}
 	
 	public String getDiscount() {

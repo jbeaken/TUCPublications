@@ -35,6 +35,6 @@ public class SearchCreditNotesDecorator extends AbstractBookmarksTableDecorator 
 		if(amount.longValue() < 0) {
 			color = "red";
 		}
-		return "<span style='color : " + color + ";'>" + currencyFormatter.print(e.getAmount(), Locale.UK) + "</span>";
+		return "<span style='color : " + color + ";'>" + CurrencyStyleFormatter.print(e.getAmount(), Locale.UK) + "</span>";
 	}	
 }

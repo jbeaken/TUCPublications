@@ -50,7 +50,7 @@ public class SearchSaleOrReturnDecorator extends AbstractBookmarksTableDecorator
 	
 	public String getTotalPrice() {
 		SaleOrReturn saleOrReturn = (SaleOrReturn)getCurrentRowObject();
-		return currencyFormatter.print(saleOrReturn.getTotalPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(saleOrReturn.getTotalPrice(), Locale.UK);
 	}
 
 	public String getReturnDate() {

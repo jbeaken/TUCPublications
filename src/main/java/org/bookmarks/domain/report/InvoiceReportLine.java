@@ -117,19 +117,19 @@ public class InvoiceReportLine implements Comparable {
 	}
 
 	}
-	public String getCreditAmount(CurrencyStyleFormatter currencyFormatter) {
+	public String getCreditAmount(CurrencyStyleFormatter CurrencyStyleFormatter) {
 		if(isCredit()) {
-			return currencyFormatter.print(creditNote.getAmount(), Locale.UK);
+			return CurrencyStyleFormatter.print(creditNote.getAmount(), Locale.UK);
 		} else {
 			return "";
 		}
 	}
 
-	public String getDebitAmount(CurrencyStyleFormatter currencyFormatter) {
+	public String getDebitAmount(CurrencyStyleFormatter CurrencyStyleFormatter) {
 		if(isCredit()) {
 			return "";
 		} else {
-			return currencyFormatter.print( sale.getTotalPrice().multiply(new BigDecimal(-1)), Locale.UK);
+			return CurrencyStyleFormatter.print( sale.getTotalPrice().multiply(new BigDecimal(-1)), Locale.UK);
 		}
 	}
 

@@ -62,17 +62,17 @@ public class SearchInvoiceDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getSecondHandPrice() {
 		Invoice invoice = (Invoice)getCurrentRowObject();
-		return currencyFormatter.print(invoice.getSecondHandPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(invoice.getSecondHandPrice(), Locale.UK);
 	}
 
 	public String getServiceCharge() {
 		Invoice invoice = (Invoice)getCurrentRowObject();
-		return currencyFormatter.print(invoice.getServiceCharge(), Locale.UK);
+		return CurrencyStyleFormatter.print(invoice.getServiceCharge(), Locale.UK);
 	}
 
 	public String getTotalPrice() {
 		Invoice invoice = (Invoice)getCurrentRowObject();
-		return currencyFormatter.print(invoice.getTotalPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(invoice.getTotalPrice(), Locale.UK);
 	}
 
 	public String getTelephoneNumber() {

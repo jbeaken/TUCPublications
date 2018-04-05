@@ -27,10 +27,10 @@ public class SaleSearchDecorator extends AbstractBookmarksTableDecorator {
 	
 	public String getTotalPrice() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getDiscountedPrice().multiply(new BigDecimal(sale.getQuantity())), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getDiscountedPrice().multiply(new BigDecimal(sale.getQuantity())), Locale.UK);
 	}
 	public String getSellPrice() {
 		Sale sale = (Sale)getCurrentRowObject();
-		return currencyFormatter.print(sale.getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(sale.getSellPrice(), Locale.UK);
 	}
 }

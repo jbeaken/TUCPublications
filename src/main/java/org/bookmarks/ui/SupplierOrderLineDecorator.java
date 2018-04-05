@@ -10,12 +10,12 @@ import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.SupplierOrderLineStatus;
 import org.displaytag.decorator.TableDecorator;
 import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.number.CurrencyFormatter;
-import org.springframework.format.number.PercentFormatter;
+import org.springframework.format.number.CurrencyStyleFormatter;
+import org.springframework.format.number.PercentStyleFormatter;
 
 public class SupplierOrderLineDecorator extends AbstractBookmarksTableDecorator {
-//	protected CurrencyFormatter currencyFormatter = new CurrencyFormatter();
-//	protected PercentFormatter percentFormatter = new PercentFormatter();
+//	protected CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
+//	protected PercentStyleFormatter PercentStyleFormatter = new PercentStyleFormatter();
 	public String getLink()	{
         SupplierOrderLine supplierOrderLine = (SupplierOrderLine)getCurrentRowObject();
         Long id = supplierOrderLine.getId();

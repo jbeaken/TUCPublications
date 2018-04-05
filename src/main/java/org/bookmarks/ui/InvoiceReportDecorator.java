@@ -37,14 +37,14 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 	public String getTotalPrice() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
 		if(!invoiceReportLine.isCredit()) {
-			return currencyFormatter.print(invoiceReportLine.getSale().getTotalPrice(), Locale.UK);
+			return CurrencyStyleFormatter.print(invoiceReportLine.getSale().getTotalPrice(), Locale.UK);
 		}
 		return "-";
 	}
 
 	public String getCurrentBalance() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
-			return currencyFormatter.print(invoiceReportLine.getCurrentBalance(), Locale.UK);
+			return CurrencyStyleFormatter.print(invoiceReportLine.getCurrentBalance(), Locale.UK);
 	}
 
 	public String getRef() {
@@ -67,6 +67,6 @@ public class InvoiceReportDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getCredit() {
 		InvoiceReportLine invoiceReportLine = (InvoiceReportLine) getCurrentRowObject();
-		return invoiceReportLine.getCreditAmount(currencyFormatter);
+		return invoiceReportLine.getCreditAmount(CurrencyStyleFormatter);
 	}
 }

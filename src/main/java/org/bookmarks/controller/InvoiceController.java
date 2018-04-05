@@ -179,8 +179,8 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		float marginLeft = 10f;
 		String nl = System.getProperty("line.separator");
 
-		CurrencyStyleFormatter currencyFormatter = new CurrencyStyleFormatter();
-		PercentStyleFormatter percentFormatter = new PercentStyleFormatter();
+		CurrencyStyleFormatter CurrencyStyleFormatter = new CurrencyStyleFormatter();
+		PercentStyleFormatter PercentStyleFormatter = new PercentStyleFormatter();
 
 		Font font = new Font(Font.FontFamily.COURIER, 16, Font.NORMAL);
 
@@ -255,15 +255,15 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 
 			table.addCell( s.getQuantity() + "" );
 
-			table.addCell( percentFormatter.print(s.getDiscount().divide( new BigDecimal(100) ), Locale.UK) );
+			table.addCell( PercentStyleFormatter.print(s.getDiscount().divide( new BigDecimal(100) ), Locale.UK) );
 
-			table.addCell( percentFormatter.print(s.getVat().divide( new BigDecimal(100) ), Locale.UK) );
+			table.addCell( PercentStyleFormatter.print(s.getVat().divide( new BigDecimal(100) ), Locale.UK) );
 
-			table.addCell( currencyFormatter.print(s.getVatAmount(), Locale.UK) );
+			table.addCell( CurrencyStyleFormatter.print(s.getVatAmount(), Locale.UK) );
 
-			table.addCell( currencyFormatter.print(s.getSellPrice(), Locale.UK) );
+			table.addCell( CurrencyStyleFormatter.print(s.getSellPrice(), Locale.UK) );
 
-			table.addCell( currencyFormatter.print(s.getTotalPrice(), Locale.UK) );
+			table.addCell( CurrencyStyleFormatter.print(s.getTotalPrice(), Locale.UK) );
 		}
 
 		//Second hand
@@ -272,7 +272,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			secondHandCell.setBorder(Rectangle.NO_BORDER);
       secondHandCell.setColspan(6);
 			table.addCell( secondHandCell );
-			PdfPCell secondHandPriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getSecondHandPrice(), Locale.UK) ));
+			PdfPCell secondHandPriceCell = new PdfPCell( new Phrase( CurrencyStyleFormatter.print(invoice.getSecondHandPrice(), Locale.UK) ));
 			secondHandPriceCell.setBorder(Rectangle.NO_BORDER);
 			table.addCell( secondHandPriceCell );
 		}
@@ -283,7 +283,7 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 			serviceChargeCell.setBorder(Rectangle.NO_BORDER);
       serviceChargeCell.setColspan(6);
 			table.addCell( serviceChargeCell );
-			PdfPCell serviceChargePriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getServiceCharge(), Locale.UK) ));
+			PdfPCell serviceChargePriceCell = new PdfPCell( new Phrase( CurrencyStyleFormatter.print(invoice.getServiceCharge(), Locale.UK) ));
 			serviceChargePriceCell.setBorder(Rectangle.NO_BORDER);
 			table.addCell( serviceChargePriceCell );
 		}
@@ -293,14 +293,14 @@ public class InvoiceController extends AbstractBookmarksController<Invoice> {
 		totalCell.setBorder(Rectangle.NO_BORDER);
 		totalCell.setColspan(6);
 		table.addCell( totalCell );
-		PdfPCell totalPriceCell = new PdfPCell( new Phrase( currencyFormatter.print(invoice.getTotalPrice(), Locale.UK) ));
+		PdfPCell totalPriceCell = new PdfPCell( new Phrase( CurrencyStyleFormatter.print(invoice.getTotalPrice(), Locale.UK) ));
 		totalPriceCell.setBorder(Rectangle.NO_BORDER);
 		table.addCell( totalPriceCell );
 
 		doc.add(table);
 
 		doc.add( new Chunk( nl ));
-		doc.add( new Chunk("TOTAL " + currencyFormatter.print(invoice.getTotalPrice(), Locale.UK)) );		
+		doc.add( new Chunk("TOTAL " + CurrencyStyleFormatter.print(invoice.getTotalPrice(), Locale.UK)) );		
 
 		doc.close();
 

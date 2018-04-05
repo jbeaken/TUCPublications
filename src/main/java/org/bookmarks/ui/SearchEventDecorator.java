@@ -40,6 +40,6 @@ public class SearchEventDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getTotalSellPrice() {
 		Event event = (Event)getCurrentRowObject();
-		return currencyFormatter.print(event.getTotalSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(event.getTotalSellPrice(), Locale.UK);
 	}
 }

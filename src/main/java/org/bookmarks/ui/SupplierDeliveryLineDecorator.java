@@ -46,18 +46,18 @@ public class SupplierDeliveryLineDecorator extends SearchStockItemsDecorator {
 
 	public String getPublisherPrice() {
 		SupplierDeliveryLine supplierDeliveryLine = (SupplierDeliveryLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierDeliveryLine.getPublisherPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierDeliveryLine.getPublisherPrice(), Locale.UK);
 	}
 	
 
 	public String getSellPrice() {
 		SupplierDeliveryLine supplierDeliveryLine = (SupplierDeliveryLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierDeliveryLine.getStockItem().getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierDeliveryLine.getStockItem().getSellPrice(), Locale.UK);
 	}	
 	
 	public String getTotalPrice() {
 		SupplierDeliveryLine supplierDeliveryLine = (SupplierDeliveryLine)getCurrentRowObject();
-		return currencyFormatter.print(supplierDeliveryLine.getPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(supplierDeliveryLine.getPrice(), Locale.UK);
 	}	
 
 	private  String showFillCustomerOrders(SupplierDeliveryLine supplierDeliveryLine) {

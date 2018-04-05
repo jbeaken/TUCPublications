@@ -24,6 +24,6 @@ public class SearchVTTransactionsDecorator extends AbstractBookmarksTableDecorat
 		if(amount.longValue() < 0) {
 			color = "red";
 		}
-		return "<span style='color : " + color + ";'>" + currencyFormatter.print(e.getTotal(), Locale.UK) + "</span>";
+		return "<span style='color : " + color + ";'>" + CurrencyStyleFormatter.print(e.getTotal(), Locale.UK) + "</span>";
 	}	
 }

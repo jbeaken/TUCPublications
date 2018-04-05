@@ -112,8 +112,8 @@ public class SearchCustomersDecorator extends AbstractBookmarksTableDecorator {
 		BigDecimal currentBalance = customer.getBookmarksAccount().getCurrentBalance() == null ? new BigDecimal(0) : customer.getBookmarksAccount().getCurrentBalance();
 	String lastPaymentDate = customer.getBookmarksAccount().getLastPaymentDate() == null ? "Never" : shortDateFormatter.print(customer.getBookmarksAccount().getLastPaymentDate(), Locale.UK);
 		if(isAccountHolder) {
-			return currencyFormatter.print(currentBalance, Locale.UK)
-					+ "/" + currencyFormatter.print(amountPaidInMonthly, Locale.UK)
+			return CurrencyStyleFormatter.print(currentBalance, Locale.UK)
+					+ "/" + CurrencyStyleFormatter.print(amountPaidInMonthly, Locale.UK)
 					+ " " + lastPaymentDate ;
 		}
 		return getImage("blue-nuke.png", "No");

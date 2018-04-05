@@ -74,7 +74,7 @@ public class SearchStockItemsDecorator extends AbstractBookmarksTableDecorator {
 
 	public String getSellPrice() {
 		StockItem stockItem = (StockItem)getCurrentRowObject();
-		return currencyFormatter.print(stockItem.getSellPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(stockItem.getSellPrice(), Locale.UK);
 	}
 
 	public String getPublisherPrice() {
@@ -88,7 +88,7 @@ public class SearchStockItemsDecorator extends AbstractBookmarksTableDecorator {
 	}
 
 	public String getPublisherPrice(StockItem stockItem) {
-		return currencyFormatter.print(stockItem.getPublisherPrice(), Locale.UK);
+		return CurrencyStyleFormatter.print(stockItem.getPublisherPrice(), Locale.UK);
 	}
 
 	public String getPrices() {
