@@ -130,7 +130,6 @@
 >>>>>>> d1bea6f... Fixed binging error for dates
 =======
 		<property name="mailSender" ref="mailSender" />
-		<property name="velocityEngine" ref="velocityEngine" />
 	</bean>
 
 	<bean id="chipsRestTemplate" class="org.springframework.web.client.RestTemplate"
@@ -149,6 +148,7 @@
 -->
 	</util:list>
 
+<<<<<<< HEAD
 	<bean id="velocityEngine"
 		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<property name="velocityProperties">
@@ -160,6 +160,12 @@
 	</bean>
 >>>>>>> e88bcf6... Fixed bouncies using RestTemplate, added LoggingRequestInterceptor for RestTemplate
 
+=======
+ <bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+   <property name="templateLoaderPath"><value>/WEB-INF/freemarker/</value></property>
+ </bean>
+ 
+>>>>>>> 1c71a76... Bump spring 4.3.14 -> 5.0.4, had to replace velocity with freemarker, tiles2 -> tiles2, jackson 2.8.8.1 -> 2.9.5
 	<!-- Encryption -->
 	<bean id="bcProvider" class="org.bouncycastle.jce.provider.BouncyCastleProvider" />
 
