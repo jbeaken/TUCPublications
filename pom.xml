@@ -183,12 +183,6 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>net.sf.flexjson</groupId>
-			<artifactId>flexjson</artifactId>
-			<version>3.3</version>
-		</dependency>
-
 		<!-- Slack -->
 		<dependency>
 		    <groupId>com.ullink.slack</groupId>
