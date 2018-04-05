@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ecwid.maleorang.MailchimpClient;
 import com.ecwid.maleorang.MailchimpObject;

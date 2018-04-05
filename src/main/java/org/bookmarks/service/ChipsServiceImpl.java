@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 >>>>>>> 7fc11cb... getOrders now working
 import org.apache.commons.io.FileUtils;

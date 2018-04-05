@@ -180,7 +180,7 @@
 	</bean>
 
 	<bean id="hibernateStringEncryptor"
-		class="org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor">
+		class="org.jasypt.hibernate5.encryptor.HibernatePBEStringEncryptor">
 		<property name="registeredName">
 			<value>strongHibernateStringEncryptor</value>
 		</property>
@@ -351,7 +351,7 @@
 
 	<!-- TRANSACTION MANAGEMENT -->
 
-	<bean class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+	<bean class="org.springframework.orm.hibernate5.HibernateTransactionManager"
 		id="transactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
@@ -394,7 +394,7 @@
 		</bean>
 
 		<bean id="sessionFactory"
-			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 			<property name="dataSource" ref="dataSource" />
 			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>
@@ -480,7 +480,7 @@
 		</bean>
 
 		<bean id="sessionFactory"
-			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 			<property name="dataSource" ref="dataSource" />
 			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>
@@ -552,7 +552,7 @@
 			<property name="password" value="${db.beans.password}" />
 		</bean>
 		<bean id="sessionFactory"
-			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+			class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 			<property name="dataSource" ref="dataSource" />
 			<property name="packagesToScan">
 				<value>org.bookmarks.domain</value>

@@ -30,6 +30,16 @@ import org.bookmarks.website.domain.PaymentType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+<<<<<<< HEAD
+=======
+import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Parameter;
+
+import org.jasypt.hibernate5.type.EncryptedStringType;
+
+
+>>>>>>> e9e0b11... First cut, not working
 @Entity
 @Table(name="customerorderline")
 public class CustomerOrderLine extends OrderLine {
