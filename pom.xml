@@ -79,7 +79,11 @@
 		<!-- Hibernate -->
 		<hibernate.version>5.2.3.Final</hibernate.version>
 		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
+<<<<<<< HEAD
 		<hibernate.search.version>5.5.4.Final</hibernate.search.version>
+=======
+		<hibernate.search.version>4.1.1.Final</hibernate.search.version>
+>>>>>>> 7c319ae... First cut, not working
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
