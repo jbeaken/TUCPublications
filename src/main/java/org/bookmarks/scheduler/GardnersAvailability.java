@@ -49,7 +49,7 @@ public class GardnersAvailability extends AbstractScheduler {
 	 * POST /gardners/StockSearch.aspx HTTP/1.1
 	 * @throws IOException
 	 */
-	@Scheduled(cron = "0 0 3 * * WED,SAT")//Three in the morning on Wednesday and Saturday
+	//@Scheduled(cron = "0 0 3 * * WED,SAT")//Three in the morning on Wednesday and Saturday
 	public void checkAvailability() throws IOException {
 
 		//if(isProduction() == false) return; //Should only run in production
@@ -89,10 +89,6 @@ public class GardnersAvailability extends AbstractScheduler {
 					stockItemService.setGardnersStockLevel(isbn, noInStock);
 					logger.debug("Count : " + count + " ISBN: " + isbn + " -- " + noInStock);
 					count++;
-				}
-
-				if(logger.isDebugEnabled()) {
-					logger.debug(doc.html());
 				}
 			}
 		}
