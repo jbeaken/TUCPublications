@@ -261,7 +261,7 @@ public class ChipsServiceImpl implements ChipsService {
 =======
 
 		Integer port = 22;
-		
+
 		if (!isProduction()) {
 >>>>>>> 175de40... Added cancel and ability to raise non account invoices
 			logger.info("Not uploading image as this isn't production");
@@ -966,7 +966,7 @@ RestTemplate restTemplate = getRestTemplate();
 		String decryptedJson = jsonEcryptor.decrypt(json);
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 
-		logger.debug("{}", decryptedJson);
+		//logger.debug("{}", decryptedJson);
 
 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
 		});
