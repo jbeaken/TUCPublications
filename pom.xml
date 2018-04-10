@@ -15,7 +15,11 @@
 	<groupId>org.bookmarks</groupId>
 	<artifactId>bookmarks</artifactId>
 	<packaging>war</packaging>
+<<<<<<< HEAD
 	<version>2.0-beta</version>
+=======
+	<version>3.0-RELEASE</version>
+>>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	<name>bookmarks</name>
 
 	<properties>
@@ -74,6 +78,7 @@
 
 		<!-- Hibernate -->
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<hibernate.version>5.2.3.Final</hibernate.version>
 		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
 <<<<<<< HEAD
@@ -90,6 +95,11 @@
 		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
 		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
 >>>>>>> 6a5b44f... Hibernate 5.2.3 -> 5.2.16, hib validator 5.2.4 -> 5.4.3, search 5.5.4 -> 5.9.1
+=======
+		<hibernate.version>5.2.16.Final</hibernate.version>
+		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
+		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
+>>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
@@ -101,6 +111,7 @@
 
 		<!-- Encryption -->
 		<jasypt.version>1.9.3-SNAPSHOT</jasypt.version>
+<<<<<<< HEAD
 		<bouncy.castle.version>1.59</bouncy.castle.version>
 
 <<<<<<< HEAD
@@ -141,6 +152,13 @@
     
 <dependencies>
 =======
+=======
+
+		<!-- Image Manipulation -->
+		<imgscalr.version>4.2</imgscalr.version>
+		<bouncy.castle.version>1.59</bouncy.castle.version>
+
+>>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	</properties>
 
 	<dependencies>

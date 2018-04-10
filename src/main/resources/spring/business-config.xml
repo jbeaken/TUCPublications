@@ -164,8 +164,12 @@
  <bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
    <property name="templateLoaderPath"><value>/WEB-INF/freemarker/</value></property>
  </bean>
+<<<<<<< HEAD
  
 >>>>>>> 1c71a76... Bump spring 4.3.14 -> 5.0.4, had to replace velocity with freemarker, tiles2 -> tiles2, jackson 2.8.8.1 -> 2.9.5
+=======
+
+>>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	<!-- Encryption -->
 	<bean id="bcProvider" class="org.bouncycastle.jce.provider.BouncyCastleProvider" />
 
@@ -503,7 +507,7 @@
 					<prop key="hibernate.physical_naming_strategy">org.bookmarks.config.SpringPhysicalNamingStrategy</prop>
 					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
 					<prop key="hibernate.connection.charSet">UTF-8</prop>
-					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 					<prop key="hibernate.hbm2ddl.auto">validate</prop>
 					<prop key="hibernate.show_sql">false</prop>
 					<prop key="hibernate.format_sql">true</prop>
