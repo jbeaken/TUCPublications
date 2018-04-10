@@ -57,7 +57,7 @@
               <property name="APP_LOG_LEVEL" value="INFO"/>
         </if>
         <if condition='property("spring.profiles.active").contains("dev")'>
-              <property name="APP_LOG_LEVEL" value="DEBUG"/>
+              <property name="APP_LOG_LEVEL" value="INFO"/>
         </if>
 <<<<<<< HEAD
 <<<<<<< HEAD

@@ -52,8 +52,16 @@ public class EmailServiceImpl implements EmailService {
 
 =======
 
+<<<<<<< HEAD
   @Autowired
 >>>>>>> 94bb064... Changed logging
+=======
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+
+>>>>>>> a58adb3... Re installing setter for mailSender
 	private JavaMailSender mailSender;
 
   @Autowired
@@ -99,9 +107,15 @@ public class EmailServiceImpl implements EmailService {
 		//String[] emails = {"jack747@gmail.com"};
 =======
 
+		// String[] emails = {buyer1Email, buyer2Email, mailOrderEmail,
+		// managerEmail, publicationsEmail, adminEmail};
 		String[] emails = { buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail };
+<<<<<<< HEAD
 
 >>>>>>> 94bb064... Changed logging
+=======
+		// String[] emails = {"jack747@gmail.com"};
+>>>>>>> a58adb3... Re installing setter for mailSender
 		msg.setTo(emails);
 		
 		msg.setSubject("Hello From Beans. Today I am feeling " + emotion);
@@ -110,6 +124,7 @@ public class EmailServiceImpl implements EmailService {
 		try{
 			this.mailSender.send(msg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		} catch(MailException ex) {
 			// simply log it and go on...
 			logger.error("Cannot send daily report", ex.getMessage());            
@@ -117,6 +132,11 @@ public class EmailServiceImpl implements EmailService {
 		} catch (Exception ex) {
 			logger.error("Cannot send daily report", ex);
 >>>>>>> 94bb064... Changed logging
+=======
+		} catch (MailException ex) {
+			// simply log it and go on...
+			logger.error("Cannot send daily report", ex.getMessage());
+>>>>>>> a58adb3... Re installing setter for mailSender
 		}
 	}
 	
