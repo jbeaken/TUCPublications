@@ -32,7 +32,8 @@ public class MonthlyAccountPayment extends AbstractScheduler {
 
 	private Logger logger = LoggerFactory.getLogger(MonthlyAccountPayment.class);
 
-	@Scheduled(cron = "0 01 17 * * ?")
+	//4am
+	@Scheduled(cron = "0 00 04 * * ?")
 	@Transactional
 	public void process() {
 
@@ -69,7 +70,7 @@ public class MonthlyAccountPayment extends AbstractScheduler {
 
 					Date firstPaymentDate = accountRepository.getFirstPaymentDate(customer);
 
-					logger.debug("Customer {} has monthlyPayment = {}, lastPaymentDate = {}, firstPaymentDate = {}", customer, monthlyPayment, lastPaymentDate, firstPaymentDate);
+				//	logger.debug("Customer {} has monthlyPayment = {}, lastPaymentDate = {}, firstPaymentDate = {}", customer, monthlyPayment, lastPaymentDate, firstPaymentDate);
 
 					accountRepository.updateMonthlyPayments(customer, monthlyPayment, lastPaymentDate, firstPaymentDate);
 			});

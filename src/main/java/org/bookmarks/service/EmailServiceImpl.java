@@ -31,6 +31,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 @Service
 public class EmailServiceImpl implements EmailService {
+<<<<<<< HEAD
 	
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
@@ -49,6 +50,10 @@ public class EmailServiceImpl implements EmailService {
 	
 =======
 
+=======
+
+  @Autowired
+>>>>>>> 94bb064... Changed logging
 	private JavaMailSender mailSender;
 
   @Autowired
@@ -87,10 +92,16 @@ public class EmailServiceImpl implements EmailService {
 	public void sendDailyReport(String emotion, String message) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
+<<<<<<< HEAD
 		
 		//String[] emails = {buyer1Email, buyer2Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail};
 		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail};
 		//String[] emails = {"jack747@gmail.com"};
+=======
+
+		String[] emails = { buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail };
+
+>>>>>>> 94bb064... Changed logging
 		msg.setTo(emails);
 		
 		msg.setSubject("Hello From Beans. Today I am feeling " + emotion);
@@ -98,9 +109,14 @@ public class EmailServiceImpl implements EmailService {
 		
 		try{
 			this.mailSender.send(msg);
+<<<<<<< HEAD
 		} catch(MailException ex) {
 			// simply log it and go on...
 			logger.error("Cannot send daily report", ex.getMessage());            
+=======
+		} catch (Exception ex) {
+			logger.error("Cannot send daily report", ex);
+>>>>>>> 94bb064... Changed logging
 		}
 	}
 	

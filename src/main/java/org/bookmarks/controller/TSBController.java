@@ -375,7 +375,7 @@ public class TSBController extends AbstractBookmarksController {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MMM/yyyy");
 		modelMap.addAttribute("creditNote", new CreditNote());
 
-		addInfo("The date of the last credit note uploaded was " +  formatter.format( lastCreditNoteDate ) + ". Please import from TSB covering this date range including this date.", modelMap);
+		addInfo("The date of the last credit note uploaded was " +  formatter.format( lastCreditNoteDate ) + ". Please import from TSB covering this date range including this date. <br/><br/> Go to <a href='https://online-business.tsb.co.uk/business/logon/login.jsp'>https://online-business.tsb.co.uk/business/logon/login.jsp</a> to download csv.", modelMap);
 
 		return "uploadAccountsFromTSB";
 	}

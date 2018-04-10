@@ -26,7 +26,7 @@
                         <MaxFileSize>20MB</MaxFileSize>
                 </triggeringPolicy>
 
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <FileNamePattern>/home/bookmarks/log/bookmarks.%i.log.zip</FileNamePattern>
             <MinIndex>1</MinIndex>
             <MaxIndex>10</MaxIndex>
@@ -101,6 +101,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> aa4a49e... Added spring security
         <root level="INFO">
 =======
@@ -121,6 +122,8 @@
 =======
         <logger name="org.bookmarks.controller.TSBController" level="DEBUG" />
 >>>>>>> ecd018b... Adding to transaction decorator for tsb
+=======
+>>>>>>> 94bb064... Changed logging
         <root level="INFO">
 >>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />
