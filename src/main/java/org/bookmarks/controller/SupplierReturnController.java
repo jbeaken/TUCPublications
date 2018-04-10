@@ -1,15 +1,12 @@
 package org.bookmarks.controller;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,21 +15,17 @@ import javax.validation.Valid;
 import org.bookmarks.controller.validation.StockItemValidator;
 import org.bookmarks.controller.validation.SupplierReturnLineValidator;
 import org.bookmarks.domain.CustomerOrderLine;
-import org.bookmarks.domain.CustomerOrderLineStatus;
 import org.bookmarks.domain.StockItem;
 import org.bookmarks.domain.Supplier;
-import org.bookmarks.domain.SupplierDeliveryLine;
 import org.bookmarks.domain.SupplierReturn;
 import org.bookmarks.domain.SupplierReturnLine;
+import org.bookmarks.domain.SupplierReturnStatus;
 import org.bookmarks.service.AZLookupService;
 import org.bookmarks.service.CustomerOrderLineService;
 import org.bookmarks.service.Service;
 import org.bookmarks.service.StockItemService;
 import org.bookmarks.service.SupplierReturnService;
 import org.bookmarks.service.SupplierService;
-import org.bookmarks.domain.SupplierReturnStatus;
-
-import org.bookmarks.ui.comparator.GardnersDeliveryComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +35,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-import java.util.Date;
-import org.springframework.transaction.annotation.Transactional;
 
 @Controller
 @RequestMapping(value="/supplierReturn")
@@ -463,7 +452,6 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 	@RequestMapping(value="/markAsReceivedCredit", method=RequestMethod.GET)
-	@Transactional
 	public String markAsReceivedCredit(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 		SupplierReturn supplierReturn = supplierReturnService.get(id);
 
@@ -476,7 +464,6 @@ public class SupplierReturnController extends OrderLineController {
 	}
 
 		@RequestMapping(value="/sendToSupplier", method=RequestMethod.GET)
-		@Transactional
 		public String sendToSupplier(Long id, ModelMap modelMap, HttpServletRequest request, HttpSession session) {
 			SupplierReturn supplierReturn = supplierReturnService.get(id);
 

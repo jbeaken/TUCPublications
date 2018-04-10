@@ -3,34 +3,10 @@ package org.bookmarks.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
 import java.math.BigDecimal;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-import org.apache.commons.csv.CSVPrinter;
-import org.apache.commons.csv.CSVParser;
-
-import java.util.GregorianCalendar;
-import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Calendar;
-
-import java.io.Reader;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,46 +20,35 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.bookmarks.controller.bean.CustomerMergeFormObject;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrder;
-import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.CustomerType;
-import org.bookmarks.domain.TransactionType;
-import org.bookmarks.service.CustomerService;
-import org.bookmarks.domain.SponsorshipDetails;
 import org.bookmarks.domain.SponsorshipType;
-
+import org.bookmarks.repository.AccountRepository;
+import org.bookmarks.service.CreditNoteService;
+import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.Service;
-import org.bookmarks.service.CreditNoteService;
-import org.bookmarks.repository.AccountRepository;
 import org.bookmarks.website.domain.Address;
-import org.bookmarks.controller.bean.CustomerMergeFormObject;
-
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.PathVariable;
-
-import org.springframework.web.multipart.MultipartFile;
-
-import org.springframework.format.number.CurrencyStyleFormatter;
-
-import org.springframework.beans.factory.annotation.Value;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.format.number.CurrencyStyleFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -391,7 +356,6 @@ public class CustomerController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/merge", method = RequestMethod.POST)
-	@Transactional
 	public String merge(@Valid CustomerMergeFormObject customerMergeFormObject, BindingResult bindingResult,
 			ModelMap modelMap) {
 
@@ -434,7 +398,6 @@ public class CustomerController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/mergeConfirmed", method = RequestMethod.GET)
-	@Transactional
 	public String mergeConfirmed(Long customerToKeepId, Long customerToDiscardId, ModelMap modelMap,
 			RedirectAttributes redirectAttributes) {
 

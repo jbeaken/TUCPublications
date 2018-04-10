@@ -3,8 +3,6 @@ package org.bookmarks.repository;
 import org.bookmarks.controller.SearchBean;
 import org.bookmarks.domain.VTTransaction;
 import org.hibernate.SessionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +13,6 @@ public class VTTransactionRepositoryImpl extends AbstractRepository<VTTransactio
 	
 	private SessionFactory sessionFactory;
 	
-    private Logger logger = LoggerFactory.getLogger(VTTransactionRepositoryImpl.class);
-
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -43,8 +39,4 @@ public class VTTransactionRepositoryImpl extends AbstractRepository<VTTransactio
 	protected String getDefaultSortColumn() {
 		return "t.id";
 	}	
-
-
-
-
 }

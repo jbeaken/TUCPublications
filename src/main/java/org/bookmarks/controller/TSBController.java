@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -19,21 +18,21 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.bookmarks.bean.CreditNoteHolder;
 import org.bookmarks.domain.CreditNote;
 import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.TransactionType;
-import org.bookmarks.domain.VTTransaction;
 import org.bookmarks.exceptions.BookmarksException;
 import org.bookmarks.repository.AccountRepository;
 import org.bookmarks.repository.VTTransactionRepository;
 import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.Service;
+import org.bookmarks.service.TSBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,14 +49,14 @@ public class TSBController extends AbstractBookmarksController {
 	@Autowired
 	private CustomerService customerService;
 
-	// @Autowired
-	// private EmailService emailService;
-
 	@Autowired
 	private VTTransactionRepository vtTransactionRepository;
 
 	@Autowired
 	private AccountRepository accountRepository;
+	
+	@Autowired
+	private TSBService tsbService;
 
 	private Logger logger = LoggerFactory.getLogger(TSBController.class);
 
@@ -65,39 +64,13 @@ public class TSBController extends AbstractBookmarksController {
 	 * File(s) have been uploaded, converted into credit notes, now process them
 	 */
 	@RequestMapping(value = "/saveAccountsFromTSB", method = RequestMethod.GET)
-	@Transactional
 	public String saveAccountsFromTSB(@RequestParam("credit") Boolean credit, ModelMap modelMap, HttpSession session) throws IOException {
 
 		CreditNoteHolder holder = (CreditNoteHolder) session.getAttribute("creditNoteHolder");
 
 		logger.info("About to process credit notes, credit = {}", credit);
 
-		for (CreditNote creditNote : holder.getCreditNoteMap().values()) {
-
-			logger.debug("CreditNote : {}", creditNote);
-
-			if (creditNote.getStatus().equals("Unmatched")) {
-				continue;
-			}
-
-			if (creditNote.getStatus().equals("Already Processed")) {
-				continue;
-			}
-
-			if (creditNote.isClubAccount()) {
-				logger.debug("Found club account, saving vt transaction");
-
-				VTTransaction transaction = new VTTransaction();
-
-				transaction.setTotal(creditNote.getAmount().floatValue());
-				transaction.setDate(creditNote.getDate());
-				transaction.setPrimaryAccount("Club Account");
-
-				vtTransactionRepository.save(transaction);
-			}
-
-			accountRepository.processCreditNote(creditNote, credit);
-		}
+		tsbService.saveAccountsFromTSB(holder, credit);
 
 		addSuccess("All Saved!", modelMap);
 
@@ -400,69 +373,4 @@ public class TSBController extends AbstractBookmarksController {
 	public Service<Customer> getService() {
 		return customerService;
 	}
-}
-
-class CreditNoteHolder {
-
-	private Map<String, CreditNote> creditNoteMap = new HashMap<>();
-
-	private Integer noOfLines = 0;
-
-	public Map<String, CreditNote> getCreditNoteMap() {
-		return creditNoteMap;
-	}
-
-	public Object getNoOfAlreadyProcessed() {
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Already Processed")).count();
-	}
-
-	public Long getNoUnmatched() {
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Unmatched")).count();
-	}
-
-	public int getNoMatched() {
-		return getMatched().size();
-	}
-
-	public void incrementNoOfLines() {
-		noOfLines++;
-	}
-
-	public Integer getNoOfLines() {
-		return noOfLines;
-	}
-
-	public double getTotalAmountInPounds() {
-		return creditNoteMap.values().stream().mapToDouble(i -> i.getAmount().doubleValue()).sum();
-	}
-
-	public List<CreditNote> getMatched() {
-		//Must match Secondary Match and Primary March
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().contains("Primary Match") || cn.getStatus().contains("Secondary Match")).collect(Collectors.toList());
-	}
-
-
-	public List<CreditNote> getAlreadyProcessed() {
-		return creditNoteMap.values().stream().filter(cn -> cn.getStatus().equals("Already Processed")).collect(Collectors.toList());
-	}
-
-
-
-	public List<CreditNote> getClubAccounts() {
-		return creditNoteMap.values().stream().filter(cn -> cn.isClubAccount()).collect(Collectors.toList());
-	}
-
-	public int getNoOfClubAccounts() {
-		return getClubAccounts().size();
-	}
-
-	public int getNoOfClubAccountsUnprocessed() {
-		return getClubAccounts().stream().filter(cn -> !cn.getStatus().equals("Already Processed")).collect(Collectors.toList()).size();
-	}
-
-	public CreditNote getCreditNote(String transactionDescription) {
-			return creditNoteMap.get(transactionDescription);
-	}
-
-
 }

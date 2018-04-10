@@ -167,7 +167,6 @@ public class StockItemController extends AbstractBookmarksController<StockItem> 
 	}
 
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-//	@Transactional
 	public String add(StockItem stockItem, BindingResult bindingResult, HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 
 		logger.info("Attempting to add stock item " + stockItem.getIsbn() + " : " + stockItem.getTitle());

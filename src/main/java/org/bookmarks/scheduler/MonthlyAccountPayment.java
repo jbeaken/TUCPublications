@@ -1,6 +1,5 @@
 package org.bookmarks.scheduler;
 
-import java.io.IOException;
 import java.util.Collection;
 
 import org.bookmarks.repository.AccountRepository;

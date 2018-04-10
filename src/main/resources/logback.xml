@@ -95,6 +95,7 @@
 
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
         <logger name="org.bookmarks" level="${APP_LOG_LEVEL}" />
+<<<<<<< HEAD
 >>>>>>> a2330fa... Added debug
 
 <<<<<<< HEAD
@@ -116,6 +117,10 @@
 
 >>>>>>> 60c6bee... Added slack and staff impl
         <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
+=======
+        
+        <logger name="org.springframework.transaction" level="INFO"/>
+>>>>>>> 24112f0... Removed transactional from controllers
 
 <<<<<<< HEAD
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate

@@ -158,12 +158,10 @@ public class SearchCustomersDecorator extends AbstractBookmarksTableDecorator {
 		return getAnchor("/bookmarks/customer/edit?id=" + id + "&flow=searchCustomers", id, "Edit", false, false);
 	}
 
-
 	public String getId() {
 		Customer customer = (Customer)getCurrentRowObject();
 		return getId(customer);
 	}
-
 
 	public String getPhoneNumber() {
 		Customer customer = (Customer)getCurrentRowObject();
