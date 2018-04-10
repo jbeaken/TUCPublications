@@ -162,7 +162,7 @@
 
 =======
  <bean id="freemarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-   <property name="templateLoaderPath"><value>/WEB-INF/freemarker/</value></property>
+   <property name="templateLoaderPath"><value>/</value></property>
  </bean>
 <<<<<<< HEAD
  

@@ -50,9 +50,9 @@ public class EmailServiceImpl implements EmailService {
 =======
 
 	private JavaMailSender mailSender;
-	
-    @Autowired
-    private FreeMarkerConfigurer freemarkerConfigurer;
+
+  @Autowired
+  private FreeMarkerConfigurer freemarkerConfigurer;
 
 	@Autowired
 	private EmailReportService emailReportService;
@@ -261,7 +261,7 @@ public class EmailServiceImpl implements EmailService {
 				message.setSubject("Your bookmarks bookshop order");
 				Map<String, Object> model = new HashMap<String, Object>();
 				model.put("customerOrder", customerOrder);
-				Template template = freemarkerConfigurer.createConfiguration().getTemplate("test");
+				Template template = freemarkerConfigurer.createConfiguration().getTemplate("customer-order-confirmation.ftl");
 				String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
 				message.setText(text, true);
 			}
@@ -308,17 +308,17 @@ public class EmailServiceImpl implements EmailService {
 //		}	
 =======
 			public void prepare(MimeMessage mimeMessage) throws Exception {
-				
+
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-				
+
 				message.setTo(emails);
 				message.setFrom(fromEmail);
 				message.setSubject("Your bookmarks bookshop order");
-				
+
 				Map<String, Object> model = new HashMap<String, Object>();
-				
+
 				model.put("customerOrderLine", customerOrderLine);
-				
+
 //				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "email/customer-order-posted.vm", "utf-8", model);
 //				message.setText(text, true);
 			}
@@ -332,12 +332,12 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendErrorEmail(Exception exception, String subject) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		
+
 		msg.setFrom(fromEmail);
 		msg.setSubject("Error : " + subject);
 		msg.setTo("jack747@gmail.com");
 		msg.setText(exception.getStackTrace().toString());
-		
+
 		try {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
