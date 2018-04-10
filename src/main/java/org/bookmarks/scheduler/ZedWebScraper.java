@@ -26,26 +26,26 @@ import java.util.stream.IntStream;
 
 @Component
 public class ZedWebScraper extends WebScraper {
-	
+
 	private Logger logger = LoggerFactory.getLogger(ZedWebScraper.class);
-	
+
 	private String base = "http://www.zedbooks.net/shop/books/";
 
 	/**
 	 * Every day at 11pm
 	 * Page 1 : https://www.zedbooks.net/shop/books
 	 * Page 2 : https://www.zedbooks.net/shop/books/page/2/
-	 * Up to page 30 as of August 2016, 
+	 * Up to page 30 as of August 2016,
 	 */
 	@Override
-	@Scheduled(cron = "0 0 23 * * SAT")
+	// @Scheduled(cron = "0 0 23 * * SAT")
 	public void scrape() throws Exception {
-			
+
 			if(isProduction() == false) {
 				logger.info("Aborting scraping Zed!! Not production");
 				return; //Should only run in production
 			}
-		
+
 			WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Zed");
 			Set<ScraperISBNHolder> isbnSet = new HashSet<ScraperISBNHolder>();
 
@@ -55,13 +55,13 @@ public class ZedWebScraper extends WebScraper {
 
 				try {
 				Document doc = Jsoup.connect( "https://www.zedbooks.net/shop/books/page/" + i ).userAgent("Mozilla").timeout(136000).get();
-				
+
 				logger.debug(doc.text());
-			 
+
 				Elements titles = doc.select("article.item a");
 
 				logger.info("Have found {} titles on page {}", titles.size(), i);
-			
+
 				//Now cycle through titles
 				for(Element e : titles) {
 					String href = e.attr("href");
@@ -79,16 +79,16 @@ public class ZedWebScraper extends WebScraper {
 					logger.debug("ISBN = " + options.attr("data-isbn"));
 
 					isbnSet.add( new ScraperISBNHolder(isbn, null) );
-					
+
 					// String categoryName = e.text();
 					// if(categoryName.isEmpty()) continue;
-					
+
 					// String drilldownURL = base + href;
-					
+
 					// //Have url of form /books/subject/ - ignore these
 					// logger.info("Category name : " + categoryName);
-					
-					
+
+
 				} //End for
 			} catch(Exception e) {
 				logger.error("Cannot get page {}", i, e);
@@ -97,12 +97,12 @@ public class ZedWebScraper extends WebScraper {
 			});
 
 			persist(isbnSet, webScraperResultBean);
-			
+
 			log(webScraperResultBean);
-			
+
 			// sendEmail(webScraperResultBean);
 	}
-	
+
 
 
 	/**
@@ -116,37 +116,37 @@ public class ZedWebScraper extends WebScraper {
 	protected Set<String> getIsbnList(String drilldownURL) throws IOException {
 		int page = 0;
 		Set<String> isbnSet = new HashSet<String>();
-		
+
 		Integer intLastPage = null;
-		
+
 		//cycle through pages
 		while(true) {
 			String url = drilldownURL;
 			if(page > 0) url = url + "?page=" + page;
 			logger.info("Drilldown url : " + url);
-			
-				
+
+
 			//Drilldown
 			Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(136000).get();
-		
+
 			Elements img = doc.select("img.book-cover");
-			
+
 			//Last page
 			if(intLastPage == null) {
 				Element elastPage = doc.select("li.pager-item").last();
 				if(elastPage == null) { //One page only
-					intLastPage = 0; 
+					intLastPage = 0;
 				} else {
 					String lastPage = elastPage.select("a").text();
 					intLastPage = Integer.parseInt(lastPage);
 				}
 				logger.info("Last page: " + intLastPage);
 			}
-			
+
 			for(Element e : img) {
 				String src = e.attr("src");
 				String isbn = src.substring(35, 48);
-				
+
 				logger.info(isbn);
 
 				isbnSet.add(isbn);

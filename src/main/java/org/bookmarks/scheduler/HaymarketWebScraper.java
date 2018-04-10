@@ -22,26 +22,26 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HaymarketWebScraper extends WebScraper {
-	
+
 	private Logger logger = LoggerFactory.getLogger(HaymarketWebScraper.class);
-	
+
 	private String base = "http://www.haymarketbooks.org";
 
 	/**
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 0 2 * * *")
+	// @Scheduled(cron = "0 0 2 * * *")
 	public void scrape() throws Exception {
-			
+
 		if(isProduction() == false) return; //Should only run in production
-	
+
 		logger.info("Scraping Haymarket!!");
 		WebScraperResultBean webScraperResultBean = new WebScraperResultBean("Haymarket");
-		
+
 		start(webScraperResultBean);
 	}
-	
+
 	@Override
 	/**
 	 * Pages have pagination, last page is represented by
@@ -53,33 +53,33 @@ public class HaymarketWebScraper extends WebScraper {
 	protected Set<String> getIsbnList(String drilldownURL) throws IOException {
 		int page = 0;
 		Set<String> isbnSet = new HashSet<String>();
-		
+
 		Integer intLastPage = null;
-		
+
 		//cycle through pages
 		while(true) {
 			String url = drilldownURL;
 			if(page > 0) url = url + "?page=" + page;
 			logger.info("Drilldown url : " + url);
-			
-				
+
+
 			//Drilldown
 			Document doc = Jsoup.connect(url).userAgent("Mozilla").timeout(136000).get();
-		
+
 			Elements dd = doc.select("a.imagecache");
-			
+
 			//Last page
 			if(intLastPage == null) {
 				Element elastPage = doc.select("li.pager-last a").first();
 				if(elastPage == null) { //One page only
-					intLastPage = 0; 
+					intLastPage = 0;
 				} else {
 					String lastPage = elastPage.attr("href").substring(20);
 					intLastPage = Integer.parseInt(lastPage);
 				}
 				logger.info("Last page: " + intLastPage);
 			}
-			
+
 			for(Element a : dd) {
 				String href = a.attr("href");
 				if(!href.contains("/pb")) continue;

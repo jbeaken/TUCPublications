@@ -49,7 +49,7 @@ public class PlutoWebScraper extends WebScraper {
 	 * Every day at 11pm
 	 */
 	@Override
-	@Scheduled(cron = "0 27 15 * * TUE")
+	// @Scheduled(cron = "0 27 15 * * TUE")
 	public void scrape() throws Exception {
 
 		logger.info("Scraping Pluto!! Search Url : {}", base);
