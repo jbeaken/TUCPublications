@@ -7,7 +7,7 @@ fi
 echo Restoring backup with timestamp $1
 
 #Load password
-. ./password
+. /home/bookmarks/password
 
 #download SQL
 wget -O bm.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$1.sql.gpg
