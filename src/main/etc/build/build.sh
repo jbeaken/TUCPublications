@@ -6,7 +6,7 @@
 git pull
 
 if [ "$?" = "1" ]; then
-	echo "git error, aborting!" 
+	echo "git error, aborting!"
 	exit 1
 fi
 
