@@ -1,9 +1,6 @@
 #!/bin/bash
-# Script to build beans from git
 
-
-# Get latest from repository
-git pull
+# git pull
 
 if [ "$?" = "1" ]; then
 	echo "git error, aborting!"
@@ -15,7 +12,7 @@ mvn -f /home/git/bookmarks clean package
 
 if [ "$?" = "1" ]; then
 	echo "maven error, aborting!"
-        exit 1
+  exit 1
 fi
 
 # Stop tomcat
