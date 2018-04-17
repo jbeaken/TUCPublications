@@ -66,12 +66,15 @@ sudo chown beans:beans -R /home/git
 git clone ssh://root@bookmarksbookshop.co.uk/home/git/bookmarks /home/git/bookmarks
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 git clone ssh://root@bookmarksbookshop.co.uk/home/git/bookmarks /home/git/bookmarks
 >>>>>>> 22f680f... Moving around install files
 =======
 git clone ssh://root@bookmarksbookshop.co.uk/home/git/bookmarks /home/git/bookmarks
 >>>>>>> b743b57... Moving around install files
+=======
+>>>>>>> 754eb44... Adding install instructions
 
 #Copy files
 cp /home/git/bookmarks/src/main/etc/getIP.sh /home/bookmarks
@@ -212,11 +215,18 @@ sh /home/bookmarks/build.sh
 #Add to fstab
 #UUID=144E3AED4E3AC770 /srv/samba/share ntfs guest 0 0
 
-# Add to /etc/samba/smb.conf
+# sudo adduser trout
+# sudo smbpassrd -a trout
+# Add to /etc/samba/smb.conf :
 # [share]
 #    comment = BRAIN File Server Share
+#    security = user
 #    path = /srv/samba/share
-#    browsable = yes
-#    guest ok = yes
+#    valid users = trout
+#    guest ok = no
 #    read only = no
-#    create mask = 0755
+
+# On client machine
+# sudo apt install cifs-utils
+# Add to /etc/fstab
+# //192.168.1.8/brain /home/beans/brain cifs credentials=.smbcredentials 0 0
