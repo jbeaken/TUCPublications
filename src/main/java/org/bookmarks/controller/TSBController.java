@@ -90,7 +90,7 @@ public class TSBController extends AbstractBookmarksController {
 
 
 	@RequestMapping(value = "/uploadCSVFiles", method = RequestMethod.POST)
-	public String uploadCSVFiles(@RequestParam("csvFiles") MultipartFile[] csvFiles, ModelMap modelMap, HttpSession session) throws IOException {
+	public String uploadCSVFiles(@RequestParam("csvFiles") MultipartFile[] csvFiles, ModelMap modelMap, HttpSession session) throws Exception {
 
 		CreditNoteHolder holder = new CreditNoteHolder();
 
@@ -99,6 +99,7 @@ public class TSBController extends AbstractBookmarksController {
 				processCSVFile(holder, csvFile);
 			} catch (Exception e) {
 				logger.error("Problem uploading csv files from file " + csvFile.getOriginalFilename(), e);
+				throw e;
 			}
 		}
 
@@ -150,14 +151,14 @@ public class TSBController extends AbstractBookmarksController {
 			String transactionDateStr = record.get(0);
 
 			try {
-				transactionDate = new SimpleDateFormat("dd/MM/yyyy").parse(transactionDateStr);
+				transactionDate = new SimpleDateFormat("yyyy-MM-dd").parse(transactionDateStr);
 				transactionType = record.get(1);
 				sortCode = record.get(2);
 				accountNumber = record.get(3);
 				transactionDescription = record.get(4);
 				amount = record.get(6);
 			} catch (java.text.ParseException e) {
-				transactionDate = new SimpleDateFormat("dd MMM yy").parse(transactionDateStr);
+				transactionDate = new SimpleDateFormat("yyyy-MM-dd").parse(transactionDateStr);
 				transactionDescription = record.get(1);
 				transactionType = record.get(2);
 				sortCode = record.get(2);
@@ -166,10 +167,10 @@ public class TSBController extends AbstractBookmarksController {
 			}
 
 			// is this a club account transfer into the main bookmarks account?
-			if (transactionDescription.startsWith("I S BOOKS LTD") || transactionDescription.startsWith("TO 30932900089719")) {
+			if (transactionDescription.equals("TO Main Account 309329-00089719") || transactionDescription.startsWith("9126-309329-00089719")) {
 				cn.setClubAccount(true);
-			}
-
+			} 
+			
 			// Sort out double quotes in transactionDescription
 			if (transactionDescription.contains("\"")) {
 				transactionDescription = record.get(4) + record.get(5);

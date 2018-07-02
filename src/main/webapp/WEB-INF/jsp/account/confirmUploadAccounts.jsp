@@ -40,10 +40,10 @@
 	<ul>
 		<li><strong>Uploaded ${noOfLines} lines from csv files</strong></li>
 		<li>Found ${noOfCreditNotes} credit Notes</li>
-		<li>${noOfAlreadyProcessed}are already processed</li>
-		<li>${noOfUnmatched}are unmatched</li>
-		<li>${noOfMatched}are matched</li>
-		<li>${noOfClubAccountsUnprocessed}are club accounts</li>
+		<li>${noOfAlreadyProcessed} are already processed</li>
+		<li>${noOfUnmatched} are unmatched</li>
+		<li>${noOfMatched} are matched</li>
+		<li>${noOfClubAccountsUnprocessed} are club accounts</li>
 	</ul>
 	<br />
 	<c:if test="${noOfUnmatched > 0}">
@@ -62,7 +62,7 @@
 	</div>
 </div>
 
-<display:table name="creditNoteList">
+<display:table name="creditNoteList" id="searchTable">
 	<display:column property="date" title="Date" />
 	<display:column property="status" title="Status" />
 	<display:column property="amount" title="Amount" />
