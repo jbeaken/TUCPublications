@@ -113,7 +113,7 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 
 	@Override
 	public Collection<CreditNote> getCreditNotes(CustomerReportBean customerReportBean) {
-		Query query = sessionFactory.getCurrentSession().createQuery("select cn from CreditNote cn " + "where cn.date between :startDate and :endDate " + "and cn.customer = :customer)");
+		Query query = sessionFactory.getCurrentSession().createQuery("select cn from CreditNote cn " + "where cn.date between :startDate and :endDate " + "and cn.customer = :customer");
 		query.setParameter("customer", customerReportBean.getCustomer());
 		query.setParameter("startDate", customerReportBean.getStartDate());
 		query.setParameter("endDate", customerReportBean.getEndDate());
@@ -122,7 +122,7 @@ public class CreditNoteRepositoryImpl extends AbstractRepository<CreditNote> imp
 
 	@Override
 	public BigDecimal getOutgoings() {
-		Query query = sessionFactory.getCurrentSession().createQuery("select sum(amount) from CreditNote cn " + "where cn.customer.id = 31245");
+		Query query = sessionFactory.getCurrentSession().createQuery("select sum(amount) from CreditNote cn where cn.customer.id = 31245");
 		return (BigDecimal) query.uniqueResult();
 	}
 @Override

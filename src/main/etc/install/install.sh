@@ -4,7 +4,7 @@
 
 # Variables
 TOMCATVERSION=9.0.7
-MAVENVERSION=3.5.2
+MAVENVERSION=3.5.4
 
 # Install Java, accept license automatically
 #sudo echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -37,14 +37,18 @@ sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
 sudo apt -y install oracle-java8-installer
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 22f680f... Moving around install files
 =======
 >>>>>>> b743b57... Moving around install files
+=======
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 
 # Directories
 sudo mkdir /home/bak
 sudo mkdir -p /home/bookmarks/logs
 sudo mkdir /home/bookmarks/backups
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 sudo mkdir /home/git
@@ -57,6 +61,11 @@ sudo mkdir /home/git
 sudo mkdir /home/bookmarks/ssl
 sudo mkdir /home/git
 >>>>>>> b743b57... Moving around install files
+=======
+sudo mkdir /home/git
+sudo mkdir /home/ssl
+
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 
 # Permissions
 sudo chown beans:beans -R /home/bookmarks
@@ -83,7 +92,7 @@ cp /home/git/bookmarks/src/main/etc/build/build.sh /home/bookmarks/
 cp /home/git/bookmarks/src/main/etc/backup/restore.sh /home/bookmarks/
 
 # Maven
-<<<<<<< HEAD
+
 #echo Installing maven  $MAVENVERSION
 #wget apache.mirror.anlx.net/maven/maven-3/$MAVENVERSION/binaries/apache-maven-$MAVENVERSION-bin.tar.gz
 #sudo tar xf apache-maven-$MAVENVERSION-bin.tar.gz -C /opt
@@ -108,7 +117,7 @@ cp /home/git/bookmarks/src/main/etc/backup/restore.sh /home/bookmarks/
 
 # OPENSSL
 #DO DO
-=======
+
 echo Installing maven  $MAVENVERSION
 wget apache.mirror.anlx.net/maven/maven-3/$MAVENVERSION/binaries/apache-maven-$MAVENVERSION-bin.tar.gz
 sudo tar xf apache-maven-$MAVENVERSION-bin.tar.gz -C /opt
@@ -134,15 +143,21 @@ sudo systemctl enable tomcat
 # Create certificate, valid 3000 days (10 years)
 openssl req -x509 -nodes -newkey rsa:4096 -keyout /home/bookmarks/ssl/key.pem -out /home/bookmarks/ssl/cert.pem -days 3000
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 22f680f... Moving around install files
 =======
 >>>>>>> b743b57... Moving around install files
+=======
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 
 # CRONTAB
 
 # Write to path
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 #cp /etc/environment /etc/environment.bak
 #echo "PATH=$PATH:/opt/maven/bin" >> /etc/environment
 #. /etc/environment
@@ -161,6 +176,7 @@ sudo chown beans:beans -R /home/git
 gpg -d /home/git/bookmarks/src/main/etc/backup/password.gpg > /home/bookmarks/password
 DAY_OF_WEEK=$(date +"%a")
 sh /home/bookmarks/restore.sh $DAY_OF_WEEK
+<<<<<<< HEAD
 =======
 sudo echo "PATH=$PATH:/opt/maven/bin" >> /etc/environment
 . /etc/environment
@@ -176,6 +192,8 @@ sh /home/bookmarks/build.sh
 #sh /home/bookmarks/restore.sh $DAY_OF_WEEK
 >>>>>>> 22f680f... Moving around install files
 =======
+=======
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 echo 'PATH=$PATH:/opt/maven/bin' | sudo tee --append /etc/environment  > /dev/null
 . /etc/environment
 
@@ -188,8 +206,11 @@ sh /home/bookmarks/build.sh
 #gpg -d /home/git/bookmarks/src/main/etc/backup/password.gpg > /home/bookmarks/password
 #DAY_OF_WEEK=$(date +"%a")
 #sh /home/bookmarks/restore.sh $DAY_OF_WEEK
+<<<<<<< HEAD
 >>>>>>> b743b57... Moving around install files
 
+=======
+>>>>>>> f799369... Bumping hibernate and bouncy castle versions
 
 # Import bookmarks database
 # THIS REQUIRES THE INFO@BOOKMARKSBOOKSHOP.CO.UK PRIVATE KEY TO BE INSTALLED.

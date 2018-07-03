@@ -133,8 +133,9 @@ public class TSBController extends AbstractBookmarksController {
 		logger.info("Have records of size " + records.size());
 
 		for (CSVRecord record : records) {
-
-			logger.info(record.toString());
+			
+			logger.debug("**********************");
+			logger.debug(record.toString());
 
 			holder.incrementNoOfLines();
 			count++;
@@ -148,6 +149,7 @@ public class TSBController extends AbstractBookmarksController {
 			String transactionDescription = null;
 			String amount = null;
 			String transactionReference = null;
+			String tsbMatch = null;
 			String transactionDateStr = record.get(0);
 
 			try {
@@ -165,9 +167,9 @@ public class TSBController extends AbstractBookmarksController {
 				accountNumber = record.get(3);
 				amount = record.get(3);
 			}
-
-			// is this a club account transfer into the main bookmarks account?
-			if (transactionDescription.equals("TO Main Account 309329-00089719") || transactionDescription.startsWith("9126-309329-00089719")) {
+			
+			// is this a transfer 
+			if ( transactionType.equals("TFR") ) {
 				cn.setClubAccount(true);
 			} 
 			
@@ -184,28 +186,40 @@ public class TSBController extends AbstractBookmarksController {
 			transactionDescription = transactionDescription.replace("+", "");
 			transactionDescription = transactionDescription.replace(",", "");
 			transactionDescription = transactionDescription.replace("  ", " ");
+			transactionDescription = transactionDescription.replace("NO REF", "");
 			transactionDescription = transactionDescription.trim();
 
-			String tsbMatch = transactionDescription;
-
-			// Find transaction reference (SO and club account do not have one)
+			// PURDUE ANTHONYANTHONY PURDUE 00151030632BBKRCWD
+			// Find transaction reference. Remove reference number (00151030632BBKRCWD) that changes from transaction description
+			// PURDUE ANTHONYANTHONY PURDUE
+			// (Standing orders and club account do not have one)
+			// FPI (faster payments) may have one!
 			if (!transactionType.equals("SO") && cn.isClubAccount() == false) {
+				
 				String pattern = "[A-Z0-9]{16}";
 
 				// Create a Pattern object
 				Pattern r = Pattern.compile(pattern);
 
 				Matcher m = r.matcher(transactionDescription);
-				if (m.find()) {
+				
+				//Get last match
+				while(m.find()) {
 					transactionReference = m.group(0);
 					logger.debug("transactionReference : " + transactionReference);
-
-				} else {
-					throw new BookmarksException(csvFile.getOriginalFilename() + " : Could not find transaction reference in " + transactionDescription);
+					int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
+					logger.info("indexOfTransactionReference {} ", indexOfTransactionReference );
+					tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();								
 				}
-
-				int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
-				tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();
+				
+				if(transactionReference == null) {
+					//Some FPI don't have the match
+					if(!transactionType.equals("FPI")) throw new BookmarksException(csvFile.getOriginalFilename() + " : Could not find transaction reference in " + transactionDescription);
+					tsbMatch = transactionDescription;
+				}
+			} else {
+				//No account number, so straight match
+				tsbMatch = transactionDescription;
 			}
 
 			transactionReference = transactionDescription;
@@ -248,16 +262,16 @@ public class TSBController extends AbstractBookmarksController {
 			}
 
 			if (logger.isDebugEnabled()) {
-				logger.debug("**********************");
+				
 				logger.debug("Is clubAccount = {}", cn.isClubAccount());
-				logger.debug("" + transactionDate);
-				logger.debug(transactionType);
-				logger.debug(sortCode);
-				logger.debug(accountNumber);
+				logger.debug("transactionDate {}", transactionDate);
+				logger.debug("transactionType {}", transactionType);
+				logger.debug("sortCode {}", sortCode);
+				logger.debug("accountNumber {}", accountNumber);
 				logger.debug("transactionDescription {}", transactionDescription);
 				logger.debug("transactionReference {}", transactionReference);
 				logger.debug("tsbMatch {}", tsbMatch);
-				logger.debug(amount);
+				logger.debug("amount {}", amount);
 			}
 
 			if (!cn.isClubAccount()) {
