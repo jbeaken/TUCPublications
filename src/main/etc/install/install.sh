@@ -1,21 +1,14 @@
 #! /usr/bin/bash
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c208890... Upgrading install script
 
 # Variables
 TOMCATVERSION=9.0.7
 MAVENVERSION=3.5.4
 
-# Install Java, accept license automatically
-#sudo echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-
-# Install java 8
-#sudo echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee /etc/apt/sources.list.d/webupd8team-java.list
-#sudo echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list
-#sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
-#sudo apt update
-#sudo apt -y install oracle-java8-installer
-#sudo apt install oracle-java8-set-default
 =======
 =======
 >>>>>>> b743b57... Moving around install files
@@ -25,9 +18,6 @@ if [ "$(id -u)" -eq "0" ]; then
    exit 1
 fi
 
-# Variables
-TOMCATVERSION=9.0.7
-MAVENVERSION=3.5.3
 
 # Install Java, accept license automatically
 sudo echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
@@ -92,32 +82,6 @@ cp /home/git/bookmarks/src/main/etc/build/build.sh /home/bookmarks/
 cp /home/git/bookmarks/src/main/etc/backup/restore.sh /home/bookmarks/
 
 # Maven
-
-#echo Installing maven  $MAVENVERSION
-#wget apache.mirror.anlx.net/maven/maven-3/$MAVENVERSION/binaries/apache-maven-$MAVENVERSION-bin.tar.gz
-#sudo tar xf apache-maven-$MAVENVERSION-bin.tar.gz -C /opt
-#sudo rm /opt/maven
-#sudo ln -s /opt/apache-maven-$MAVENVERSION /opt/maven
-
-# Mysql
-#sudo apt -y install mysql-server
-#mysql -uroot -p < /home/git/bookmarks/src/main/etc/install/create-bookmarks-db.sql
-
-# Tomcat
-#sudo wget apache.mirror.anlx.net/tomcat/tomcat-9/v$TOMCATVERSION/bin/apache-tomcat-$TOMCATVERSION.tar.gz
-#sudo tar xf apache-tomcat-$TOMCATVERSION.tar.gz -C /opt
-#sudo ln -s /opt/apache-tomcat-$TOMCATVERSION /opt/tomcat
-#sudo rm -rf /opt/tomcat/webapps/*
-#sudo cp /home/git/bookmarks/src/main/etc/conf/server.xml /opt/tomcat/conf/server.xml
-#sudo cp /home/git/bookmarks/src/main/etc/conf/setenv-prod.sh /opt/tomcat/bin/setenv.sh
-
-# Tomcat systemd
-#sudo cp /home/git/bookmarks/src/main/etc/install/tomcat.service /lib/systemd/system/
-#sudo systemctl enable tomcat
-
-# OPENSSL
-#DO DO
-
 echo Installing maven  $MAVENVERSION
 wget apache.mirror.anlx.net/maven/maven-3/$MAVENVERSION/binaries/apache-maven-$MAVENVERSION-bin.tar.gz
 sudo tar xf apache-maven-$MAVENVERSION-bin.tar.gz -C /opt

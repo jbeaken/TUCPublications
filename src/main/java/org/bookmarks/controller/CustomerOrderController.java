@@ -439,7 +439,7 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		//Persist customer order
 		customerOrderService.save(customerOrder, customerOrderLineMap.values());
 
-		String email =customer.getContactDetails().getEmail();
+		String email = customer.getContactDetails().getEmail();
 
 
 		//Send confirmation email

@@ -295,11 +295,10 @@ public class EmailServiceImpl implements EmailService {
 				message.setTo(emails);
 				message.setFrom(fromEmail);
 				message.setSubject("Your bookmarks bookshop order");
-				Map<String, Object> model = new HashMap<String, Object>();
-				model.put("customerOrder", customerOrder);
-				Template template = freemarkerConfigurer.createConfiguration().getTemplate("customer-order-confirmation.ftl");
-				String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-				message.setText(text, true);
+//				Map<String, Object> model = new HashMap<String, Object>();
+//				Template template = freemarkerConfigurer.createConfiguration().getTemplate("customer-order-confirmation.ftl");
+//				String text = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+				message.setText(builder.toString(), true);
 			}
 		};
 
