@@ -80,6 +80,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<hibernate.version>5.2.3.Final</hibernate.version>
 		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
 <<<<<<< HEAD
@@ -96,6 +97,9 @@
 =======
 		<hibernate.version>5.2.17.Final</hibernate.version>
 >>>>>>> f799369... Bumping hibernate and bouncy castle versions
+=======
+		<hibernate.version>5.3.1.Final</hibernate.version>
+>>>>>>> 74aaa5c... Bump hibernate 5.2.17 -> 5.3.1
 		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
 		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
 >>>>>>> 6a5b44f... Hibernate 5.2.3 -> 5.2.16, hib validator 5.2.4 -> 5.4.3, search 5.5.4 -> 5.9.1
@@ -160,7 +164,7 @@
 
 		<!-- Image Manipulation -->
 		<imgscalr.version>4.2</imgscalr.version>
-		<bouncy.castle.version>1.60</bouncy.castle.version>
+		<bouncy.castle.version>1.59</bouncy.castle.version>
 
 >>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	</properties>
