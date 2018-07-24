@@ -28,6 +28,6 @@ echo "....All Done!"
 
 #Shredding
 echo "Shredding..."
-shred bm.sql
+#shred bm.sql
 
 echo "Restore Complete"
