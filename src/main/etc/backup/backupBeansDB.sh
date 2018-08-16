@@ -16,12 +16,12 @@ else
    FILENAME=$DAY_OF_WEEK
 fi
 echo $FILENAME
-/usr/bin/mysqldump  -u root -p$DB_PASSWORD bookmarks --add-drop-database --result-file=/home/bookmarks/backup/bm.sql
+/usr/bin/mysqldump  -u root -p$DB_PASSWORD bookmarks -B --result-file=/home/bookmarks/backup/bm.sql
 
 echo "...finished! Uploading to backup server.."
 
 # Encrypt
-gpg --encrypt --recipient info@bookmarksbookshop.co.uk --trust-model always --output /home/bookmarks/backup/bm.$FILENAME.sql.gpg /home/bookmarks/backup/bm.sql
+gpg --encrypt --batch --yes --recipient info@bookmarksbookshop.co.uk --trust-model always --output /home/bookmarks/backup/bm.$FILENAME.sql.gpg /home/bookmarks/backup/bm.sql
 
 # Upload
 wput -nc -u /home/bookmarks/backup/bm.$FILENAME.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$FILENAME.sql.gpg
