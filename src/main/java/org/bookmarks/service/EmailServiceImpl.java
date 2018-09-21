@@ -371,7 +371,7 @@ public class EmailServiceImpl implements EmailService {
 		msg.setFrom(fromEmail);
 		msg.setSubject("Error : " + subject);
 		msg.setTo("jack747@gmail.com");
-		msg.setText(exception.getStackTrace().toString());
+		msg.setText(exception.getStackTrace().toString() + " " + exception.getMessage());
 
 		try {
 			this.mailSender.send(msg);

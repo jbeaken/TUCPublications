@@ -98,8 +98,11 @@ public class TSBController extends AbstractBookmarksController {
 			try {
 				processCSVFile(holder, csvFile);
 			} catch (Exception e) {
-				logger.error("Problem uploading csv files from file " + csvFile.getOriginalFilename(), e);
-				throw e;
+				String errorMessage = "Problem uploading csv files from file " + csvFile.getOriginalFilename();
+				logger.error(errorMessage, e);
+				errorMessage += e.getMessage();
+				addError(errorMessage, modelMap);
+				return "welcome";
 			}
 		}
 

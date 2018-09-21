@@ -23,13 +23,17 @@ public class DocumentationController {
 
 
 	@RequestMapping(value="/")
-	public String index(ModelMap modelMap) throws ClientProtocolException, IOException {
+	public String index(ModelMap modelMap) {
 		return "documentation";
 	}
 
 	@RequestMapping(value="/technical")
-	public String technical(ModelMap modelMap) throws ClientProtocolException, IOException {
+	public String technical(ModelMap modelMap) {
 		return "technical";
 	}
-
+	
+	@RequestMapping(value="/admin")
+	public String admin(ModelMap modelMap) {
+		return "admin";
+	}	
 }
