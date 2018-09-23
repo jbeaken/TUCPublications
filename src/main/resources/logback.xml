@@ -119,6 +119,7 @@
         <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
 =======
         
+<<<<<<< HEAD
         <logger name="org.springframework.transaction" level="INFO"/>
 >>>>>>> 24112f0... Removed transactional from controllers
 
@@ -129,6 +130,8 @@
 >>>>>>> ecd018b... Adding to transaction decorator for tsb
 =======
 >>>>>>> 94bb064... Changed logging
+=======
+>>>>>>> a654b73... Better logging error
         <root level="INFO">
 >>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />

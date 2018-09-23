@@ -367,17 +367,20 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendErrorEmail(Exception exception, String subject) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-
+		
+		String message = exception.getStackTrace().toString() + " " + exception.getMessage();
+		
+		logger.error("This is message : " + message);
+		
 		msg.setFrom(fromEmail);
 		msg.setSubject("Error : " + subject);
 		msg.setTo("jack747@gmail.com");
-		msg.setText(exception.getStackTrace().toString() + " " + exception.getMessage());
+		msg.setText(message);
 
 		try {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
-			System.err.println(ex.getMessage());
+			logger.error("Cannot send error email", ex);
 		}
 	}
-
 }
