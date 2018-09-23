@@ -16,11 +16,11 @@ if [ "$?" = "1" ]; then
 fi
 
 # Stop tomcat
-sudo systemctl stop tomcat
+systemctl stop tomcat
 
-sudo rm -rf /opt/tomcat/webapps/bookmarks*
+rm -rf /opt/tomcat/webapps/bookmarks*
 
-sudo cp /home/git/bookmarks/target/bookmarks.war /opt/tomcat/webapps/bookmarks.war
+cp /home/git/bookmarks/target/bookmarks.war /opt/tomcat/webapps/bookmarks.war
 
 # Start tomcat
-sudo systemctl start tomcat
+systemctl start tomcat

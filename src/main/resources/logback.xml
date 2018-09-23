@@ -93,6 +93,7 @@
         
 =======
 
+<<<<<<< HEAD
 >>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
         <logger name="org.bookmarks" level="${APP_LOG_LEVEL}" />
 <<<<<<< HEAD
@@ -132,6 +133,8 @@
 >>>>>>> 94bb064... Changed logging
 =======
 >>>>>>> a654b73... Better logging error
+=======
+>>>>>>> c97fb42... Swithc of debug logging, janino not working
         <root level="INFO">
 >>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />
