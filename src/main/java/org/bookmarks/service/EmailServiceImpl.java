@@ -107,6 +107,7 @@ public class EmailServiceImpl implements EmailService {
 		//String[] emails = {"jack747@gmail.com"};
 =======
 
+<<<<<<< HEAD
 		// String[] emails = {buyer1Email, buyer2Email, mailOrderEmail,
 		// managerEmail, publicationsEmail, adminEmail};
 		String[] emails = { buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail };
@@ -116,6 +117,10 @@ public class EmailServiceImpl implements EmailService {
 =======
 		// String[] emails = {"jack747@gmail.com"};
 >>>>>>> a58adb3... Re installing setter for mailSender
+=======
+		String[] emails = { buyer1Email, managerEmail };
+		
+>>>>>>> 7af1d0d... Removed myself from daily report email
 		msg.setTo(emails);
 		
 		msg.setSubject("Hello From Beans. Today I am feeling " + emotion);
