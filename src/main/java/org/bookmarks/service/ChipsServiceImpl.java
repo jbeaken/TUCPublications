@@ -227,20 +227,8 @@ public class ChipsServiceImpl implements ChipsService {
 
 		Session session = null;
 		try {
-			JSch jsch = new JSch();
-
-			String knownHostsFilename = "/root/.ssh/known_hosts";
-			jsch.setKnownHosts(knownHostsFilename);
+			session = getJschSession();
 			
-			logger.debug("Attempting sftp to {} {} {}", sftpUsername, sftpHost, sftpPort);
-
-			session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
-			
-			// non-interactive version. Relies in host key being in known-hosts file
-			session.setPassword(sftpPassword);
-			session.setConfig("server_host_key","ecdsa-sha2-nistp256");
-
-
 			session.connect();
 
 			Channel channel = session.openChannel("sftp");
@@ -303,6 +291,7 @@ public class ChipsServiceImpl implements ChipsService {
 		Session session = null;
 		
 		try {
+<<<<<<< HEAD
 			JSch jsch = new JSch();
 
 <<<<<<< HEAD
@@ -392,6 +381,10 @@ public class ChipsServiceImpl implements ChipsService {
 			session = jsch.getSession(sftpUsername, sftpHost, port);
 >>>>>>> 175de40... Added cancel and ability to raise non account invoices
 
+=======
+			session = getJschSession();
+			
+>>>>>>> ac4cd65... Creating getSession for jsch, using idenity and known hosts
 			session.connect();
 
 			Channel channel = session.openChannel( "sftp" );
@@ -446,7 +439,25 @@ public class ChipsServiceImpl implements ChipsService {
 			if(session != null) session.disconnect();
 		}
 	}
+<<<<<<< HEAD
 	
+=======
+
+	private Session getJschSession() throws JSchException {
+		Session session = null;
+
+		JSch jsch = new JSch();
+
+		jsch.setKnownHosts("/home/sftponly/.ssh/known_hosts");
+		jsch.addIdentity("/home/sftponly/.ssh/id_rsa");
+
+		session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+		session.setConfig("server_host_key","ecdsa-sha2-nistp256");
+		
+		return session;
+	}
+
+>>>>>>> ac4cd65... Creating getSession for jsch, using idenity and known hosts
 	@Override
 <<<<<<< HEAD
 	public void syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException {
