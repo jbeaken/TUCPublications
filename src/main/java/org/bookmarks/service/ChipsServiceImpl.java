@@ -117,6 +117,12 @@ public class ChipsServiceImpl implements ChipsService {
 	@Value("#{ applicationProperties['sftpHost'] }")
 	private String sftpHost;
 	
+<<<<<<< HEAD
+=======
+	@Value("#{ applicationProperties['sftpPort'] }")
+	private Integer sftpPort;
+
+>>>>>>> d8e095e... Fixing ecdsa fingerprint used in known_hosts rather than rsa
 	@Value("#{ applicationProperties['sftpUsername'] }")
 	private String sftpUsername;
 	
@@ -220,16 +226,20 @@ public class ChipsServiceImpl implements ChipsService {
 	public void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException {
 
 		Session session = null;
-
 		try {
 			JSch jsch = new JSch();
 
 			String knownHostsFilename = "/root/.ssh/known_hosts";
 			jsch.setKnownHosts(knownHostsFilename);
+			
+			logger.debug("Attempting sftp to {} {} {}", sftpUsername, sftpHost, sftpPort);
 
-			session = jsch.getSession(sftpUsername, sftpHost, 2298);
+			session = jsch.getSession(sftpUsername, sftpHost, sftpPort);
+			
 			// non-interactive version. Relies in host key being in known-hosts file
 			session.setPassword(sftpPassword);
+			session.setConfig("server_host_key","ecdsa-sha2-nistp256");
+
 
 			session.connect();
 
@@ -241,8 +251,7 @@ public class ChipsServiceImpl implements ChipsService {
 			sftpChannel.put(in, "/images/brochure.pdf", ChannelSftp.OVERWRITE);
 
 			sftpChannel.exit();
-		} catch (Exception e) {
-			logger.error("FTP error", e);
+		
 		} finally {
 			if (session != null)
 				session.disconnect();

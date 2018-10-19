@@ -258,10 +258,14 @@
 			<groupId>com.jcraft</groupId>
 			<artifactId>jsch</artifactId>
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<version>0.1.50</version>
 =======
 			<version>0.1.53</version>
 >>>>>>> f6b36c6... Upgrading spring, hibernate jsftp slfj
+=======
+			<version>0.1.54</version>
+>>>>>>> d8e095e... Fixing ecdsa fingerprint used in known_hosts rather than rsa
 		</dependency>
 		
 <dependency>

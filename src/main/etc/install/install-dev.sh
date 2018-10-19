@@ -14,8 +14,10 @@ apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886
 apt-get update
 apt-get -y install oracle-java8-installer
 apt-get install oracle-java8-set-default
+
 # JCE
 cp /home/git/bookmarks/src/main/scripts/UnlimitedJCEPolicy/*.jar /usr/lib/jvm/java-8-oracle/jre/lib/security
+
 # Maven
 wget ftp://mirror.reverse.net/pub/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
 tar -xf apache-maven-3.5.0-bin.tar.gz -C /opt
