@@ -68,12 +68,18 @@
 
 <br />
 <c:if test="${creditNoteList != null}">
-	<display:table name="creditNoteList" requestURI="search"
+	<display:table name="creditNoteList"
+		requestURI="search"
 		decorator="org.bookmarks.ui.SearchCreditNotesDecorator"
-		sort="external" defaultsort="2" defaultorder="ascending"
+		sort="external"
+		defaultsort="2"
+		defaultorder="ascending"
 		class="table table-striped table-bordered table-hover table-condensed"
-		export="true" partialList="true" pagesize="${pageSize}"
-		size="${searchResultCount}" id="searchTable">
+		export="true"
+		partialList="true"
+		pagesize="${pageSize}"
+		size="${searchResultCount}"
+		id="searchTable">
 		<display:setProperty name="export.pdf" value="true" />
 		<display:setProperty name="export.xml" value="false" />
 		<display:setProperty name="export.pdf.filename"
@@ -85,10 +91,14 @@
 			title="ID" />
 		<display:column property="date" sortable="true" sortName="cn.date"
 			title="Date" />
-		<display:column property="customer" sortable="true" sortName="cn.date"
+		<display:column property="customerRaw" media="excel csv pdf" title="Customer" />
+
+		<display:column property="customer" media="html" sortable="true" sortName="cn.date"
 			title="Customer" />
-		<display:column property="amount" sortable="true" sortName="cn.amount"
+		<display:column property="amount" media="html" sortable="true" sortName="cn.amount"
 			title="Amount" />
+			<display:column property="amountRaw" media="excel csv pdf" title="Amount" />
+
 		<display:column property="transactionDescription" sortable="true"
 			sortName="cn.transactionDescription" title="Customer Match" />
 		<display:column property="transactionReference" sortable="true"

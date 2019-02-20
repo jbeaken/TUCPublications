@@ -59,6 +59,7 @@
 		<url-pattern>/invoice/search</url-pattern>
 		<url-pattern>/customerOrderLine/search</url-pattern>
 		<url-pattern>/events/search</url-pattern>
+		<url-pattern>/creditNote/search</url-pattern>
 	</filter-mapping>
 
 	<context-param>

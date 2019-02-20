@@ -34,15 +34,14 @@
 			<c:if test="${requestScope.eventList != null}">
 					<display:table name="eventList"
 			   requestURI="search"
-        	   decorator="org.bookmarks.ui.SearchEventDecorator"
+        decorator="org.bookmarks.ui.SearchEventDecorator"
 			   sort="external"
 			   defaultsort="2"
 			   defaultorder="ascending"
 			   export="true"
 			   partialList="true"
-
-               pagesize="${pageSize}"
-               size="${searchResultCount}"
+         pagesize="${pageSize}"
+         size="${searchResultCount}"
 			   id="searchTable">
 	   <display:setProperty name="export.pdf" value="true" />
 	   <display:setProperty name="export.xml" value="false" />

@@ -17,6 +17,20 @@ TERMINATED BY ';'
 ESCAPED BY '"'
 LINES TERMINATED BY '\r\n';
 
+-- Invoice order lines
+SELECT 'Lastname', 'Firstname', 'Customer Id', 'Amount', 'Date'
+UNION ALL
+select c.lastname, c.firstname, c.id as customerId, cn.amount, cn.creationDate
+from CreditNote cn
+join customer c on c.id = cn.customer_id
+where cn.creationDate between '2017-10-01 00:00:00' and '2018-01-31 23:59:59'
+and c.accountHolder = true
+INTO OUTFILE '/var/lib/mysql-files/creditnotes.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ','
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';
+
 -- Invoices with second hand
 select c.lastname, c.firstname, c.id as customerId, i.creationDate as date, i.secondHandPrice as secHand, i.serviceCharge
 from customer c
