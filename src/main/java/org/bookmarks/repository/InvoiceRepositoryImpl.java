@@ -224,10 +224,10 @@ private boolean appendId(InvoiceSearchBean invoiceSearchBean, StringBuffer query
 						+ "then (i.secondHandPrice + i.serviceCharge) "
 						+ "else (sum(s.quantity * (1- s.discount/100) * s.sellPrice) + i.secondHandPrice + i.serviceCharge) end, "
 						+ "sum((case when s.sellPrice is null then 0.0 else s.sellPrice end) * (case when s.vat is null then 0.0 else s.vat end) / 100.0 ) * quantity)"
-						+ "from Invoice i  join i.customer c left join i.sales as s "
+						+ "from Invoice i join i.customer c left join i.sales as s "
 						+ "where i.creationDate between :startDate and :endDate "
 						+ "and i.paid = false and i.isProforma = false "
-						+ "group By c order by c.lastName");
+						+ "group By c, i order by c.lastName");
 		query.setParameter("startDate", invoiceSearchBean.getStartDate());
 		query.setParameter("endDate", invoiceSearchBean.getEndDate());
 		return query.list();

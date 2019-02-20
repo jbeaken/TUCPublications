@@ -1,3 +1,39 @@
+-- Invoice order lines
+SELECT 'Lastname', 'Firstname', 'Customer Id', 'Title', 'Quantity', 'Sell Price', 'Discount', 'VAT', 'Date'
+UNION ALL
+select c.lastname, c.firstname, c.id as customerId, si.title, s.quantity, s.sellPrice, s.discount, s.vat, i.creationDate
+from customer c
+join invoice i on i.customer_id = c.id
+join invoice_sale invs on invs.invoice_id = i.id
+join sale s on s.id = invs.sales_id
+join stockitem si on si.id = s.stockItem_id
+where i.creationDate between '2017-10-01 00:00:00' and '2018-01-31 23:59:59'
+and i.paid = false
+and i.isProforma = false
+and c.accountHolder = true
+INTO OUTFILE '/var/lib/mysql-files/invoiceorderline.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ';'
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';
+
+-- Invoices with second hand
+select c.lastname, c.firstname, c.id as customerId, i.creationDate as date, i.secondHandPrice as secHand, i.serviceCharge
+from customer c
+join invoice i on i.customer_id = c.id
+where i.creationDate between '2017-10-01 00:00:00' and '2018-01-31 23:59:59'
+and i.paid = false
+i.isProforma = false
+and c.accountHolder = true
+INTO OUTFILE '/var/lib/mysql-files/secHand.csv'
+FIELDS ENCLOSED BY '"'
+TERMINATED BY ';'
+ESCAPED BY '"'
+LINES TERMINATED BY '\r\n';
+
+
+
+
 -- Minibeans hasn't been reset, delete sales below given sale id
 SET @saleId = 300041;
 set foreign_key_checks = 0;
