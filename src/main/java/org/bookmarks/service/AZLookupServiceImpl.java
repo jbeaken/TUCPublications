@@ -272,12 +272,18 @@ public class AZLookupServiceImpl implements AZLookupService {
 
 	private Document getDrilldownPageDocument(Document doc) throws IOException {
 
-		// logger.debug(doc.html());
 
-		Elements elements = doc.select(".newaps");
+		Elements elements = doc.select("span.rush-component > a.a-link-normal");
+		
+//		logger.debug( elements.toString() );
 
 		//Drill down for more details
 		String drilldownUrl = elements.select("a[href]").attr("href");
+		
+		for(Element e : elements) {
+			logger.debug( e.attr("href") );
+		}
+		logger.debug(drilldownUrl);
 
 		if(drilldownUrl.isEmpty()) {
 			logger.debug("Cannot find drilldown using .newapps, attempting with .s-access-detail-page");
@@ -931,7 +937,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 
 		String imageUrl = null;
 
-		Elements elements = doc.select("img.productImage");
+		Elements elements = doc.select("img.s-image");
 
 		if(!elements.isEmpty()) {
 			imageUrl = elements.first().attr("src");
