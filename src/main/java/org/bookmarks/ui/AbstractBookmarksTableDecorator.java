@@ -53,12 +53,12 @@ public abstract class AbstractBookmarksTableDecorator extends TableDecorator {
 	}
 
 	protected String getStockItemTitleLinkNoAuthor(StockItem stockItem, String flow) {
-		return getAnchor("/bookmarks/stock/edit?id=" + stockItem.getId() +"&flow=" + flow,
+		return getAnchor("/stock/edit?id=" + stockItem.getId() +"&flow=" + flow,
 				stockItem.getTitle(),"Title", true, false);
 	}
 
 	protected String getStockTitleLink(StockItem stockItem, String flow) {
-		return getAnchor("/bookmarks/stock/edit?id=" + stockItem.getId() +"&flow=" + flow,
+		return getAnchor("/stock/edit?id=" + stockItem.getId() +"&flow=" + flow,
 				stockItem.getTitle(),"Title", true, false);
 	}
 
@@ -214,11 +214,11 @@ public abstract class AbstractBookmarksTableDecorator extends TableDecorator {
 	}
 
 	protected String getCustomerName(Customer customer) {
-		return getAnchor("/bookmarks/customer/edit?id=" + customer.getId(), getName(customer), "Edit", true, false);
+		return getAnchor("/customer/edit?id=" + customer.getId(), getName(customer), "Edit", true, false);
 	}
 
 	protected String getCustomerName(Customer customer, String flow) {
-		return getAnchor("/bookmarks/customer/edit?id=" + customer.getId() + "&flow=" + flow, getName(customer), "Edit", true, false);
+		return getAnchor("/customer/edit?id=" + customer.getId() + "&flow=" + flow, getName(customer), "Edit", true, false);
 	}
 
 	public String getName(Customer customer) {

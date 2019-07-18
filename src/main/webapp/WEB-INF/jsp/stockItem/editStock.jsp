@@ -11,17 +11,17 @@
 			dateFormat: 'dd-mm-yy'
 		});
 		$("#authorAutoComplete").autocomplete( {
-             source: "/bookmarks/author/autoCompleteName",
+             source: "/author/autoCompleteName",
              minLength: 3,
              select: function( event, ui ) {
-                     $('#authorTable').load("/bookmarks/author/addAuthorToStock?authorId=" + ui.item.value);
+                     $('#authorTable').load("/author/addAuthorToStock?authorId=" + ui.item.value);
                      return false;
              },
              focus: function( event, ui ) {
                      return false;
              }
      	});
-		$('#authorTable').load("/bookmarks/author/loadAuthorTable");
+		$('#authorTable').load("/author/loadAuthorTable");
 	});
 
 	function getImage() {

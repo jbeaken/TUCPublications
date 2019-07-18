@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<form:form id="stockItemSearchForm" modelAttribute="stockItemSearchBean" action="/bookmarks/stockTakeLine/search" method="post">
+<form:form id="stockItemSearchForm" modelAttribute="stockItemSearchBean" action="/stockTakeLine/search" method="post">
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">
@@ -18,7 +18,7 @@
 <div id="rows">
 	<div class="row">
           <div class="column w-100-percent">
-		  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('/bookmarks/stockTakeLine/search')">Search</button>
+		  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('/stockTakeLine/search')">Search</button>
           <button type="button" class="btn btn-primary" id="resetButton" accesskey="R">Reset</button>&nbsp;
 	 	 </div>
 	</div>
@@ -50,8 +50,8 @@ Nothing Found
   <display:column property="stockItem.title" sortable="true" sortName="s.title" maxLength="100" title="Title" style="width:70%"/>
   <display:column property="quantity" sortable="true" maxLength="10" class="category" sortName="s.category.name" title="Quantity"/>
   <display:column title="Actions" media="html" style="width:15%">
-  <a href="/bookmarks/stockTakeLine/edit?id=${searchTable.id}"><img src="../resources/images/write_medium.png" title="Edit" /></a>
-  <img src="../resources/images/delete_medium.png" onclick="javascript:authoriseUser('/bookmarks/stockTakeLine/delete?id=${searchTable.id}')" title="Delete" />
+  <a href="/stockTakeLine/edit?id=${searchTable.id}"><img src="../resources/images/write_medium.png" title="Edit" /></a>
+  <img src="../resources/images/delete_medium.png" onclick="javascript:authoriseUser('/stockTakeLine/delete?id=${searchTable.id}')" title="Delete" />
   </display:column>
 </display:table>
 </c:if>

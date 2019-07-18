@@ -10,8 +10,8 @@ public class SaleReportDecorator extends AbstractBookmarksTableDecorator {
 	
 	public String getLink() {
 	    Sale sale = (Sale)getCurrentRowObject();
-	    return 	confirmation("/bookmarks/saleReport/delete?id=" + sale.getId(), "delete_medium.png")
-		+ confirmation("/bookmarks/saleReport/edit?id=" + sale.getId(), "write_medium.png");
+	    return 	confirmation("/saleReport/delete?id=" + sale.getId(), "delete_medium.png")
+		+ confirmation("/saleReport/edit?id=" + sale.getId(), "write_medium.png");
 	}
 	
 	public String getCreationDate() {

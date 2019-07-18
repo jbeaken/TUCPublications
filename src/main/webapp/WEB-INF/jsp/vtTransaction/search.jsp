@@ -27,7 +27,7 @@
 			
 			<input type="submit" class="btn btn-danger" id="searchVTTransactionsButton"/> 
 			
-			<a href="/bookmarks/vtTransaction/displaySearch" class="btn btn-danger">Reset</a>
+			<a href="/vtTransaction/displaySearch" class="btn btn-danger">Reset</a>
 			
 </form:form>
 

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<form:form modelAttribute="publisher" action="/bookmarks/publisher/edit?flow=${flow}" method="post">
+<form:form modelAttribute="publisher" action="/publisher/edit?flow=${flow}" method="post">
 <form:hidden path="id"/>
 			<form:hidden path="note"/>
 			<form:hidden path="creationDate"/>
@@ -68,7 +68,7 @@
 				<button type="button" class="btn btn-primary" onclick="javascript:window.close()">Close Window</button>		
 				</c:if>
 				<c:if test="${flow != 'editStock'}">				
-					<a href="/bookmarks/publisher/searchFromSession"><button type="button" class="btn btn-primary">Back to	search</button></a>
+					<a href="/publisher/searchFromSession"><button type="button" class="btn btn-primary">Back to	search</button></a>
 				</c:if>
 	 	 </div>
 	</div>		

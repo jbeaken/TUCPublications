@@ -15,7 +15,7 @@ $(function() {
 	});
 	
 	$("#authorAutoComplete").autocomplete( {
-        source: "/bookmarks/author/autoCompleteName",
+        source: "/author/autoCompleteName",
         minLength: 3,
         select: function( event, ui ) {
         		$("#authorAutoComplete").value = ui.item.label;

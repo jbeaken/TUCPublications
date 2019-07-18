@@ -13,7 +13,7 @@
 	      <div class="row">
 	          <div class="column w-70-percent">
 	 				<input type="submit" class="btn btn-danger" id="searchSuppliersButton"/> 
-	 				<a href="/bookmarks/supplier/displaySearch">
+	 				<a href="/supplier/displaySearch">
 	 					<button type="button" class="btn btn-danger">Reset</button>
 	 				</a>
 		 	 </div>

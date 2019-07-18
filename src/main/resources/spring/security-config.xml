@@ -17,35 +17,35 @@
         </authentication-provider>
     </authentication-manager>
 
-		<beans:beans profile="dev">
+	<beans:beans profile="dev">
 
-	    <http use-expressions="true" disable-url-rewriting="true">
-				<!--
-					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
+		<http use-expressions="true" disable-url-rewriting="true">
+			<!--
+                <intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
+                <intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
+            -->
 
-					<remember-me key="bookmarksBigGles"/>
-					<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
-				-->
+			<intercept-url pattern="/login*" access="permitAll" />
+			<intercept-url pattern="/**" access="isAuthenticated()"/>
 
-					<csrf disabled="false"/>
 
-	        <form-login />
+			<form-login />
 
-	        <logout />
-	    </http>
-		</beans:beans>
+			<logout />
+		</http>
+	</beans:beans>
 
-		<beans:beans profile="prod,mini-beans">
+	<beans:beans profile="prod,mini-beans">
 
-	    <http use-expressions="true" disable-url-rewriting="true">
-				<!--
-					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
-				-->
-					<intercept-url pattern="/**" access="permitAll" requires-channel="https"/>
-					<csrf disabled="true"/>
-	        <form-login />
-	        <logout />
-	    </http>
-		</beans:beans>
+		<http use-expressions="true" disable-url-rewriting="true">
+			<intercept-url pattern="/login*" access="permitAll" />
+			<intercept-url pattern="/**" access="isAuthenticated()"/>
+
+			<csrf disabled="true"/>
+			<form-login />
+			<logout />
+		</http>
+	</beans:beans>
+
 
 </beans:beans>

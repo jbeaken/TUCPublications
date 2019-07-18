@@ -37,7 +37,7 @@
       <div class="row">
 		  <div class="column w-30-percent">
 		  	<input type="submit" class="btn btn-primary"/>
-								<a href="/bookmarks/customerOrderLine/searchFromSession">
+								<a href="/customerOrderLine/searchFromSession">
 								 	<button type="button" class="btn btn-primary">Back To Search</button>
 								</a>		  	
 		  </div>

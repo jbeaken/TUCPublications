@@ -26,7 +26,7 @@
 		
 		 $('#fileupload').fileupload({
 		        dataType: 'json',
-		        url : '/bookmarks/events/upload',
+		        url : '/events/upload',
 		        formData: [ { name : 'eventId', value : ${event.id} }], 
 		        done: function (e, data) {
 		            $.each(data.result.files, function (index, file) {
@@ -56,7 +56,7 @@
                 
     <div class="row">
           <div class="column w-70-percent">
- 			<input id="fileupload" type="file" class="fileinput-button" name="files" data-url="/bookmarks/events/upload?eventId=$(event.id})" multiple> 
+ 			<input id="fileupload" type="file" class="fileinput-button" name="files" data-url="/events/upload?eventId=$(event.id})" multiple>
 	 	 </div>
 	</div>	
 		

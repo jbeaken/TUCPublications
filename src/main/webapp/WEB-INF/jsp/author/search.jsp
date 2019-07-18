@@ -10,7 +10,7 @@
 		</div>
 	</div>
 			<input type="submit" class="btn btn-danger" id="searchAuthorsButton"/> 
-			<a href="/bookmarks/author/displaySearch" class="btn btn-danger">Reset</a>
+			<a href="/author/displaySearch" class="btn btn-danger">Reset</a>
 </form:form>
 
 <br/>

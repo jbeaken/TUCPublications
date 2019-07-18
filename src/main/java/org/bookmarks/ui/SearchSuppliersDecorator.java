@@ -16,13 +16,13 @@ public class SearchSuppliersDecorator extends AbstractBookmarksTableDecorator{
 	}
 	
 	private String showCreateSupplierReturn(Supplier supplier) {
-		return getImageAnchor("/bookmarks/supplierReturn/init?supplierId=" + supplier.getId() + "&flow=search", 
+		return getImageAnchor("/supplierReturn/init?supplierId=" + supplier.getId() + "&flow=search",
 				"supplierReturn.png", 
 				"Create Supplier Return", false, false);
 	}
 	
 	public String showSupplierOrder(Supplier supplier) {
-		return getImageAnchor("/bookmarks/supplierOrder/init?supplierId=" + supplier.getId(), 
+		return getImageAnchor("/supplierOrder/init?supplierId=" + supplier.getId(),
 	        				"blue-clipboard copy.png", 
 	        				"Reorder Review", false);
 	}	

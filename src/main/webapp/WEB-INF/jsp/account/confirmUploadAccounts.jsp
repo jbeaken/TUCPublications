@@ -30,7 +30,7 @@
 
 		}
 		//alert( customerId + " " + transactionDescription);
-		window.location.href = "/bookmarks/tsb/match?customerId=" + customerId + "&transactionDescription=" + encodeURI(transactionDescription);
+		window.location.href = "/tsb/match?customerId=" + customerId + "&transactionDescription=" + encodeURI(transactionDescription);
 	}
 </script>
 <h1>Upload bank credits from TSB</h1>
@@ -87,7 +87,7 @@
 <div class="rows">
 	<div class="row">
 		<div class="column w-33-percent">
-			<a href="/bookmarks/tsb/saveAccountsFromTSB?credit=true" class="btn btn-danger">Save And Credit</a>
+			<a href="/tsb/saveAccountsFromTSB?credit=true" class="btn btn-danger">Save And Credit</a>
 		</div>
 	</div>
 </div>

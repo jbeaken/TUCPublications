@@ -14,7 +14,7 @@ $(document).ready(function() {
 
     $('#calendar').fullCalendar({
         // put your options and callbacks here
-    	 events: '/bookmarks/events/getJson',
+    	 events: '/events/getJson',
 
        eventClick: function(calEvent, jsEvent, view) {
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 	        // change the day's background color just for fun
 	        var startDate = moment(date).format('DD/MM/YYYY');
 	        console.log(startDate)
-	        window.location.href = "/bookmarks/events/displayAddFromCalendar?startDate=" + startDate;
+	        window.location.href = "/events/displayAddFromCalendar?startDate=" + startDate;
 	       // $(this).css('background-color', 'red');
 
     	}

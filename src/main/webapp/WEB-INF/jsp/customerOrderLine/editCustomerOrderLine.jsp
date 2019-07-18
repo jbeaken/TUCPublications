@@ -191,27 +191,27 @@
           <div class="column w-100-percent">
 							<input type="submit" id="editCustomerOrderLineButton" class="btn btn-primary" value="Save Customer Order"/>&nbsp;
 							<c:if test="${customerOrderLine.canComplete == true}">
-								<a href="/bookmarks/customerOrderLine/complete?customerOrderLineId=${customerOrderLine.id}&flow=fromEditCustomerOrderLine">
+								<a href="/customerOrderLine/complete?customerOrderLineId=${customerOrderLine.id}&flow=fromEditCustomerOrderLine">
 								 	<button type="button" class="btn btn-primary">Complete</button>
 								</a>
 							</c:if>
 							<c:if test="${customerOrderLine.canPost == true}">
-								<a href="/bookmarks/customerOrderLine/markAsPosted?customerOrderLineId=${customerOrderLine.id}&customerId=${customerOrderLine.customer.id}">
+								<a href="/customerOrderLine/markAsPosted?customerOrderLineId=${customerOrderLine.id}&customerId=${customerOrderLine.customer.id}">
 								 	<button type="button" class="btn btn-primary">Post</button>
 								</a>
 							</c:if>
 							<c:if test="${customerOrderLine.hasInvoice == true}">
-								<a href="/bookmarks/invoice/view?id=${customerOrderLine.invoice.id}&flow=editCustomerOrderLine&customerOrderLineId=${customerOrderLine.id}">
+								<a href="/invoice/view?id=${customerOrderLine.invoice.id}&flow=editCustomerOrderLine&customerOrderLineId=${customerOrderLine.id}">
 								 	<button type="button" class="btn btn-primary">View Invoice</button>
 								</a>
 							</c:if>
 							<c:if test="${flow != 'supplierOrderEdit'}">
-								<a href="/bookmarks/customerOrderLine/searchFromSession">
+								<a href="/customerOrderLine/searchFromSession">
 								 	<button type="button" class="btn btn-primary">Back To Search</button>
 								</a>
 							</c:if>
 							<c:if test="${flow == 'supplierOrderEdit'}">
-								<a href="/bookmarks/customerOrderLine/searchFromSession">
+								<a href="/customerOrderLine/searchFromSession">
 								 	<button type="button" onclick="javascript:window.close();" class="btn btn-primary">Close</button>
 								</a>
 							</c:if>

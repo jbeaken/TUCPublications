@@ -28,7 +28,7 @@
 	
 	$(function() {
 		$("#customerAutoComplete").autocomplete( {
-			source: "/bookmarks/customer/autoCompleteSurname",
+			source: "/customer/autoCompleteSurname",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#customerAutoComplete").val(ui.item.label);
@@ -49,7 +49,7 @@
 		 $("#publisherSelect").chosen();
 	});
 </script>
-<form:form modelAttribute="customerReportBean" action="/bookmarks/customerReport/report" method="post">
+<form:form modelAttribute="customerReportBean" action="/customerReport/report" method="post">
 <form:hidden path="customer.id" id="customerId"/>
 <form:hidden path="filter" />
 <form:errors></form:errors>
@@ -103,9 +103,9 @@
 		          <div class="column w-33-percent">
 			  	 </div>
           <div class="column w-100-percent">
-				<button type="button" class="btn btn-danger" id="saleReportSubmitButton" onclick="javascript:submitForm('/bookmarks/customerReport/report')" id="focus">Show Report</button>
+				<button type="button" class="btn btn-danger" id="saleReportSubmitButton" onclick="javascript:submitForm('/customerReport/report')" id="focus">Show Report</button>
  				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('reset')">Reset</button>
- 				<a href="/bookmarks/customerReport/generatePdf?customer.id=${customer.id}&customerReportType=INVOICE" class="btn btn-default">Generate PDF</a>
+ 				<a href="/customerReport/generatePdf?customer.id=${customer.id}&customerReportType=INVOICE" class="btn btn-default">Generate PDF</a>
 	 	 </div>
 	</div>		
 </div>		
@@ -127,7 +127,7 @@ Current Balance : ${customer.bookmarksAccount.currentBalance}
 </select>
 
 <display:table name="invoiceReportLineList" 
-			   requestURI="/bookmarks/saleReport/report" 
+			   requestURI="/saleReport/report"
         	   decorator="org.bookmarks.ui.InvoiceReportDecorator"
 			   export="true"
 			   id="searchTable"

@@ -3,7 +3,7 @@
 $(function() {
 	
 	$("#authorToDeleteAutoComplete").autocomplete( {
-        source: "/bookmarks/author/autoCompleteName",
+        source: "/author/autoCompleteName",
         minLength: 3,
         select: function( event, ui ) {
         		$("#authorToDeleteAutoComplete").value = ui.item.label;
@@ -18,7 +18,7 @@ $(function() {
 	});	
 	
 	$("#authorToKeepAutoComplete").autocomplete( {
-        source: "/bookmarks/author/autoCompleteName",
+        source: "/author/autoCompleteName",
         minLength: 3,
         select: function( event, ui ) {
         		$("#authorToKeepAutoComplete").value = ui.item.label;

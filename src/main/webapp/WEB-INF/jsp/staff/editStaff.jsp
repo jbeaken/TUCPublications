@@ -18,7 +18,7 @@
         </ul>
     </div>
 </spring:hasBindErrors>
-<form:form modelAttribute="staff" action="/bookmarks/staff/edit" method="post">
+<form:form modelAttribute="staff" action="/staff/edit" method="post">
   <form:hidden path="id"/>
 <div class="rows">
         <div class="row">

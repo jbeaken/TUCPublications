@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<form:form modelAttribute="saleOrReturnOrderLineList" action="/bookmarks/saleOrReturn/sell" method="post">
+<form:form modelAttribute="saleOrReturnOrderLineList" action="/saleOrReturn/sell" method="post">
 	<display:table 
 		name="saleOrReturnOrderLineList" 
 		decorator="org.bookmarks.ui.SaleOrReturnOrderLineDecorator"

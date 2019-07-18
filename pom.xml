@@ -1252,7 +1252,7 @@
 					<port>8080</port>
 					<path>/bookmarks</path>
 					<systemProperties>
-						<spring.profiles.active>dev</spring.profiles.active>
+						<spring.profiles.active>prod</spring.profiles.active>
 					</systemProperties>
 				</configuration>
 			</plugin>

@@ -43,7 +43,7 @@
       				<form:input path="stockItem.isbn" id="focus"/> <form:errors path="stockItem.isbn" />
        				<input type="submit" id="sellStockSubmitButton" class="btn btn-primary" style="margin-left : 20px;" value="Add"/>
        				 <c:if test="${lastStockRecord != null}">
-      	 				<button type="button" onclick="javascript:authoriseUser('/bookmarks/stockTakeLine/edit?id=${lastStockRecord.id}&flow=search')" class="btn btn-default" id="editLastStockRecordButton">Edit Last Record</button>
+      	 				<button type="button" onclick="javascript:authoriseUser('/stockTakeLine/edit?id=${lastStockRecord.id}&flow=search')" class="btn btn-default" id="editLastStockRecordButton">Edit Last Record</button>
       	 				<a href="increment?id=${lastStockRecord.id}&flow=search" tabindex="3">
       	 					<button type="button" class="btn btn-default" id="incrementLastStockRecordButton">Increment Last Record</button>
       	 				</a>
@@ -64,9 +64,9 @@
 </p>
       <div class="row">
           <div class="column w-100-percent">
-	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/reset')">Reset Stock Record</button>&nbsp;&nbsp;
-	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=false')">Update Stock Record (Inc. bookmarks Exc. Merchandise)</button>
-        <button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=false&includeMerchandise=false')">Update Stock Record (Exc. bookmarks Exc. Merchandise)</button>
-        <button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/bookmarks/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=true')">Update Stock Record (Inc. bookmarks Inc. Merchandise)</button>
+	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/stockTakeLine/reset')">Reset Stock Record</button>&nbsp;&nbsp;
+	 			<button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=false')">Update Stock Record (Inc. bookmarks Exc. Merchandise)</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/stockTakeLine/commit?includeBookmarks=false&includeMerchandise=false')">Update Stock Record (Exc. bookmarks Exc. Merchandise)</button>
+        <button type="button" class="btn btn-danger" onclick="javascript:authoriseSuperUser('/stockTakeLine/commit?includeBookmarks=true&includeMerchandise=true')">Update Stock Record (Inc. bookmarks Inc. Merchandise)</button>
 	 	 </div>
 	</div>

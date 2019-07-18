@@ -1,5 +1,5 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<form:form modelAttribute="sale" action="/bookmarks/sale/sellSecondHand" method="post">
+<form:form modelAttribute="sale" action="/sale/sellSecondHand" method="post">
 	<form:hidden path="creationDate"/>
 	<form:hidden path="quantity"/>
 	<form:hidden path="vat"/>

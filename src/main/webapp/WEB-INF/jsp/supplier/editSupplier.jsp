@@ -80,7 +80,7 @@
  				<input type="submit" class="btn btn-success" id="editSupplierButton" value="Update Supplier"/> 
  				<button type="button" class="btn btn-primary" onclick="javascript:reset()">Reset</button>
 				<c:if test="${flow == 'search'}">
-					<a href="/bookmarks/supplier/searchFromSession"><button type="button" class="btn btn-primary">Back to search</button></a>
+					<a href="/supplier/searchFromSession"><button type="button" class="btn btn-primary">Back to search</button></a>
 				</c:if>
 	 	 </div>
 	</div>		

@@ -55,16 +55,16 @@
  <br/>   
 <br/>
 <c:if test="${flow == 'editCustomerOrderLine'}">
-	<a href="/bookmarks/customerOrderLine/edit?id=${customerOrderLineId}">
+	<a href="/customerOrderLine/edit?id=${customerOrderLineId}">
 	 	<button type="button" class="btn btn-primary">Back to Customer Order</button>
 	</a>
 </c:if>
 <c:if test="${flow == 'searchInvoices'}">
-	<a href="/bookmarks/invoice/searchFromSession">
+	<a href="/invoice/searchFromSession">
 	 	<button type="button" class="btn btn-primary">Back to Search</button>
 	</a>
 </c:if>
-	<a href="/bookmarks/invoice/print?invoiceId=${invoice.id}" target="_blank">
+	<a href="/invoice/print?invoiceId=${invoice.id}" target="_blank">
 	 	<button type="button" class="btn btn-primary">Print Invoice</button>
 	</a>
 <br/><br/>

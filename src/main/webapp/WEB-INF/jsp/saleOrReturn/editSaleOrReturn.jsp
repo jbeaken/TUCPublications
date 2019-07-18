@@ -111,7 +111,7 @@
 <label>No. of items: </label>${noOfLines}
 </c:if>
 <c:if test="${saleOrReturnOrderLineList != null && flow == 'return'}">
-<form:form modelAttribute="saleOrReturnOrderLineList" action="/bookmarks/saleOrReturn/sell" method="post">
+<form:form modelAttribute="saleOrReturnOrderLineList" action="/saleOrReturn/sell" method="post">
 	<display:table
 		name="saleOrReturnOrderLineList"
 		decorator="org.bookmarks.ui.SaleOrReturnOrderLineDecorator"

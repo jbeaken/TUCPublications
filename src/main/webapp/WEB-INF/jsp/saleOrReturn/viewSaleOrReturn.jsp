@@ -38,11 +38,11 @@
 	 <div class="row">
 		  <div class="column w-50-percent">
 		  	<c:if test="${flow == 'searchSaleOrReturn'}">
-				<a href="/bookmarks/saleOrReturn/searchFromSession">
+				<a href="/saleOrReturn/searchFromSession">
 					<button class="btn btn-primary">Return To Search</button>
 				</a>
 		  	 </c:if>
-				<a href="/bookmarks/saleOrReturn/print?saleOrReturnId=${saleOrReturn.id}" target="_blank">
+				<a href="/saleOrReturn/print?saleOrReturnId=${saleOrReturn.id}" target="_blank">
 					<button type="button" class="btn btn-primary">Print</button>
 				</a>		  	 
 		  </div>

@@ -113,7 +113,7 @@
 	<div class="row">
 		  <div class="column w-100-percent">
 							<c:if test="${flow == 'search'}">
-								<a href="/bookmarks/stock/searchFromSession">
+								<a href="/stock/searchFromSession">
 									<button type="button" class="btn btn-primary">Back To Search</button>
 								</a>
 							</c:if>

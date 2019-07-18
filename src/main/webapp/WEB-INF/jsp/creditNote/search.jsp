@@ -62,7 +62,7 @@
 	<input type="submit" class="btn btn-danger"
 		id="searchCreditNotesButton" />
 
-	<a href="/bookmarks/creditNote/displaySearch" class="btn btn-danger">Reset</a>
+	<a href="/creditNote/displaySearch" class="btn btn-danger">Reset</a>
 
 </form:form>
 

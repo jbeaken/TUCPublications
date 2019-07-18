@@ -23,7 +23,7 @@
 	</div>
 
       <div class="row">
- 				<a href="/bookmarks/customer/mergeConfirmed?customerToKeepId=${customerToKeep.id}&customerToDiscardId=${customerToDiscard.id}" class="btn btn-primary" value="Merge" id="mergeCustomerSubmitButton">Commit Merge</a>
+ 				<a href="/customer/mergeConfirmed?customerToKeepId=${customerToKeep.id}&customerToDiscardId=${customerToDiscard.id}" class="btn btn-primary" value="Merge" id="mergeCustomerSubmitButton">Commit Merge</a>
 	 	 </div>
 
 	</div>

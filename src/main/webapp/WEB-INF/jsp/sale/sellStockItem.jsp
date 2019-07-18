@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <head>
-<link href="/bookmarks/resources/css/select2.min.css" rel="stylesheet" />
-<script src="/bookmarks/resources/js/select2.full.min.js"></script>
+<link href="/resources/css/select2.min.css" rel="stylesheet" />
+<script src="/resources/js/select2.full.min.js"></script>
 
 <script>
 	$(document).ready(function() {
