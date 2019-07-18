@@ -802,9 +802,6 @@ public class StockItem extends AbstractEntity {
 	}
 	public String getImageURL() {
 		if(imageURL == null) return null;
-		if(imageURL.contains("imageFile") && !imageURL.contains("bookmarks")) {
-			return "/bookmarks" + imageURL;
-		}
 		return imageURL;
 	}
 	public void setImageURL(String imageURL) {
