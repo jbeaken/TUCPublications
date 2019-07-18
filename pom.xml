@@ -1250,7 +1250,7 @@
 				<version>2.2</version>
 				<configuration>
 					<port>8080</port>
-					<path>/bookmarks</path>
+					<path>/</path>
 					<systemProperties>
 						<spring.profiles.active>prod</spring.profiles.active>
 					</systemProperties>
