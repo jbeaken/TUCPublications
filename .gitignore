@@ -17,5 +17,9 @@ bm.sql*
 >>>>>>> a53eb52... Removing bower
 =======
 build.sh
+<<<<<<< HEAD
 
 >>>>>>> c009ed9... Improving build script
+=======
+.idea
+>>>>>>> c595c03... Adding .idea to gitignore
