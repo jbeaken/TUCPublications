@@ -801,7 +801,6 @@ public class StockItem extends AbstractEntity {
 		this.preferredSupplier = preferredSupplier;
 	}
 	public String getImageURL() {
-		if(imageURL == null) return null;
 		return imageURL;
 	}
 	public void setImageURL(String imageURL) {

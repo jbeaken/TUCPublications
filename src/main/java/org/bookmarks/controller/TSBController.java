@@ -54,7 +54,7 @@ public class TSBController extends AbstractBookmarksController {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private TSBService tsbService;
 
@@ -136,7 +136,7 @@ public class TSBController extends AbstractBookmarksController {
 		logger.info("Have records of size " + records.size());
 
 		for (CSVRecord record : records) {
-			
+
 			logger.debug("**********************");
 			logger.debug(record.toString());
 
@@ -170,12 +170,12 @@ public class TSBController extends AbstractBookmarksController {
 				accountNumber = record.get(3);
 				amount = record.get(3);
 			}
-			
-			// is this a transfer 
+
+			// is this a transfer
 			if ( transactionType.equals("TFR") ) {
 				cn.setClubAccount(true);
-			} 
-			
+			}
+
 			// Sort out double quotes in transactionDescription
 			if (transactionDescription.contains("\"")) {
 				transactionDescription = record.get(4) + record.get(5);
@@ -198,23 +198,23 @@ public class TSBController extends AbstractBookmarksController {
 			// (Standing orders and club account do not have one)
 			// FPI (faster payments) may have one!
 			if (!transactionType.equals("SO") && cn.isClubAccount() == false) {
-				
+
 				String pattern = "[A-Z0-9]{16}";
 
 				// Create a Pattern object
 				Pattern r = Pattern.compile(pattern);
 
 				Matcher m = r.matcher(transactionDescription);
-				
+
 				//Get last match
 				while(m.find()) {
 					transactionReference = m.group(0);
 					logger.debug("transactionReference : " + transactionReference);
 					int indexOfTransactionReference = transactionDescription.indexOf(transactionReference);
 					logger.info("indexOfTransactionReference {} ", indexOfTransactionReference );
-					tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();								
+					tsbMatch = transactionDescription.substring(0, indexOfTransactionReference).trim();
 				}
-				
+
 				if(transactionReference == null) {
 					//Some FPI don't have the match
 					if(!transactionType.equals("FPI")) throw new BookmarksException(csvFile.getOriginalFilename() + " : Could not find transaction reference in " + transactionDescription);
@@ -243,8 +243,8 @@ public class TSBController extends AbstractBookmarksController {
 				cn.setCustomer(matchedCustomer);
 			}
 
-			if (transactionType.equals("SO")) {
-				transactionReference = transactionDateStr + "-SO-" + transactionDescription;
+			if (transactionType.equals("SO") || transactionType.equals("FPI")) {
+				transactionReference = transactionDateStr + "-" + transactionType + "-" + transactionDescription;
 			}
 
 			if (cn.isClubAccount()) {
@@ -265,7 +265,7 @@ public class TSBController extends AbstractBookmarksController {
 			}
 
 			if (logger.isDebugEnabled()) {
-				
+
 				logger.debug("Is clubAccount = {}", cn.isClubAccount());
 				logger.debug("transactionDate {}", transactionDate);
 				logger.debug("transactionType {}", transactionType);
