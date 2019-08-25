@@ -1,74 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-=======
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-=======
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
->>>>>>> 4afb20d... Removing commons logging from commons dbcp
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
->>>>>>> d3fdae2... adding conf tomcat files
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bookmarks</groupId>
 	<artifactId>bookmarks</artifactId>
 	<packaging>war</packaging>
-<<<<<<< HEAD
-	<version>2.0-beta</version>
-=======
 	<version>3.0-RELEASE</version>
->>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	<name>bookmarks</name>
 
 	<properties>
-<<<<<<< HEAD
-    <java.version>1.7</java.version>
-    <groovy.version>2.1.1</groovy.version>
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        
-	<!-- Spring -->
-    <spring.version>4.1.5.RELEASE</spring.version>
-        
-    <!-- Spring Data -->
-    <spring-data-jpa.version>1.5.2.RELEASE</spring-data-jpa.version>  
-
-    <!-- Servlet API (tomcat 7 uses 3.0) -->
-    <tomcat.version>7.0.57</tomcat.version>                  
-
-	<!-- Hibernate -->
-    <hibernate.version>4.3.5.Final</hibernate.version>
-    <hibernate.validator.version>4.3.1.Final</hibernate.validator.version>
-    <hibernate.search.version>4.1.1.Final</hibernate.search.version> 
-
-    <groovy.eclipse.compiler.version>2.7.0-01</groovy.eclipse.compiler.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
-
-	<spring.integration.version>2.1.0.RELEASE</spring.integration.version>
-	<slf4j.version>1.7.5</slf4j.version>
-        
-        <!-- AOP -->
-	<aspectj.version>1.8.3</aspectj.version>
-		
-        <!-- Test -->
-	<junit.version>4.11</junit.version>
-	<hamcrest.version>1.3</hamcrest.version>
-		
-	<!-- Encryption -->
-        <jasypt.version>1.9.2</jasypt.version>		
-        
-        <!-- Image Manipulation -->
-        <imgscalr.version>4.2</imgscalr.version>
-             
-        
-        <!--  Java EE / Java SE dependencies -->
-        <jsp.version>2.2</jsp.version>
-        <jstl.version>1.2</jstl.version>
-        <servlet.version>2.5</servlet.version>
-        <javax-el.version>2.2</javax-el.version>
-=======
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -77,45 +18,9 @@
 		<spring.security.version>5.1.4.RELEASE</spring.security.version>
 
 		<!-- Hibernate -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<hibernate.version>5.2.3.Final</hibernate.version>
-		<hibernate.validator.version>5.2.4.Final</hibernate.validator.version>
-<<<<<<< HEAD
-<<<<<<< HEAD
-		<hibernate.search.version>5.5.4.Final</hibernate.search.version>
-=======
-		<hibernate.search.version>4.1.1.Final</hibernate.search.version>
->>>>>>> 7c319ae... First cut, not working
-=======
-		<hibernate.search.version>5.5.4.Final</hibernate.search.version>
->>>>>>> 14fb1bc... Removed old hibernate search 4 import, exluded javax.enterprise.cdi-api from hibernate as had dependency on javax el
-=======
-		<hibernate.version>5.2.16.Final</hibernate.version>
-=======
-		<hibernate.version>5.2.17.Final</hibernate.version>
->>>>>>> f799369... Bumping hibernate and bouncy castle versions
-=======
-		<hibernate.version>5.3.1.Final</hibernate.version>
->>>>>>> 74aaa5c... Bump hibernate 5.2.17 -> 5.3.1
-=======
-		<hibernate.version>5.3.2.Final</hibernate.version>
->>>>>>> c0338ec... Bump hibernate 5.3.3
-=======
 		<hibernate.version>5.3.8.Final</hibernate.version>
->>>>>>> 1cefc4b... bump spring, spring security and hibernate
 		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
 		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
->>>>>>> 6a5b44f... Hibernate 5.2.3 -> 5.2.16, hib validator 5.2.4 -> 5.4.3, search 5.5.4 -> 5.9.1
-=======
-		<hibernate.version>5.2.16.Final</hibernate.version>
-		<hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
-		<hibernate.search.version>5.9.1.Final</hibernate.search.version>
->>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
@@ -127,61 +32,15 @@
 
 		<!-- Encryption -->
 		<jasypt.version>1.9.3-SNAPSHOT</jasypt.version>
-<<<<<<< HEAD
-		<bouncy.castle.version>1.59</bouncy.castle.version>
-
-<<<<<<< HEAD
-
-		<!-- Java EE / Java SE dependencies -->
-		<jsp.version>2.2</jsp.version>
-		<jstl.version>1.2</jstl.version>
-		<servlet.version>2.5</servlet.version>
-		<javax-el.version>2.2</javax-el.version>
->>>>>>> 268cddb... Changing pom.xml
-	</properties>
-	<!-- 
-	<repositories>
-        <repository>
-            <id>spring-maven-release</id>
-            <name>Spring Maven Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
-        </repository>
-        <repository>
-            <id>spring-maven-milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://maven.springframework.org/milestone</url>
-        </repository>
-    </repositories> 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-maven-release</id>
-            <name>Spring Maven Release Repository</name>
-            <url>http://maven.springframework.org/release</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-maven-milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://maven.springframework.org/milestone</url>
-        </pluginRepository>
-    </pluginRepositories>
-	 -->
-    
-<dependencies>
-=======
-=======
 
 		<!-- Image Manipulation -->
 		<imgscalr.version>4.2</imgscalr.version>
 		<bouncy.castle.version>1.59</bouncy.castle.version>
 
->>>>>>> 8a48f10... Adding JoinTable for reading list, bumping version to 3.0
 	</properties>
 
 	<dependencies>
 
-<<<<<<< HEAD
->>>>>>> d3fdae2... adding conf tomcat files
-=======
 		<!-- Mailchimp -->
 		<dependency>
 			<groupId>com.ecwid</groupId>
@@ -189,19 +48,11 @@
 			<version>3.0-0.9.6</version>
 		</dependency>
 
->>>>>>> 2165655... Adding last credit note date info, and mailchimp integration
 		<!-- Talking to Chips -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
-			<version>4.3.1</version>
-=======
-			<version>4.4</version>
-=======
 			<version>4.4.1</version>
->>>>>>> 67b7d81... Fixing az robot detection
 			<exclusions>
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
@@ -235,20 +86,11 @@
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>
 			<version>${bouncy.castle.version}</version>
->>>>>>> 27fd69b... First cut of csv sales download
 		</dependency>
-        <dependency>
-            <groupId>net.sf.flexjson</groupId>
-            <artifactId>flexjson</artifactId>
-            <version>2.1</version>
-        </dependency>
 		<dependency>
 			<groupId>org.jasypt</groupId>
 			<artifactId>jasypt</artifactId>
 			<version>${jasypt.version}</version>
-<<<<<<< HEAD
-		</dependency>  
-=======
 		</dependency>
 		<dependency>
 			<groupId>org.jasypt</groupId>
@@ -257,39 +99,12 @@
 			<scope>compile</scope>
 		</dependency>
 
->>>>>>> e9e0b11... First cut, not working
 		<dependency>
 			<groupId>com.jcraft</groupId>
 			<artifactId>jsch</artifactId>
-<<<<<<< HEAD
-<<<<<<< HEAD
-			<version>0.1.50</version>
-=======
-			<version>0.1.53</version>
->>>>>>> f6b36c6... Upgrading spring, hibernate jsftp slfj
-=======
 			<version>0.1.54</version>
->>>>>>> d8e095e... Fixing ecdsa fingerprint used in known_hosts rather than rsa
 		</dependency>
-		
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-core</artifactId>
-    <version>2.4.1</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.4.1.1</version>
-</dependency>
 
-<<<<<<< HEAD
-<dependency>
-    <groupId>org.codehaus.jackson</groupId>
-    <artifactId>jackson-core-asl</artifactId>
-    <version>1.9.13</version>
-</dependency>
-=======
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -312,31 +127,8 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
->>>>>>> 1c24bf1... Adding ability to skip updating stock record when uploading sales for events
 
-<dependency>
-    <groupId>org.codehaus.jackson</groupId>
-    <artifactId>jackson-mapper-asl</artifactId>
-    <version>1.9.13</version>
-</dependency>		
-		
 		<!-- Email templates -->
-<<<<<<< HEAD
-<dependency>
-	<groupId>org.apache.velocity</groupId>
-	<artifactId>velocity</artifactId>
-	<version>1.7</version>
-</dependency>		
-
-    	<!-- iText -->
-	<dependency>
-		<groupId>com.itextpdf</groupId>
-		<artifactId>itextpdf</artifactId>
-		<version>5.5.2</version>
-	</dependency>
-            		   
-		
-=======
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -350,35 +142,15 @@
 			<version>5.5.13</version>
 		</dependency>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> d3fdae2... adding conf tomcat files
-=======
-		<dependency>
-			<groupId>net.sf.flexjson</groupId>
-			<artifactId>flexjson</artifactId>
-			<version>3.3</version>
-		</dependency>
-
-
->>>>>>> 1c71a76... Bump spring 4.3.14 -> 5.0.4, had to replace velocity with freemarker, tiles2 -> tiles2, jackson 2.8.8.1 -> 2.9.5
-=======
->>>>>>> 2939a45... Removed flexjson, replaced deprecated methods
 		<!-- Image resizing -->
 		<dependency>
 			<groupId>org.imgscalr</groupId>
 			<artifactId>imgscalr-lib</artifactId>
 			<version>4.2</version>
 		</dependency>
-<<<<<<< HEAD
-               
-        
-	    <!-- Spring Testing -->
-=======
 
 
 		<!-- Spring Testing -->
->>>>>>> d3fdae2... adding conf tomcat files
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -392,118 +164,22 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-		    <groupId>com.jayway.jsonpath</groupId>
-		    <artifactId>json-path-assert</artifactId>
-		    <version>0.8.1</version>
-		    <scope>test</scope>
-		</dependency>	
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path-assert</artifactId>
+			<version>0.8.1</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
-		    <groupId>com.jayway.jsonpath</groupId>
-		    <artifactId>json-path</artifactId>
-		    <version>0.8.1</version>
-		    <scope>test</scope>
-		</dependency>			
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>0.8.1</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
 			<version>${hamcrest.version}</version>
 			<scope>test</scope>
-<<<<<<< HEAD
-		</dependency>        
-            
-<dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-search</artifactId>
-	<version>${hibernate.search.version}</version>
-</dependency>
-<dependency>
-  <groupId>org.apache.commons</groupId>
-  <artifactId>commons-lang3</artifactId>
-  <version>3.1</version>
-</dependency>
-<dependency>
-	<groupId>commons-io</groupId>
-	<artifactId>commons-io</artifactId>
-	<version>2.3</version>
-</dependency>
-<!-- 
-<dependency>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-resources-plugin</artifactId>
-    <version>2.6</version>
-    <scope>provided</scope>
-</dependency>
-<dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-core</artifactId>
-	<version>3.1.0.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-expression</artifactId>
-                </exclusion>                
-            </exclusions>	
-</dependency>
-<dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-web</artifactId>
-	<version>3.1.0.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-expression</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>                 
-            </exclusions>	
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework.security</groupId>
-        	<artifactId>spring-security-config</artifactId>
-        	<version>3.1.0.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-expression</artifactId>
-                </exclusion>                
-            </exclusions>	
-        </dependency>
-        <dependency>
-    	   <groupId>org.springframework.security</groupId>
-    	   <artifactId>spring-security-taglibs</artifactId>
-    	   <version>3.1.0.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-expression</artifactId>
-                </exclusion> 
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>                
-            </exclusions>	
-        </dependency>  
- -->
-  
-=======
 		</dependency>
 
 		<dependency>
@@ -529,7 +205,6 @@
 			<version>2.3</version>
 		</dependency>
 
->>>>>>> aa4d072... Removing csv dependecies from pom
 		<dependency>
 			<groupId>javax.activation</groupId>
 			<artifactId>activation</artifactId>
@@ -541,43 +216,31 @@
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
 		</dependency>
-			
+
 		<dependency>
-		    <groupId>commons-validator</groupId>
-		    <artifactId>commons-validator</artifactId>
-		    <version>1.3.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>		    
-		</dependency> 
-		<dependency>
-		    <groupId>jfree</groupId>
-		    <artifactId>jfreechart</artifactId>
-		    <version>1.0.0</version>
-		</dependency>		
-		<dependency>
-		    <groupId>commons-net</groupId>
-		    <artifactId>commons-net</artifactId>
-		    <version>3.0.1</version>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>1.3.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
-        <!-- Tiles -->		       
 		<dependency>
-<<<<<<< HEAD
-		    <groupId>org.apache.tiles</groupId>
-		    <artifactId>tiles-jsp</artifactId>
-		    <version>2.2.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jcl-over-slf4j</artifactId>
-                </exclusion>
-            </exclusions>            
-		</dependency> 
-=======
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+
+		<!-- Tiles -->
+		<dependency>
 			<groupId>org.apache.tiles</groupId>
 			<artifactId>tiles-jsp</artifactId>
 			<version>3.0.8</version>
@@ -588,278 +251,31 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
->>>>>>> 1c71a76... Bump spring 4.3.14 -> 5.0.4, had to replace velocity with freemarker, tiles2 -> tiles2, jackson 2.8.8.1 -> 2.9.5
 
-        <!-- JSoup -->
-        <dependency>
-            <groupId>org.jsoup</groupId>
-            <artifactId>jsoup</artifactId>
-            <version>1.7.3</version>
-        </dependency>
-                        
-        <!-- Logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.13</version>
-        </dependency>
-	   <dependency>
-	        <groupId>org.slf4j</groupId>
-	        <artifactId>slf4j-api</artifactId>
-	        <version>${slf4j.version}</version>
-	    </dependency>
-	    <!-- 
-	    <dependency>
-	        <groupId>org.slf4j</groupId>
-	        <artifactId>jcl-over-slf4j</artifactId>
-	        <version>${slf4j.version}</version>
-	        <scope>runtime</scope>
-	    </dependency>        
+		<!-- JSoup -->
 		<dependency>
-		  <groupId>commons-codec</groupId>
-		  <artifactId>commons-codec</artifactId>
-		  <version>1.3</version>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.3</version>
 		</dependency>
-	     -->
-		<!-- Aspect J -->
-<<<<<<< HEAD
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
 
-        <!-- Servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>    
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.1</version>
-            <scope>provided</scope>
-        </dependency>          
-        <dependency>
-        	<groupId>javax.servlet</groupId>
-        	<artifactId>jstl</artifactId>
-        	<version>1.2</version>
-        	<scope>runtime</scope>
-        </dependency>        
-
-                    
-       <!-- Spring dependencies -->
-<!-- Apache Commons file upload  -->
-    <dependency>
-        <groupId>commons-fileupload</groupId>
-        <artifactId>commons-fileupload</artifactId>
-        <version>1.2.2</version>
-    </dependency>
-    <!-- Apache Commons IO -->
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>1.3.2</version>
-    </dependency>       
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>    
-        
-        <!-- SPRING -->
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-webmvc</artifactId>
-        	<version>${spring.version}</version>
-        </dependency>         
-        
-        <!-- HIBERNATE -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.validator.version}</version>
-        </dependency>
-        
-        <!-- 
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.0.Final</version>
-        </dependency>
-         -->
-        <!-- 
-        <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-            <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>jta</artifactId>
-            <version>1.1</version>
-        </dependency>
-         -->
-        <!-- 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-         -->
-  
-         <!--      
-
-<<<<<<< HEAD
-=======
 		<!-- Logging -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
 		</dependency>
->>>>>>> f6b36c6... Upgrading spring, hibernate jsftp slfj
 		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>1.6.2</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
 		</dependency>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        -->
-        
-        <!-- Connect pool using org.apache.commons.dbcp.BasicDataSource -->
-        <dependency>
-            <groupId>commons-pool</groupId>
-            <artifactId>commons-pool</artifactId>
-            <version>20030825.183949</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>commons-dbcp</groupId>
-            <artifactId>commons-dbcp</artifactId>
-            <version>20030825.184428</version>
-            <!-- 
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>commons-pool</groupId>
-                    <artifactId>commons-pool</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>xerces</groupId>
-                    <artifactId>xerces</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>xerces</groupId>
-                    <artifactId>xercesImpl</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>xml-apis</groupId>
-                    <artifactId>xml-apis</artifactId>
-                </exclusion>
-            </exclusions>
-             -->
-        </dependency>        
-=======
-=======
-=======
 		<dependency>
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>janino</artifactId>
 			<version>3.0.6</version>
-<<<<<<< HEAD
-		</dependency>		
->>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
-=======
-		</dependency>
->>>>>>> 1c24bf1... Adding ability to skip updating stock record when uploading sales for events
-
-<<<<<<< HEAD
-		<!-- Aspect J -->
->>>>>>> d3fdae2... adding conf tomcat files
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${aspectj.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
 		</dependency>
 
-=======
->>>>>>> f7ea538... Removed aspectj for tx mananger, now using proxies
 		<!-- Servlet API -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -981,250 +397,32 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-<<<<<<< HEAD
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-pool2</artifactId>
-    <version>2.4.2</version>
-</dependency>		
 
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-<<<<<<< HEAD
->>>>>>> aa4d072... Removing csv dependecies from pom
-=======
-
-		-->
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-dbcp2</artifactId>
-    <version>2.1.1</version>
-</dependency>
-=======
->>>>>>> 4afb20d... Removing commons logging from commons dbcp
-
-<<<<<<< HEAD
-
-
->>>>>>> d3fdae2... adding conf tomcat files
-=======
->>>>>>> 053452c... Bump dbcp2 2.1.1 -> 2.2.0, mysql 5.1.33 -> 5.1.46, commons fileupload 1.2.2 -> 1.3.3
 		<dependency>
 			<groupId>displaytag</groupId>
 			<artifactId>displaytag</artifactId>
 			<version>1.2</version>
-		    <exclusions>
-		        <exclusion>
-		            <groupId>org.slf4j</groupId>
-		            <artifactId>jcl104-over-slf4j</artifactId>
-		        </exclusion>
-		        <exclusion>
-		            <groupId>org.slf4j</groupId>
-		            <artifactId>slf4j-log4j12</artifactId>
-		        </exclusion>
-		    </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl104-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
-<<<<<<< HEAD
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>5.1.28</version>
-=======
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-<<<<<<< HEAD
-			<version>5.1.33</version>
->>>>>>> aa4d072... Removing csv dependecies from pom
-=======
 			<version>5.1.46</version>
->>>>>>> 053452c... Bump dbcp2 2.1.1 -> 2.2.0, mysql 5.1.33 -> 5.1.46, commons fileupload 1.2.2 -> 1.3.3
 		</dependency>
 	</dependencies>
 	<build>
-        <finalName>bookmarks</finalName>
+		<finalName>bookmarks</finalName>
 		<plugins>
-<<<<<<< HEAD
-<plugin>
-				<!-- EXEC PLUGIN -->
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.3.2</version>
-
-				<executions>
-					<!-- Execute Bower, uses /src/main/webapp/bower.json to download and 
-						package manage front end assets (e.g. jquery, bootstrap) -->
-					<execution>
-						<id>exec-bower-install</id>
-						<phase>generate-sources</phase>
-
-						<configuration>
-							<executable>bower</executable>
-							<arguments>
-								<argument>install</argument>
-							</arguments>
-							<workingDirectory>${basedir}/src/main/webapp/bower</workingDirectory>
-							<action>
-								<ignore />
-							</action>
-						</configuration>
-
-						<goals>
-							<goal>exec</goal>
-						</goals>
-
-					</execution>
-					<!-- <execution> <id>exec-grunt</id> <phase>process-resources</phase> 
-						<configuration> <executable>grunt</executable> </configuration> <goals> <goal>exec</goal> 
-						</goals> </execution> -->
-				</executions>
-
-<<<<<<< HEAD
-			</plugin>		
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.1.1</version>
-            </plugin>
-            
-            <!-- Configure the compiler plugin for Groovy 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <compilerId>groovy-eclipse-compiler</compilerId>
-                    <verbose>false</verbose>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.groovy</groupId>
-                        <artifactId>groovy-eclipse-compiler</artifactId>
-                        <version>${groovy.eclipse.compiler.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            -->
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <verbose>false</verbose>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>            
-    
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.7</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjrt</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjtools</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outxml>true</outxml>
-                    <aspectLibraries>
-                        <aspectLibrary>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-aspects</artifactId>
-                        </aspectLibrary>
-                    </aspectLibraries>
-                     <complianceLevel>1.7</complianceLevel>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-            <!-- 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-             -->
-            
-<plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.8</version>
-        <executions>
-            <!-- 
-          <execution>
-            <id>copy</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>[ groupId ]</groupId>
-                  <artifactId>[ artifactId ]</artifactId>
-                  <version>[ version ]</version>
-                  <type>[ packaging ]</type>
-                  <classifier> [classifier - optional] </classifier>
-                  <overWrite>[ true or false ]</overWrite>
-                  <outputDirectory>[ output directory ]</outputDirectory>
-                  <destFileName>[ filename ]</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-             -->
-        </executions>
-      </plugin>            
-            
-
-<!-- Apache Tomcat 7 -->
-
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <port>8080</port>
-                    <systemProperties>
-                        <spring.profiles.active>dev</spring.profiles.active>
-                    </systemProperties>
-                </configuration>
-            </plugin>   		        
-            
-        </plugins>
-=======
-			</plugin>
-=======
->>>>>>> a53eb52... Removing bower
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -1258,6 +456,5 @@
 			</plugin>
 
 		</plugins>
->>>>>>> 268cddb... Changing pom.xml
 	</build>
 </project>

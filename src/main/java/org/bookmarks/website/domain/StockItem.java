@@ -31,25 +31,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 /**
  * @author jack
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-@Entity
-@Indexed
-public class StockItem extends AbstractEntity { 
-=======
-//@Entity
-//@Indexed
-=======
->>>>>>> 2939a45... Removed flexjson, replaced deprecated methods
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StockItem extends AbstractEntity {
 
-<<<<<<< HEAD
->>>>>>> 1232860... Adding ignore unknown to stockItem
-
-	//No ameobic
-=======
->>>>>>> 2939a45... Removed flexjson, replaced deprecated methods
 	public Boolean hasImage() {
 		if (imageFilename != null)
 			return true;

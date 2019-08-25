@@ -152,7 +152,6 @@ public class StockTakeLineController extends AbstractBookmarksController {
 			stockTakeLine.setCreationDate(new Date());
 		}
 
-<<<<<<< HEAD
 		if(stockTakeMap.size() > 50) {
 			List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
 
@@ -167,19 +166,9 @@ public class StockTakeLineController extends AbstractBookmarksController {
 			//stockTakeMap.clear();
 		}
 
-=======
-		if(stockTakeMap.size() > 20) {
-			//Remove access
-			//Sort by update Date
-			List<StockTakeLine> list = new ArrayList<StockTakeLine>(stockTakeMap.values());
-			Collections.sort(list, (s1, s2) -> {
-				return s2.getDateOfUpdate().compareTo(s1.getDateOfUpdate());
-			});
-			stockTakeMap.clear();
-		}
 
 		stockTakeLine.setDateOfUpdate(new Date());
->>>>>>> 996b89d... Fixed up stocktake, pre dump of hashmap
+
 		stockTakeLineService.saveOrUpdate(stockTakeLine);
 		stockTakeMap.put(stockTakeLine.getId(), stockTakeLine);
 

@@ -4,24 +4,35 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import org.hibernate.annotations.Type;
+
 @Embeddable
 public class CreditCard implements Serializable{
+
+	@Type(type="encryptedString")
 	private String creditCard1;
-	
+
+	@Type(type="encryptedString")
 	private String creditCard2;
-	
+
+	@Type(type="encryptedString")
 	private String creditCard3;
-	
+
+	@Type(type="encryptedString")
 	private String creditCard4;
 
+	@Type(type="encryptedString")
 	private String expiryMonth;
-	
+
+	@Type(type="encryptedString")
 	private String expiryYear;
-	
+
+	@Type(type="encryptedString")
 	private String securityCode;
-	
+
+	@Type(type="encryptedString")
 	private String nameOnCard;
-	
+
 	public String getNameOnCard() {
 		return nameOnCard;
 	}

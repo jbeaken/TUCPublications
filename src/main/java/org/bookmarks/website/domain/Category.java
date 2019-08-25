@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.search.annotations.ContainedIn;
 
-@Entity
+//@Entity
 public class Category extends AbstractEntity {
 
     @NotNull

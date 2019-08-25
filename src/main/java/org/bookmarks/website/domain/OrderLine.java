@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 
-@Entity
+//@Entity
 public class OrderLine extends AbstractEntity {
 
     @NotNull private String webReference;

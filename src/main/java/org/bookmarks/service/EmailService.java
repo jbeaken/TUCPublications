@@ -2,6 +2,7 @@ package org.bookmarks.service;
 
 import org.bookmarks.controller.bean.WebScraperResultBean;
 import org.bookmarks.domain.CustomerOrder;
+import org.bookmarks.domain.CustomerOrderLine;
 
 public interface EmailService {
 
@@ -18,11 +19,8 @@ public interface EmailService {
 	void sendWebScraperFailedReport(WebScraperResultBean webScraperResultBean);
 
 	void sendCustomerOrderConfirmationEmail(CustomerOrder customerOrder);
-<<<<<<< HEAD
-=======
 
 	void sendCustomerOrderLinePostedEmail(CustomerOrderLine customerOrderLine);
 
 	void sendErrorEmail(Exception exception, String subject);
->>>>>>> 407a726... Cleaned up basic auth
 }

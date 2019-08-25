@@ -77,8 +77,6 @@ delete from invoice_sale where sales_id in (select id from sale where event_id =
 delete from sale where event_id = @eventId;
 set foreign_key_checks = 1;
 
--- copy over stockrecord
--- Bookmarks publishers, swp, socialist review, merchandise category
 update bookmarks.stockitem b, mb.stockitem mb
   set b.quantityInStock = mb.quantityInStock
   where b.id = mb.id and (b.publisher_id in (3769, 725, 151, 3645) or b.category_id = 69);

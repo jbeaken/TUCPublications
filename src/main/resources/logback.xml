@@ -3,11 +3,7 @@
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
                 <encoder>
                         <pattern>
-<<<<<<< HEAD
-                                %d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
-=======
                                 %d{HH:mm:ss} %-5level %logger{0} - %msg%n
->>>>>>> d0a2049... Adding logging to invoice creation
                         </pattern>
                 </encoder>
         </appender>
@@ -33,110 +29,15 @@
         </rollingPolicy>
 
         </appender>
-<<<<<<< HEAD
-        
-		<logger name="org.springframework.web.servlet.mvc.method.annotation" level="WARN" />
-        <logger name="org.hibernate.type" level="INFO" /> 
-=======
 
-<<<<<<< HEAD
-        <logger name="org.hibernate.type" level="INFO" />
-
-<<<<<<< HEAD
->>>>>>> aa4a49e... Added spring security
-        <logger name="org.hibernate" level="INFO" />
-<<<<<<< HEAD
-        <logger name="org.bookmarks.service.AZLookupServiceImpl" level="DEBUG" />
-        <logger name="org.bookmarks.controller.AuthorController" level="DEBUG" />
-=======
-        <logger name="org.bookmarks" level="INFO" />
-=======
-=======
->>>>>>> a2330fa... Added debug
         <if condition='property("spring.profiles.active").contains("prod")'>
               <property name="APP_LOG_LEVEL" value="INFO"/>
         </if>
         <if condition='property("spring.profiles.active").contains("dev")'>
               <property name="APP_LOG_LEVEL" value="INFO"/>
         </if>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-        <logger name="org.hibernate" level="INFO" />
->>>>>>> 8690189... Added _csrf param skip for supplier delivery, added janino
-        <logger name="org.bookmarks.service.AZLookupServiceImpl" level="INFO" />
-        <logger name="org.bookmarks.controller.AuthorController" level="INFO" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> a6bbbcb... Cleaning up debugging
-=======
-        <logger name="org.bookmarks.controller.InvoiceController" level="DEBUG" />
->>>>>>> d0a2049... Adding logging to invoice creation
-=======
-=======
-        <logger name="org.bookmarks.controller.CustomerOrderController" level="DEBUG" />
->>>>>>> 4883163... Debug email in customer order
-        <logger name="org.bookmarks.controller.InvoiceController" level="INFO" />
-<<<<<<< HEAD
->>>>>>> c258bd0... Removing debug level from logback
-=======
-        <logger name="org.bookmarks.controller.CustomerOrderController" level="DEBUG" />
->>>>>>> ca1f0a3... Added debug to customerorder controller
-        <logger name="org.springframework" level="INFO" />
-        <logger name="org.springframework.security" level="INFO" />
-
-<<<<<<< HEAD
-=======
-        <logger name="org.apache.http" level="INFO" />
-=======
-        
-=======
-
-<<<<<<< HEAD
->>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
-        <logger name="org.bookmarks" level="${APP_LOG_LEVEL}" />
-<<<<<<< HEAD
->>>>>>> a2330fa... Added debug
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> aa4a49e... Added spring security
         <root level="INFO">
-=======
-        <root level="DEBUG">
->>>>>>> 85bbe47... Added documentation
-=======
-=======
-=======
-        <logger name="com.ullink.slack">
-            <level value="TRACE" />
-        </logger>        
-
->>>>>>> 60c6bee... Added slack and staff impl
-        <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="WARN" />
-=======
-        
-<<<<<<< HEAD
-        <logger name="org.springframework.transaction" level="INFO"/>
->>>>>>> 24112f0... Removed transactional from controllers
-
-<<<<<<< HEAD
->>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
-=======
-        <logger name="org.bookmarks.controller.TSBController" level="DEBUG" />
->>>>>>> ecd018b... Adding to transaction decorator for tsb
-=======
->>>>>>> 94bb064... Changed logging
-=======
->>>>>>> a654b73... Better logging error
-=======
->>>>>>> c97fb42... Swithc of debug logging, janino not working
-        <root level="INFO">
->>>>>>> d1bea6f... Fixed binging error for dates
                 <appender-ref ref="STDOUT" />
                 <appender-ref ref="FILE" />
         </root>

@@ -7,17 +7,20 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 
+import org.hibernate.annotations.Type;
+
 @Embeddable
 public class ContactDetails implements java.io.Serializable {
 
 	@Email @NotNull private String email;
-	
+
 //	@Transient @Email private String confirmEmail;
 
+//  @Type(type="encryptedString")
 	private String workNumber;
-	
+
 	private String homeNumber;
-	
+
 	private String mobileNumber;
 
 	public String getMobileNumber() {

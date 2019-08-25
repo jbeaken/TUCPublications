@@ -30,6 +30,8 @@ import org.bookmarks.service.CustomerOrderService;
 import org.bookmarks.service.CustomerService;
 import org.bookmarks.service.EmailService;
 import org.bookmarks.service.StockItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -65,13 +67,9 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 	@Autowired
 	private CustomerOrderValidator customerOrderValidator;
-<<<<<<< HEAD
-	
-=======
 
 	private Logger logger = LoggerFactory.getLogger(CustomerOrderController.class);
 
->>>>>>> a420287... Adding logging to customer order
 	@Autowired
 	private EmailService emailService;
 
@@ -443,30 +441,12 @@ public class CustomerOrderController extends AbstractBookmarksController {
 
 
 		//Send confirmation email
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		emailService.sendCustomerOrderConfirmationEmail(customerOrder);
-=======
-		if(customerOrder.getCustomer().getContactDetails().getEmail() != null) {
-=======
-		String email = customerOrder.getCustomer().getContactDetails().getEmail();
-=======
-		
->>>>>>> 7742430... After adding stringtrimmer, check for null is needed, adding
-=======
 
->>>>>>> 9b496e6... Fixing transfer of customer address to customer order line
 		logger.debug("Email for customer order is '{}'", email);
 
 		if(email != null) {
-<<<<<<< HEAD
->>>>>>> a6766fc... Added debug and check for blank email
-=======
 			//could have been updated in order screen
 			customerService.updateEmail(customerOrder.getCustomer());
->>>>>>> 7742430... After adding stringtrimmer, check for null is needed, adding
 			try {
 				emailService.sendCustomerOrderConfirmationEmail(customerOrder);
 				logger.info("Successfully sent confirmation email");
@@ -476,7 +456,6 @@ public class CustomerOrderController extends AbstractBookmarksController {
 		} else {
 			logger.info("Cannot send confirmation email as customer has no email address");
 		}
->>>>>>> d851794... Suppressing error to log if email is null for customer order confirmation
 
 		//Clean up session
 		session.removeAttribute("customerOrderLineMap");

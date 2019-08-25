@@ -18,9 +18,8 @@ import org.bookmarks.website.domain.ContactDetails;
 import org.bookmarks.website.domain.CreditCard;
 import org.bookmarks.website.domain.DeliveryType;
 import org.bookmarks.website.domain.OrderLine;
-import org.jasypt.util.text.StrongTextEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,12 +42,7 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 	@Autowired
 	private CustomerRepository customerRepository;
 
-<<<<<<< HEAD
-	@Value("#{ applicationProperties['thingy'] }")
-	private String passwd;
-=======
 	private final Logger logger = LoggerFactory.getLogger(CustomerOrderServiceImpl.class);
->>>>>>> a420287... Adding logging to customer order
 
 	@Override
 	public CustomerOrder selectCustomer(Long id) {
@@ -224,183 +218,4 @@ public class CustomerOrderServiceImpl implements CustomerOrderService {
 		col.setStatus(CustomerOrderLineStatus.RESEARCH);
 		customerOrderLineService.save(col);
 	}
-<<<<<<< HEAD
-
-	@Override
-	public void saveChipsOrders(List<org.bookmarks.website.domain.Customer> chipsCustomers) {
-
-		// Decrypt
-		StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-		textEncryptor.setPassword(passwd);
-
-		// Check if customers exist, using email
-		for (org.bookmarks.website.domain.Customer chipsCustomer : chipsCustomers) { // Cycle
-																						
-			org.bookmarks.domain.Customer beansCustomer = customerRepository
-					.getByEmail(chipsCustomer.getContactDetails().getEmail());
-
-			// The customer order mechanism used by beans
-			CustomerOrder customerOrder = new CustomerOrder();
-			
-			// Decrypt contact details
-			ContactDetails descryptedContactDetails = chipsCustomer.getContactDetails();
-			if (descryptedContactDetails != null) {
-				if (descryptedContactDetails.getEmail() != null) {
-					String temp = textEncryptor.decrypt(descryptedContactDetails.getEmail());
-					descryptedContactDetails.setEmail(temp);
-				}
-				if (descryptedContactDetails.getHomeNumber() != null) {
-					String temp = textEncryptor.decrypt(descryptedContactDetails.getHomeNumber());
-					descryptedContactDetails.setHomeNumber(temp);
-				}
-				if (descryptedContactDetails.getWorkNumber() != null) {
-					String temp = textEncryptor.decrypt(descryptedContactDetails.getWorkNumber());
-					descryptedContactDetails.setWorkNumber(temp);
-				}
-				if (descryptedContactDetails.getMobileNumber() != null) {
-					String temp = textEncryptor.decrypt(descryptedContactDetails.getMobileNumber());
-					descryptedContactDetails.setMobileNumber(temp);
-				}
-			}
-
-			//Decrypt creditcard
-			CreditCard decryptedCreditCard = chipsCustomer.getCreditCard();
-
-					if(decryptedCreditCard != null) {
-						if(decryptedCreditCard.getCreditCard1() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getCreditCard1());
-							decryptedCreditCard.setCreditCard1(temp);
-						}
-						if(decryptedCreditCard.getCreditCard2() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getCreditCard2());
-							decryptedCreditCard.setCreditCard2(temp);
-						}
-						if(decryptedCreditCard.getCreditCard3() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getCreditCard3());
-							decryptedCreditCard.setCreditCard3(temp);
-						}
-						if(decryptedCreditCard.getSecurityCode() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getSecurityCode());
-							decryptedCreditCard.setSecurityCode(temp);
-						}
-						if(decryptedCreditCard.getExpiryMonth() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getExpiryMonth());
-							decryptedCreditCard.setExpiryMonth(temp);
-						}
-						if(decryptedCreditCard.getExpiryYear() != null) {
-							String temp = textEncryptor.decrypt(decryptedCreditCard.getExpiryYear());
-							decryptedCreditCard.setExpiryYear(temp);
-						}
-					}
-
-			
-			// Decrypt address
-			Address decryptedAddress = chipsCustomer.getAddress();
-			if (decryptedAddress != null) {
-				if (decryptedAddress.getAddress1() != null) {
-					String temp = textEncryptor.decrypt(decryptedAddress.getAddress1());
-					decryptedAddress.setAddress1(temp);
-				}
-				if (decryptedAddress.getAddress2() != null) {
-					String temp = textEncryptor.decrypt(decryptedAddress.getAddress2());
-					decryptedAddress.setAddress2(temp);
-				}
-				if (decryptedAddress.getAddress3() != null) {
-					String temp = textEncryptor.decrypt(decryptedAddress.getAddress3());
-					decryptedAddress.setAddress3(temp);
-				}
-				if (decryptedAddress.getCountry() != null) {
-					String temp = textEncryptor.decrypt(decryptedAddress.getCountry());
-					decryptedAddress.setCountry(temp);
-				}
-				if (decryptedAddress.getCity() != null) {
-					String temp = textEncryptor.decrypt(decryptedAddress.getCity());
-					decryptedAddress.setCity(temp);
-				}
-			}			
-
-			//Customer can't be matched by email, create new beans customer
-			if (beansCustomer == null) {
-
-				String decyptedLastname = textEncryptor.decrypt(chipsCustomer
-						.getLastName());
-				String decyptedFirstname = textEncryptor.decrypt(chipsCustomer
-						.getFirstName());
-
-				beansCustomer = new org.bookmarks.domain.Customer();
-				// Set is from web
-				beansCustomer.setCustomerType(CustomerType.WEB);
-				beansCustomer.setFirstName(decyptedFirstname);
-				beansCustomer.setLastName(decyptedLastname);
-				beansCustomer.setAddress(decryptedAddress);
-				
-				BookmarksAccount account = new BookmarksAccount();
-				beansCustomer.setBookmarksAccount(account);
-			}
-
-			beansCustomer.setContactDetails(descryptedContactDetails);
-
-			beansCustomer.setWebAddress(decryptedAddress);
-
-			// TODO What to do about name? Maybe need webname
-
-			customerRepository.saveOrUpdate(beansCustomer);
-
-			// Build up Beans CustomerOrderLines
-			beansCustomer.setCustomerOrderLines(new HashSet<CustomerOrderLine>());
-
-			for (OrderLine chipsOl : chipsCustomer.getOrders()) {
-				CustomerOrderLine beansOl = new CustomerOrderLine();
-				beansOl.setIsEncrypted(true);
-
-				beansOl.setAmount(new Long(chipsOl.getQuantity()));
-				beansOl.setSellPrice(chipsOl.getSellPrice());
-				beansOl.setPostage(chipsOl.getPostage());
-				beansOl.setWebReference(chipsOl.getWebReference());
-
-				if (chipsCustomer.getOrders().size() > 1) {
-					beansOl.setIsMultipleOrder(true);
-				} else {
-					beansOl.setIsMultipleOrder(false);
-				}
-
-				StockItem stockItem = stockItemService.get(chipsOl.getStockItem().getId());
-
-				beansOl.setStockItem(stockItem);
-				beansOl.setAddress(chipsCustomer.getAddress());
-
-				beansCustomer.getCustomerOrderLines().add(beansOl);
-
-				logger.info("******");
-				logger.info("StockItem : " + stockItem.getTitle());
-				logger.info("Quantity : " + beansOl.getAmount());
-				logger.info("Web ref : " + beansOl.getWebReference());
-				logger.info("******");
-
-			}
-
-			customerOrder.setPaymentType(chipsCustomer.getPaymentType()); 
-																	
-			customerOrder.setDeliveryType(chipsCustomer.getDeliveryType()); 
-																	
-			customerOrder.setCreditCard(decryptedCreditCard);
-			
-			customerOrder.setCustomer(beansCustomer);
-			
-			customerOrder.setSource(Source.WEB);
-
-			save(customerOrder, beansCustomer.getCustomerOrderLines());
-		}// end for
-
-	}
-
-	// @Override
-	// public Collection<CustomerOrderLine> getCustomerOrderLines(Long
-	// customerId) {
-	// Collection<CustomerOrderLine> customerOrderLines =
-	// customerOrderLineRepository.getCustomerOrderLines(customerId);
-	// return customerOrderLines;
-	// }
-=======
->>>>>>> 7fc11cb... getOrders now working
 }

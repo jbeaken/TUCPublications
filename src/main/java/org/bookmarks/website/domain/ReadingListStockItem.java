@@ -11,12 +11,12 @@ import javax.persistence.ManyToOne;
 //@Entity
 public class ReadingListStockItem extends AbstractEntity {
 
-	@ManyToOne
-	@JoinColumn(name="stockitem_id")
+//	@ManyToOne
+//	@JoinColumn(name="stockitem_id")
 	private StockItem stockItem;
 	
-	@ManyToOne
-	@JoinColumn(name="readinglist_id")
+//	@ManyToOne
+//	@JoinColumn(name="readinglist_id")
 	private ReadingList readingList;
 	
 	private Long position;

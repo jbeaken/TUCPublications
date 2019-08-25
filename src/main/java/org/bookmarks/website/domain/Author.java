@@ -13,7 +13,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Store;
 
-@Entity
+//@Entity
 public class Author extends AbstractEntity {
 
     @NotNull

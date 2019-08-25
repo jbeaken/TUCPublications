@@ -5,7 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-@Entity
+//@Entity
 public class LayoutStockItem extends AbstractEntity {
 	
 	@ManyToOne

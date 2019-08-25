@@ -235,43 +235,19 @@ public class ChipsController extends AbstractBookmarksController {
 
 		logger.info("User manual request for getOrders started");
 
-<<<<<<< HEAD
-		List<Customer> chipsCustomers;
-<<<<<<< HEAD
-=======
-=======
 		if (chipsGetOrders != true) {
 			logger.info("Aborting getOrders(), turned off");
 			addWarning("Retrieval of chips orders is turned off!", modelMap);
 			return "chipsTransferReport";
 		}
->>>>>>> 7fc11cb... getOrders now working
 
->>>>>>> 49e2612... Added upload brochure functionality
 		try {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-		if(chipsCustomers == null) {
-			return "chipsTransferReport";
-		}
-
->>>>>>> 49e2612... Added upload brochure functionality
-		try {
-			customerOrderService.saveChipsOrders(chipsCustomers);
-		} catch (Exception e) {
-			logger.error("Cannot get orders", e);
-			addError("Have got orders, but beans cannot process them :  " + e.getMessage(), modelMap);
-			return "chipsTransferReport";
-		}
-=======
 			Collection<WebsiteCustomer> chipsCustomers = chipsService.getOrders();
 
 			addSuccess("Have retrieved " + chipsCustomers.size() + " orders from chips", modelMap);
 
 			modelMap.addAttribute(chipsCustomers);
->>>>>>> 7fc11cb... getOrders now working
 
 			logger.info("User request for getOrders successful");
 

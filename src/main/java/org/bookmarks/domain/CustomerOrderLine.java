@@ -30,8 +30,6 @@ import org.bookmarks.website.domain.PaymentType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
-<<<<<<< HEAD
-=======
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Parameter;
@@ -39,17 +37,23 @@ import org.hibernate.annotations.Parameter;
 import org.jasypt.hibernate5.type.EncryptedStringType;
 
 
->>>>>>> e9e0b11... First cut, not working
 @Entity
 @Table(name="customerorderline")
+@TypeDef(
+    name="encryptedString",
+    typeClass=EncryptedStringType.class,
+    parameters= {
+        @Parameter(name="encryptorRegisteredName", value="strongHibernateStringEncryptor")
+    }
+)
 public class CustomerOrderLine extends OrderLine {
 
 	//From web orders, shared by containing website.CustomerOrder
     private String webReference;
-    
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<SupplierDeliveryLine> supplierDeliveryLines;
-	
+
 	@Enumerated(EnumType.STRING)
 	@NotNull
 	private Source source;
@@ -58,17 +62,9 @@ public class CustomerOrderLine extends OrderLine {
 	@NotNull
 	@Column(name="paymentType")
 	private PaymentType paymentType;
-	
+
 	private Boolean isSecondHand = false;
-	
-	private Boolean isEncrypted = false;
-	
-	public Boolean getIsEncrypted() {
-		return isEncrypted;
-	}
-	public void setIsEncrypted(Boolean isEncrypted) {
-		this.isEncrypted = isEncrypted;
-	}
+
 	private Boolean havePrintedLabel = false;
 
 	public Boolean getHavePrintedLabel() {
@@ -81,18 +77,18 @@ public class CustomerOrderLine extends OrderLine {
 	@NotNull
 	@Column(name="deliveryType")
 	private DeliveryType deliveryType;
-	
+
 	@Embedded
 	private Address address;
-	
+
 	private Boolean isMultipleOrder;
-	
+
 	@Min(value=0)
 	@NotNull
 	@NumberFormat(pattern="#.##")
 	@Column(name="sell_price")
 	private BigDecimal sellPrice;
-	
+
 	@Min(value=0)
 	@NumberFormat(pattern="#.##")
 	private BigDecimal postage;
@@ -145,7 +141,7 @@ public class CustomerOrderLine extends OrderLine {
 	@DateTimeFormat(pattern="dd-MM-yy")
 	@Column(name="receivedIntoStockDate")
 	private Date receivedIntoStockDate;
-	
+
 	public CustomerOrderLine() {
 		super();
 		setCustomer(new Customer());
@@ -199,7 +195,7 @@ public class CustomerOrderLine extends OrderLine {
 		stockItem.setImageURL(imageURL);
 		stockItem.setPreferredSupplier(supplier);
 		setStockItem(stockItem);
-		
+
 		Invoice invoice = new Invoice();
 		invoice.setId(invoiceId);
 		setInvoice(invoice);
@@ -208,7 +204,7 @@ public class CustomerOrderLine extends OrderLine {
 		setId(id);
 		setNote(note);
 		setCreationDate(creationDate);
-	}	
+	}
 
 	public Address getAddress() {
 		return address;
@@ -228,7 +224,7 @@ public class CustomerOrderLine extends OrderLine {
 
 	public void setIsResearch(Boolean isResearch) {
 		this.isResearch = isResearch;
-	}	
+	}
 
 	public Date getCompletionDate() {
 		return completionDate;
@@ -271,7 +267,7 @@ public class CustomerOrderLine extends OrderLine {
 	}
 	public void setSale(Sale sale) {
 		this.sale = sale;
-	}	
+	}
 
 	public boolean isComplete() {
 		CustomerOrderLineStatus status = getStatus();
@@ -355,7 +351,7 @@ public class CustomerOrderLine extends OrderLine {
 		setStockItem(stockItem);
 		setAmount(amount);
 	}
-	
+
 	public CustomerOrderLine(Long customerOrderLineId) {
 		this();
 		setId(customerOrderLineId);
@@ -404,7 +400,7 @@ public class CustomerOrderLine extends OrderLine {
 	}
 
 	public boolean getCanComplete() {
-		if(getStatus() == CustomerOrderLineStatus.COMPLETE 
+		if(getStatus() == CustomerOrderLineStatus.COMPLETE
 				|| getStatus() == CustomerOrderLineStatus.RESEARCH
 				|| getStatus() == CustomerOrderLineStatus.OUT_OF_STOCK
 				|| getStatus() == CustomerOrderLineStatus.IN_STOCK) {
@@ -438,9 +434,6 @@ public class CustomerOrderLine extends OrderLine {
 		}
 		return false;
 	}
-<<<<<<< HEAD
-	
-=======
 
 	public boolean canRaiseInvoice() {
 		if(getStatus() == CustomerOrderLineStatus.COMPLETE) {
@@ -449,10 +442,9 @@ public class CustomerOrderLine extends OrderLine {
 		return true;
 	}
 
->>>>>>> 175de40... Added cancel and ability to raise non account invoices
 	public boolean getCanBeFilled() {
 		return canBeFilled();
-	}	
+	}
 
 	public CustomerOrderLineStatus[] getCustomerOrderStatusesThatCanBeFilled() {
 		CustomerOrderLineStatus[] statuses = {CustomerOrderLineStatus.IN_STOCK,
@@ -495,7 +487,7 @@ public class CustomerOrderLine extends OrderLine {
 		setStatus(CustomerOrderLineStatus.COMPLETE);
 		setCompletionDate(new Date());
 	}
-	
+
 	public Collection<CustomerOrderLineStatus> getBuyerStatuses() {
 		Collection<CustomerOrderLineStatus> list = new ArrayList<CustomerOrderLineStatus>();
 		list.add(CustomerOrderLineStatus.OUT_OF_STOCK);
@@ -504,7 +496,7 @@ public class CustomerOrderLine extends OrderLine {
 		list.add(CustomerOrderLineStatus.OUT_OF_STOCK_NOT_YET_PUBLISHED);
 		return list;
 	}
-	
+
 	public Collection<CustomerOrderLineStatus> getMailorderStatuses() {
 		Collection<CustomerOrderLineStatus> list = new ArrayList<CustomerOrderLineStatus>();
 		list.add(CustomerOrderLineStatus.READY_TO_POST);
@@ -521,7 +513,7 @@ public class CustomerOrderLine extends OrderLine {
 		}
 		return false;
 	}
-	
+
 	public String getFullAddressWithBreaks() {
 		if(getDeliveryType() == DeliveryType.COLLECTION) {
 			return "Collection";
@@ -534,7 +526,7 @@ public class CustomerOrderLine extends OrderLine {
 		//Should never happen
 		if(address == null) {
 			return "No address supplied";
-		}		
+		}
 		if(address.getAddress1() != null && !address.getAddress1().isEmpty()) {
 			buffer.append(address.getAddress1());
 		}
@@ -556,12 +548,12 @@ public class CustomerOrderLine extends OrderLine {
 		if(buffer.length() == 0) return "No address supplied";
 		return buffer.toString();
 	}
-	
+
 	//METHODS
 	public BigDecimal getTotalPrice() {
 		return getSellPrice().multiply(new BigDecimal(getAmount()));
 	}
-	
+
 	public BigDecimal getSellPrice() {
 		return sellPrice;
 	}

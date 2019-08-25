@@ -16,13 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
-<<<<<<< HEAD:src/main/java/org/bookmarks/website/domain/Customer.java
-@Entity
-public class Customer extends AbstractEntity {
-=======
 //@Entity
 public class WebsiteCustomer extends AbstractEntity {
->>>>>>> 7fc11cb... getOrders now working:src/main/java/org/bookmarks/website/domain/WebsiteCustomer.java
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="customer", fetch=FetchType.EAGER)
     private Set<OrderLine> orders = new HashSet<OrderLine>();

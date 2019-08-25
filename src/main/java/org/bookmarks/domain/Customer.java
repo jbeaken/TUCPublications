@@ -76,17 +76,10 @@ public class Customer extends AbstractEntity {
 	@Size(min=1, max = 55)
 	@Column(name="lastName")
 	private String lastName;
-<<<<<<< HEAD
-	
-	@Embedded
-	private CreditCard creditCard;
-	
-=======
 
 //	@Embedded
 //	private CreditCard creditCard;
 
->>>>>>> 6f480c9... Fixing no address bug
 	public Customer(Long customerId) {
 		setId(customerId);
 	}
@@ -192,13 +185,13 @@ public class Customer extends AbstractEntity {
 		this.nonBookmarksDiscount = nonBookmarksDiscount;
 	}
 
-	public CreditCard getCreditCard() {
-		return creditCard;
-	}
-
-	public void setCreditCard(CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
+//	public CreditCard getCreditCard() {
+//		return creditCard;
+//	}
+//
+//	public void setCreditCard(CreditCard creditCard) {
+//		this.creditCard = creditCard;
+//	}
 
 	public Address getWebAddress() {
 		return webAddress;

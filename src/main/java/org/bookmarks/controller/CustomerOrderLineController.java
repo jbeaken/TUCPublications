@@ -79,7 +79,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@Autowired
 	private SupplierOrderService supplierOrderService;
 
@@ -88,7 +88,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@Autowired
 	private InvoiceService invoiceService;
-	
+
 	@Autowired
 	private StockItemService stockItemService;
 
@@ -97,9 +97,6 @@ public class CustomerOrderLineController extends OrderLineController {
 
 	@Autowired
 	private CustomerOrderLineValidator customerOrderLineValidator;
-	
-	@Value("#{ applicationProperties['thingy'] }")
-	private String thingy;	
 
 	private Logger logger = LoggerFactory.getLogger(CustomerOrderLineController.class);
 
@@ -111,16 +108,16 @@ public class CustomerOrderLineController extends OrderLineController {
 	 */
 	@RequestMapping(value="/informCustomer")
 	public String informCustomer(Long id, CustomerOrderLineStatus customerOrderStatus, HttpSession session, ModelMap modelMap) {
-		
+
 		customerOrderLineService.updateStatus(id, customerOrderStatus);
-		
+
 		customerOrderLineService.makeNote(id, customerOrderStatus);
-		
+
 		modelMap.addAttribute("closeWindowNoRefresh", "not null");
-		
+
 		return "closeWindow";
-	}	
-	
+	}
+
 	@RequestMapping(value="/processSupplierOrders", method=RequestMethod.POST)
 	public String processSupplierOrders(ArrayList<SupplierOrderLine> supplierOrderLines, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 
@@ -213,7 +210,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 			//Save for update later
 //			orderedCustomerOrderLineMap.put(customerOrderLineId, amountFilled);
-		}	
+		}
 		if(errorMessage != null) {
 			addInfo(errorMessage, modelMap);
 			return searchFromSession(session, request, modelMap);
@@ -228,12 +225,12 @@ public class CustomerOrderLineController extends OrderLineController {
 		addInfo("Successfully created pending orders", modelMap);
 		return searchFromSession(session, request, modelMap);
 	}
-	
+
 	@RequestMapping(value="/copyISBNs", method=RequestMethod.GET)
 	public String copyISBNs(HttpSession session, ModelMap modelMap) {
 		CustomerOrderLineSearchBean customerOrderLineSearchBean = (CustomerOrderLineSearchBean) session.getAttribute("customerOrderSearchBean");
 		Collection<CustomerOrderLine> customerOrderLines = customerOrderLineService.search(customerOrderLineSearchBean);
-		
+
 		int rows = 0;
 		StringBuffer b = new StringBuffer();
 		for(CustomerOrderLine col : customerOrderLines) {
@@ -243,9 +240,9 @@ public class CustomerOrderLineController extends OrderLineController {
 		}
 		modelMap.addAttribute("someText", b.toString());
 		modelMap.addAttribute("rows", rows);
-		
+
 		return "showText";
-	}	
+	}
 
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String edit(Long id, String flow, ModelMap modelMap) {
@@ -259,69 +256,6 @@ public class CustomerOrderLineController extends OrderLineController {
 		modelMap.addAttribute(customerOrderLine.getCustomer());
 		modelMap.addAttribute(customerOrderLine.getStockItem());
 		modelMap.addAttribute(CustomerOrderLineStatus.values());
-		
-		//Decrypt if necessary
-		StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
-		textEncryptor.setPassword(thingy);
-		
-		Customer customer = customerOrderLine.getCustomer();
-		
-		Address address = customerOrderLine.getAddress();
-		
-		if(address != null) {
-			if(address.getAddress1() != null) {
-				String temp = textEncryptor.decrypt(address.getAddress1());
-				address.setAddress1(temp);
-			}
-			if(address.getAddress2() != null) {
-				String temp = textEncryptor.decrypt(address.getAddress2());
-				address.setAddress2(temp);
-			}
-			if(address.getAddress3() != null) {
-				String temp = textEncryptor.decrypt(address.getAddress3());
-				address.setAddress3(temp);
-			}
-			if(address.getCountry() != null) {
-				String temp = textEncryptor.decrypt(address.getCountry());
-				address.setCountry(temp);
-			}	
-			if(address.getCity() != null) {
-				String temp = textEncryptor.decrypt(address.getCity());
-				address.setCity(temp);
-			}				
-		}
-		
-		CreditCard creditCard = customerOrderLine.getCreditCard();
-		
-		if(creditCard != null) {
-			if(creditCard.getCreditCard1() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getCreditCard1());
-				creditCard.setCreditCard1(temp);
-			}
-			if(creditCard.getCreditCard2() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getCreditCard2());
-				creditCard.setCreditCard2(temp);
-			}
-			if(creditCard.getCreditCard3() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getCreditCard3());
-				creditCard.setCreditCard3(temp);
-			}
-			if(creditCard.getSecurityCode() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getSecurityCode());
-				creditCard.setSecurityCode(temp);
-			}	
-			if(creditCard.getExpiryMonth() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getExpiryMonth());
-				creditCard.setExpiryMonth(temp);
-			}
-			if(creditCard.getExpiryYear() != null) {
-				String temp = textEncryptor.decrypt(creditCard.getExpiryYear());
-				creditCard.setExpiryYear(temp);
-			}			
-		}		
-		
-		
-		
 
 		logger.info("About to edit customer order line " + customerOrderLine.getId() + " with status " + customerOrderLine.getStatus());
 		logger.info(ReflectionToStringBuilder.toString( customerOrderLine ));
@@ -333,7 +267,7 @@ public class CustomerOrderLineController extends OrderLineController {
 	public String gotoGardners(String isbn, ModelMap modelMap) {
 		modelMap.addAttribute("isbn", isbn);
 		return "gotoGardners";
-	}	
+	}
 
 
 	@RequestMapping(value="/edit", method=RequestMethod.POST)
@@ -347,12 +281,12 @@ public class CustomerOrderLineController extends OrderLineController {
 			modelMap.addAttribute(DeliveryType.values());
 			modelMap.addAttribute(customerOrderLine);
 			modelMap.addAttribute(customerOrderLine.getCustomer());
-			modelMap.addAttribute(customerOrderLine.getStockItem());			
+			modelMap.addAttribute(customerOrderLine.getStockItem());
 			modelMap.addAttribute(CustomerOrderLineStatus.values());
 			addError(bindingResult.getAllErrors(), modelMap);
 			return "editCustomerOrderLine";
 		}
-		
+
 		if(customerOrderLine.getSupplierOrderLine().getId() == null) {
 			customerOrderLine.setSupplierOrderLine(null);
 		} else {
@@ -378,7 +312,7 @@ public class CustomerOrderLineController extends OrderLineController {
 		modelMap.addAttribute(new StockItemSearchBean());
 		modelMap.addAttribute(getCategories(session));
 		modelMap.addAttribute(getPublishers(session));
-		
+
 		customerOrderLineService.delete(new CustomerOrderLine(id));
 
 		return "selectStockItemsForCustomerOrder";
@@ -411,11 +345,7 @@ public class CustomerOrderLineController extends OrderLineController {
 			modelMap.addAttribute("customerOrderStatusOptions", CustomerOrderLineStatus.values());
 		    return "searchCustomerOrderLines";
 		}
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> f61b9b0... Removing debug
 		setPaginationFromRequest(customerOrderLineSearchBean, request);
 		if(customerOrderLineSearchBean.getCustomerOrderLine().getStatus() == CustomerOrderLineStatus.OUT_OF_STOCK) {
 			//Because this is a form, pagination will lose input so display all results (up to a hundred, more than a hundred is
@@ -424,17 +354,13 @@ public class CustomerOrderLineController extends OrderLineController {
 		}
 
 		Collection<CustomerOrderLine> customerOrderLines = customerOrderLineService.search(customerOrderLineSearchBean);
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> f61b9b0... Removing debug
 		//Don't like, fix for shitty export
-		setPageSize(customerOrderLineSearchBean, modelMap, customerOrderLines.size());		
+		setPageSize(customerOrderLineSearchBean, modelMap, customerOrderLines.size());
 
 		session.setAttribute("customerOrderSearchBean", customerOrderLineSearchBean);
 		session.setAttribute("request", request);
-		
+
 		addSuccess((String) session.getAttribute("success"), modelMap);
 		session.removeAttribute("success");
 
@@ -461,59 +387,59 @@ public class CustomerOrderLineController extends OrderLineController {
 
 		return "searchCustomerOrderLines";
 	}
-	
-	
+
+
 	@RequestMapping(value="/printLabels")
 	public @ResponseBody void printLabels(@ModelAttribute CustomerOrderLineSearchBean customerOrderLineSearchBean, BindingResult bindingResult, HttpSession session, HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws DocumentException {
-		
+
 		setPaginationFromRequest(customerOrderLineSearchBean, request);
-		
+
 		customerOrderLineSearchBean.setExport(true); //Override
-		
+
 		Collection<CustomerOrderLine> customerOrderLines = customerOrderLineService.search(customerOrderLineSearchBean);
-		
+
 		Document doc = new Document();
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
- 
-        //Here We are writing the pdf contents to the output stream via pdfwriter 
+
+        //Here We are writing the pdf contents to the output stream via pdfwriter
 		//doc will contain the all the format and pages generated by the iText
-		
+
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 		//doc.setPageSize(PageSize.A4);
 		doc.setMargins(0, 0, 0, 0);
 //		doc.setMarginMirroring(true);
-		
+
 		PdfPTable table = new PdfPTable(2);
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		table.setWidthPercentage(100);
 		table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 		doc.open();
-		
-		
+
+
 		String nl = System.getProperty("line.separator");
-		
+
 		Set<Long> ids = new HashSet<Long>();
 
 		List<Customer> customersForLabels = new ArrayList<Customer>();
-		
+
 		for(CustomerOrderLine col : customerOrderLines) {
 			Customer c = customerService.get(col.getCustomer().getId());
-			
+
 			 //Duplication?
 			 if(ids.contains(c.getId())) {
 				 continue;
 			 }
-			 
+
 			 //Alread been printed
 			 if(col.getHavePrintedLabel() != null && col.getHavePrintedLabel() == true) {
 				 continue;
 			 }
 			 ids.add(c.getId());
-			 
+
 			 customersForLabels.add(c);
 			 StringBuilder labelText = new StringBuilder();
-			 
+
 			 Address a = c.getAddress();
 			 if(a != null) {
 		    	 labelText.append(c.getFullName() + nl);
@@ -522,13 +448,13 @@ public class CustomerOrderLineController extends OrderLineController {
 		    	 if(a.getAddress3() != null && !a.getAddress3().isEmpty()) labelText.append(a.getAddress3() + nl);
 		    	 if(a.getPostcode() != null && !a.getPostcode().isEmpty()) labelText.append(a.getPostcode() + nl);
 //		    	 logger.info(labelText.toString());
-		    	// pl.add(labelText.toString());//, "45140-8778");  //regular label with postnet barcode 
-		    	 
+		    	// pl.add(labelText.toString());//, "45140-8778");  //regular label with postnet barcode
+
 		    	 Font DOC_FONT = new Font (Font.FontFamily.COURIER, 12, Font.NORMAL);
-		    	 
+
 		    	 PdfPCell cell = new PdfPCell (new Phrase(labelText.toString(), DOC_FONT));
-		    	 cell.setBorder(Rectangle.NO_BORDER); 
-		    	 cell.setFixedHeight(125f); 
+		    	 cell.setBorder(Rectangle.NO_BORDER);
+		    	 cell.setFixedHeight(125f);
 
 //		         cell.setNoWrap(true);
 
@@ -537,34 +463,34 @@ public class CustomerOrderLineController extends OrderLineController {
 
 //		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 //		         cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-		         
+
 		    	 table.addCell(cell);
 			 }
 			 customerOrderLineService.updateHasPrintedLabel(true, col.getId());
 		}
-		
+
 //		pl.finish();
-		
+
 		doc.add(table);
-		
+
 		try {
 			doc.close();
-		
-		
+
+
 		 response.setContentType("application/pdf");
 		 response.setHeader("Content-Disposition","attachment; filename=\"ringAround.pdf\"");
 		 response.setContentLength(baos.size());
-		   
+
 		 OutputStream os = response.getOutputStream();
 		 baos.writeTo(os);
 		 os.flush();
-		 os.close(); 	
-		 
+		 os.close();
+
 		} catch(IOException e) {
 			//Probably no labels, no page exeption
-		}		 
+		}
 
-	}	
+	}
 
 	@RequestMapping(value="/reset", method=RequestMethod.GET)
 	public String reset(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
@@ -576,15 +502,10 @@ public class CustomerOrderLineController extends OrderLineController {
 
 		CustomerOrderLineSearchBean customerOrderLineSearchBean = (CustomerOrderLineSearchBean) session.getAttribute("customerOrderSearchBean");
 
-<<<<<<< HEAD
-		if(customerOrderLineSearchBean == null) return "sessionExpired";
-		
-=======
 		if(customerOrderLineSearchBean == null) {
 			customerOrderLineSearchBean = new CustomerOrderLineSearchBean();
 		}
 
->>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		HttpServletRequest sessionRequest = (HttpServletRequest) session.getAttribute("request");
 
 		if(sessionRequest == null) { sessionRequest = request;}
@@ -649,53 +570,17 @@ public class CustomerOrderLineController extends OrderLineController {
 	}
 
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * From 
-=======
->>>>>>> 175de40... Added cancel and ability to raise non account invoices
-	 * Two variations, account or other.
-	 * For other, goes to customerOrderLinesSerive.complete, which decrements quantityReadyForCustomer BUT
-	 * NOT QIS, 
-	 * @param customerOrderLineId
-	 * @param flow
-	 * @param request
-	 * @param session
-	 * @param modelMap
-	 * @return
-=======
 	 * Non-account
->>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 	 */
 	@RequestMapping(value="/sellOut", method=RequestMethod.GET)
 	public String sellOut(Long customerOrderLineId, String flow, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 
 		CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
-<<<<<<< HEAD
-		
-		if(customerOrderLine.getPaymentType() == PaymentType.ACCOUNT) {
-			return raiseInvoice(customerOrderLine, request, session, flow, modelMap);
-		} else {
-<<<<<<< HEAD
-=======
 
->>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		try {
 			customerOrderLineService.complete(customerOrderLine);
 		} catch(BookmarksException e) {
 			addError("Cannot complete this order, has it already been completed?", modelMap);
-<<<<<<< HEAD
-=======
-			try {
-				//Non-account
-				customerOrderLineService.complete(customerOrderLine);
-			} catch(BookmarksException e) {
-				addError("Cannot complete this order, has it already been completed?", modelMap);
-			}
-				
-			return searchFromSession(session, request, modelMap);
-=======
->>>>>>> 44d8cd0... customer order line search now defaults to session search, addToInvoice now working for non-account col
 		}
 
 		return searchFromSession(session, request, modelMap);
@@ -710,11 +595,7 @@ public class CustomerOrderLineController extends OrderLineController {
 
 		if(customerOrderLine.getCanCancel() == false) {
 			return "error";
->>>>>>> 175de40... Added cancel and ability to raise non account invoices
 		}
-			return searchFromSession(session, request, modelMap);
-		}
-	}
 
 		if(customerOrderLine.canBeFilled() == false) {
 			//Put back into stock
@@ -778,7 +659,7 @@ public class CustomerOrderLineController extends OrderLineController {
 		CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
 		customerOrderLine.setAmountFilled(customerOrderLine.getAmount());
 
-		modelMap.addAttribute(customerOrderLine); 
+		modelMap.addAttribute(customerOrderLine);
 
 		return "fillCustomerOrderLine";
 	}
@@ -792,9 +673,9 @@ public class CustomerOrderLineController extends OrderLineController {
 //		CustomerOrderLine customerOrderLine = customerOrderLineService.get(customerOrderLineId);
 //		Supplier supplier = new Supplier(supplierId);
 //		customerOrderLine.getStockItem().setPreferredSupplier(supplier);
-//		
+//
 //		supplierOrderService.sendToSupplier(customerOrderLine, true);
-//		
+//
 //		addMessage("Succesfully sent order to supplier", modelMap);
 //
 //		return searchFromSession(session, request, modelMap);

@@ -32,40 +32,10 @@ public class ChipsOrdersManager extends AbstractScheduler {
 
 		logger.info("Auto request for getOrders started");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if(isProduction() == false) return; //Should only run in production
-
-		List<WebsiteCustomer> chipsCustomers = null;
-
-		try {
-			chipsCustomers = chipsService.getOrders();
-		} catch (Exception e) {
-			logger.error("Cannot get orders from chips", e);
-		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 1f51618... Fixing session search for supplier deliveries
-
-		if(chipsCustomers == null) {
-			logger.info("No orders to process, exiting...");
-=======
 		if (chipsGetOrders != true) {
-			logger.info("Aborting getOrders(), turned off in configuration");
->>>>>>> 407a726... Cleaned up basic auth
-=======
-		if (chipsDownloadOrders != true) {
-=======
-		if (chipsGetOrders != true) {
->>>>>>> 8e7be17... Adding code to turn off get orders
 			logger.info("Aborting auto getOrders(), turned off in configuration");
->>>>>>> 0b8750a... Converted getOrders to use Spring RestTemplate
 			return;
 		}
->>>>>>> 1978e06... Fixing session search for supplier returns
 
 		try {
 

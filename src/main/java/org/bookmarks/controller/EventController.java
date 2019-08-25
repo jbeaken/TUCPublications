@@ -10,21 +10,11 @@ import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Collection;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-import java.util.Date;
-=======
->>>>>>> 720c3a6... Download, upload event sales all looking good
 import java.util.List;
-<<<<<<< HEAD
->>>>>>> 27fd69b... First cut of csv sales download
-=======
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
->>>>>>> e7d9133... Getting to csv download
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -89,18 +79,14 @@ public class EventController extends AbstractBookmarksController {
 
 	@Autowired
 	private EventService eventService;
-	
+
 	@Autowired
 	private StockItemService stockItemService;
-	
+
 	@Autowired
 	private SaleController saleController;
-	
+
 	@Autowired
-<<<<<<< HEAD
-	private SaleReportController reportController;	
-	
-=======
 	private SaleService saleService;
 
 	@Autowired
@@ -109,46 +95,17 @@ public class EventController extends AbstractBookmarksController {
 	@Autowired
 	private SaleReportController reportController;
 
->>>>>>> 27fd69b... First cut of csv sales download
 	@Value("#{ applicationProperties['imageFileLocation'] }")
-	private String imageFileLocation;	
+	private String imageFileLocation;
 
 	private Logger logger = LoggerFactory.getLogger(EventController.class);
 
-<<<<<<< HEAD
-	@RequestMapping(value="/upload", method=RequestMethod.POST)
-<<<<<<< HEAD
-	public @ResponseBody String search(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
-	 
-=======
-	public @ResponseBody String upload(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
-=======
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody String uploadImage(MultipartFile files, Long eventId, HttpServletRequest request, ModelMap modelMap) throws IOException {
->>>>>>> 720c3a6... Download, upload event sales all looking good
 
->>>>>>> 27fd69b... First cut of csv sales download
 		if (!ServletFileUpload.isMultipartContent(request)) {
 			throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
 		}
-<<<<<<< HEAD
-		 
-		 InputStream is = files.getInputStream();
-			
-			//Normally /home/bookmarks/images/orginal/isbn.jpg
-			File originalFile = new File(imageFileLocation + "events" + File.separator + eventId + ".jpg");
-			
-			OutputStream os = new FileOutputStream(originalFile);
-
-			// if file doesnt exists, then create it
-			if (!originalFile.exists()) {
-				originalFile.createNewFile();
-			}
-			
-			//Save file to beans local file system
-			IOUtils.copy(is, os);
-			
-=======
 
 		InputStream is = files.getInputStream();
 
@@ -165,13 +122,8 @@ public class EventController extends AbstractBookmarksController {
 		// Save file to beans local file system
 		IOUtils.copy(is, os);
 
->>>>>>> 720c3a6... Download, upload event sales all looking good
 		return "searchEvents";
 	}
-<<<<<<< HEAD
-	
-	
-=======
 
 	/**
 	 * Text file to upload from mini beans, for extennal event 1) CSV file
@@ -337,37 +289,24 @@ public class EventController extends AbstractBookmarksController {
 		return new CSVResponse(sales, "mini-beans.csv");
 	}
 
-<<<<<<< HEAD
->>>>>>> 27fd69b... First cut of csv sales download
-	@RequestMapping(value="/getJson", method = RequestMethod.GET)
-=======
 	@RequestMapping(value = "/getJson", method = RequestMethod.GET)
->>>>>>> 720c3a6... Download, upload event sales all looking good
 	@ResponseBody
-<<<<<<< HEAD
-	public Collection<CalendarEvent> getJson() {
-		
-=======
 	public Collection<CalendarEvent> getJson(@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date start, @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date end) {
 
 		logger.info("Search for calendar using date range {} - {}", start, end);
 
->>>>>>> 6df053c... Event calendar now using events json
 		EventSearchBean eventSearchBean = new EventSearchBean();
+
 		Calendar c = new GregorianCalendar();
 		c.add(Calendar.DAY_OF_YEAR, -30);
-<<<<<<< HEAD
-		eventSearchBean.getEvent().setStartDate(c.getTime());
-=======
 
 		eventSearchBean.getEvent().setStartDate(start);
 		eventSearchBean.getEvent().setEndDate(end);
 
 		logger.debug("Search for calendar using search bean {}", eventSearchBean);
 
->>>>>>> 6df053c... Event calendar now using events json
 		Collection<Event> events = eventService.search(eventSearchBean);
-		
+
 		Collection<CalendarEvent> calendarEvents = new ArrayList<CalendarEvent>();
 
 		logger.debug("Have {} events in date range", events.size());
@@ -381,15 +320,9 @@ public class EventController extends AbstractBookmarksController {
 		logger.debug("Have {} events to send to client", calendarEvents.size());
 
 		return calendarEvents;
-<<<<<<< HEAD
-	}	
-	
-	@RequestMapping(value="/search")
-=======
 	}
 
 	@RequestMapping(value = "/search")
->>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String search(EventSearchBean eventSearchBean, HttpServletRequest request, ModelMap modelMap) {
 		if (eventSearchBean == null) { // this is coming from the nav bar
 			eventSearchBean = new EventSearchBean();
@@ -407,19 +340,9 @@ public class EventController extends AbstractBookmarksController {
 
 		return "searchEvents";
 	}
-<<<<<<< HEAD
-	
-	@RequestMapping(value="/delete")
-=======
 
-<<<<<<< HEAD
-	@RequestMapping(value = "/delete")
->>>>>>> 720c3a6... Download, upload event sales all looking good
-	public String delete(Long id, HttpServletRequest request, ModelMap modelMap) {
-=======
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable("id") Long id, HttpServletRequest request, ModelMap modelMap) {
->>>>>>> a04b3d1... Fixing event rest
 
 		Event event = eventService.get(id);
 
@@ -438,20 +361,7 @@ public class EventController extends AbstractBookmarksController {
 
 		return search(eventSearchBean, request, modelMap);
 	}
-<<<<<<< HEAD
-	
-	@RequestMapping(value="/startSelling")
-=======
 
-<<<<<<< HEAD
-	@RequestMapping(value = "/startSelling")
->>>>>>> 720c3a6... Download, upload event sales all looking good
-	public String startSelling(Long eventId, String eventName, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		Event event = new Event();
-		event.setId(eventId);
-		event.setName(eventName);
-		
-=======
 	@RequestMapping(value = "/startSelling/{id}")
 	public String startSelling(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 
@@ -459,46 +369,16 @@ public class EventController extends AbstractBookmarksController {
 
 		addSuccess("Any sales or invoices created will now be attached to event " + event.getName() + ". To stop, click 'Events - Stop Selling'", modelMap);
 
->>>>>>> a04b3d1... Fixing event rest
 		session.setAttribute("event", event);
-		
+
 		return saleController.displaySellStockItem(modelMap, session);
 	}
-<<<<<<< HEAD
-	
-	
-	@RequestMapping(value="/showSales")
-=======
 
-<<<<<<< HEAD
-	@RequestMapping(value = "/showSales")
->>>>>>> 720c3a6... Download, upload event sales all looking good
-	public String showSales(Long eventId, String eventName, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		Event event = new Event();
-		event.setId(eventId);
-		event.setName(eventName);
-		
-=======
 	@RequestMapping(value = "/showSales/{id}")
 	public String showSales(@PathVariable("id") Long id, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		Event event = eventService.get( id );
 
->>>>>>> a04b3d1... Fixing event rest
 		SaleReportBean saleReportBean = new SaleReportBean(event);
-<<<<<<< HEAD
-		
-//		modelMap.addAttribute(saleReportBean);
-		
-		modelMap.addAttribute(saleReportBean);
-		modelMap.addAttribute(SalesReportType.values());
-		modelMap.addAttribute(getCategories(session));
-		return "salesReport";		
-		
-//		return reportController.saleListReport(saleReportBean, request, session, modelMap);
-	}	
-	
-	@RequestMapping(value="/stopSelling")
-=======
 
 		modelMap.addAttribute(saleReportBean);
 		modelMap.addAttribute(SalesReportType.values());
@@ -508,15 +388,10 @@ public class EventController extends AbstractBookmarksController {
 	}
 
 	@RequestMapping(value = "/stopSelling")
->>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String stopSelling(HttpServletRequest request, HttpSession session, ModelMap modelMap) {
 		session.removeAttribute("event");
-<<<<<<< HEAD
-		
-=======
 
 		addSuccess("Have stopped selling for event", modelMap);
->>>>>>> a04b3d1... Fixing event rest
 		return "home";
 	}
 
@@ -525,7 +400,7 @@ public class EventController extends AbstractBookmarksController {
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		modelMap.addAttribute(eventSearchBean);
 		return search(eventSearchBean, request, modelMap);
-	}	
+	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(@Valid Event event, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
@@ -541,30 +416,19 @@ public class EventController extends AbstractBookmarksController {
 			}
 			event.setStockItem(stockItem);
 		}
-		
+
 		EventValidator eventValidator = new EventValidator();
 		eventValidator.validate(event, bindingResult);
-<<<<<<< HEAD
-		
-		//Check for errors
-		if(bindingResult.hasErrors()){
-=======
 
 		// Check for errors
 		if (bindingResult.hasErrors()) {
->>>>>>> 720c3a6... Download, upload event sales all looking good
 			modelMap.addAttribute(EventType.values());
 			return "addEvent";
 		}
 
 		eventService.save(event);
-<<<<<<< HEAD
-		
-		//Redirect
-=======
 
 		// Redirect
->>>>>>> 720c3a6... Download, upload event sales all looking good
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		eventSearchBean.getEvent().setName(event.getName());
 		session.setAttribute("searchBean", eventSearchBean);
@@ -586,43 +450,23 @@ public class EventController extends AbstractBookmarksController {
 		modelMap.addAttribute(event);
 		modelMap.addAttribute(EventType.values());
 		return "addEvent";
-<<<<<<< HEAD
-	}	
-	
-	@RequestMapping(value="/searchFromSession")
-=======
 	}
 
 	@RequestMapping(value = "/searchFromSession")
->>>>>>> 720c3a6... Download, upload event sales all looking good
 	public String searchFromSession(HttpSession session, HttpServletRequest request, ModelMap modelMap) {
 		EventSearchBean eventSearchBean = (EventSearchBean) session.getAttribute("searchBean");
 		eventSearchBean.isFromSession(true);
 		modelMap.addAttribute(eventSearchBean);
 		modelMap.addAttribute(EventType.values());
 		return search(eventSearchBean, request, modelMap);
-	}	
+	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String edit(@Valid Event event, BindingResult bindingResult, HttpServletRequest request, HttpSession session, ModelMap modelMap) {
-		
+
 		EventValidator eventValidator = new EventValidator();
 		eventValidator.validate(event, bindingResult);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		logger.info(event.getDescription());
-		
-=======
->>>>>>> e7d9133... Getting to csv download
-		//Check for errors
-		if(bindingResult.hasErrors()){
-			modelMap.addAttribute(EventType.values());
-			return "editEvent";
-		}
-		
-		if(event.getStockItem().getIsbn().trim().equals("")) {
-=======
 		// Check for errors
 		if (bindingResult.hasErrors()) {
 			modelMap.addAttribute(EventType.values());
@@ -630,7 +474,6 @@ public class EventController extends AbstractBookmarksController {
 		}
 
 		if (event.getStockItem().getIsbn().trim().equals("")) {
->>>>>>> 720c3a6... Download, upload event sales all looking good
 			event.setStockItem(null);
 		} else {
 			StockItem stockItem = stockItemService.getByISBNAsNumber(event.getStockItem().getIsbn());
@@ -641,40 +484,19 @@ public class EventController extends AbstractBookmarksController {
 			}
 			event.setStockItem(stockItem);
 		}
-<<<<<<< HEAD
-		
-		if(event.getDescription() != null) {
-=======
 
 		if (event.getDescription() != null) {
->>>>>>> 720c3a6... Download, upload event sales all looking good
 			String description = event.getDescription();
 			description = description.replace("<br/>", "");
 			event.setDescription(description);
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		logger.info("AFTER:" + event.getDescription());
-=======
->>>>>>> e7d9133... Getting to csv download
-		if(event.getNote() != null && event.getNote().trim().equals("")){
-=======
 		if (event.getNote() != null && event.getNote().trim().equals("")) {
->>>>>>> 720c3a6... Download, upload event sales all looking good
 			event.setNote(null);
 		}
-		
-		eventService.update(event);
-<<<<<<< HEAD
-		logger.info("AFTER_UPDATE:" + event.getDescription());
-=======
 
-<<<<<<< HEAD
->>>>>>> e7d9133... Getting to csv download
-		//Redirect
-=======
+		eventService.update(event);
+
 		// Redirect
->>>>>>> 720c3a6... Download, upload event sales all looking good
 		EventSearchBean eventSearchBean = new EventSearchBean();
 		eventSearchBean.getEvent().setName(event.getName());
 		session.setAttribute("searchBean", eventSearchBean);
@@ -688,30 +510,18 @@ public class EventController extends AbstractBookmarksController {
 	public String edit(@PathVariable("id") Long id, ModelMap modelMap) {
 		Event event = eventService.get(id);
 
-<<<<<<< HEAD
-		logger.info(event.getDescription());
-		
-=======
->>>>>>> e7d9133... Getting to csv download
 		modelMap.addAttribute(EventType.values());
 		modelMap.addAttribute(event);
-		
+
 		return "editEvent";
 	}
 
-<<<<<<< HEAD
-	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String displayView(Long id, ModelMap modelMap) {
-<<<<<<< HEAD
-=======
-=======
 	@RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
 	public String view(@PathVariable("id") Long id, ModelMap modelMap) {
->>>>>>> a04b3d1... Fixing event rest
 
->>>>>>> 27fd69b... First cut of csv sales download
 		Event event = eventService.get(id);
 		modelMap.addAttribute(event);
+
 		return "viewEvent";
 	}
 

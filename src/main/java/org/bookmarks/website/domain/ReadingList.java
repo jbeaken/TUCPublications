@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 
-@Entity
+//@Entity
 public class ReadingList extends AbstractNamedEntity {
 
 	//@OneToMany(mappedBy="readingList")

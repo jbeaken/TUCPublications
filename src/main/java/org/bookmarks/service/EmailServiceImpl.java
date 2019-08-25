@@ -1,7 +1,5 @@
 package org.bookmarks.service;
 
-
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,37 +29,12 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-<<<<<<< HEAD
-	
-	public void setMailSender(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
-	}
 
-<<<<<<< HEAD
-   public void setVelocityEngine(VelocityEngine velocityEngine) {
-      this.velocityEngine = velocityEngine;
-   }
-	private JavaMailSender mailSender;
-	private VelocityEngine velocityEngine;
-	
-	@Autowired private EmailReportService emailReportService;
-	
-	private static final String fromEmail = "beans@bookmarks.com";
-	
-=======
-
-=======
-
-<<<<<<< HEAD
-  @Autowired
->>>>>>> 94bb064... Changed logging
-=======
 	public void setMailSender(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
 
 
->>>>>>> a58adb3... Re installing setter for mailSender
 	private JavaMailSender mailSender;
 
   @Autowired
@@ -72,135 +45,89 @@ public class EmailServiceImpl implements EmailService {
 
 	private static final String fromEmail = "info@bookmarksbookshop.co.uk";
 
->>>>>>> e70c6d7... CurrencyFormat to CurrencyStyleFormat, same with PercentFormat
 	@Value("#{  emailProperties['email.dailyReport.cron'] }")
 	private String cronJob;
-	
+
 	@Value("#{ emailProperties['email.address.buyer1'] }")
 	private String buyer1Email;
-	
+
 	@Value("#{ emailProperties['email.address.buyer2'] }")
 	private String buyer2Email;
-	
+
 	@Value("#{ emailProperties['email.address.mailorder'] }")
 	private String mailOrderEmail;
-	
+
 	@Value("#{ emailProperties['email.address.admin'] }")
-	private String adminEmail;	
-	
+	private String adminEmail;
+
 	@Value("#{ emailProperties['email.address.manager'] }")
-	private String managerEmail;	
-	
+	private String managerEmail;
+
 	@Value("#{ emailProperties['email.address.publications'] }")
 	private String publicationsEmail;
 
-	private Logger logger = LoggerFactory.getLogger(DailyReport.class);
+	private Logger logger = LoggerFactory.getLogger(EmailService.class);
 
 	@Override
 	public void sendDailyReport(String emotion, String message) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-<<<<<<< HEAD
-		
-		//String[] emails = {buyer1Email, buyer2Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail};
-		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail};
-		//String[] emails = {"jack747@gmail.com"};
-=======
 
-<<<<<<< HEAD
-		// String[] emails = {buyer1Email, buyer2Email, mailOrderEmail,
-		// managerEmail, publicationsEmail, adminEmail};
-		String[] emails = { buyer1Email, mailOrderEmail, managerEmail, publicationsEmail, adminEmail };
-<<<<<<< HEAD
-
->>>>>>> 94bb064... Changed logging
-=======
-		// String[] emails = {"jack747@gmail.com"};
->>>>>>> a58adb3... Re installing setter for mailSender
-=======
 		String[] emails = { buyer1Email, managerEmail };
 		
->>>>>>> 7af1d0d... Removed myself from daily report email
 		msg.setTo(emails);
-		
+
 		msg.setSubject("Hello From Beans. Today I am feeling " + emotion);
 		msg.setText(message);
-		
-		try{
+
+		try {
 			this.mailSender.send(msg);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		} catch(MailException ex) {
-			// simply log it and go on...
-			logger.error("Cannot send daily report", ex.getMessage());            
-=======
-		} catch (Exception ex) {
-			logger.error("Cannot send daily report", ex);
->>>>>>> 94bb064... Changed logging
-=======
 		} catch (MailException ex) {
 			// simply log it and go on...
 			logger.error("Cannot send daily report", ex.getMessage());
->>>>>>> a58adb3... Re installing setter for mailSender
 		}
 	}
-	
+
 	@Override
 	public void sendWebScraperReport(WebScraperResultBean webScraperResultBean) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-		
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
-		String[] emails = {"jack747@gmail.com"};
+
+		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
+		// adminEmail};
+		String[] emails = { "jack747@gmail.com" };
 		msg.setTo(emails);
-		
+
 		msg.setText(webScraperResultBean.getMessage());
-		
+
 		msg.setSubject("Beans reporting on web scrapper for  " + webScraperResultBean.getSiteName());
 
 		try {
 			this.mailSender.send(msg);
-		} catch(MailException ex) {
+		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot send web scraper", ex.getMessage());            
+			logger.error("Cannot send web scraper", ex.getMessage());
 		}
-	}	
-	
-	@Override
-<<<<<<< HEAD
-	public void emailErrorToJack(Exception exception) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom(fromEmail);
-        msg.setSubject("Error");
-        msg.setTo("jack747@gmail.com");
-        msg.setText(exception.getStackTrace().toString());
-        try{
-            this.mailSender.send(msg);
-        }
-        catch(MailException ex) {
-            System.err.println(ex.getMessage());            
-        }
 	}
 
 	@Override
-=======
->>>>>>> 407a726... Cleaned up basic auth
 	public void sendGardnersAvailabiltyReport(int count) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-		
-		String[] emails = {adminEmail};
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
+
+		String[] emails = { adminEmail };
+		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
+		// adminEmail};
 		msg.setTo(emails);
-		
+
 		msg.setSubject("Beans reporting on gardners availability, " + count + " items in stock");
 		msg.setText("Beans reporting on gardners availability, " + count + " items in stock");
 
-		try{
+		try {
 			this.mailSender.send(msg);
-		} catch(MailException ex) {
+		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot send web scraper", ex.getMessage());            
+			logger.error("Cannot send web scraper", ex.getMessage());
 		}
 	}
 
@@ -208,20 +135,21 @@ public class EmailServiceImpl implements EmailService {
 	public void sendWipedCCDetails() {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-		
-		String[] emails = {adminEmail};
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
+
+		String[] emails = { adminEmail };
+		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
+		// adminEmail};
 		msg.setTo(emails);
-//		msg.setTo("jack747@gmail.com");
-		
+		// msg.setTo("jack747@gmail.com");
+
 		msg.setSubject("Beans has run wipe cc details programme successfully!");
 		msg.setText("Beans has run wipe cc details programme successfully!");
-		
-		try{
+
+		try {
 			this.mailSender.send(msg);
-		} catch(MailException ex) {
+		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot wipe cc details email", ex.getMessage());            
+			logger.error("Cannot wipe cc details email", ex.getMessage());
 		}
 	}
 
@@ -229,68 +157,61 @@ public class EmailServiceImpl implements EmailService {
 	public void sendDailyAttentionReport(String message) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-		
-		String[] emails = {adminEmail, mailOrderEmail};
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
+
+		String[] emails = { adminEmail, mailOrderEmail };
+		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
+		// adminEmail};
 		msg.setTo(emails);
-//		msg.setTo("jack747@gmail.com");
-		
+		// msg.setTo("jack747@gmail.com");
+
 		msg.setSubject("Customer Orders need urgent attention!");
 		msg.setText(message);
-		
-		try{
+
+		try {
 			this.mailSender.send(msg);
-		} catch(MailException ex) {
+		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot daily attention email", ex.getMessage());            
+			logger.error("Cannot daily attention email", ex.getMessage());
 		}
-		
+
 	}
 
 	@Override
 	public void sendWebScraperFailedReport(WebScraperResultBean webScraperResultBean) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(fromEmail);
-		
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
-		String[] emails = {"jack747@gmail.com"};
+
+		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
+		// adminEmail};
+		String[] emails = { "jack747@gmail.com" };
 		msg.setTo(emails);
-		
+
 		msg.setText(webScraperResultBean.getMessage());
-		
+
 		msg.setSubject("FAILED : Beans reporting on web scrapper for  " + webScraperResultBean.getSiteName());
 
 		try {
 			this.mailSender.send(msg);
-		} catch(MailException ex) {
+		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot send web scraper", ex.getMessage());            
-		}		
+			logger.error("Cannot send web scraper", ex.getMessage());
+		}
 	}
 
 	@Override
 	public void sendCustomerOrderConfirmationEmail(final CustomerOrder customerOrder) {
-<<<<<<< HEAD
-		
-//		String[] emails = {buyer1Email, mailOrderEmail, managerEmail, adminEmail};
-		final String[] emails = {"jack747@gmail.com","info@bookmarksbookshop.co.uk"};
-=======
 
 		final String[] emails = { customerOrder.getCustomer().getContactDetails().getEmail(), "info@bookmarksbookshop.co.uk" };
 
->>>>>>> 407a726... Cleaned up basic auth
 		StringBuilder builder = new StringBuilder(300);
 		builder.append("<html>");
 		builder.append("<a href='http://bookmarksbookshop.co.uk'><img src='http://bookmarksbookshop.co.uk/resources/images/bookmarks_logo_400.png'/></a>");
 		builder.append("<h1>Confirmation of Order</h1>");
 		builder.append("<br/><br/>");
-		
-		for(CustomerOrderLine col : customerOrder.getCustomerOrderline()) {
+
+		for (CustomerOrderLine col : customerOrder.getCustomerOrderline()) {
 			builder.append("<div>" + col.getStockItem().getTitle() + "</div>");
 		}
-<<<<<<< HEAD
-		
-=======
 
 		builder.append("</html>");
 
@@ -324,29 +245,9 @@ public class EmailServiceImpl implements EmailService {
 
 		builder.append("<div>" + customerOrderLine.getStockItem().getTitle() + "</div>");
 
->>>>>>> 407a726... Cleaned up basic auth
 		builder.append("</html>");
-		
-		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-<<<<<<< HEAD
-	         public void prepare(MimeMessage mimeMessage) throws Exception {
-	            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-	            message.setTo(emails);
-	            message.setFrom(fromEmail); // could be parameterized...
-	            Map<String, Object> model = new HashMap<String, Object>();
-	            model.put("customerOrder", customerOrder);
-	            String text = VelocityEngineUtils.mergeTemplateIntoString(
-	               velocityEngine, "email/customer-order-confirmation.vm", "utf-8", model);
-	            message.setText(text, true);
-	         }
-	      };
 
-//		try {
-//			this.mailSender.send(preparator);
-//		} catch(MailException ex) {
-//			logger.error("Cannot send confirmation order", ex.getMessage());            
-//		}	
-=======
+		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
@@ -366,7 +267,6 @@ public class EmailServiceImpl implements EmailService {
 
 		this.mailSender.send(preparator);
 
->>>>>>> 407a726... Cleaned up basic auth
 	}
 
 	@Override
