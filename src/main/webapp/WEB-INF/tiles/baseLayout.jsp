@@ -15,6 +15,8 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/bookmarks.js" />" ></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.js" />" ></script>
 	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/chosen.css" />" />
+	<link rel="icon" type="image/png" href="<c:url value="/resources/favicon-32x32.png" />" sizes="32x32">
+	<link rel="icon" type="image/png" href="<c:url value="/resources/favicon-16x16.png" />" sizes="16x16">
 <style type="text/css">
 body {
 }
