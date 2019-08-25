@@ -1,6 +1,6 @@
 src/main/resources/spring/application.prod.properties
 src/main/resources/spring/application.dev.properties
 src/main/groovy/org/bookmarks/groovy/DecyptDatabase.groovy
-target/
+/target/
 .idea
 *.iml
