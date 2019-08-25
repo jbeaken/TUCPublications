@@ -36,7 +36,6 @@
 	</beans:beans>
 
 	<beans:beans profile="prod,mini-beans">
-
 		<http use-expressions="true" disable-url-rewriting="true">
 			<intercept-url pattern="/login*" access="permitAll" />
 			<intercept-url pattern="/**" access="isAuthenticated()"/>
@@ -48,34 +47,22 @@
 	</beans:beans>
 
 		<beans:beans profile="dev">
+			<http use-expressions="true" disable-url-rewriting="true">
+					<!--
+						<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
 
-	    <http use-expressions="true" disable-url-rewriting="true">
-				<!--
-					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="http"/>
+						<remember-me key="bookmarksBigGles"/>
+						<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
+					-->
 
-					<remember-me key="bookmarksBigGles"/>
-					<intercept-url pattern="/**" access="permitAll" requires-channel="http"/>
-				-->
+						<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+						<csrf disabled="false"/>
 
-					<intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
-					<csrf disabled="false"/>
+				<form-login />
 
-	        <form-login />
-
-	        <logout />
-	    </http>
+				<logout />
+			</http>
 		</beans:beans>
 
-		<beans:beans profile="prod,mini-beans">
-
-	    <http use-expressions="true" disable-url-rewriting="true">
-			<intercept-url pattern="/login*" access="permitAll" />
-			<intercept-url pattern="/**" access="isAuthenticated()"/>
-
-					<csrf disabled="true"/>
-	        <form-login />
-	        <logout />
-	    </http>
-		</beans:beans>
 
 </beans:beans>
