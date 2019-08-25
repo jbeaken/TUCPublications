@@ -85,7 +85,7 @@ public class SlackService {
 
 		logger.info("posting to slack");
 
-		SlackSession session = SlackSessionFactory.createWebSocketSlackSession("xoxb-277950732593-59sYYh9qBg23TW8Tf5FB9hn7");
+		SlackSession session = SlackSessionFactory.createWebSocketSlackSession(slackBotAuthToken);
 
 
 		session.connect();
@@ -100,7 +100,7 @@ public class SlackService {
 		logger.info("todo slack");
 
 		// Requires legacy token
-		SlackSession session = SlackSessionFactory.createWebSocketSlackSession("xoxp-269044738705-269044738897-277855547008-84efc9dbc7bfaad4a743a8b00c636960");
+		SlackSession session = SlackSessionFactory.createWebSocketSlackSession(slackBotAuthToken);
 		session.connect();
 		//
 		// for(SlackBot bot : session.getBots()) {
@@ -111,7 +111,6 @@ public class SlackService {
 
 		params.put("text", "do something");
 		params.put("command", "/todo");
-		//params.put("token", "xoxp-269044738705-269044738897-277855547008-84efc9dbc7bfaad4a743a8b00c636960");
 
 
 		SlackChannel channel = session.findChannelByName("general"); //make sure bot is a member of the channel.
