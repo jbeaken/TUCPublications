@@ -28,8 +28,8 @@
   }],
   "provisioners": [{
     "type": "file",
-    "source": "stuff.tar.bz2",
-    "destination": "stuff.tar.bz2"
+    "source": "files.tar.bz2",
+    "destination": "files.tar.bz2"
   }, {
     "type": "shell",
     "script": "install.sh"
