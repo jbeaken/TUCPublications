@@ -1,4 +1,4 @@
 mvn clean package -f /home/git/bookmarks
-cp /home/git/bookmarks/target/bookmarks.war stuff/tomcat/webapps/ROOT.war
-tar cjf stuff.tar.bz2 stuff
+cp /home/git/bookmarks/target/bookmarks.war files/tomcat/webapps/ROOT.war
+tar cjf files.tar.bz2 files
 packer build initial_ami.json
