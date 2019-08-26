@@ -1,5 +1,4 @@
-src/main/resources/spring/application.prod.properties
-src/main/resources/spring/application.dev.properties
+src/main/resources/spring/application.*.properties
 src/main/groovy/org/bookmarks/groovy/DecyptDatabase.groovy
 target
 src/main/etc/packer/files.tar.bz2
@@ -7,3 +6,5 @@ src/main/etc/packer/aws/credentials
 src/main/etc/packer/files/tomcat/webapps/ROOT.war
 .idea
 *.iml
+src/main/etc/packer/files/aws/credentials
+
