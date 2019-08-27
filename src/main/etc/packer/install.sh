@@ -13,12 +13,12 @@ mkdir ~/.aws
 tar xjf files.tar.bz2
 
 # tomcat
-sudo cp stuff/tomcat/conf/tomcat.conf /etc/tomcat/conf.d/bookmarks.conf
-sudo cp stuff/tomcat/webapps/ROOT.war /usr/share/tomcat/webapps/ROOT.war
+sudo cp files/tomcat/conf/tomcat.conf /etc/tomcat/conf.d/bookmarks.conf
+sudo cp files/tomcat/webapps/ROOT.war /usr/share/tomcat/webapps/ROOT.war
 
 # images
-cp stuff/aws/credentials ~/.aws/credentials
-cp stuff/aws/config ~/.aws/config
+cp files/aws/credentials ~/.aws/credentials
+cp files/aws/config ~/.aws/config
 sudo chown tomcat:tomcat -R /home/bookmarks/
 
 # aws s3 sync s3://paper-files-bucket /home/paper/Image
