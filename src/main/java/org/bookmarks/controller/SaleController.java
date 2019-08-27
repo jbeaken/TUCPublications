@@ -71,51 +71,6 @@ public class SaleController extends AbstractBookmarksController {
 		return "searchSales";
 	}
 
-
-
-//	@RequestMapping(value = "/sell", method=RequestMethod.POST)
-//	public String sell(StockItemSearchBean stockItemSearchBean, HttpServletRequest request, ModelMap modelMap, HttpSession session) {
-//		String errorMessage = stockItemSearchBean.checkValidity();
-//		if(errorMessage != null) {
-//			modelMap.addAttribute("message", errorMessage);
-//			fillStockSearchModel(session, modelMap);
-//			return "searchStockItems";
-//		}
-//
-//		setPaginationFromRequest(stockItemSearchBean, request);
-//
-//		convertToISBN13(stockItemSearchBean.getStockItem());
-//
-//		Collection<StockItem> stockItems = stockItemService.search(stockItemSearchBean);
-//		modelMap.addAttribute("searchResultCount", stockItemSearchBean.getSearchResultCount());
-//
-//		//Sell item
-//		Map<Long, Sale> saleMap = (Map<Long, Sale>) session.getAttribute("saleMap");
-//
-//		if(stockItems.size() == 1) {
-//			//Sell
-//			StockItem stockItem = stockItems.iterator().next();
-//			Sale sale = sellSingleStockItem(stockItem, null, modelMap, saleMap);
-//
-//			//Reset search
-//			stockItemSearchBean.reset();
-//
-//			fillSaleModel(saleMap, session, modelMap);
-//			return "sellStockItem";
-//		} else if(stockItems.size() > 1) {
-//			//Too many stock items, display to user for selection
-//			modelMap.addAttribute(stockItems);
-//		} else {
-//			//ISBN cannot be found in database
-//			//Don't reset isbn
-//			//In future offer to create new stock record if ISBN is 13 or 10??
-//			modelMap.addAttribute("message", "ISBN " + stockItemSearchBean.getStockItem().getIsbn() + " cannot be found in database");
-//		}
-//
-//		fillSaleModel(saleMap, session, modelMap);
-//		return "sellStockItem";
-//	}
-
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sellAndGoByISBN", method=RequestMethod.GET)
 	public String sellAndGoByISBN(String isbn, boolean stayInSearch, HttpServletRequest request, ModelMap modelMap, HttpSession session) {
@@ -132,14 +87,7 @@ public class SaleController extends AbstractBookmarksController {
 
 	/**
 	 * Used from sellStockItem.jsp
-	 *
-	 * @param stockItemSearchBean
-	 * @param request
-	 * @param modelMap
-	 * @param session
-	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/sellByISBN", method=RequestMethod.POST)
 	public String sellByISBN(StockItemSearchBean stockItemSearchBean, HttpServletRequest request, ModelMap modelMap, HttpSession session) {
 		//Sell item
