@@ -114,7 +114,7 @@
 	<tx:annotation-driven mode="proxy"
 		transaction-manager="transactionManager" />
 
-	<beans profile="prod">
+	<beans profile="prod,aws">
 
 		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 			<property name="host" value="auth.smtp.1and1.co.uk" />
