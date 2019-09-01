@@ -7,4 +7,6 @@ src/main/etc/packer/files/tomcat/webapps/ROOT.war
 .idea
 *.iml
 src/main/etc/packer/files/aws/credentials
-
+src/main/etc/terraform/.terraform
+src/main/etc/terraform/terraform.tfstate
+src/main/etc/terraform/terraform.tfstate.backup
