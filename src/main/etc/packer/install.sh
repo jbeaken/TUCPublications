@@ -13,6 +13,7 @@ mkdir ~/.aws
 tar xjf files.tar.bz2
 
 # tomcat
+sudo cp files/tomcat/conf/server.xml /usr/share/tomcat/conf/server.xml
 sudo cp files/tomcat/conf/tomcat.conf /etc/tomcat/conf.d/bookmarks.conf
 sudo cp files/tomcat/webapps/ROOT.war /usr/share/tomcat/webapps/ROOT.war
 
@@ -24,4 +25,3 @@ sudo chown tomcat:tomcat -R /home/bookmarks/
 # aws s3 sync s3://paper-files-bucket /home/paper/Image
 
 sudo systemctl enable tomcat
-
