@@ -11,20 +11,9 @@
     "source_ami": "ami-07683a44e80cd32c5",
     "instance_type": "t2.micro",
     "ssh_username": "ec2-user",
-    "vpc_filter": {
-          "filters": {
-            "tag:Name": "default",
-            "isDefault": "false"
-          }
-    },
-    "subnet_filter": {
-          "filters": {
-            "tag:Name": "Public subnet"
-          },
-          "random": true
-    },
+  
     "associate_public_ip_address": "true",
-    "ami_name": "packer-example {{timestamp | clean_ami_name}}"
+    "ami_name": "bookmarks {{timestamp | clean_ami_name}}"
   }],
   "provisioners": [{
     "type": "file",
