@@ -10,3 +10,4 @@ src/main/etc/packer/files/aws/credentials
 src/main/etc/terraform/.terraform
 src/main/etc/terraform/terraform.tfstate
 src/main/etc/terraform/terraform.tfstate.backup
+src/main/etc/terraform/vars.tf
