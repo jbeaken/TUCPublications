@@ -3,18 +3,21 @@
 TOMCATVERSION=9.0.27
 MAVENVERSION=3.5.4
 
+# Packages
+apt -y update
+apt -y dist-upgrade
+apt -y install git vim-nox zip unzip
+
+
 # Install sdkman with java and maven
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
 sdk install maven
 
-# Packages
-apt -y install git vim-nox
 
 # git
 mkdir /home/git
-chown beans:beans -R /home/git
 git clone https://github.com/jbeaken/festival.git /home/git/festival
 git clone https://github.com/jbeaken/TUCPublications.git /home/git/bookmarks
 git clone https://github.com/jbeaken/bmw.git /home/git/bmw
