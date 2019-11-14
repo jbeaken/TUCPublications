@@ -4,4 +4,4 @@ mvn -f /home/git/bookmarks/pom.xml -Dmaven.test.skip=true -Dspring.profiles.acti
 
 rm -rf /opt/tomcat/webapps/bookmarks/*
 
-cp -r target/bookmarks/. /opt/tomcat/webapps/bookmarks/
+cp -r /home/git/bookmarks/target/bookmarks/. /opt/tomcat/webapps/bookmarks/
