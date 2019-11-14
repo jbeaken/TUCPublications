@@ -8,13 +8,11 @@ apt -y update
 apt -y dist-upgrade
 apt -y install git vim-nox zip unzip
 
-
 # Install sdkman with java and maven
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
 sdk install maven
-
 
 # git
 mkdir /home/git
@@ -45,32 +43,20 @@ mkdir /home/bookmarks/ssl
 
 # Tomcat
 wget -P /tmp http://apache.mirror.anlx.net/tomcat/tomcat-9/v$TOMCATVERSION/bin/apache-tomcat-$TOMCATVERSION.tar.gz
-# Extract
 tar xf /tmp/apache-tomcat-$TOMCATVERSION.tar.gz -C /opt
-# Link
 ln -s /opt/apache-tomcat-$TOMCATVERSION /opt/tomcat
-# Directories
 rm -rf /opt/tomcat/webapps
-mkdir /opt/tomcat/webapps/bmw
+mkdir -p /opt/tomcat/webapps/bmw
 mkdir /opt/tomcat/webapps/bookmarks
 mkdir /opt/tomcat/webapps/festival
-cp -rf /home/git/festival/src/main/etc/tomcat/Catalina /opt/apache-tomcat-$TOMCATVERSION/conf/Catalina
-cp /home/git/festival/src/main/etc/tomcat/server.xml /opt/tomcat/conf/
-cp /home/git/festival/src/main/etc/tomcat/setenv.sh /opt/tomcat/bin/
+cp -rf /home/git/bookmarks/src/main/etc/install/tomcat/Catalina /opt/apache-tomcat-$TOMCATVERSION/conf/Catalina
+cp /home/git/bookmarks/src/main/etc/install/tomcat/server.xml /opt/tomcat/conf/
+cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
 
 # Systemd
-cp /home/git/festival/src/main/etc/tomcat/tomcat.service /lib/systemd/system/
+cp /home/git/bookmarks/src/main/etc/install/tomcat/tomcat.service /lib/systemd/system/
 systemctl enable tomcat
 systemctl start tomcat
 
-
 # Mysql
 apt -y install mysql-server
-
-
-# Build bookmarks database
-gpg -d /home/git/bookmarks/src/main/etc/backup/password.gpg > /home/bookmarks/password
-DAY_OF_WEEK=$(date +"%a")
-sh /home/bookmarks/restore.sh $DAY_OF_WEEK
-sudo echo "PATH=$PATH:/opt/maven/bin" >> /etc/environment
-. /etc/environment
