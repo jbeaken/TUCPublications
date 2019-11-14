@@ -24,4 +24,8 @@ sudo chown tomcat:tomcat -R /home/bookmarks/
 
 # aws s3 sync s3://paper-files-bucket /home/paper/Image
 
+# Cloud watch
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
+#sudo rpm -U ./amazon-cloudwatch-agent.rpm
+
 sudo systemctl enable tomcat
