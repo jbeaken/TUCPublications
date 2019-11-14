@@ -31,7 +31,7 @@
 		<hamcrest.version>1.3</hamcrest.version>
 
 		<!-- Encryption -->
-		<jasypt.version>1.9.3-SNAPSHOT</jasypt.version>
+		<jasypt.version>1.9.3</jasypt.version>
 
 		<!-- Image Manipulation -->
 		<imgscalr.version>4.2</imgscalr.version>

@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 
 TOMCATVERSION=9.0.27
 MAVENVERSION=3.5.4
@@ -10,7 +10,7 @@ apt -y install git vim-nox zip unzip
 
 # Install sdkman with java and maven
 curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+. "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
 sdk install maven
 
@@ -27,19 +27,15 @@ mv bmw-prod.properties /home/git/bmw/src/main/resources
 mv festival-prod.properties /home/git/festival/src/main/resources
 mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring
 
-# Link build files
-ln -s /home/git/festival/build.sh buildFestival.sh
-ln -s /home/git/bookmarks/build.sh buildBookmarks.sh
-ln -s /home/git/bmw/build.sh buildBmw.sh
-
-sh buildFestival.sh
-sh buildBmw.sh
-sh buildBookmarks.sh
-
 # Directories
 mkdir -p /home/bookmarks/logs
 mkdir /home/bookmarks/backups
 mkdir /home/bookmarks/ssl
+
+# Link build files
+ln -s /home/git/festival/build.sh buildFestival.sh
+ln -s /home/git/bookmarks/build.sh buildBookmarks.sh
+ln -s /home/git/bmw/build.sh buildBmw.sh
 
 # Tomcat
 wget -P /tmp http://apache.mirror.anlx.net/tomcat/tomcat-9/v$TOMCATVERSION/bin/apache-tomcat-$TOMCATVERSION.tar.gz
@@ -52,6 +48,11 @@ mkdir /opt/tomcat/webapps/festival
 cp -rf /home/git/bookmarks/src/main/etc/install/tomcat/Catalina /opt/apache-tomcat-$TOMCATVERSION/conf/Catalina
 cp /home/git/bookmarks/src/main/etc/install/tomcat/server.xml /opt/tomcat/conf/
 cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
+
+# Build
+sh buildFestival.sh
+sh buildBmw.sh
+sh buildBookmarks.sh
 
 # Systemd
 cp /home/git/bookmarks/src/main/etc/install/tomcat/tomcat.service /lib/systemd/system/
