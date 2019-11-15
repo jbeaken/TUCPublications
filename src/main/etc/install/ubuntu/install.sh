@@ -1,7 +1,6 @@
-#! /bin/bash
+#!/bin/bash
 
 TOMCATVERSION=9.0.27
-MAVENVERSION=3.5.4
 
 # Packages
 apt -y update
@@ -10,7 +9,7 @@ apt -y install git vim-nox zip unzip
 
 # Install sdkman with java and maven
 curl -s "https://get.sdkman.io" | bash
-. "$HOME/.sdkman/bin/sdkman-init.sh"
+source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
 sdk install maven
 
@@ -61,3 +60,5 @@ systemctl start tomcat
 
 # Mysql
 apt -y install mysql-server
+mysql -uroot < /home/git/bookmarks/src/main/etc/install/sql/createDatabases.sql
+mysql -uroot < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
