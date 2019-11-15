@@ -61,4 +61,4 @@ systemctl start tomcat
 # Mysql
 apt -y install mysql-server
 mysql -uroot < /home/git/bookmarks/src/main/etc/install/sql/createDatabases.sql
-mysql -uroot < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
+mysql -uroot festival < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
