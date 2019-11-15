@@ -60,5 +60,9 @@ systemctl start tomcat
 
 # Mysql
 apt -y install mysql-server
-mysql -uroot < /home/git/bookmarks/src/main/etc/install/sql/createDatabases.sql
 mysql -uroot festival < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
+mysql -uroot bmw < /home/git/bookmarks/src/main/etc/install/sql/bmw.sql
+mysql -uroot bookmarks < /home/git/bookmarks/src/main/etc/install/sql/bookmarks.sql
+mysql -uroot < init-mysql.sql
+shred init-mysql.sql
+rm init-mysql.sql
