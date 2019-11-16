@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.client.ClientProtocolException;
-import org.bookmarks.scheduler.ChipsOrdersManager;
-import org.bookmarks.scheduler.GardnersAvailability;
-import org.bookmarks.scheduler.DailyReport;
-import org.bookmarks.service.AdminService;
-import org.bookmarks.service.EmailService;
+import java.io.InputStream;
+import java.io.OutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.core.io.Resource;
+import org.apache.commons.io.IOUtils;
+import org.springframework.context.ApplicationContext;
+
 import org.bookmarks.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/.well-known")
 public class ChallengeController extends AbstractBookmarksController {
+
+	@Autowired
+	private ApplicationContext appContext;
 
 	@RequestMapping("/acme-challenge/{filename}")
 	public void certbot(@PathVariable("filename") String filename, HttpServletResponse response) throws java.io.IOException {
