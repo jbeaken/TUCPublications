@@ -14,6 +14,8 @@ import org.springframework.core.io.Resource;
 import org.apache.commons.io.IOUtils;
 import org.springframework.context.ApplicationContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.bookmarks.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,11 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/.well-known")
 public class ChallengeController extends AbstractBookmarksController {
 
-	@Autowired
-	private ApplicationContext appContext;
+	private Logger logger = LoggerFactory.getLogger(ChallengeController.class);
 
-	@RequestMapping("/acme-challenge/{filename}")
-	public void certbot(@PathVariable("filename") String filename, HttpServletResponse response) throws java.io.IOException {
+@Autowired
+private ApplicationContext appContext;
+
+@RequestMapping("/acme-challenge/{filename}")
+public void certbot(@PathVariable("filename") String filename, HttpServletResponse response) throws java.io.IOException {
+
+	logger.info("acme-challenge with "+ filename);
 
 		Resource resource = appContext.getResource("file:/var/www/html/.well-known/acme-challenge/" + filename);
 
