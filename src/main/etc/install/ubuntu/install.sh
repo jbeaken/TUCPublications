@@ -70,7 +70,11 @@ add-apt-repository -y ppa:certbot/certbot
 apt-get -y update
 apt-get -y install certbot python-certbot-apache
 #certbot --apache
-
+certbot certonly --webroot -d www.bookmarksonline.website -w /var/www/html
+certbot certonly --webroot -d bookmarksonline.website -w /var/www/html
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/apache2/sites-available/
+a2ensite bookmarksonline
+a2dissite bookmarksonline-min
 systemctl reload apache2
 #ufw allow 'Apache Full'
 
