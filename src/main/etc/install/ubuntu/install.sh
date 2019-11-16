@@ -66,9 +66,9 @@ cp /home/git/bookmarks/src/main/etc/install/apache2/workers.properties /etc/liba
 apt-get -y install software-properties-common
 add-apt-repository -y universe
 add-apt-repository -y ppa:certbot/certbot
-apt-get -y  update
-apt-get -y  install certbot python-certbot-apache
-certbot --apache
+apt-get -y update
+apt-get -y install certbot python-certbot-apache
+#certbot --apache
 
 systemctl reload apache2
 #ufw allow 'Apache Full'
