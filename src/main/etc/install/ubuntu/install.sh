@@ -22,9 +22,9 @@ git clone https://github.com/jbeaken/bmw.git /home/git/bmw
 # Gives access to application-prod.properties and init-mariadb.sql
 gpg -d /home/git/bookmarks/src/main/etc/install/ubuntu/app.gpg > app.tar
 tar xf app.tar
-mv bmw-prod.properties /home/git/bmw/src/main/resources
-mv festival-prod.properties /home/git/festival/src/main/resources
-mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring
+mv bmw-prod.properties /home/git/bmw/src/main/resources/application.prod.properties
+mv festival-prod.properties /home/git/festival/src/main/resources/application.prod.properties
+mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties
 
 # Directories
 mkdir -p /home/bookmarks/logs
@@ -50,18 +50,27 @@ cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
 
 #apache
 apt install -y apache2
-apt-get install -y libapr1-dev libssl-dev
+# apt-get install -y libapr1-dev libssl-dev
 apt-get install -y libapache2-mod-jk
-cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
-cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/apache2/sites-available/
-cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
+#cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
+#cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
 
 a2enmod ssl
-a2ensite marxismfestival
-a2ensite bookmarksonline
-a2ensite bookmarksbookshop
-cp /home/git/bookmarks/src/main/etc/install/workers.properties /etc/libapache2-mod-jk/
+#a2ensite marxismfestival
+a2ensite bookmarksonline-min
+#a2ensite bookmarksbookshop
+a2dissite 000-default
+cp /home/git/bookmarks/src/main/etc/install/apache2/workers.properties /etc/libapache2-mod-jk/
 
+apt-get -y install software-properties-common
+add-apt-repository -y universe
+add-apt-repository -y ppa:certbot/certbot
+apt-get -y  update
+apt-get -y  install certbot python-certbot-apache
+certbot --apache
+
+systemctl reload apache2
 #ufw allow 'Apache Full'
 
 # Build
@@ -82,3 +91,9 @@ mysql -uroot bookmarks < /home/git/bookmarks/src/main/etc/install/sql/bookmarks.
 mysql -uroot < init-mysql.sql
 shred init-mysql.sql
 rm init-mysql.sql
+
+# Misc
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+cd ~/.fzf/
+./install
+cd ~
