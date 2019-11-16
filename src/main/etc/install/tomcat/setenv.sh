@@ -35,7 +35,7 @@
 # http://confluence.atlassian.com/display/DOC/Garbage+Collector+Performance+Issues
 export CATALINA_OPTS="$CATALINA_OPTS -Xms128m"
 export CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
-# export JAVA_HOME="/usr/local/java"
+export JAVA_HOME="/root/.sdkman/candidates/java/11.0.5.hs-adpt/"
 # export  AUTHBIND=yes
 # Increase maximum perm size for web base applications to 4x the default amount
 # http://wiki.apache.org/tomcat/FAQ/Memoryhttp://wiki.apache.org/tomcat/FAQ/Memory
@@ -80,8 +80,8 @@ export CATALINA_OPTS="$CATALINA_OPTS -server"
 # and remove ability for applications to call explicit GC collection
 export CATALINA_OPTS="$CATALINA_OPTS -XX:+DisableExplicitGC"
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.net.preferIPv4Stack=true"
-export CATALINA_OPTS="$CATALINA_OPTS -Dspring.profiles.active=prod" 
- 
+export CATALINA_OPTS="$CATALINA_OPTS -Dspring.profiles.active=prod"
+
 #Check for application specific parameters at startup
 if [ -r "$CATALINA_BASE/bin/appenv.sh" ]; then
   . "$CATALINA_BASE/bin/appenv.sh"
@@ -104,4 +104,3 @@ echo ""
 
 LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/apr/lib
 export LD_LIBRARY_PATH
-

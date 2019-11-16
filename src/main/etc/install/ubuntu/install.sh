@@ -11,6 +11,7 @@ apt -y install git vim-nox zip unzip
 curl -s "https://get.sdkman.io" | bash
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
+sdk use java 11.0.5.hs-adpt
 sdk install maven
 
 # git
@@ -22,9 +23,9 @@ git clone https://github.com/jbeaken/bmw.git /home/git/bmw
 # Gives access to application-prod.properties and init-mariadb.sql
 gpg -d /home/git/bookmarks/src/main/etc/install/ubuntu/app.gpg > app.tar
 tar xf app.tar
-mv bmw-prod.properties /home/git/bmw/src/main/resources/application.prod.properties
-mv festival-prod.properties /home/git/festival/src/main/resources/application.prod.properties
-mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring/application.prod.properties
+mv bmw-prod.properties /home/git/bmw/src/main/resources/application-prod.properties
+mv festival-prod.properties /home/git/festival/src/main/resources/application-prod.properties
+mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring/application-prod.properties
 
 # Directories
 mkdir -p /home/bookmarks/logs
