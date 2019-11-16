@@ -48,6 +48,22 @@ cp -rf /home/git/bookmarks/src/main/etc/install/tomcat/Catalina /opt/apache-tomc
 cp /home/git/bookmarks/src/main/etc/install/tomcat/server.xml /opt/tomcat/conf/
 cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
 
+#apache
+apt install -y apache2
+apt-get install -y libapr1-dev libssl-dev
+apt-get install -y libapache2-mod-jk
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/apache2/sites-available/
+cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
+
+a2enmod ssl
+a2ensite marxismfestival
+a2ensite bookmarksonline
+a2ensite bookmarksbookshop
+cp /home/git/bookmarks/src/main/etc/install/workers.properties /etc/libapache2-mod-jk/
+
+#ufw allow 'Apache Full'
+
 # Build
 sh buildFestival.sh
 sh buildBmw.sh
