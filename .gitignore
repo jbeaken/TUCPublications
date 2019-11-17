@@ -1,4 +1,4 @@
-src/main/resources/spring/application.*.properties
+src/main/resources/spring/application-*.properties
 src/main/groovy/org/bookmarks/groovy/DecyptDatabase.groovy
 target
 src/main/etc/packer/files.tar.bz2
