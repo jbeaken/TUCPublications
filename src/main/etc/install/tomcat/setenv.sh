@@ -34,9 +34,8 @@
 # discourage address map swapping by setting Xms and Xmx to the same value
 # http://confluence.atlassian.com/display/DOC/Garbage+Collector+Performance+Issues
 export CATALINA_OPTS="$CATALINA_OPTS -Xms128m"
-export CATALINA_OPTS="$CATALINA_OPTS -Xmx1024m"
-export JAVA_HOME="/root/.sdkman/candidates/java/11.0.5.hs-adpt/"
-# export  AUTHBIND=yes
+export CATALINA_OPTS="$CATALINA_OPTS -Xmx2048m"
+
 # Increase maximum perm size for web base applications to 4x the default amount
 # http://wiki.apache.org/tomcat/FAQ/Memoryhttp://wiki.apache.org/tomcat/FAQ/Memory
 #export CATALINA_OPTS="$CATALINA_OPTS -XX:MaxPermSize=256m"
