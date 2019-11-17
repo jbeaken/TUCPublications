@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
-<form:form modelAttribute="stockItem" action="/stickies/manageStickyStockItemType" method="post">
+<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/stickies/manageStickyStockItemType" method="post">
 	<div class="rows">
 	        <div class="row">
 	          <div class="column w-33-percent">

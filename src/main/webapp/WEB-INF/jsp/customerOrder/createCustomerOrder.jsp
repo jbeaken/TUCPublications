@@ -15,7 +15,7 @@
 				}
 			}
 
-			submitForm('/customerOrder/create');
+			submitForm('${pageContext.request.contextPath}/customerOrder/create');
 		}
 	</script>
 </head>
@@ -23,7 +23,7 @@
 	${customerOrder.customer.firstName}
 	${customerOrder.customer.lastName}
 </span>
-<form:form action="/customerOrder/create" modelAttribute="customerOrder">
+<form:form action="${pageContext.request.contextPath}/customerOrder/create" modelAttribute="customerOrder">
 	<form:hidden path="customer.id" />
 	<form:hidden path="customer.firstName" />
 	<form:hidden path="customer.lastName" />
@@ -102,8 +102,8 @@
 	          <div class="column w-100-percent">
 	          		<br/>
 					<button type="button" class="btn btn-danger" id="createCustomerOrderButton" onclick="javascript:saveCustomerOrder()">Create Order</button>
-					<button type="button" id="gotoAddStockToCustomerOrderButton" onclick="javascript:submitForm('/customerOrder/addStock')" class="btn btn-primary">Add stock</button>
-					<a href="/customerOrder/cancel" class="btn btn-success">Cancel</a>
+					<button type="button" id="gotoAddStockToCustomerOrderButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customerOrder/addStock')" class="btn btn-primary">Add stock</button>
+					<a href="${pageContext.request.contextPath}/customerOrder/cancel" class="btn btn-success">Cancel</a>
 		 	 </div>
 	      </div>
 	</div>

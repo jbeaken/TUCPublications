@@ -63,9 +63,9 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="/vtTransaction/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
+						    <li><a href="${pageContext.request.contextPath}/vtTransaction/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
 						    <li class="divider"></li>
-						    <li><a href="/vtTransaction/delete?id=${searchTable.id}">Delete</a></li>
+						    <li><a href="${pageContext.request.contextPath}/vtTransaction/delete?id=${searchTable.id}">Delete</a></li>
 						  </ul>
 						</div>
 					  </display:column>	  

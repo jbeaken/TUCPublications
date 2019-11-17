@@ -21,7 +21,7 @@
       <div class="row">
           <div class="column w-70-percent">
  				<input type="submit" class="btn btn-primary"/> 
-	 				<a href="/category/displaySearch">
+	 				<a href="${pageContext.request.contextPath}/category/displaySearch">
 	 					<button type="button" class="btn btn-primary">Reset</button>
 	 				</a>
 	 	 </div>
@@ -50,8 +50,8 @@
 							    Action <span class="caret"></span>
 							  </button>
 							  <ul class="dropdown-menu" role="menu">					  						  	
-							    <li><a href="/category/edit?id=${searchTable.id}">Edit</a></li>
-							    <li><a href="/category/manageStickies?id=${searchTable.id}">Manage Stickies</a></li>
+							    <li><a href="${pageContext.request.contextPath}/category/edit?id=${searchTable.id}">Edit</a></li>
+							    <li><a href="${pageContext.request.contextPath}/category/manageStickies?id=${searchTable.id}">Manage Stickies</a></li>
 							    <li><a href="displayEditNote?id=${searchTable.id}" target="_blank">Add Note</a></li>
 							    <li class="divider"></li>	
 							    <li><a onclick='javascript:authoriseUser("delete?id=${searchTable.id}")'>Delete</a></li>

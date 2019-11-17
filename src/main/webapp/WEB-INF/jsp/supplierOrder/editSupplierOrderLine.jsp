@@ -15,7 +15,7 @@
           </div>
        </div>
 </div>
-		<form:form modelAttribute="supplierOrderLine" action="/supplierOrderLine/edit?flow=${flow}" method="post">
+		<form:form modelAttribute="supplierOrderLine" action="${pageContext.request.contextPath}/supplierOrderLine/edit?flow=${flow}" method="post">
 			<form:hidden path="id"/>
 			<form:hidden path="stockItem.id"/>
 			<form:hidden path="stockItem.title"/>

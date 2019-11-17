@@ -30,7 +30,7 @@ tr.tableRowEven,tr.even {
 	  	 </div>
 	  	</div>
 </div>
-<form:form modelAttribute="invoice" action="/invoice/save" method="post">
+<form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/save" method="post">
 <form:hidden path="customer.id"/>
 <form:hidden path="customer.firstName"/>
 <form:hidden path="customer.lastName"/>
@@ -48,40 +48,40 @@ tr.tableRowEven,tr.even {
       <div class="row">
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Invoice"/>
-		 		<a href="/invoice/showAddAdditionalCharges">
+		 		<a href="${pageContext.request.contextPath}/invoice/showAddAdditionalCharges">
 		 			<button class="btn btn-primary" type="button" id="addAdditionalChargesButton">Add Additional Charges</button>
 		 		</a>
 		 		<c:if test="${invoice.deliveryType == 'MAIL'}">
-					<a href="/invoice/setAsCollection">
+					<a href="${pageContext.request.contextPath}/invoice/setAsCollection">
 						<button class="btn btn-primary" type="button">Set As Collection</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.deliveryType == 'COLLECTION'}">
-					<a href="/invoice/setAsMail">
+					<a href="${pageContext.request.contextPath}/invoice/setAsMail">
 						<button class="btn btn-primary" type="button">Set As Mail Delivery</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == true}">
-					<a href="/invoice/setAsPaid?paid=false">
+					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=false">
 						<button class="btn btn-danger" type="button">Set As Unpaid</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == false}">
-					<a href="/invoice/setAsPaid?paid=true">
+					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=true">
 						<button class="btn btn-primary" type="button">Set As Paid</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.updateStock == false}">
-					<a href="/invoice/setUpdateStock?updateStock=true">
+					<a href="${pageContext.request.contextPath}/invoice/setUpdateStock?updateStock=true">
 						<button class="btn btn-primary" type="button">Set As Don't Update stock</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.updateStock == true}">
-					<a href="/invoice/setUpdateStock?updateStock=false">
+					<a href="${pageContext.request.contextPath}/invoice/setUpdateStock?updateStock=false">
 						<button class="btn btn-danger" type="button">Set As Update Stock</button>
 					</a>
 				</c:if>
-		 		<a href="/invoice/cancel">
+		 		<a href="${pageContext.request.contextPath}/invoice/cancel">
 		 			<button class="btn btn-primary" type="button">Cancel</button>
 		 		</a>
 	 	 </div>
@@ -91,7 +91,7 @@ tr.tableRowEven,tr.even {
 </c:if>
 <c:if test="${secondHandPrice != null}">
 <label class="smallCaps">Second Hand</label>
-<form:form modelAttribute="invoice" action="/invoice/addAdditionalCharges" method="post">
+<form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/addAdditionalCharges" method="post">
 <form:hidden path="customer.id"/>
 <form:hidden path="customer.firstName"/>
 <form:hidden path="customer.lastName"/>
@@ -127,7 +127,7 @@ tr.tableRowEven,tr.even {
 <c:if test="${saleToEdit != null}">
 <br/>
 <legend>${saleToEdit.stockItem.title}</legend>
-<form:form modelAttribute="saleToEdit" action="/invoice/editInvoiceOrderLine" method="post">
+<form:form modelAttribute="saleToEdit" action="${pageContext.request.contextPath}/invoice/editInvoiceOrderLine" method="post">
 	<form:hidden path="stockItem.id"/>
 	<form:hidden path="stockItem.type"/>
 	<form:hidden path="stockItem.quantityInStock"/>
@@ -167,7 +167,7 @@ tr.tableRowEven,tr.even {
 </form:form>
 </c:if>
 <c:if test="${saleToEdit == null && secondHandPrice == null}">
-<form:form modelAttribute="stockItemSearchBean" action="/invoice/searchStockItems" method="post">
+<form:form modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/invoice/searchStockItems" method="post">
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">

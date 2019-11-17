@@ -3,17 +3,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <h1>Search Stock Items</h1>
-<form:form id="stockItemSearchForm" modelAttribute="stockItemSearchBean" action="/stock/search" method="post">
+<form:form id="stockItemSearchForm" modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/stock/search" method="post">
   <jsp:include page="searchStockItemFragment.jsp" />
 <div id="rows">
   <div class="row">
           <div class="column w-100-percent">
-      	  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('/stock/search')">Search</button>
-      	  <button type="button" class="btn btn-warning" id="reorderReviewButton" onclick="javascript:submitForm('/stock/search?reorderReview=true?skipMarxismRejects=false')">Reorder Review</button>&nbsp;
-          <button type="button" class="btn btn-primary" id="reorderReviewButton" onclick="javascript:submitForm('/stock/search?reorderReview=true&skipMarxismRejects=true')">Reorder Review (skip)</button>&nbsp;
+      	  <button type="button" class="btn btn-primary" id="searchStockSubmitButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search')">Search</button>
+      	  <button type="button" class="btn btn-warning" id="reorderReviewButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search?reorderReview=true?skipMarxismRejects=false')">Reorder Review</button>&nbsp;
+          <button type="button" class="btn btn-primary" id="reorderReviewButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/search?reorderReview=true&skipMarxismRejects=true')">Reorder Review (skip)</button>&nbsp;
           <button type="button" class="btn btn-warning" id="resetButton" accesskey="R">Reset</button>&nbsp;
           <c:if test="${stockItemList == null}">
-      		<button type="button" class="btn btn-danger" onclick="javascript:submitForm('/stock/azlookupFromSearchPage')">Add Stock</button>
+      		<button type="button" class="btn btn-danger" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/azlookupFromSearchPage')">Add Stock</button>
       	  </c:if>
      </div>
   </div>
@@ -70,35 +70,35 @@ Nothing Found
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="/stock/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
-						    <li><a href="/stock/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
-						    <li><a href="/saleReport/displayStockItemMonthlySaleReport?id=${searchTable.id}" target="_blank">Show Sales</a></li>
-						    <li><a href="/supplierOrderLine/displayCreate?id=${searchTable.id}" target="_blank">Create Supplier Order</a></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
+						    <li><a href="${pageContext.request.contextPath}/saleReport/displayStockItemMonthlySaleReport?id=${searchTable.id}" target="_blank">Show Sales</a></li>
+						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreate?id=${searchTable.id}" target="_blank">Create Supplier Order</a></li>
 
 						  	<c:if test="${invoice != null}">
-  								<li><a href="/invoice/addStockItem?id=${searchTable.id}">Add To Invoice</a></li>
+  								<li><a href="${pageContext.request.contextPath}/invoice/addStockItem?id=${searchTable.id}">Add To Invoice</a></li>
   							</c:if>
 
 						    <li class="divider"></li>
 
-						    <li><a href="/sale/sellAndGoByISBN?isbn=${searchTable.isbn}">Sell And Go<c:if test="${sessionScope.event != null}"> For Event ${sessionScope.event.name}</c:if></a></li>
-						    <li><a href="/sale/sellAndStayByISBN?isbn=${searchTable.isbn}">Sell And Stay<c:if test="${sessionScope.event != null}"> For Event ${sessionScope.event.name}</c:if></a></li>
-						    <li><a href="/stock/addImageToStockItem?id=${searchTable.id}" target="_blank">Add Image</a></li>
-						    <li><a href="/saleReport/displayStockItemMonthlySaleReport?id=${searchTable.id}" target="_blank">Show Sales</a></li>
+						    <li><a href="${pageContext.request.contextPath}/sale/sellAndGoByISBN?isbn=${searchTable.isbn}">Sell And Go<c:if test="${sessionScope.event != null}"> For Event ${sessionScope.event.name}</c:if></a></li>
+						    <li><a href="${pageContext.request.contextPath}/sale/sellAndStayByISBN?isbn=${searchTable.isbn}">Sell And Stay<c:if test="${sessionScope.event != null}"> For Event ${sessionScope.event.name}</c:if></a></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/addImageToStockItem?id=${searchTable.id}" target="_blank">Add Image</a></li>
+						    <li><a href="${pageContext.request.contextPath}/saleReport/displayStockItemMonthlySaleReport?id=${searchTable.id}" target="_blank">Show Sales</a></li>
 
 						    <li class="divider"></li>
 
 							<c:if test="${searchTable.putOnWebsite == true}">
-								<li><a href="/chips/removeFromWebsite?id=${searchTable.id}" target="_blank">Remove From Website</a></li>
+								<li><a href="${pageContext.request.contextPath}/chips/removeFromWebsite?id=${searchTable.id}" target="_blank">Remove From Website</a></li>
 							</c:if>
 							<c:if test="${searchTable.putOnWebsite == false}">
-								<li><a href="/chips/putOnWebsite?id=${searchTable.id}" target="_blank">Put On Website</a></li>
+								<li><a href="${pageContext.request.contextPath}/chips/putOnWebsite?id=${searchTable.id}" target="_blank">Put On Website</a></li>
 							</c:if>
-						    <li><a href="/chips/syncStockItemWithChips?id=${searchTable.id}" target="_blank">Sync With Chips</a></li>
+						    <li><a href="${pageContext.request.contextPath}/chips/syncStockItemWithChips?id=${searchTable.id}" target="_blank">Sync With Chips</a></li>
 
 						    <li class="divider"></li>
 
-						    <li><a onclick='javascript:authoriseUser("/stock/delete?id=${searchTable.id}")' >Delete</a></li>
+						    <li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/stock/delete?id=${searchTable.id}")' >Delete</a></li>
 						  </ul>
 						</div>
 </display:column>

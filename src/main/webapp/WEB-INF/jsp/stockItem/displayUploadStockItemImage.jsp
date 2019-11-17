@@ -4,7 +4,7 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <h1>Select a file to upload for stockitem : ${stockItem.title}</h1>
-<form:form modelAttribute="stockItem" action="/stock/addImageToStockItem" method="post" enctype="multipart/form-data">
+<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/stock/addImageToStockItem" method="post" enctype="multipart/form-data">
 <form:hidden path="id"/>
 	<div class="rows">
 	        <div class="row">

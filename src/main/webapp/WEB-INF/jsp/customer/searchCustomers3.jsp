@@ -5,7 +5,7 @@
 <script>
 	$(function() {
 		$("#customerAutoComplete").autocomplete( {
-			source: "/customer/autoCompleteSurname",
+			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#customerAutoComplete").val(ui.item.label);
@@ -22,7 +22,7 @@
 		$('#customerAutoComplete').focus();
 	});
 </script>
-<form:form modelAttribute="customerSearchBean" action="/customer/search" method="post">
+<form:form modelAttribute="customerSearchBean" action="${pageContext.request.contextPath}/customer/search" method="post">
 <form:hidden path="customer.id" id="customerId"/>
 <div class="row">
         <div class="col-sm-4">
@@ -74,11 +74,11 @@
 		 </div>
 		<div class="row">
           <div class="button-row">
- 				<button id="searchCustomerSubmitButton" type="button" class="btn btn-primary" onclick="javascript:submitForm('/customer/search')">Search</button>
-	 				<a href="/customer/displaySearch">
+ 				<button id="searchCustomerSubmitButton" type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/search')">Search</button>
+	 				<a href="${pageContext.request.contextPath}/customer/displaySearch">
 	 					<button type="button" class="btn btn-primary">Reset</button>
 	 				</a>
-	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('/customer/addCustomerFromSearch')">Add Customer</button>
+	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addCustomerFromSearch')">Add Customer</button>
 	 	 </div>
 	</div>		
 </form:form>
@@ -114,16 +114,16 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="/customerOrder/init?customerId=${searchTable.id}">Create Order</a></li>
-						    <li><a href="/customerOrderLine/searchByCustomerID?id=${searchTable.id}">View Orders</a></li>
-						    <li><a href="/invoice/init?customerId=${searchTable.id}">Create Invoice</a></li>
-						    <li><a href="/customer/edit?id=${searchTable.id}&flow=search">Edit</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${searchTable.id}">Create Order</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/searchByCustomerID?id=${searchTable.id}">View Orders</a></li>
+						    <li><a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}">Create Invoice</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search">Edit</a></li>
 						    
   							<li><a onclick='javascript:authoriseUser("delete?id=${searchTable.id}")'>Delete</a></li>
 						    
 						    <li class="divider"></li>
 						    
-						    <li><a href="/saleOrReturn/init?id=${searchTable.id}">Sale Or Return</a></li>
+						    <li><a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}">Sale Or Return</a></li>
 						    <li><a href="displayEditNote?id=${searchTable.id}" target="_blank">Add Note</a></li>
 						  </ul>
 						</div>

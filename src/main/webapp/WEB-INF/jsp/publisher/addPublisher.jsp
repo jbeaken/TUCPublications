@@ -63,7 +63,7 @@
       <div class="row">
           <div class="column w-70-percent">
  				<input type="submit" class="btn btn-primary" value="Add Publisher"/> 
- 				<button class="btn btn-primary" onclick="javascript:submitForm('/publisher/addAndCreateSupplier?flow=${flow}')">Add and Create Supplier with Same Name</button>
+ 				<button class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/publisher/addAndCreateSupplier?flow=${flow}')">Add and Create Supplier with Same Name</button>
  				<button type="button"  class="btn btn-primary" onclick="javascript:reset()">Reset</button>
 	 	 </div>
 	</div>		

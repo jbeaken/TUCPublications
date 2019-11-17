@@ -4,7 +4,7 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <h1>Add stock for merchandise</h1>
-<form:form modelAttribute="stockItem" action="/bounciesMerchandise/addSticky" method="post">
+<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/bounciesMerchandise/addSticky" method="post">
 	<div class="rows">
 	        <div class="row">
 	          <div class="column w-33-percent">
@@ -16,7 +16,7 @@
 	      <div class="row">
 	          <div class="column w-33-percent">
 	 				<input type="submit" class="btn btn-primary" value="Add ISBN to Merchandise"/> 
-	 				<a class="btn btn-danger" href="/bounciesMerchandise/save">Save Merchandise</a>
+	 				<a class="btn btn-danger" href="${pageContext.request.contextPath}/bounciesMerchandise/save">Save Merchandise</a> 
 		 	 </div>		 	 
 		</div>		
 	</div>		
@@ -45,11 +45,11 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="/bounciesMerchandise/moveUp?index=${searchTable_rowNum - 1}">Move Up</a></li>
-						    <li><a href="/bounciesMerchandise/moveDown?index=${searchTable_rowNum - 1}">Move Down</a></li>
-						    <li><a href="/bounciesMerchandise/remove?index=${searchTable_rowNum - 1}">Remove</a></li>
+						    <li><a href="${pageContext.request.contextPath}/bounciesMerchandise/moveUp?index=${searchTable_rowNum - 1}">Move Up</a></li>
+						    <li><a href="${pageContext.request.contextPath}/bounciesMerchandise/moveDown?index=${searchTable_rowNum - 1}">Move Down</a></li>
+						    <li><a href="${pageContext.request.contextPath}/bounciesMerchandise/remove?index=${searchTable_rowNum - 1}">Remove</a></li>
 						    <li class="divider"></li>						   
-						    <li><a href="/stock/edit?id=${searchTable.id}&flow=stickyStockItemType"  target="_blank"">Edit Stock</a></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/edit?id=${searchTable.id}&flow=stickyStockItemType"  target="_blank"">Edit Stock</a></li>
 						  </ul>
 						</div>
 					  </display:column>								  

@@ -5,7 +5,7 @@
 <script>
 	$(function() {
 		$("#customerAutoComplete").autocomplete( {
-			source: "/customer/autoCompleteSurname",
+			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#customerAutoComplete").val(ui.item.label);
@@ -22,12 +22,12 @@
 		$('#customerAutoComplete').focus();
 	});
 	function printLabels(noOfLabels) {
-		$('form#customerForm').attr("action", '/customer/printLabels/' + noOfLabels);
+		$('form#customerForm').attr("action", '${pageContext.request.contextPath}/customer/printLabels/' + noOfLabels);
 		$('form#customerForm').submit();
-		$('form#customerForm').attr("action", '/customer/search');
+		$('form#customerForm').attr("action", '${pageContext.request.contextPath}/customer/search');
 	}
 </script>
-<form:form modelAttribute="customerSearchBean" id="customerForm" action="/customer/search" method="post">
+<form:form modelAttribute="customerSearchBean" id="customerForm" action="${pageContext.request.contextPath}/customer/search" method="post">
 <form:hidden path="customer.id" id="customerId"/>
 <div class="rows">
         <div class="row">
@@ -74,11 +74,11 @@
 		</div><!-- /row -->
 		<div class="row">
           <div class="column w-100-percent">
- 				<button id="searchCustomerSubmitButton" type="button" class="btn btn-primary" onclick="javascript:submitForm('/customer/search')">Search</button>
-	 				<a href="/customer/displaySearch">
+ 				<button id="searchCustomerSubmitButton" type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/search')">Search</button>
+	 				<a href="${pageContext.request.contextPath}/customer/displaySearch">
 	 					<button type="button" class="btn btn-primary">Reset</button>
 	 				</a>
-	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('/customer/addCustomerFromSearch')">Add Customer</button>
+	 				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addCustomerFromSearch')">Add Customer</button>
 	 				<button type="button" class="btn btn-success" onclick="javascript:printLabels( 12 )">Print Labels (12)</button>
 					<button type="button" class="btn btn-success" onclick="javascript:printLabels( 16 )">Print Labels (16)</button>
 	 	 </div>
@@ -115,36 +115,36 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="/customerOrder/init?customerId=${searchTable.id}">Create Order</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${searchTable.id}">Create Order</a></li>
 
-						    <li><a href="/customerOrderLine/search?customerOrderLine.customer.lastName=${searchTable.lastName}&customerOrderLine.customer.firstName=${searchTable.firstName}">View Orders</a></li>
-
-						    <li class="divider"></li>
-
-						    <li><a href="/invoice/init?customerId=${searchTable.id}" target="_blank">Create Invoice</a></li>
-
-  							<li><a href="/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}">View Invoices</a></li>
-
-  							<li class="divider"></li>
-
-  							<li><a href="/saleOrReturn/init?id=${searchTable.id}">Create Sale Of Return</a></li>
-
-  							<li class="divider"></li>
-
-
-						    <li><a href="/customer/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
-
-						    <li><a href="/customer/editAccount?id=${searchTable.id}&flow=search">Edit Account</a></li>
-
-						    <li><a href="/customer/editSponsorship?id=${searchTable.id}&flow=search">Edit Sponsorship</a></li>
+						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${searchTable.lastName}&customerOrderLine.customer.firstName=${searchTable.firstName}">View Orders</a></li>
 
 						    <li class="divider"></li>
 
-								<li><a href="/customerReport/report?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement</a></li>
+						    <li><a href="${pageContext.request.contextPath}/invoice/init?customerId=${searchTable.id}" target="_blank">Create Invoice</a></li>
 
-								<li><a href="/customerReport/generatePdf?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement (PDF)</a></li>
+  							<li><a href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${searchTable.lastName}&invoice.customer.firstName=${searchTable.firstName}">View Invoices</a></li>
 
-						    <li><a href="/customer/addCredit?customerId=${searchTable.id}">Add Credit</a></li>
+  							<li class="divider"></li>
+
+  							<li><a href="${pageContext.request.contextPath}/saleOrReturn/init?id=${searchTable.id}">Create Sale Of Return</a></li>
+
+  							<li class="divider"></li>
+
+
+						    <li><a href="${pageContext.request.contextPath}/customer/edit?id=${searchTable.id}&flow=search" target="_blank">Edit</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customer/editAccount?id=${searchTable.id}&flow=search">Edit Account</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customer/editSponsorship?id=${searchTable.id}&flow=search">Edit Sponsorship</a></li>
+
+						    <li class="divider"></li>
+
+								<li><a href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement</a></li>
+
+								<li><a href="${pageContext.request.contextPath}/customerReport/generatePdf?customer.id=${searchTable.id}&customerReportType=INVOICE">Statement (PDF)</a></li>
+
+						    <li><a href="${pageContext.request.contextPath}/customer/addCredit?customerId=${searchTable.id}">Add Credit</a></li>
 
 						    <li><a href="displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 

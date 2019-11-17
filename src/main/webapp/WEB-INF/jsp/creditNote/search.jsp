@@ -114,12 +114,12 @@
 				</button>
 				<ul class="dropdown-menu" role="menu">
 					<li><a
-						href="/creditNote/edit?id=${searchTable.id}&flow=search"
+						href="${pageContext.request.contextPath}/creditNote/edit?id=${searchTable.id}&flow=search"
 						target="_blank">Edit</a></li>
 					<li class="divider"></li>
 					<li><a
-						href="/creditNote/delete?id=${searchTable.id}">Delete</a></li>
-					<li><a href="/customerReport/report?customer.id=${searchTable.customer.id}&customerReportType=INVOICE">Statement</a></li>
+						href="${pageContext.request.contextPath}/creditNote/delete?id=${searchTable.id}">Delete</a></li>
+					<li><a href="${pageContext.request.contextPath}/customerReport/report?customer.id=${searchTable.customer.id}&customerReportType=INVOICE">Statement</a></li>
 				</ul>
 			</div>
 		</display:column>

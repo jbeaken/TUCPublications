@@ -102,14 +102,14 @@
       <div class="row">
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
-				<a href="/customerOrder/init?customerId=${customer.id}" class="btn btn-danger">Create New Customer Order</a>
-				<a class="btn btn-default" href="/customerOrderLine/search?customerOrderLine.customer.lastName=${customer.lastName}&customerOrderLine.customer.firstName=${customer.firstName}">Orders</a>
-				<a class="btn btn-default" href="/customerReport/report?customer.id=${customer.id}&customerReportType=INVOICE">Statement</a>
-				<a class="btn btn-default" href="/invoice/init?customerId=${customer.id}">Create Invoice</a>
-				<a class="btn btn-default" href="/invoice/search?invoice.customer.lastName=${customer.lastName}&invoice.customer.firstName=${customer.firstName}">Invoices</a>
+				<a href="${pageContext.request.contextPath}/customerOrder/init?customerId=${customer.id}" class="btn btn-danger">Create New Customer Order</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/customerOrderLine/search?customerOrderLine.customer.lastName=${customer.lastName}&customerOrderLine.customer.firstName=${customer.firstName}">Orders</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/customerReport/report?customer.id=${customer.id}&customerReportType=INVOICE">Statement</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/init?customerId=${customer.id}">Create Invoice</a>
+				<a class="btn btn-default" href="${pageContext.request.contextPath}/invoice/search?invoice.customer.lastName=${customer.lastName}&invoice.customer.firstName=${customer.firstName}">Invoices</a>
 
  				<c:if test="${flow == 'search' || flow == 'searchCustomers'}">
- 					<a href="/customer/searchFromSession" class="btn btn-danger">Back</a>
+ 					<a href="${pageContext.request.contextPath}/customer/searchFromSession" class="btn btn-danger">Back</a>
  				</c:if>
  				<c:if test="${flow == 'invoiceSearch' || flow == 'customerOrderSearch'}">
  					<a href="closeWindow" class="btn btn-danger">Close</a>

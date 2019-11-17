@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <h1>Manage Priority Stock for category ${categoryToManage.name}</h1>
-<form:form modelAttribute="stockItem" action="/category/addSticky" method="post">
+<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/category/addSticky" method="post">
 	<div class="rows">
 	        <div class="row">
 	          <div class="column w-33-percent">
@@ -15,7 +15,7 @@
 	      <div class="row">
 	          <div class="column w-33-percent">
 	 				<input type="submit" class="btn btn-primary" value="Add ISBN"/> 
-	 				<a class="btn btn-danger" href="/category/saveStickies">Save Stickies</a>
+	 				<a class="btn btn-danger" href="${pageContext.request.contextPath}/category/saveStickies">Save Stickies</a> 
 		 	 </div>		 	 
 		</div>		
 	</div>		
@@ -45,11 +45,11 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">						
-						    <li><a href="/category/moveUp?index=${searchTable_rowNum - 1}">Move Up</a></li>
-						    <li><a href="/category/moveDown?index=${searchTable_rowNum - 1}">Move Down</a></li>
-						    <li><a href="/category/remove?index=${searchTable_rowNum - 1}">Remove</a></li>
+						    <li><a href="${pageContext.request.contextPath}/category/moveUp?index=${searchTable_rowNum - 1}">Move Up</a></li>
+						    <li><a href="${pageContext.request.contextPath}/category/moveDown?index=${searchTable_rowNum - 1}">Move Down</a></li>
+						    <li><a href="${pageContext.request.contextPath}/category/remove?index=${searchTable_rowNum - 1}">Remove</a></li>
 						    <li class="divider"></li>						   
-						    <li><a href="/stock/edit?id=${searchTable.id}&flow=categoryStickies"  target="_blank"">Edit Stock</a></li>
+						    <li><a href="${pageContext.request.contextPath}/stock/edit?id=${searchTable.id}&flow=categoryStickies"  target="_blank"">Edit Stock</a></li>
 						  </ul>
 						</div>
 					  </display:column>	

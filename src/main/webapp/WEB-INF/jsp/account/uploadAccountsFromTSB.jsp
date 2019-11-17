@@ -6,7 +6,7 @@
 <h1>Upload CSV file from TSB</h1>
 
 
-<form:form action="/tsb/uploadCSVFiles"
+<form:form action="${pageContext.request.contextPath}/tsb/uploadCSVFiles"
     method="post"
     enctype="multipart/form-data">    
 

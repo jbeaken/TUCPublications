@@ -115,10 +115,10 @@
 				<form:label	for="stockItem.isbn" path="stockItem.isbn" cssErrorClass="error">ISBN</form:label><br/>
 				<form:input path="stockItem.isbn" autofocus="autofocus" required="required"/>&nbsp;<form:errors path="stockItem.isbn" />&nbsp;<form:errors path="supplierDelivery.supplierDeliveryLine" />
 				<input type="submit" class="btn btn-primary" value="Add" id="addStockToSupplierDeliveryButton"/>&nbsp;
-				<a href="/supplierDelivery/editSupplierDeliveryOrderLine?id=${lastSupplierDeliveryLine.stockItem.id}">
+				<a href="${pageContext.request.contextPath}/supplierDelivery/editSupplierDeliveryOrderLine?id=${lastSupplierDeliveryLine.stockItem.id}">
 					<button type="button" class="btn btn-danger" id="editLastLine">Edit Last Line</button>
 				</a>
-				<a href="/supplierDelivery/setGlobalDiscount">
+				<a href="${pageContext.request.contextPath}/supplierDelivery/setGlobalDiscount">
 					<button type="button" class="btn btn-danger" id="setGlobalDiscountButton">Set Global Discount</button>
 				</a>				
 			</div>
@@ -147,6 +147,6 @@
   					Retail Price : <fmt:formatNumber value="${retailPrice}" type="currency" currencyCode="GBP"/>
   					</c:if>
   					<br/><br/>
-		<button class="btn btn-primary" type="button" onclick="javscript:submitForm('/supplierDelivery/create')" id="placeIntoStockButton">Place in stock</button>
-		<a href="/supplierDelivery/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
+		<button class="btn btn-primary" type="button" onclick="javscript:submitForm('${pageContext.request.contextPath}/supplierDelivery/create')" id="placeIntoStockButton">Place in stock</button>
+		<a href="${pageContext.request.contextPath}/supplierDelivery/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
 </c:if>			

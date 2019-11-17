@@ -93,9 +93,9 @@
 	</div>	
       <div class="row">
           <div class="column w-100-percent">
-				<button type="button" class="btn btn-primary" id="addCustomerButton" onclick="javascript:submitForm('/customer/add')">Add</button>
-				<button type="button" class="btn btn-danger" id="addCustomerAndCreateCustomerOrderButton" onclick="javascript:submitForm('/customer/addAndCreateCustomerOrder')">Add & Create Customer Order</button>
-				<button type="button" class="btn btn-danger" id="addCustomerAndCreateInvoiceButton" onclick="javascript:submitForm('/customer/addAndCreateInvoice')">Add & Create Invoice</button>
+				<button type="button" class="btn btn-primary" id="addCustomerButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/add')">Add</button>
+				<button type="button" class="btn btn-danger" id="addCustomerAndCreateCustomerOrderButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addAndCreateCustomerOrder')">Add & Create Customer Order</button>
+				<button type="button" class="btn btn-danger" id="addCustomerAndCreateInvoiceButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addAndCreateInvoice')">Add & Create Invoice</button>
 	 	 </div>
 	 	 
 	</div>	

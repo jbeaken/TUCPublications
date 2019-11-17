@@ -30,7 +30,7 @@ $(function() {
 	});	
 	
 	$("#publisherAutoComplete").autocomplete( {
-			source: "/publisher/autoCompletePublisherName",
+			source: "${pageContext.request.contextPath}/publisher/autoCompletePublisherName",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#publisherAutoComplete").value = ui.item.label;
@@ -43,7 +43,7 @@ $(function() {
 			}	
 	});
 	$("#supplierAutoComplete").autocomplete( {
-		source: "/supplier/autoCompleteSupplierName",
+		source: "${pageContext.request.contextPath}/supplier/autoCompleteSupplierName",
 		minLength: 3,
 		select: function( event, ui ) {
 			$("#supplierAutoComplete").value = ui.item.label;
@@ -108,13 +108,13 @@ $(function() {
         <div class="row">
           <div class="column w-33-percent">
 						<label for="stockItem.binding">Binding</label><br/>
-						<form:select id="bindingSelect" path="stockItem.binding" onkeypress="javascript:submitForm('/stock/search')">
+						<form:select id="bindingSelect" path="stockItem.binding" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/stock/search')">
 	            			<form:option value="" label="All"/>
             			<form:options items="${bindingList}" itemLabel="displayName"/></form:select>				
 	  	 </div>
 		  <div class="column w-33-percent">
 					<form:label for="stockItem.type" path="stockItem.type" cssErrorClass="error">Type</form:label><br/>
-						<form:select id="stockItemTypeSelect" path="stockItem.type" onkeypress="javascript:submitForm('/stock/search')">
+						<form:select id="stockItemTypeSelect" path="stockItem.type" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/stock/search')">
 	            			<form:option value="" label="All"/>
             			<form:options items="${stockItemTypeList}" itemLabel="displayName"/></form:select>				
 		  </div>	
@@ -134,7 +134,7 @@ $(function() {
 		  </div>        	  
 		  <div class="column w-33-percent">
 					<form:label for="stockLevel" path="stockLevel" cssErrorClass="error">Stock Level</form:label><br/>
-						<form:select id="stockLevelSelect" path="stockLevel" onkeypress="javascript:submitForm('/stock/search')">
+						<form:select id="stockLevelSelect" path="stockLevel" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/stock/search')">
 	            			<form:option value="" label="All"/>
             			<form:options items="${stockLevelList}" itemLabel="displayName"/></form:select>				
 		  </div>

@@ -14,7 +14,7 @@
 	function sellExtra() {
 		var stockItemid =  $('#extras').val()
 
-		document.location.href = '/sale/sellExtra/' + stockItemid
+		document.location.href = '${pageContext.request.contextPath}/sale/sellExtra/' + stockItemid
 	}
 </script>
 
@@ -58,7 +58,7 @@
 </div>
 <br/>
 
-<form:form modelAttribute="stockItemSearchBean" action="/sale/sellByISBN" method="post">
+<form:form modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/sale/sellByISBN" method="post">
 <div class="rows">
         <div class="row">
 
@@ -86,7 +86,7 @@
 	 					<button type="button" class="btn btn-warning" id="editLastSaleButton">Edit Last Sale</button>
 	 				</a>
 	 			</c:if>
-				<a href="/sale/sellSecondHand" tabindex="4">
+				<a href="${pageContext.request.contextPath}/sale/sellSecondHand" tabindex="4">
 	 				<button type="button" id="sellSecondHandButton" class="btn btn-danger">Sell Second Hand</button>
 	 			</a>
 	 	 </div>
