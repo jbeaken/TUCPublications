@@ -7,9 +7,9 @@ apt -y update
 apt -y dist-upgrade
 apt -y install git vim-nox zip unzip
 
-# Install sdkman with java and maven
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
+# Install sdkman with java and maven, insure available to non-root users
+export SDKMAN_DIR="/usr/local/sdkman" && curl -s "https://get.sdkman.io" | bash
+source "$skHOME/.sdkman/bin/sdkman-init.sh"
 sdk install java 11.0.5.hs-adpt
 sdk use java 11.0.5.hs-adpt
 sdk install maven
@@ -87,6 +87,9 @@ systemctl reload apache2
 sh buildFestival.sh
 sh buildBmw.sh
 sh buildBookmarks.sh
+# Tomcat system user and group
+useradd -r -s /sbin/nologin tomcat
+chown -R tomcat: /opt/apache-tomcat-$TOMCATVERSION
 
 # Systemd
 cp /home/git/bookmarks/src/main/etc/install/tomcat/tomcat.service /lib/systemd/system/
