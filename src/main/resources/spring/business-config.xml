@@ -168,12 +168,7 @@
 
 	<beans profile="prod">
 		<util:properties id="applicationProperties"
-						 location="classpath:spring/application.prod.properties" />
-	</beans>
-
-	<beans profile="aws">
-		<util:properties id="applicationProperties"
-						 location="classpath:spring/application.aws.properties" />
+						 location="classpath:spring/application-prod.properties" />
 	</beans>
 
 	<beans profile="dev,mini-beans">
@@ -221,7 +216,7 @@
 		</bean>
 
 		<util:properties id="applicationProperties"
-			location="classpath:spring/application.dev.properties" />
+			location="classpath:spring/application-dev.properties" />
 
 	</beans>
 
@@ -269,7 +264,7 @@
 		</bean>
 
 		<util:properties id="applicationProperties"
-			location="classpath:spring/application.dev.properties" />
+			location="classpath:spring/application-dev.properties" />
 
 	</beans>
 

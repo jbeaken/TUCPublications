@@ -8,8 +8,10 @@ apt -y dist-upgrade
 apt -y install git vim-nox zip unzip
 
 # Install sdkman with java and maven, insure available to non-root users
-export SDKMAN_DIR="/usr/local/sdkman" && curl -s "https://get.sdkman.io" | bash
-source "$skHOME/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/usr/local/sdkman"
+curl -s "https://get.sdkman.io" | bash
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
 sdk install java 11.0.5.hs-adpt
 sdk use java 11.0.5.hs-adpt
 sdk install maven
@@ -55,9 +57,7 @@ cp /home/git/bookmarks/src/main/etc/install/tomcat/server.xml /opt/tomcat/conf/
 cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
 
 #apache
-apt install -y apache2
-# apt-get install -y libapr1-dev libssl-dev
-apt-get install -y libapache2-mod-jk
+apt-get install -y apache2 libapache2-mod-jk
 #cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
 cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
 #cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
@@ -74,12 +74,8 @@ add-apt-repository -y universe
 add-apt-repository -y ppa:certbot/certbot
 apt-get -y update
 apt-get -y install certbot python-certbot-apache
-#certbot --apache
-certbot certonly --webroot -d www.bookmarksonline.website -w /var/www/html
-certbot certonly --webroot -d bookmarksonline.website -w /var/www/html
-cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/apache2/sites-available/
-a2ensite bookmarksonline
-a2dissite bookmarksonline-min
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
+a2ensite bookmarksonline-min
 systemctl reload apache2
 #ufw allow 'Apache Full'
 
@@ -91,19 +87,29 @@ sh buildBookmarks.sh
 useradd -r -s /sbin/nologin tomcat
 chown -R tomcat: /opt/apache-tomcat-$TOMCATVERSION
 
+# Mysql
+apt -y install mysql-server
+mysql -uroot < init-mysql.sql
+mysql -uroot festival < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
+mysql -uroot bmw < /home/git/bookmarks/src/main/etc/install/sql/bmw.sql
+mysql -uroot bookmarks < /home/git/bookmarks/src/main/etc/install/sql/bookmarks.sql
+
+#shred init-mysql.sql
+#rm init-mysql.sql
+
 # Systemd
 cp /home/git/bookmarks/src/main/etc/install/tomcat/tomcat.service /lib/systemd/system/
 systemctl enable tomcat
 systemctl start tomcat
 
-# Mysql
-apt -y install mysql-server
-mysql -uroot festival < /home/git/bookmarks/src/main/etc/install/sql/festival.sql
-mysql -uroot bmw < /home/git/bookmarks/src/main/etc/install/sql/bmw.sql
-mysql -uroot bookmarks < /home/git/bookmarks/src/main/etc/install/sql/bookmarks.sql
-mysql -uroot < init-mysql.sql
-shred init-mysql.sql
-rm init-mysql.sql
+# Lets encrypt
+certbot certonly --webroot -d www.bookmarksonline.website -w /var/www/html
+certbot certonly --webroot -d bookmarksonline.website -w /var/www/html
+
+#
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
+a2ensite bookmarksonline
+a2dissite bookmarksonline-min
 
 # Misc
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
