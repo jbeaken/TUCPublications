@@ -155,7 +155,7 @@ public class SearchCustomersDecorator extends AbstractBookmarksTableDecorator {
 
 	protected String getId(Customer customer) {
 		String id = customer.getId().toString();
-		return getAnchor("/bookmarks/customer/edit?id=" + id + "&flow=searchCustomers", id, "Edit", false, false);
+		return getAnchor("/customer/edit?id=" + id + "&flow=searchCustomers", id, "Edit", false, false);
 	}
 
 	public String getId() {
