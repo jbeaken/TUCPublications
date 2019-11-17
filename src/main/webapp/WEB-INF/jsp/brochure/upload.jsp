@@ -4,7 +4,7 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <h1>Select brochure file</h1>
-<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/chips/uploadBrochure" method="post" enctype="multipart/form-data">
+<form:form modelAttribute="stockItem" action="/chips/uploadBrochure" method="post" enctype="multipart/form-data">
 
 
 	<div class="rows">

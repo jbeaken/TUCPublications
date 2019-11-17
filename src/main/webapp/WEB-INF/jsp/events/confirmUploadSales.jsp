@@ -23,7 +23,7 @@
 
         <div class="row">
             <div class="column w-33-percent">
-           <a href="${pageContext.request.contextPath}/events/confirmUploadSales" class="btn btn-primary">Confirm</a>
+           <a href="/events/confirmUploadSales" class="btn btn-primary">Confirm</a>
         </div>
     </div>
 

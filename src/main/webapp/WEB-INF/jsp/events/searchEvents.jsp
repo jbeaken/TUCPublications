@@ -62,21 +62,21 @@
 												  </button>
 
 												  <ul class="dropdown-menu" role="menu">
-												    <li><a href="${pageContext.request.contextPath}/events/view/${searchTable.id}">View</a></li>
+												    <li><a href="/events/view/${searchTable.id}">View</a></li>
 
-												    <li><a href="${pageContext.request.contextPath}/events/edit/${searchTable.id}">Edit</a></li>
+												    <li><a href="/events/edit/${searchTable.id}">Edit</a></li>
 
-														<li><a href="${pageContext.request.contextPath}/events/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
+														<li><a href="/events/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 
 												    <li class="divider"></li>
 
-												    <li><a href="${pageContext.request.contextPath}/events/startSelling/${searchTable.id}">Start Selling</a></li>
+												    <li><a href="/events/startSelling/${searchTable.id}">Start Selling</a></li>
 
-														<li><a href="${pageContext.request.contextPath}/events/showSales/${searchTable.id}">Show Sales</a></li>
+														<li><a href="/events/showSales/${searchTable.id}">Show Sales</a></li>
 
 														<li class="divider"></li>
 
-														<li><a href="${pageContext.request.contextPath}/events/delete/${searchTable.id}">Delete</a></li>
+														<li><a href="/events/delete/${searchTable.id}">Delete</a></li>
 
 														<li><a href='javascript:authoriseUser("uploadSales/${searchTable.id}")'>Upload CSV</a></li>
 

@@ -24,7 +24,7 @@
 		 $("#publisherSelect").chosen();
 	});
 </script>
-<form:form modelAttribute="saleReportBean" action="${pageContext.request.contextPath}/saleReport/report" method="post">
+<form:form modelAttribute="saleReportBean" action="/saleReport/report" method="post">
 	<form:hidden path="sale.event.id"/>
 	<form:hidden path="sale.event.name"/>
 <div class="rows">
@@ -80,13 +80,13 @@
 				 </div>
 				  <div class="column w-33-percent">
 							<form:label for="sale.stockItem.type" path="sale.stockItem.type" cssErrorClass="error">Type</form:label><br/>
-								<form:select id="stockItemTypeSelect" path="sale.stockItem.type" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/saleReport/report')">
+								<form:select id="stockItemTypeSelect" path="sale.stockItem.type" onkeypress="javascript:submitForm('/saleReport/report')">
 			            			<form:option value="" label="All"/>
 		            			<form:options items="${stockItemTypeList}" itemLabel="displayName"/></form:select>
 				  </div>
 					<div class="column w-33-percent">
 							<form:label for="status" path="status" cssErrorClass="error">Books/Non-Books</form:label><br/>
-								<form:select id="statusSelect" path="status" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/saleReport/report')">
+								<form:select id="statusSelect" path="status" onkeypress="javascript:submitForm('/saleReport/report')">
 			            			<form:option value="" label="All"/>
 												<form:option value="1" label="Books"/>
 												<form:option value="2" label="Non-Books"/>
@@ -106,7 +106,7 @@
  	   </div>
       <div class="row">
           <div class="column w-100-percent">
-				<button type="button" class="btn btn-danger" id="saleReportSubmitButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/saleReport/report')">Show Report</button>
+				<button type="button" class="btn btn-danger" id="saleReportSubmitButton" onclick="javascript:submitForm('/saleReport/report')">Show Report</button>
  				<button type="button" class="btn btn-primary" onclick="javascript:submitForm('reset')">Reset</button>
 	 	 </div>
 	</div>
@@ -119,7 +119,7 @@
 <br/>
 			<c:if test="${saleReportBean.groupBy == true }">
 <display:table name="saleList"
-			   requestURI="${pageContext.request.contextPath}/saleReport/report"
+			   requestURI="/saleReport/report"
         	   decorator="org.bookmarks.ui.SaleReportDecorator"
 			   sort="external"
 			   defaultsort="3"
@@ -144,7 +144,7 @@
 			</c:if>
 			<c:if test="${saleReportBean.groupBy == false}">
 					<display:table name="saleList"
-			   requestURI="${pageContext.request.contextPath}/saleReport/report"
+			   requestURI="/saleReport/report"
         	   decorator="org.bookmarks.ui.SaleReportDecorator"
 			   sort="external"
 			   defaultsort="3"
@@ -176,7 +176,7 @@
 	<br/>
 	<br/>
 	<display:table name="vatList"
-				   requestURI="${pageContext.request.contextPath}/saleReport/report"
+				   requestURI="/saleReport/report"
 				   export="true"
 				   size="${vatList.size()}"
 				   id="searchTable"
@@ -198,7 +198,7 @@
 	<div id="vattotals">VAT Total : <fmt:formatNumber type="currency" value="${vatTotal}" /></div>
 	<br/>
 	<display:table name="invoiceReportBeanList"
-				   requestURI="${pageContext.request.contextPath}/saleReport/report"
+				   requestURI="/saleReport/report"
 				   export="true"
 				   size="${invoiceReportBeanList.size()}"
 				   id="searchTable"

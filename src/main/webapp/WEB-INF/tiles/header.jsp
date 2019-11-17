@@ -2,7 +2,7 @@
 <script>
 	$(function() {
 		$("#globalCustomerAutoComplete").autocomplete( {
-			source: "${pageContext.request.contextPath}/customer/autoCompleteSurname",
+			source: "/customer/autoCompleteSurname",
 			minLength: 3,
 			select: function( event, ui ) {
 				$("#globalCustomerAutoComplete").val(ui.item.label);
@@ -102,11 +102,11 @@
 			<li><a href="<c:url value="/bounciesMerchandise/manage" />" title="Manage Merchandise"><img src="<c:url value="/resources/images/blue-database1.png" />" alt="Merchandise"/>Manage Merchandise</a></li>
 			<li><a href="<c:url value="/chips/getOrders" />" title="Get Chips Orders"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Send Email Report"/>Get Chips Orders</a></li>
 			<li><a href="<c:url value="/staff/search" />" title="Search Staff"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Staff"/>Staff</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateChips")' title="Update Chips"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Chips"/>Update Chips</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateEvents")' title="Update Events"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Events"/>Update Events</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/uploadBrochure")' title="Upload Brochure"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Brochure"/>Upload Brochure</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateReadingLists")' title="Update Reading Lists"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Reading Lists"/>Update Reading Lists</a></li>
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/buildIndex")'" title="Build Index"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Build Index"/>Build Index</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/updateChips")' title="Update Chips"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Chips"/>Update Chips</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/updateEvents")' title="Update Events"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Events"/>Update Events</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/uploadBrochure")' title="Upload Brochure"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Upload Brochure"/>Upload Brochure</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/updateReadingLists")' title="Update Reading Lists"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Update Reading Lists"/>Update Reading Lists</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/buildIndex")'" title="Build Index"><img src="<c:url value="/resources/images/blue-sitemap1.png" />" alt="Build Index"/>Build Index</a></li>
 		</ul>
 	</li>
 </ul>
@@ -115,7 +115,7 @@
 <div id="globalCustomerAutoCompleteWrapper">
 <input type="text" id="globalCustomerAutoComplete"/>
 
-<form id="globalCustomerForm" action="${pageContext.request.contextPath}/customer/search"s>
+<form id="globalCustomerForm" action="/customer/search"s>
 
 <input type="hidden" name="customer.id" accesskey="M" id="globalCustomerId"/>
 </form>

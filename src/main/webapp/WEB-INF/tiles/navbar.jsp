@@ -154,7 +154,7 @@
 
       <li><a href="<c:url value="/mailchimp/subscribe" />" title="Mailchimp subscribe">Mailchimp Subscribe</a></li>
 
-			<li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/chips/updateChips")' title="Update Chips">Update Chips</a></li>
+			<li><a onclick='javascript:authoriseUser("/chips/updateChips")' title="Update Chips">Update Chips</a></li>
 			<li><a href="<c:url value="/chips/getOrders" />" title="Get Orders">Get Orders</a></li>
 			<li class="divider"></li>
           </ul>

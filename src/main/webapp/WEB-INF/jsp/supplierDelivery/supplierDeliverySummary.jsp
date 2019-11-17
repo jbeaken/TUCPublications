@@ -27,9 +27,9 @@ Lines for collection
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=EMAILED_CUSTOMER" target="_blank">Emailed Customer</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=LEFT_PHONE_MESSAGE" target="_blank">Left Phone Message</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=SPOKE_TO_CUSTOMER" target="_blank">Spoke to Customer</a></li>
+						    <li><a href="/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=EMAILED_CUSTOMER" target="_blank">Emailed Customer</a></li>
+						    <li><a href="/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=LEFT_PHONE_MESSAGE" target="_blank">Left Phone Message</a></li>
+						    <li><a href="/customerOrderLine/informCustomer?id=${searchTable.id}&customerOrderStatus=SPOKE_TO_CUSTOMER" target="_blank">Spoke to Customer</a></li>
 						  </ul>
 						</div>
 					  </display:column>	

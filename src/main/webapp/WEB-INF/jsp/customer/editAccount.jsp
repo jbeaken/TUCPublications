@@ -65,7 +65,7 @@
 
  				<input type="submit" class="btn btn-primary" value="Save Changes" id="editCustomerSubmitButton"></input>
 
-				<a class="btn btn-default" href="${pageContext.request.contextPath}/creditNote/add?id=${customer.id}">Add Credit note</a>
+				<a class="btn btn-default" href="/creditNote/add?id=${customer.id}">Add Credit note</a>
 
 	 	 </div>
 	</div>

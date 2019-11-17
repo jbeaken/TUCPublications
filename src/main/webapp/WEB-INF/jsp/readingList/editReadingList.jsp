@@ -22,8 +22,8 @@
       <div class="row">
           <div class="column w-70-percent">
  				<input type="submit" class="btn btn-primary"/> 
-				<a href="${pageContext.request.contextPath}/readingList/searchFromSession"><button type="button" class="btn btn-danger">Back to search</button></a>
-				<a href="${pageContext.request.contextPath}/readingList/view?id=${readingList.id}"><button type="button" class="btn btn-warning">Add Stock</button></a>
+				<a href="/readingList/searchFromSession"><button type="button" class="btn btn-danger">Back to search</button></a>
+				<a href="/readingList/view?id=${readingList.id}"><button type="button" class="btn btn-warning">Add Stock</button></a>
 	 	 </div>
 	</div>		
 </div>		

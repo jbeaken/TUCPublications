@@ -16,14 +16,14 @@ $(function(){
 ${customerOrder.customer.fullName}
 </span>
 <c:if test="${stockItemList == null && customerOrderLine == null}">			
-			<form:form modelAttribute="stockItemSearchBean" id="stockItemSearchForm" action="${pageContext.request.contextPath}/customerOrder/searchStockItems" method="post">
+			<form:form modelAttribute="stockItemSearchBean" id="stockItemSearchForm" action="/customerOrder/searchStockItems" method="post">
 				<jsp:include page="../searchStockItemFragment.jsp" />
 </div>
 </form:form>
 <div id="rows">
 	<div class="row">
           <div class="column w-100-percent"> 
-		  <button type="button" class="btn btn-danger" id="searchStockSubmitButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customerOrder/searchStockItems')" accesskey="S">Add Stock</button>
+		  <button type="button" class="btn btn-danger" id="searchStockSubmitButton" onclick="javascript:submitForm('/customerOrder/searchStockItems')" accesskey="S">Add Stock</button>
           <button type="button" class="btn btn-primary" id="resetButton" accesskey="R">Reset</button>&nbsp;
 	 	 </div>
 	</div>	
@@ -92,6 +92,6 @@ ${customerOrder.customer.fullName}
 <br/>
 <br/>
 <c:if test="${stockItemList == null && customerOrderLine == null}">
-<a href="${pageContext.request.contextPath}/customerOrder/displayCustomerOrder"><button id="proceedToCheckoutButton" class="btn btn-danger">Proceed To Checkout</button></a>
-<a href="${pageContext.request.contextPath}/customerOrder/cancel" class="btn btn-success">Cancel</a>
+<a href="/customerOrder/displayCustomerOrder"><button id="proceedToCheckoutButton" class="btn btn-danger">Proceed To Checkout</button></a>
+<a href="/customerOrder/cancel" class="btn btn-success">Cancel</a>
 </c:if>

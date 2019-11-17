@@ -90,7 +90,7 @@
 	</div>	
       <div class="row">
 				<button type="submit" class="btn btn-primary" id="addCustomerButton">Add</button>
-				<button type="button" class="btn btn-danger" id="addCustomerAndCreateCustomerOrderButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addAndCreateCustomerOrder')">Add & Create Customer Order</button>
-				<button type="button" class="btn btn-danger" id="addCustomerAndCreateInvoiceButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/customer/addAndCreateInvoice')">Add & Create Invoice</button>
+				<button type="button" class="btn btn-danger" id="addCustomerAndCreateCustomerOrderButton" onclick="javascript:submitForm('/customer/addAndCreateCustomerOrder')">Add & Create Customer Order</button>
+				<button type="button" class="btn btn-danger" id="addCustomerAndCreateInvoiceButton" onclick="javascript:submitForm('/customer/addAndCreateInvoice')">Add & Create Invoice</button>
 	</div>		
 </form:form>

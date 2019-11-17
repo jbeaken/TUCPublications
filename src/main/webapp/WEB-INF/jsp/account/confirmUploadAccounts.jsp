@@ -5,7 +5,7 @@
 <script>
 	$(function() {
 		$("#customerAutoComplete").autocomplete({
-			source : "${pageContext.request.contextPath}/customer/autoCompleteSurname?accountHolders=true",
+			source : "/customer/autoCompleteSurname?accountHolders=true",
 			minLength : 3,
 			select : function(event, ui) {
 				$("#customerAutoComplete").val(ui.item.label);

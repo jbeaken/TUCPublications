@@ -69,7 +69,7 @@
 		keynum = e.which
 		}
 		if(keynum == 13) {
-			submitForm('${pageContext.request.contextPath}/stock/azlookup');
+			submitForm('/stock/azlookup');
 		}
 		//alert(keynum);
 	}
@@ -81,10 +81,10 @@
 	}
 
 	function lookUpFromAZ() {
-		submitForm('${pageContext.request.contextPath}/stock/azlookup');
+		submitForm('/stock/azlookup');
 	}
 	</script>
-		<form:form modelAttribute="stockItem" action="${pageContext.request.contextPath}/stock/add" method="post">
+		<form:form modelAttribute="stockItem" action="/stock/add" method="post">
 		  	<form:hidden path="id"/>
 
 		  	<form:hidden path="imageURL"/>
@@ -133,7 +133,7 @@
 			  				<form:option value="" label="Please select"/>
 			  				<form:options items="${publisherList}" itemValue="id" itemLabel="name"/>
 				</form:select>
-				<a href="${pageContext.request.contextPath}/publisher/add?flow=addStock">Add</a>
+				<a href="/publisher/add?flow=addStock">Add</a>
 	 	 </div>
       </div>
       <div class="row">
@@ -239,7 +239,7 @@
 			<input type="submit" class="btn btn-primary" value="Add" />
 			<button class="btn btn-success" type="button" onclick="javascript:lookUpFromAZUsingIsbn()">Lookup at AZ</button>
 			<c:if test="${sessionScope.flow == 'customerOrder'}">
-				<a href="${pageContext.request.contextPath}/customerOrder/continue" class="btn btn-success">Go Back to Customer Order</a>
+				<a href="/customerOrder/continue" class="btn btn-success">Go Back to Customer Order</a>
 			</c:if>
 		</div>
         <div class="column w-50-percent">

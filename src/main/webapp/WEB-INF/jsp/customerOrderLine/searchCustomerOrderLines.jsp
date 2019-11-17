@@ -19,9 +19,9 @@ $(function() {
 	});
 
 	function printLabels() {
-		$('form#customerOrderLineForm').attr("action", '${pageContext.request.contextPath}/customerOrderLine/printLabels');
+		$('form#customerOrderLineForm').attr("action", '/customerOrderLine/printLabels');
 		$('form#customerOrderLineForm').submit();
-		$('form#customerOrderLineForm').attr("action", '${pageContext.request.contextPath}/customerOrderLine/search');
+		$('form#customerOrderLineForm').attr("action", '/customerOrderLine/search');
 	}
 </script>
 <form:form modelAttribute="customerOrderLineSearchBean" action="search" method="post" id="customerOrderLineForm">
@@ -117,11 +117,11 @@ $(function() {
 	  <div class="row">
           <div class="column w-100-percent">
 				<input type="submit" class="btn btn-primary"/>
-				<a href="${pageContext.request.contextPath}/customerOrderLine/reset">
+				<a href="/customerOrderLine/reset">
 					<button type="button" class="btn btn-primary">Reset</button>
 				</a>
 				<c:if test="${customerOrderLineSearchBean.customerOrderLine.status == 'OUT_OF_STOCK'}">
-						<a href="${pageContext.request.contextPath}/customerOrderLine/copyISBNs" target="_blank">
+						<a href="/customerOrderLine/copyISBNs" target="_blank">
 							<button type="button" class="btn btn-success">Copy ISBNs</button>
 						</a>
 				</c:if>
@@ -167,20 +167,20 @@ $(function() {
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
 						  	<c:if test="${searchTable.canBeFilled}">
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
+						    	<li><a href="/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
 						  	</c:if>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?customerOrderLine.id=${searchTable.id}">View Supplier Order</a></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
+						    <li><a href="/supplierOrderLine/viewSupplierOrderLine?customerOrderLine.id=${searchTable.id}">View Supplier Order</a></li>
+						    <li><a href="/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
 									<li><a href="mailto:${searchTable.customer.contactDetails.email}?Subject=Your%20Bookmarks%20Bookshop%20Order&body=${searchTable.stockItem.title}">Email Customer</a></li>
 								</c:if>
 						    <li class="divider"></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
+						    <li><a href="/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
+						    <li><a href="/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
+						    <li><a href="/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
 						    <li class="divider"></li>
 							<c:if test="${searchTable.canCancel}">
-						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
+						    	<li><a href="javascript:confirmationWithUrl('/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
 						  	</c:if>
 						  </ul>
 						</div>
@@ -239,31 +239,31 @@ $(function() {
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
 						  	<c:if test="${searchTable.canBeFilled}">
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
+						    	<li><a href="/customerOrderLine/fill?customerOrderLineId=${searchTable.id}">Fill</a></li>
 						    	<li class="divider"></li>
 						  	</c:if>
 						  	<c:if test="${searchTable.canComplete}">
-					    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Invoice &amp; Go</a></li>
-						    	<li><a href="${pageContext.request.contextPath}/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Invoice &amp; Stay</a></li>
+					    		<li><a href="/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesGo&customerOrderLineId=${searchTable.id}">Invoice &amp; Go</a></li>
+						    	<li><a href="/customerOrderLine/addToInvoice?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}">Invoice &amp; Stay</a></li>
 						  		<li class="divider"></li>
 						  	</c:if>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
+						    <li><a href="/supplierOrderLine/viewSupplierOrderLine?id=${searchTable.id}" target="_blank">View Supplier Order</a></li>
+						    <li><a href="/supplierOrderLine/displayCreateForCustomerOrder?customerOrderLineId=${searchTable.id}&amount=${searchTable.amount}&stockItemId=${searchTable.stockItem.id}&supplierId=${searchTable.stockItem.preferredSupplier.id}&flow=searchCustomerOrder" target="_blank">Create Supplier Order</a></li>
 								<c:if test="${searchTable.customer.contactDetails.email != null}">
 									<li><a href="mailto:${searchTable.customer.contactDetails.email}?Subject=Your%20Bookmarks%20Bookshop%20Order&body=${searchTable.stockItem.title}">Email Customer</a></li>
 								</c:if>
 							<c:if test="${searchTable.canComplete}">
 								<c:if test="${searchTable.paymentType != 'ACCOUNT'}">
 						  			<li class="divider"></li>
-						    		<li><a href="${pageContext.request.contextPath}/customerOrderLine/sellOut?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
+						    		<li><a href="/customerOrderLine/sellOut?customerOrderLineId=${searchTable.id}">Sell Out</a></li>
 						  		</c:if>
 							</c:if>
 						    <li class="divider"></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
-						    <li><a href="${pageContext.request.contextPath}/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
+						    <li><a href="/customerOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
+						    <li><a href="/customerOrderLine/edit?id=${searchTable.id}&flow=search">Edit</a></li>
+						    <li><a href="/customerOrderLine/view?id=${searchTable.id}&flow=search">View</a></li>
 							<c:if test="${searchTable.canCancel}">
-						    	<li><a href="javascript:confirmationWithUrl('${pageContext.request.contextPath}/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
+						    	<li><a href="javascript:confirmationWithUrl('/customerOrderLine/cancel?flow=searchCustomerOrderLinesStay&customerOrderLineId=${searchTable.id}', 'Are you sure? This will put stock back into stock.')">Cancel</a></li>
 						  	</c:if>
 						  </ul>
 						</div>

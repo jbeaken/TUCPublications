@@ -28,7 +28,7 @@ tr.tableRowEven,tr.even {
 	  	 </div>
 	  	</div>
 </div>
-<form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/edit" method="post">
+<form:form modelAttribute="invoice" action="/invoice/edit" method="post">
 <form:hidden path="id"/>
 <form:hidden path="note"/>
 <form:hidden path="creationDate"/>
@@ -49,30 +49,30 @@ tr.tableRowEven,tr.even {
       <div class="row">
           <div class="column w-100-percent">
  				<input type="submit" class="btn btn-primary" value="Save Invoice"/>
-		 		<a href="${pageContext.request.contextPath}/invoice/showAddAdditionalCharges">
+		 		<a href="/invoice/showAddAdditionalCharges">
 		 			<button type="button" class="btn btn-primary">Add Additional Charges</button>
 		 		</a>
 		 		<c:if test="${invoice.deliveryType == 'MAIL'}">
-					<a href="${pageContext.request.contextPath}/invoice/setAsCollection">
+					<a href="/invoice/setAsCollection">
 						<button type="button" class="btn btn-primary">Set As Collection</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == true}">
-					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=false">
+					<a href="/invoice/setAsPaid?paid=false">
 						<button class="btn btn-danger" type="button">Set As Unpaid</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.paid == false}">
-					<a href="${pageContext.request.contextPath}/invoice/setAsPaid?paid=true">
+					<a href="/invoice/setAsPaid?paid=true">
 						<button class="btn btn-primary" type="button">Set As Paid</button>
 					</a>
 				</c:if>
 		 		<c:if test="${invoice.deliveryType == 'COLLECTION'}">
-					<a href="${pageContext.request.contextPath}/invoice/setAsMail">
+					<a href="/invoice/setAsMail">
 						<button type="button" class="btn btn-primary">Set As Mail Delivery</button>
 					</a>
 				</c:if>
-		 		<a href="${pageContext.request.contextPath}/invoice/cancel">
+		 		<a href="/invoice/cancel">
 		 			<button type="button" class="btn btn-primary">Cancel</button>
 		 		</a>
 	 	 </div>
@@ -82,7 +82,7 @@ tr.tableRowEven,tr.even {
 </c:if>
 <c:if test="${secondHandPrice != null}">
 <legend>Second Hand</legend>
-<form:form modelAttribute="invoice" action="${pageContext.request.contextPath}/invoice/addAdditionalCharges" method="post">
+<form:form modelAttribute="invoice" action="/invoice/addAdditionalCharges" method="post">
 <form:hidden path="id"/>
 <form:hidden path="customer.id"/>
 <form:hidden path="customer.firstName"/>
@@ -111,7 +111,7 @@ tr.tableRowEven,tr.even {
 <c:if test="${saleToEdit != null}">
 <br/>
 <legend>${saleToEdit.stockItem.title}</legend>
-<form:form modelAttribute="saleToEdit" action="${pageContext.request.contextPath}/invoice/editInvoiceOrderLine" method="post">
+<form:form modelAttribute="saleToEdit" action="/invoice/editInvoiceOrderLine" method="post">
 	<form:hidden path="id"/>
 	<form:hidden path="creationDate"/>
 	<form:hidden path="stockItem.id"/>
@@ -146,7 +146,7 @@ tr.tableRowEven,tr.even {
 </form:form>
 </c:if>
 <c:if test="${saleToEdit == null && secondHandPrice == null}">
-<form:form modelAttribute="stockItemSearchBean" action="${pageContext.request.contextPath}/invoice/searchStockItems" method="post">
+<form:form modelAttribute="stockItemSearchBean" action="/invoice/searchStockItems" method="post">
 <div class="rows">
         <div class="row">
           <div class="column w-33-percent">

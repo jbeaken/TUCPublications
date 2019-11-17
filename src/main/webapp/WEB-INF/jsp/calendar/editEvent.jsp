@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/js/jQuery-File-Upload-9.8.1/css/jquery.fileupload.css" /> ">
 <link rel="stylesheet" href="<c:url value="/resources/js/jQuery-File-Upload-9.8.1/css/jquery.fileupload-ui.css" />" />
 
-<script src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
+<script src="/resources/ckeditor/ckeditor.js"></script>
 	<script>
 	$(function() {
 		$( "#startDate" ).datepicker({

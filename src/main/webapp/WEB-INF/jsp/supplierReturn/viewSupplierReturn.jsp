@@ -36,4 +36,4 @@
 	  <display:column property="stockItem.sellPrice" title="Sell Price"/>
 </display:table>
 <br/>
-<a href="${pageContext.request.contextPath}/supplierReturn/searchFromSession"><button class="btn btn-primary">Back To Search</button></a>
+<a href="/supplierReturn/searchFromSession"><button class="btn btn-primary">Back To Search</button></a>

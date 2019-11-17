@@ -19,7 +19,7 @@
 <div class="rows">
    <div class="row">
         <div class="column w-100-percent">
-			<label>No. ${index + 1} of ${size}</label>&nbsp;<a href="${pageContext.request.contextPath}/stock/edit?id=${stockItem.id}" target="_blank" class="reorder-review-title">${stockItem.title}</a>
+			<label>No. ${index + 1} of ${size}</label>&nbsp;<a href="/stock/edit?id=${stockItem.id}" target="_blank" class="reorder-review-title">${stockItem.title}</a>
 		</div>
 	</div>
 </div>	
@@ -129,10 +129,10 @@
    <div class="row">
           <div class="column w-33-percent">
 	  	 <c:if test="${index - 20 >= 0}"> 
-			<button class="btn btn-warning" id="previous20Button" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=previous20')">Previous 20</button>
+			<button class="btn btn-warning" id="previous20Button" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=previous20')">Previous 20</button>
 	  	</c:if>	          
           <c:if test="${index != 0}">
-			<button class="btn btn-primary" id="previousButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=previous')">Previous</button>
+			<button class="btn btn-primary" id="previousButton" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=previous')">Previous</button>
 		  </c:if>
           <c:if test="${index == 0}">
 			<button class="btn btn-primary" id="previousButton"  accesskey="p" onclick="javascript:alert('You are at the first item!')">Previous</button>
@@ -140,19 +140,19 @@
 	 	 </div>
 	 	 
           <div class="column w-33-percent">
-			<button class="btn btn-primary" id="summaryButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=summary')">Summary</button>
+			<button class="btn btn-primary" id="summaryButton" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=summary')">Summary</button>
 	  	 </div>		
 	  	 
 	  	  <div class="column w-33-percent">
 	  	 <c:if test="${index < size - 1}"> 
-			<button class="btn btn-primary" id="nextButton" accesskey="n" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=next')">Next</button>
-			<button class="btn btn-primary" id="removeFromMarxismButton" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=removeFromMarxism')">Next &amp; Remove</button>
+			<button class="btn btn-primary" id="nextButton" accesskey="n" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=next')">Next</button>
+			<button class="btn btn-primary" id="removeFromMarxismButton" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=removeFromMarxism')">Next &amp; Remove</button>
 	  	</c:if>
 	  	 <c:if test="${index < size - 20}"> 
-			<button class="btn btn-warning" id="next20Button" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=next20')">Next 20</button>
+			<button class="btn btn-warning" id="next20Button" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=next20')">Next 20</button>
 	  	</c:if>	
 	  	 <c:if test="${index < size - 100}"> 
-			<button class="btn btn-danger" id="next100Button" onclick="javascript:submitForm('${pageContext.request.contextPath}/reorderReview/process?index=${index}&flow=next100')">Next 100</button>
+			<button class="btn btn-danger" id="next100Button" onclick="javascript:submitForm('/reorderReview/process?index=${index}&flow=next100')">Next 100</button>
 	  	</c:if>		  		  		
 	  	 <c:if test="${index == size - 1}">
 			<button class="btn btn-warning" id="nextButton"  onclick="javascript:alert('You are at the last item!')">Next</button>

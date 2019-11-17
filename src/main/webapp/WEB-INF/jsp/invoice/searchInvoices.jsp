@@ -87,19 +87,19 @@
   						    Action <span class="caret"></span>
   						  </button>
   						  <ul class="dropdown-menu" role="menu">
-  						    <li><a href="${pageContext.request.contextPath}/invoice/edit?id=${searchTable.id}">Edit</a></li>
+  						    <li><a href="/invoice/edit?id=${searchTable.id}">Edit</a></li>
 
-  						    <li><a href="${pageContext.request.contextPath}/invoice/view?id=${searchTable.id}&flow=searchInvoices">View</a></li>
-
-  						    <li class="divider"></li>
-
-  						    <li><a href="${pageContext.request.contextPath}/invoice/print?invoiceId=${searchTable.id}" target="_blank">Print</a></li>
-
-    							<li><a href="${pageContext.request.contextPath}/invoice/generatePdf?invoiceId=${searchTable.id}">Generate PDF</a></li>
+  						    <li><a href="/invoice/view?id=${searchTable.id}&flow=searchInvoices">View</a></li>
 
   						    <li class="divider"></li>
 
-  						    <li><a href='javascript:authoriseUser("${pageContext.request.contextPath}/invoice/delete?id=${searchTable.id}")'>Delete
+  						    <li><a href="/invoice/print?invoiceId=${searchTable.id}" target="_blank">Print</a></li>
+
+    							<li><a href="/invoice/generatePdf?invoiceId=${searchTable.id}">Generate PDF</a></li>
+
+  						    <li class="divider"></li>
+
+  						    <li><a href='javascript:authoriseUser("/invoice/delete?id=${searchTable.id}")'>Delete
   						    </a></li>
 
   						  </ul>

@@ -32,7 +32,7 @@
       <div class="row">
           <div class="column w-70-percent">
  				<input type="submit" class="btn btn-primary"/> 
-				<a href="${pageContext.request.contextPath}/category/searchFromSession"><button type="button" class="btn btn-primary">Back to search</button></a>
+				<a href="/category/searchFromSession"><button type="button" class="btn btn-primary">Back to search</button></a>
 	 	 </div>
 	</div>		
 </div>		

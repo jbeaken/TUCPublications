@@ -34,16 +34,16 @@
 					</button> 
 				</c:if>
 					&nbsp;
-					<a href="${pageContext.request.contextPath}/supplierOrder/searchFromSession">
+					<a href="/supplierOrder/searchFromSession">
 						<button type="button" class="btn btn-primary">Back To Search</button>
 					</a>
-					<a href="${pageContext.request.contextPath}/supplierOrder/markAllForHold">
+					<a href="/supplierOrder/markAllForHold">
 						<button type="button" class="btn btn-primary">All on Hold</button>
 					</a>
-					<a href="${pageContext.request.contextPath}/supplierOrder/markAllForReadyToSend">
+					<a href="/supplierOrder/markAllForReadyToSend">
 						<button type="button" class="btn btn-primary">All Ready To Send</button>
 					</a>
-					<a href="${pageContext.request.contextPath}/supplierOrder/markCustomerOrdersReadyToSend">
+					<a href="/supplierOrder/markCustomerOrdersReadyToSend">
 						<button type="button" class="btn btn-primary">Customer Orders Ready To Send</button>
 					</a>
 	 	 </div>

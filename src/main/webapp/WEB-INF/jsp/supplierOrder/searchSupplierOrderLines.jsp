@@ -64,11 +64,11 @@
           <div class="column w-100-percent">
 				<input type="submit" class="btn btn-primary" value="Search" id="searchsupplierOrderLinesButton"/>
 				<button type="button" onclick="reset()" class="btn btn-primary" id="resetButton">Reset</button>
-				<a href="${pageContext.request.contextPath}/supplierOrderLine/sendAllToSupplier" class="btn btn-success" id="sendAllToSupplierButton">Send All To Supplier</a>				
-				<a href="${pageContext.request.contextPath}/supplierOrderLine/putAllOnHold" class="btn btn-success" id="putAllOnHoldButton">Put All On Hold</a>
-				<a href="${pageContext.request.contextPath}/supplierOrderLine/takeAllOffHold" class="btn btn-success" id="takeAllOffHoldButton">Take All Off Hold</a>
-				<a href="${pageContext.request.contextPath}/supplierOrderLine/copyISBNs" class="btn btn-primary" target="_blank" id="copyISBNsButton">Copy ISBNs</a>
-				<a href="${pageContext.request.contextPath}/supplierOrderLine/createTable" class="btn btn-primary" target="_blank" id="createTableButton">Create Table</a>
+				<a href="/supplierOrderLine/sendAllToSupplier" class="btn btn-success" id="sendAllToSupplierButton">Send All To Supplier</a>
+				<a href="/supplierOrderLine/putAllOnHold" class="btn btn-success" id="putAllOnHoldButton">Put All On Hold</a>
+				<a href="/supplierOrderLine/takeAllOffHold" class="btn btn-success" id="takeAllOffHoldButton">Take All Off Hold</a>
+				<a href="/supplierOrderLine/copyISBNs" class="btn btn-primary" target="_blank" id="copyISBNsButton">Copy ISBNs</a>
+				<a href="/supplierOrderLine/createTable" class="btn btn-primary" target="_blank" id="createTableButton">Create Table</a>
 	  	 </div>
 	  </div>
 </div>	
@@ -102,12 +102,12 @@
 						    Action <span class="caret"></span>
 						  </button>
 						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/toggleOnHold?id=${searchTable.id}">Toggle Hold</a></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/edit?id=${searchTable.id}" target="_blank">Edit</a></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/sendToSupplier?id=${searchTable.id}">Send To Supplier</a></li>
+						    <li><a href="/supplierOrderLine/toggleOnHold?id=${searchTable.id}">Toggle Hold</a></li>
+						    <li><a href="/supplierOrderLine/edit?id=${searchTable.id}" target="_blank">Edit</a></li>
+						    <li><a href="/supplierOrderLine/sendToSupplier?id=${searchTable.id}">Send To Supplier</a></li>
 						    <li class="divider"></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/delete?id=${searchTable.id}">Delete</a></li>
-						    <li><a href="${pageContext.request.contextPath}/supplierOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>						   
+						    <li><a href="/supplierOrderLine/delete?id=${searchTable.id}">Delete</a></li>
+						    <li><a href="/supplierOrderLine/displayEditNote?id=${searchTable.id}" target="_blank">Edit Note</a></li>
 						  </ul>
 						</div>
 					  </display:column>					  

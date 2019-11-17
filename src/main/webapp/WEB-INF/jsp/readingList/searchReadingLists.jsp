@@ -13,7 +13,7 @@
       <div class="row">
           <div class="column w-70-percent">
  				<input type="submit" class="btn btn-primary"/> 
-	 			<a href="${pageContext.request.contextPath}/readingList/add" class="btn btn-danger">Add New Reading List</a>
+	 			<a href="/readingList/add" class="btn btn-danger">Add New Reading List</a>
 	 	 </div>
 	</div>		
 </div>		
@@ -40,10 +40,10 @@
 							    Action <span class="caret"></span>
 							  </button>
 							  <ul class="dropdown-menu" role="menu">					  						  	
-							    <li><a href="${pageContext.request.contextPath}/readingList/edit?id=${searchTable.id}">Edit</a></li>
-							    <li><a href="${pageContext.request.contextPath}/readingList/manage?id=${searchTable.id}">Manage Stock</a></li>
+							    <li><a href="/readingList/edit?id=${searchTable.id}">Edit</a></li>
+							    <li><a href="/readingList/manage?id=${searchTable.id}">Manage Stock</a></li>
 							    <li class="divider"></li>	
-							    <li><a onclick='javascript:authoriseUser("${pageContext.request.contextPath}/readingList/delete?id=${searchTable.id}")'>Delete</a></li>
+							    <li><a onclick='javascript:authoriseUser("/readingList/delete?id=${searchTable.id}")'>Delete</a></li>
 							  </ul>
 							</div>
 						</display:column>

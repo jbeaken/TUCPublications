@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-    <script src="${pageContext.request.contextPath}/resources/ckeditor/ckeditor.js"></script>
+    <script src="/resources/ckeditor/ckeditor.js"></script>
 	<script>
 	$(function() {
 		$( "#publishedDate" ).datepicker({
@@ -25,10 +25,10 @@
 	});
 
 	function getImage() {
-		submitForm('${pageContext.request.contextPath}/stock/getImage?flow=editStock');
+		submitForm('/stock/getImage?flow=editStock');
 	}
 	function getReview() {
-		submitForm('${pageContext.request.contextPath}/stock/getReview?flow=editStock');
+		submitForm('/stock/getReview?flow=editStock');
 	}
 	</script>
 		<form:form modelAttribute="stockItem" action="edit" method="post">
@@ -97,7 +97,7 @@
 			  				<form:option value="" label="Please select"/>
 			  				<form:options items="${publisherList}" itemValue="id" itemLabel="name"/>
 				</form:select>
-				<a href="${pageContext.request.contextPath}/publisher/add?flow=editStock">Add</a>
+				<a href="/publisher/add?flow=editStock">Add</a>
 
 	 	 </div>
       </div>
@@ -108,7 +108,7 @@
 		  </div>
           <div class="column w-33-percent">
                <label for="category.id" path="category.id">Category</label><br/>
-									<form:select path="category.id" onkeypress="javascript:submitForm('${pageContext.request.contextPath}/stock/edit')">
+									<form:select path="category.id" onkeypress="javascript:submitForm('/stock/edit')">
 				            			<form:option value="" label="Please select"/>
 				            			<form:options items="${categoryList}" itemValue="id" itemLabel="name"/>
 				        			</form:select>
@@ -244,11 +244,11 @@
     </div>
       <div class="row">
           <div class="column w-100-percent">
-               <button type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/stock/edit')" class="btn btn-danger">Save Changes</button>&nbsp;
+               <button type="button" onclick="javascript:submitForm('/stock/edit')" class="btn btn-danger">Save Changes</button>&nbsp;
 				<button type="button" onclick="window.close();" class="btn btn-primary">Back to search</button>
 				<button class="btn btn-success" onclick="javascript:getImage()">Get Image</button>
 				<button class="btn btn-success" onclick="javascript:getReview()">Get Review</button>
-				<button type="button" onclick="javascript:authoriseSuperUser('${pageContext.request.contextPath}/stock/delete')" class="btn btn-primary">Delete</button>
+				<button type="button" onclick="javascript:authoriseSuperUser('/stock/delete')" class="btn btn-primary">Delete</button>
 	 </div>
     </div>
      <div class="row">

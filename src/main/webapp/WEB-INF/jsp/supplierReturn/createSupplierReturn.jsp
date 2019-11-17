@@ -63,7 +63,7 @@
 				<form:input path="stockItem.isbn" autofocus="autofocus" required="required"/>&nbsp;<form:errors path="stockItem.isbn" />&nbsp;<form:errors path="supplierReturn.supplierReturnLine" />
 				<input type="submit" class="btn btn-primary" value="Add" id="addStockToSupplierReturnButton"/>&nbsp;
 
-				<a href="${pageContext.request.contextPath}/supplierReturn/editSupplierReturnOrderLine?id=${lastSupplierReturnLine.stockItem.id}">
+				<a href="/supplierReturn/editSupplierReturnOrderLine?id=${lastSupplierReturnLine.stockItem.id}">
 					<button type="button" class="btn btn-danger" id="editLastLine">Edit Last Line</button>
 				</a>
 			</div>
@@ -92,6 +92,6 @@
   					Retail Price : <fmt:formatNumber value="${retailPrice}" type="currency" currencyCode="GBP"/>
   					</c:if>
   					<br/><br/>
-		<button class="btn btn-primary" type="button" onclick="javascript:submitForm('${pageContext.request.contextPath}/supplierReturn/create')" id="placeIntoStockButton">Save Supplier Return</button>
-		<a href="${pageContext.request.contextPath}/supplierReturn/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
+		<button class="btn btn-primary" type="button" onclick="javascript:submitForm('/supplierReturn/create')" id="placeIntoStockButton">Save Supplier Return</button>
+		<a href="/supplierReturn/cancel"><button class="btn btn-danger" type="button">Cancel</button></a>
 </c:if>

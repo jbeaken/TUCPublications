@@ -20,7 +20,7 @@
 </form:form>
 		<br/>
 					<display:table name="staffList"
-			   requestURI="${pageContext.request.contextPath}/staff/search"
+			   requestURI="/staff/search"
 				 class="table table-striped table-bordered"
         decorator="org.bookmarks.ui.SearchStaffDecorator"
 			   sort="external"
@@ -48,13 +48,13 @@
 												  </button>
 
 												  <ul class="dropdown-menu" role="menu">
-												    <li><a href="${pageContext.request.contextPath}/staff/view/${searchTable.id}">View</a></li>
+												    <li><a href="/staff/view/${searchTable.id}">View</a></li>
 
-												    <li><a href="${pageContext.request.contextPath}/staff/edit/${searchTable.id}">Edit</a></li>
+												    <li><a href="/staff/edit/${searchTable.id}">Edit</a></li>
 
 												    <li class="divider"></li>
 
-														<li><a onclick="javascript:authoriseSuperUser( '${pageContext.request.contextPath}/staff/delete/${searchTable.id}' )">Delete</a></li>
+														<li><a onclick="javascript:authoriseSuperUser( '/staff/delete/${searchTable.id}' )">Delete</a></li>
 												  </ul>
 												</div>
 						</display:column>

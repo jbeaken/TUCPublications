@@ -7,10 +7,10 @@
 						<display:column property="supplierOrderLine.amount" title="Amount"/>
   					</display:table>
   					<br/>
-<a href="${pageContext.request.contextPath}/reorderReview/save">
+<a href="/reorderReview/save">
 	<button class="btn btn-primary" id="saveButton">Save</button>
 </a>
 &nbsp;&nbsp;&nbsp;
-<a href="${pageContext.request.contextPath}/reorderReview/cancel">
+<a href="/reorderReview/cancel">
 	<button class="btn btn-primary" id="cancelButton">Cancel</button>
 </a>

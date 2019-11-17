@@ -14,7 +14,7 @@
 	      <div class="row">
 	          <div class="column w-70-percent">
 	 				<input type="submit" class="btn btn-primary"/>
-		 				<a href="${pageContext.request.contextPath}/publisher/displaySearch">
+		 				<a href="/publisher/displaySearch">
 		 					<button type="button" class="btn btn-primary">Reset</button>
 		 				</a>
 		 	 </div>
