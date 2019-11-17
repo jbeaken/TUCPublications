@@ -16,7 +16,7 @@ else
    FILENAME=$DAY_OF_WEEK
 fi
 echo $FILENAME
-/usr/bin/mysqldump  -u root -p$DB_PASSWORD bookmarks --add-drop-database --result-file=/home/bookmarks/bm.sql
+mysqldump  -u root bookmarks --add-drop-database --result-file=/home/bookmarks/bm.sql
 
 echo "...finished! Uploading to backup server.."
 
@@ -30,4 +30,4 @@ echo "Shredding documents..."
 #shred /home/bookmarks/bm.sql
 echo "...All shredded"
 rm /home/bookmarks/bm.sql
-rm /home/bookmarks/bm.$FILENAME.sql.gpg 
+rm /home/bookmarks/bm.$FILENAME.sql.gpg
