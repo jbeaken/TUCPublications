@@ -103,13 +103,14 @@ systemctl enable tomcat
 systemctl start tomcat
 
 # Lets encrypt
-certbot certonly --webroot -d www.bookmarksonline.website -w /var/www/html
-certbot certonly --webroot -d bookmarksonline.website -w /var/www/html
+certbot certonly --webroot -d www.bookmarksonline.website -w /var/www/html --installer apache
+certbot certonly --webroot -d bookmarksonline.website -w /var/www/html --installer apache
 
 #
-cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
+cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/apache2/sites-available/
 a2ensite bookmarksonline
 a2dissite bookmarksonline-min
+systemctl reload apache2
 
 # Misc
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
