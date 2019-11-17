@@ -20,17 +20,22 @@ git clone https://github.com/jbeaken/festival.git /home/git/festival
 git clone https://github.com/jbeaken/TUCPublications.git /home/git/bookmarks
 git clone https://github.com/jbeaken/bmw.git /home/git/bmw
 
+# Directories
+mkdir -p /home/bookmarks/logs
+mkdir /home/bookmarks/backups
+mkdir /home/bookmarks/ssl
+mkdir -p /home/sftponly/.ssh
+
 # Gives access to application-prod.properties and init-mariadb.sql
 gpg -d /home/git/bookmarks/src/main/etc/install/ubuntu/app.gpg > app.tar
 tar xf app.tar
 mv bmw-prod.properties /home/git/bmw/src/main/resources/application-prod.properties
 mv festival-prod.properties /home/git/festival/src/main/resources/application-prod.properties
 mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring/application-prod.properties
+mv sftponly_id_rsa /home/sftponly/.ssh/id_rsa
+mv sftponly_known_hosts /home/sftponly/.ssh/known_hosts
 
-# Directories
-mkdir -p /home/bookmarks/logs
-mkdir /home/bookmarks/backups
-mkdir /home/bookmarks/ssl
+
 
 # Link build files
 ln -s /home/git/festival/build.sh buildFestival.sh
