@@ -5,7 +5,7 @@ TOMCATVERSION=9.0.27
 # Packages
 apt -y update
 apt -y dist-upgrade
-apt -y install git vim-nox zip unzip
+apt -y install git vim-nox zip unzip wput
 
 # Install sdkman with java and maven, insure available to non-root users
 export SDKMAN_DIR="/usr/local/sdkman"
@@ -24,8 +24,12 @@ git clone https://github.com/jbeaken/bmw.git /home/git/bmw
 
 # Directories
 mkdir -p /home/bookmarks/logs
-mkdir /home/bookmarks/backups
+mkdir /home/bookmarks/backup
 mkdir /home/bookmarks/ssl
+mkdir /home/bookmarks/indexes
+mkdir /home/bmw/logs
+mkdir -p /home/bookmarks/images/original/
+mkdir /home/bookmarks/images/150
 mkdir -p /home/sftponly/.ssh
 
 # Gives access to application-prod.properties and init-mariadb.sql
@@ -36,7 +40,7 @@ mv festival-prod.properties /home/git/festival/src/main/resources/application-pr
 mv bookmarks-prod.properties /home/git/bookmarks/src/main/resources/spring/application-prod.properties
 mv sftponly_id_rsa /home/sftponly/.ssh/id_rsa
 mv sftponly_known_hosts /home/sftponly/.ssh/known_hosts
-
+mv password /home/bookmarks/backup
 
 
 # Link build files
@@ -61,21 +65,17 @@ apt-get install -y apache2 libapache2-mod-jk
 #cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
 cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
 #cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
-
 a2enmod ssl
 #a2ensite marxismfestival
 a2ensite bookmarksonline-min
 #a2ensite bookmarksbookshop
 a2dissite 000-default
 cp /home/git/bookmarks/src/main/etc/install/apache2/workers.properties /etc/libapache2-mod-jk/
-
 apt-get -y install software-properties-common
 add-apt-repository -y universe
 add-apt-repository -y ppa:certbot/certbot
 apt-get -y update
 apt-get -y install certbot python-certbot-apache
-cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
-a2ensite bookmarksonline-min
 systemctl reload apache2
 #ufw allow 'Apache Full'
 
@@ -85,7 +85,10 @@ sh buildBmw.sh
 sh buildBookmarks.sh
 # Tomcat system user and group
 useradd -r -s /sbin/nologin tomcat
-chown -R tomcat: /opt/apache-tomcat-$TOMCATVERSION
+chown -R tomcat:tomcat /opt/apache-tomcat-$TOMCATVERSION
+chown -R tomcat:tomcat /home/bookmarks/logs
+chown -R tomcat:tomcat /home/bookmarks/indexes
+chown -R tomcat:tomcat /home/bookmarks/images
 
 # Mysql
 apt -y install mysql-server
@@ -111,6 +114,10 @@ cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline.conf /etc/ap
 a2ensite bookmarksonline
 a2dissite bookmarksonline-min
 systemctl reload apache2
+
+# backup
+cp /home/git/bookmarks/src/main/etc/backup/backupBeansDB.sh /home/bookmarks/backup
+cp /home/git/bookmarks/src/main/etc/backup/bookmarks_cron /etc/cron.d/bookmarks
 
 # Misc
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
