@@ -480,7 +480,7 @@ public class AZLookupServiceImpl implements AZLookupService {
 				stockItem.setDiscount(new BigDecimal(40));
 				stockItem.calculateCostPrice();
 			}catch(Exception e1) {
-				logger.error("Fallback price didn't work, giving up", e1);
+				logger.warn("Fallback price didn't work, giving up");
 			}
 		}
 	}
@@ -823,7 +823,7 @@ private void getPublisherInfo(Elements bucket, StockItem stockItem) throws Parse
 			logger.debug("Cannot get review from lookup 1 : Cannot find elements div#productDescription");
 		}
 	} catch(Exception e) {
-		logger.error("Cannot get review", e);
+		logger.warn("Cannot get review");
 	}
 
 /*
