@@ -30,6 +30,7 @@ mkdir /home/bookmarks/indexes
 mkdir /home/bmw/logs
 mkdir -p /home/bookmarks/images/original/
 mkdir /home/bookmarks/images/150
+mkdir /home/bookmarks/images/events
 mkdir -p /home/sftponly/.ssh
 
 # Gives access to application-prod.properties and init-mariadb.sql
