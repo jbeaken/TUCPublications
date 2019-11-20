@@ -275,7 +275,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		ResponseEntity<String> response = chipsRestTemplate.exchange(chipsUrl + "/website/syncStockItemFromBeansWithJson", HttpMethod.POST, requestEntity, String.class);
 
-		logger.info("Chips response : {}", response);
+		logger.debug("Chips response : {}", response);
 
 		if(result.equals("")) return response.getBody();
 
