@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
