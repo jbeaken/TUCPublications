@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup the bookmarks database
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/home/bookmarks/backup/backupBeansDB.sh >> /var/log/backupBeansDB.log'
