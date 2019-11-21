@@ -118,7 +118,12 @@ systemctl reload apache2
 
 # backup
 cp /home/git/bookmarks/src/main/etc/backup/backupBeansDB.sh /home/bookmarks/backup
-cp /home/git/bookmarks/src/main/etc/backup/bookmarks_cron /etc/cron.d/bookmarks
+#cp /home/git/bookmarks/src/main/etc/backup/bookmarks_cron /etc/cron.d/bookmarks
+cp /home/git/bookmarks/src/main/etc/install/ubuntu/backup.service /etc/systemd/system
+cp /home/git/bookmarks/src/main/etc/install/ubuntu/backup.timer /etc/systemd/system
+systemctl enable backup.timer
+systemctl start backup.timer
+systemctl enable backup.service
 
 # Misc
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
