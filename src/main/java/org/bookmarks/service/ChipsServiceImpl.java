@@ -708,8 +708,6 @@ public class ChipsServiceImpl implements ChipsService {
 
 		String profile = environment.getActiveProfiles()[0];
 
-		logger.info("Current active profile : " + profile);
-
 		if (profile.equals("dev") || profile.equals("test")) {
 			logger.info("Aborting due to profile");
 			return false;
