@@ -1,29 +1,15 @@
 package org.bookmarks.controller;
 
-import java.util.Collection;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.bookmarks.domain.StockItem;
-import org.bookmarks.repository.CustomerRepository;
-import org.bookmarks.repository.StockItemRepository;
-import org.bookmarks.service.ChipsService;
-import org.bookmarks.service.CustomerOrderService;
-import org.bookmarks.service.Service;
+import com.ecwid.maleorang.method.v3_0.lists.members.MemberInfo;
 import org.bookmarks.service.MailchimpService;
-import org.bookmarks.website.domain.WebsiteCustomer;
-
+import org.bookmarks.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @Controller
@@ -50,12 +36,12 @@ public class MailchimpController extends AbstractBookmarksController {
 		logger.info("Attempting to subscribe email : {}  name : {} {}", email, firstname, lastname);
 
 		try {
-			mailchimpService.subscribe(email, firstname, lastname);
-			addSuccess("Successfully subscribed " + email, modelMap);
+			MemberInfo memberInfo = mailchimpService.subscribe(email, firstname, lastname);
+			addSuccess("Successfully subscribed " +  email, modelMap);
 			logger.info("Successfully subscribed {}", email);
 		} catch(Exception e) {
 				logger.error("Cannot subscribe to mailchimp", e);
-				addError("There is a problem subscribing to mailchimp", modelMap);
+				addError("There is a problem subscribing to mailchimp " + e.getMessage(), modelMap);
 				return "subscribeMailchimp";
 		}
 
