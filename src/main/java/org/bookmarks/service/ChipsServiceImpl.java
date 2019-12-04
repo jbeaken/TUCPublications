@@ -1,57 +1,29 @@
 package org.bookmarks.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-
-import org.springframework.transaction.annotation.Transactional;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jcraft.jsch.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
-import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.auth.BasicScheme;
-import org.apache.http.impl.client.BasicAuthCache;
-import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.bookmarks.domain.BookmarksAccount;
 import org.bookmarks.domain.Category;
-import org.bookmarks.domain.Customer;
 import org.bookmarks.domain.CustomerOrder;
-import org.bookmarks.domain.CustomerOrderLine;
 import org.bookmarks.domain.CustomerType;
-import org.bookmarks.domain.Event;
 import org.bookmarks.domain.Publisher;
 import org.bookmarks.domain.ReadingList;
-import org.bookmarks.domain.Source;
 import org.bookmarks.domain.StockItem;
+import org.bookmarks.domain.*;
 import org.bookmarks.exceptions.BookmarksException;
 import org.bookmarks.repository.CustomerRepository;
 import org.bookmarks.repository.StockItemRepository;
-import org.bookmarks.website.domain.Address;
-import org.bookmarks.website.domain.ContactDetails;
-import org.bookmarks.website.domain.CreditCard;
 import org.bookmarks.website.domain.OrderLine;
-import org.bookmarks.website.domain.WebsiteCustomer;
+import org.bookmarks.website.domain.*;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,18 +32,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.JSchException;
-import com.jcraft.jsch.Session;
-import com.jcraft.jsch.SftpException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class ChipsServiceImpl implements ChipsService {
@@ -112,9 +83,7 @@ public class ChipsServiceImpl implements ChipsService {
 	@Value("#{ applicationProperties['chips.url'] }")
 	private String chipsUrl;
 
-    private HttpHost target;
 
-    private CredentialsProvider credsProvider;
 
 	@Value("#{ applicationProperties['chips.get.orders'] }")
 	private Boolean chipsGetOrders;
@@ -140,7 +109,7 @@ public class ChipsServiceImpl implements ChipsService {
 	private RestTemplate chipsRestTemplate;
 
 	@Override
-	public void uploadBrochure(InputStream in) throws SftpException, JSchException, IOException {
+	public void uploadBrochure(InputStream in) throws SftpException, JSchException {
 
 		Session session = null;
 		try {
@@ -214,7 +183,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	private Session getJschSession() throws JSchException {
-		Session session = null;
+		Session session;
 
 		JSch jsch = new JSch();
 
@@ -228,7 +197,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	@Override
-	public String syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException, SftpException, JSchException {
+	public String syncStockItemWithChips(StockItem stockItem) throws ClientProtocolException, IOException {
 
 		logger.info("Attempting to sync stockitem with chips : {}", stockItem);
 
@@ -246,7 +215,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		// Checks
 		if (stockItem.getAlwaysInStock() != null && stockItem.getAlwaysInStock()) {
-			stockItem.setQuantityInStock(1l);
+			stockItem.setQuantityInStock(1L);
 		}
 
 		// Get sales figures, salesLastYear and totalSales
@@ -284,7 +253,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	@Override
-	public void evictAll() throws ClientProtocolException, IOException {
+	public void evictAll() throws IOException {
 
 		CloseableHttpClient httpclient = getHttpClient();
 
@@ -319,12 +288,12 @@ public class ChipsServiceImpl implements ChipsService {
 	 * At present only sending up bouncies, stickies aren't working
 	 */
 	@Override
-	public String updateChips() throws ClientProtocolException, IOException {
+	public String updateChips() {
 
 		ArrayList<StockItem> stockItems = (ArrayList<StockItem>) stockItemService.getBounciesAndStickies();
-		ArrayList<StockItem> strippedStockItems = new ArrayList<StockItem>();
+		ArrayList<StockItem> strippedStockItems = new ArrayList<>();
 
-		Collection<ReadingList> readingLists = readingListService.getAll();
+//		Collection<ReadingList> readingLists = readingListService.getAll();
 
 		// Transfer to reduce amount of unneeded fluff
 		for (StockItem si : stockItems) {
@@ -370,49 +339,6 @@ public class ChipsServiceImpl implements ChipsService {
 		return response.getBody();
 	}
 
-	private CloseableHttpResponse execute(String url, String name, String value) throws ClientProtocolException, IOException {
-
-		// Get Post
-		HttpPost httpPost = getHttpPost(url, name, value);
-
-		CredentialsProvider credsProvider = new BasicCredentialsProvider();
-
-		// credsProvider.setCredentials( new AuthScope(AuthScope.ANY_HOST, -1),
-		// new UsernamePasswordCredentials("little", "large"));
-		credsProvider.setCredentials(new AuthScope(target.getHostName(), -1), new UsernamePasswordCredentials("little", "large"));
-
-		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-
-		// // Create AuthCache instance
-		AuthCache authCache = new BasicAuthCache();
-		// // Generate BASIC scheme object and add it to the local
-		// // auth cache
-		BasicScheme basicAuth = new BasicScheme();
-		authCache.put(target, basicAuth);
-		//
-		// // Add AuthCache to the execution context
-		HttpClientContext localContext = HttpClientContext.create();
-		localContext.setCredentialsProvider(credsProvider);
-		localContext.setAuthCache(authCache);
-
-		CloseableHttpResponse response = httpclient.execute(httpPost, localContext);
-
-		return response;
-	}
-
-	private HttpPost getHttpPost(String uri, String name, String value) throws UnsupportedEncodingException {
-
-		HttpPost httpPost = getHttpPost(uri);
-
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-
-		nvps.add(new BasicNameValuePair(name, value));
-		httpPost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
-		// httpPost.setEntity(new UrlEncodedFormEntity(nvps));
-
-		return httpPost;
-	}
-
 	private HttpPost getHttpPost(String uri) {
 		logger.debug("Creating HTTP Post with url " + chipsUrl);
 
@@ -421,46 +347,15 @@ public class ChipsServiceImpl implements ChipsService {
 		return httpPost;
 	}
 
-	private HttpGet getHttpGet(String uri) {
-		logger.debug("Creating HTTP Get with url " + chipsUrl);
-
-		HttpGet httpGet = new HttpGet(chipsUrl);
-
-		return httpGet;
-	}
-
 	private CloseableHttpClient getHttpClient() {
-
-		CloseableHttpClient httpclient = HttpClients.custom().setDefaultCredentialsProvider(credsProvider).build();
-
-		return httpclient;
-	}
-
-	private void checkStatus(CloseableHttpResponse response) throws IOException {
-		HttpEntity entity = response.getEntity();
-
-		String returnMessage = EntityUtils.toString(entity);
-
-		if (!returnMessage.equals("success"))
-			throw new BookmarksException(returnMessage);
-
-		EntityUtils.consume(entity);
-	}
-
-	private RestTemplate getRestTemplate() {
-
-		RestTemplate restTemplate = new RestTemplate();
-
-		restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor("little", "bastard"));
-
-		return restTemplate;
+		return HttpClients.custom().setDefaultCredentialsProvider( null ).build();
 	}
 
 	@Override
 	@Transactional
-	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
+	public Collection<WebsiteCustomer> getOrders() throws IOException {
 
-		if (chipsGetOrders != true) {
+		if (!chipsGetOrders) {
 			logger.info("Aborting getOrders(), turned off");
 			return null;
 		}
@@ -469,8 +364,6 @@ public class ChipsServiceImpl implements ChipsService {
 
 		// Decrypt json
 		String decryptedJson = jsonEcryptor.decrypt(json);
-
-		//logger.debug("{}", decryptedJson);
 
 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
 		});
@@ -481,49 +374,7 @@ public class ChipsServiceImpl implements ChipsService {
 		saveOrders(chipsCustomers);
 
 		return chipsCustomers;
-
 	}
-// 	@Override
-// 	@Transactional
-// 	public Collection<WebsiteCustomer> getOrders() throws ClientProtocolException, IOException {
-//
-// 		CloseableHttpClient httpclient = getHttpClient();
-//
-// 		HttpGet httpGet = getHttpGet("/website/getOrders");
-//
-// 		CloseableHttpResponse response = httpclient.execute(httpGet);
-//
-// 		StatusLine status = response.getStatusLine();
-//
-// 		logger.info("/website/getOrders return status : " + status);
-//
-// 		checkStatus(status);
-//
-// 		String jsonCustomers = null;
-//
-// 		try {
-// 			HttpEntity entity = response.getEntity();
-// 			jsonCustomers = EntityUtils.toString(entity);
-// 			EntityUtils.consume(entity);
-// 		} finally {
-// 			response.close();
-// 		}
-//
-// 		// Decrypt json
-// 		String decryptedJson = jsonEcryptor.decrypt(jsonCustomers);
-//
-// //		logger.debug("{}", decryptedJson);
-//
-// 		List<WebsiteCustomer> chipsCustomers = new ObjectMapper().readValue(decryptedJson, new TypeReference<List<WebsiteCustomer>>() {
-// 		});
-//
-// 		logger.info("Have retrieved " + chipsCustomers.size() + " chips customer orders");
-//
-// 		// Now persist
-// 		saveOrders(chipsCustomers);
-//
-// 		return chipsCustomers;
-// 	}
 
 	private void saveOrders(List<WebsiteCustomer> chipsCustomers) {
 
@@ -562,7 +413,7 @@ public class ChipsServiceImpl implements ChipsService {
 			customerService.saveOrUpdate(beansCustomer);
 
 			// Build up Beans CustomerOrderLines
-			beansCustomer.setCustomerOrderLines(new HashSet<CustomerOrderLine>());
+			beansCustomer.setCustomerOrderLines(new HashSet<>());
 
 			for (OrderLine chipsOl : chipsCustomer.getOrders()) {
 
@@ -571,7 +422,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 				CustomerOrderLine beansOl = new CustomerOrderLine();
 
-				beansOl.setAmount(new Long(chipsOl.getQuantity()));
+				beansOl.setAmount(Long.valueOf(chipsOl.getQuantity()));
 				beansOl.setSellPrice(chipsOl.getSellPrice());
 				beansOl.setPostage(chipsOl.getPostage());
 				beansOl.setWebReference(chipsOl.getWebReference());
@@ -615,7 +466,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	@Override
-	public void removeConsumedCustomers() throws ClientProtocolException, IOException {
+	public void removeConsumedCustomers() throws IOException {
 
 		CloseableHttpClient httpclient = getHttpClient();
 
@@ -636,9 +487,7 @@ public class ChipsServiceImpl implements ChipsService {
 	}
 
 	@Override
-	public void buildIndex() throws ClientProtocolException, IOException {
-
-		RestTemplate restTemplate = getRestTemplate();
+	public void buildIndex() {
 
 		String json = chipsRestTemplate.getForObject("https://bookmarksbookshop.co.uk/website/buildIndex", String.class);
 

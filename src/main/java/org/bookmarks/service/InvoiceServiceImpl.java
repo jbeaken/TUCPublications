@@ -23,15 +23,11 @@ import org.bookmarks.domain.Event;
 import org.bookmarks.domain.Invoice;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
-import org.bookmarks.service.CustomerService;
 import org.bookmarks.report.bean.InvoiceReportBean;
 import org.bookmarks.repository.InvoiceRepository;
 import org.bookmarks.repository.Repository;
 import org.springframework.beans.factory.annotation.Value;
-import org.bookmarks.util.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.DateFormatter;
-import org.springframework.format.number.PercentStyleFormatter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -40,7 +40,7 @@
 
 	<util:list id="interceptors">
 		<bean id="basicAuthorizationInterceptor"
-			class="org.springframework.http.client.support.BasicAuthorizationInterceptor">
+			class="org.springframework.http.client.support.BasicAuthenticationInterceptor">
 			<constructor-arg index="0" value="${chips.username}" />
 			<constructor-arg index="1" value="${chips.password}" />
 		</bean>
@@ -206,9 +206,10 @@
 				<props>
 					<prop key="hibernate.connection.useUnicode">true</prop>
 					<prop key="hibernate.physical_naming_strategy">org.bookmarks.config.SpringPhysicalNamingStrategy</prop>
+					<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 					<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
 					<prop key="hibernate.connection.charSet">UTF-8</prop>
-					<prop key="hibernate.hbm2ddl.auto">validate</prop>
+					<prop key="hibernate.hbm2ddl.auto">none</prop>
 					<prop key="hibernate.show_sql">false</prop>
 					<prop key="hibernate.format_sql">true</prop>
 				</props>
