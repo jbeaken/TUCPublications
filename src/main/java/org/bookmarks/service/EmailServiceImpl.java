@@ -72,7 +72,7 @@ public class EmailServiceImpl implements EmailService {
 		msg.setFrom(fromEmail);
 
 		String[] emails = { buyer1Email, managerEmail };
-		
+
 		msg.setTo(emails);
 
 		msg.setSubject("Hello From Beans. Today I am feeling " + emotion);
@@ -147,7 +147,7 @@ public class EmailServiceImpl implements EmailService {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot wipe cc details email", ex.getMessage());
+			logger.error("Cannot wipe cc details email", e);
 		}
 	}
 
@@ -270,11 +270,11 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public void sendErrorEmail(Exception exception, String subject) {
 		SimpleMailMessage msg = new SimpleMailMessage();
-		
+
 		String message = exception.getStackTrace().toString() + " " + exception.getMessage();
-		
+
 		logger.error("This is message : " + message);
-		
+
 		msg.setFrom(fromEmail);
 		msg.setSubject("Error : " + subject);
 		msg.setTo("jack747@gmail.com");
