@@ -147,7 +147,7 @@ public class EmailServiceImpl implements EmailService {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
 			// simply log it and go on...
-			logger.error("Cannot wipe cc details email", e);
+			logger.error("Cannot wipe cc details email", ex);
 		}
 	}
 
