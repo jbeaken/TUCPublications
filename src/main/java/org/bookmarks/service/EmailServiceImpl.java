@@ -135,10 +135,7 @@ public class EmailServiceImpl implements EmailService {
 		msg.setFrom(fromEmail);
 
 		String[] emails = { adminEmail };
-		// String[] emails = {buyer1Email, mailOrderEmail, managerEmail,
-		// adminEmail};
 		msg.setTo(emails);
-		// msg.setTo("jack747@gmail.com");
 
 		msg.setSubject("Beans has run wipe cc details programme successfully!");
 		msg.setText("Beans has run wipe cc details programme successfully!");
@@ -146,8 +143,7 @@ public class EmailServiceImpl implements EmailService {
 		try {
 			this.mailSender.send(msg);
 		} catch (MailException ex) {
-			// simply log it and go on...
-			logger.error("Cannot wipe cc details email", ex);
+			logger.error("Exception sending wipe cc details email " + ex.getMessage());
 		}
 	}
 
