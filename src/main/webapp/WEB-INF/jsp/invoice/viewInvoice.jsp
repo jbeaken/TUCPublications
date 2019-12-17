@@ -88,7 +88,7 @@
 					  <display:column sortable="true" sortName="col.customer.lastName" maxLength="15" property="customerName" title="Customer" media="html"/>
 					  <display:column maxLength="15" property="rawCustomerName" title="Customer" media="pdf"/>
 					  <display:column property="telephoneNumber" maxLength="15" title="Telephone"/>
-					  <display:column sortable="true" sortName="col.customerOrderStatus" maxLength="15" property="customerOrderStatus.displayName" title="Status"/>
+					  <display:column sortable="true" sortName="col.status" maxLength="15" property="status.displayName" title="Status"/>
 					  <display:column sortable="true" sortName="col.deliveryType" property="deliveryType.displayName" title="Delivery Type"/>
 					  <display:column sortable="true" sortName="col.paymentType" property="paymentType.displayName" title="Payment Type"/>
 					  <display:column sortable="true" sortName="col.stockItem.isbn" property="stockItem.isbn" title="ISBN"/>
