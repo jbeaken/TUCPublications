@@ -227,7 +227,7 @@ private boolean appendId(InvoiceSearchBean invoiceSearchBean, StringBuffer query
 						+ "from Invoice i join i.customer c left join i.sales as s "
 						+ "where i.creationDate between :startDate and :endDate "
 						+ "and i.paid = false and i.isProforma = false "
-						+ "group By c, i order by c.lastName");
+						+ "group By c, i, s order by c.lastName");
 		query.setParameter("startDate", invoiceSearchBean.getStartDate());
 		query.setParameter("endDate", invoiceSearchBean.getEndDate());
 		return query.list();
