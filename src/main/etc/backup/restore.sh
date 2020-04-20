@@ -7,7 +7,7 @@ fi
 echo Restoring backup with timestamp $1
 
 #Load password
-. /home/bookmarks/password
+. ./password
 
 #download SQL
 wget -O bm.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$1.sql.gpg
@@ -23,7 +23,7 @@ gpg -d bm.sql.gpg > bm.sql
 
 #Restore database
 echo "Restoring database...."
-mysql -uroot -p$DB_PASSWORD bookmarks < bm.sql
+sudo mysql < bm.sql
 echo "....All Done!"
 
 #Shredding
