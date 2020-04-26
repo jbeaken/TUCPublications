@@ -1,4 +1,3 @@
 <?xml version='1.0' encoding='utf-8'?>
-<Context displayName="bookmarksonline.website" docBase="" path=""
-workDir="work/Catalina/bookmarks/_">
+<Context displayName="bookmarksonline.website" docBase="" workDir="work/Catalina/bookmarks/_">
 </Context>
