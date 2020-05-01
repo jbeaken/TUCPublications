@@ -65,11 +65,11 @@ cp /home/git/bookmarks/src/main/etc/install/tomcat/setenv.sh /opt/tomcat/bin/
 apt-get install -y apache2 libapache2-mod-jk
 #cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksbookshop.conf /etc/apache2/sites-available/
 cp /home/git/bookmarks/src/main/etc/install/apache2/bookmarksonline-min.conf /etc/apache2/sites-available/
-#cp /home/git/bookmarks/src/main/etc/install/apache2/marxismfestival.conf /etc/apache2/sites-available/
+cp /home/git/bookmarks/src/main/etc/install/apache2/mf.conf /etc/apache2/sites-available/
 a2enmod ssl
-#a2ensite marxismfestival
+a2ensite mf
 a2ensite bookmarksonline-min
-#a2ensite bookmarksbookshop
+a2ensite bookmarksbookshop
 a2dissite 000-default
 cp /home/git/bookmarks/src/main/etc/install/apache2/workers.properties /etc/libapache2-mod-jk/
 apt-get -y install software-properties-common
