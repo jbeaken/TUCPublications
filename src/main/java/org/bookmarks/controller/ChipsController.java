@@ -91,8 +91,8 @@ public class ChipsController extends AbstractBookmarksController {
 		logger.info("Attempting to update reading lists on chips");
 
 		try {
-			String result = chipsService.updateReadingLists();
-			addSuccess("Have updated events", modelMap);
+			chipsService.updateReadingLists();
+			addSuccess("Have updated reading lists", modelMap);
 			logger.info("Successfully updated events on chips!");
 		} catch (Exception e) {
 			logger.error("Cannot update reading lists!", e);

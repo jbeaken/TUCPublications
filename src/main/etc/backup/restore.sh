@@ -9,25 +9,33 @@ echo Restoring backup with timestamp $1
 #Load password
 . ./password
 
+DAY_OF_MONTH=$(date +"%d")
+MONTH=$(date +"%b")
+YEAR=$(date +'%Y')
+FULL_DATE=$(date +'%F')
+
 #download SQL
-wget -O bm.sql.gpg ftp://$USERNAME:$PASSWORD@$HOSTNAME/bookmarks/bm.$1.sql.gpg
+sshpass -e sftp -oBatchMode=no -b - $UN@$HOSTNAME << !
+   get /bookmarks/bm.$1.sql.gpg bm.sql.$FULL_DATE.gpg
+   bye
+!
 
 if [ $? -ne 0 ]
   then
-        echo "Database file with timestamp $1 cannot be found, aborting!!"
-       exit 1
+      echo "Database file with timestamp $1 cannot be found, aborting!!"
+      exit 1
 fi
 
+echo "Decrypting  database...."
 
-gpg -d bm.sql.gpg > bm.sql
+gpg -d bm.sql.$FULL_DATE.gpg > bm.sql
 
-#Restore database
-echo "Restoring database...."
-sudo mysql < bm.sql
+if [ $? -ne 0 ]
+  then
+      echo "Error in encyption, aborting!!"
+      exit 1
+fi
+
+sudo mysql  < bm.sql
+
 echo "....All Done!"
-
-#Shredding
-echo "Shredding..."
-#shred bm.sql
-
-echo "Restore Complete"
