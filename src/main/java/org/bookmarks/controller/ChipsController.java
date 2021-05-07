@@ -95,7 +95,7 @@ public class ChipsController extends AbstractBookmarksController {
 			addSuccess("Have updated events", modelMap);
 			logger.info("Successfully updated events on chips!");
 		} catch (Exception e) {
-			logger.error("Cannot update reading lists! {}", e);
+			logger.error("Cannot update reading lists!", e);
 			addError("Cannot update reading lists " + e.getMessage(), modelMap);
 		}
 
