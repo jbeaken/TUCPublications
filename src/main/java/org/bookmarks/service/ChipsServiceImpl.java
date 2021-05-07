@@ -279,7 +279,7 @@ public class ChipsServiceImpl implements ChipsService {
 
 		ResponseEntity<String> result = chipsRestTemplate.exchange(chipsUrl + "/website/updateReadingLists", HttpMethod.POST, requestEntity, String.class);
 
-		logger.info("Readling lists return result : {}", result);
+		logger.info("Reading lists return result : {}", result);
 
 		return result.getBody();
 	}
