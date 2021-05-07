@@ -89,18 +89,15 @@ public class ChipsController extends AbstractBookmarksController {
 	public String updateReadingLists(HttpSession session, ModelMap modelMap) {
 
 		logger.info("Attempting to update reading lists on chips");
-		
-		String result = chipsService.updateReadingLists();
 
-		if(!result.equals("success")) {
-			logger.info("Cannot update reading lists! {}", result);
-			addError("Cannot update reading lists " + result, modelMap);
-		} else {
-			addSuccess("Have updated events", modelMap);	
+		try {
+			String result = chipsService.updateReadingLists();
+			addSuccess("Have updated events", modelMap);
 			logger.info("Successfully updated events on chips!");
+		} catch (Exception e) {
+			logger.error("Cannot update reading lists! {}", e);
+			addError("Cannot update reading lists " + e.getMessage(), modelMap);
 		}
-
-		
 
 		return "welcome";
 	}
