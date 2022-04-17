@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.bookmarks.domain.Event;
-import org.springframework.beans.propertyeditors.LocaleEditor;
-import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * Interceptor that allows for changing the current locale on every request,
@@ -21,10 +18,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  * @since 20.06.2003
  * @see org.springframework.web.servlet.LocaleResolver
  */
-public class DecoratorInterceptor extends HandlerInterceptorAdapter {
-
-
-
+public class DecoratorInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -75,5 +69,4 @@ public class DecoratorInterceptor extends HandlerInterceptorAdapter {
 		}
 		return true;
 	}
-
 }

@@ -20,7 +20,7 @@ public class CSVMessageConvertor extends AbstractHttpMessageConverter<CSVRespons
 
 	public static final MediaType MEDIA_TYPE = new MediaType("text", "csv", Charset.forName("utf-8"));
 
-	private static final CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator("\n");
+	private static final CSVFormat csvFileFormat =  CSVFormat.DEFAULT.withRecordSeparator("\n");
 
 	public CSVMessageConvertor() {
 		super(MEDIA_TYPE);

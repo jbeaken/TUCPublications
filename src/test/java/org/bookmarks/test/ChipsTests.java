@@ -30,7 +30,7 @@ public class ChipsTests extends AbstractBookmarkWebsiteTests {
     			.param("isMember", "true")
     			.param("lastname","lastname"))
     			
-				.andExpect(status().isMovedTemporarily())
+				.andExpect(status().isFound())
 				.andExpect(redirectedUrl("/isjIssue/displaySearch"));
 //				.andExpect(model().size(1))
 //				.andExpect(model().attributeExists("name"))

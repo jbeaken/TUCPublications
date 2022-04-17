@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 		List<Customer> customerWithAccount= new ArrayList<Customer>();
 
 		//Populate list with customers and their account details
-		List<String> lines = FileUtils.readLines(new File("c:\\accounts.csv"));
+		List<String> lines = FileUtils.readLines(new File("c:\\accounts.csv"), Charset.forName("UTF-8"));
 		Integer index = 0;
 		while(index < lines.size()) {
 			String currentLine = lines.get(index);

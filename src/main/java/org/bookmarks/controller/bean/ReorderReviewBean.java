@@ -4,14 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.bookmarks.domain.Supplier;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-
-import org.bookmarks.domain.Supplier;
-import org.bookmarks.domain.Sale;
-import org.bookmarks.domain.Event;
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class ReorderReviewBean {
 
