@@ -1,6 +1,5 @@
 package org.bookmarks.controller;
 
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,8 +7,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,7 +16,6 @@ import org.bookmarks.controller.bean.SaleReportBean;
 import org.bookmarks.domain.Event;
 import org.bookmarks.domain.Sale;
 import org.bookmarks.domain.StockItem;
-import org.bookmarks.domain.StockItemType;
 import org.bookmarks.service.SaleService;
 import org.bookmarks.service.StockItemService;
 
