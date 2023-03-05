@@ -177,7 +177,7 @@ public class EventController extends AbstractBookmarksController {
 
 			// Sale
 			Sale s = new Sale();
-			s.setQuantity(new Long(quantity));
+			s.setQuantity(Long.valueOf(quantity));
 			s.setDiscount(new BigDecimal(discount));
 			s.setVat(new BigDecimal(vat));
 			s.setSellPrice(new BigDecimal(sellPrice));
@@ -185,7 +185,7 @@ public class EventController extends AbstractBookmarksController {
 			s.setCreationDate(creationDate);
 
 			StockItem si = new StockItem();
-			si.setId(new Long(stockItemId));
+			si.setId(Long.valueOf(stockItemId));
 
 			s.setStockItem(si);
 
@@ -193,7 +193,7 @@ public class EventController extends AbstractBookmarksController {
 				sales.add(s);
 			} else if (type.equals("I")) {
 				// Invoice
-				Long customerId = new Long(record.get(7));
+				Long customerId = Long.valueOf(record.get(7));
 				String invoiceCreationDateStr = record.get(8);
 
 				Date invoiceCreationDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(invoiceCreationDateStr);

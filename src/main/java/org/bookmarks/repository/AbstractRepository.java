@@ -130,7 +130,7 @@ public abstract class AbstractRepository<E> implements Repository<E> {
         }
         
        Long noSearchResults = (Long) q.uniqueResult();
-	   if(noSearchResults == null) noSearchResults = new Long(0);
+	   if(noSearchResults == null) noSearchResults = 0L;
        return noSearchResults.intValue();
 	}
 		

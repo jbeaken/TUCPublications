@@ -3,12 +3,10 @@ package org.bookmarks.service;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -17,8 +15,6 @@ import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -109,8 +105,6 @@ public class StockItemImageServiceImpl implements StockItemImageService {
 		try {
 			URL url = new URL(urlLocation);
 			image = ImageIO.read(url);
-		} catch (MalformedURLException e) {
-//			e.printStackTrace();
 		} catch (IOException e) {
 //			e.printStackTrace();
 		}
@@ -163,14 +157,14 @@ public class StockItemImageServiceImpl implements StockItemImageService {
 		    while ((line = reader.readLine()) != null) {
 //		    		count = count + line.length();
 //		    		System.out.println(line);
-		    		if(line.indexOf("<div class=\"image\"") != -1){
+		    		if(line.contains("<div class=\"image\"")){
 		    			//Can get small image
 		    			break;
 		    		}
-		    		if(line.indexOf("\"productImage\"") != -1){
+		    		if(line.contains("\"productImage\"")){
 		    			break;
 		    		}
-		    		if(line.indexOf("id=\"noResultsTitle\">") != -1){
+		    		if(line.contains("id=\"noResultsTitle\">")){
 //		    			System.out.println("Get no results title for isbn " + isbn);
 		    			//Lost cause
 		    			return null;

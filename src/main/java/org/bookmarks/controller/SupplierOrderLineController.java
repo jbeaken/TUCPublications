@@ -1,46 +1,21 @@
 package org.bookmarks.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.bookmarks.controller.validation.SupplierOrderLineValidator;
-import org.bookmarks.controller.bean.ReorderReviewBean;
-import org.bookmarks.domain.CustomerOrderLine;
-import org.bookmarks.domain.Customer;
-import org.bookmarks.domain.CustomerOrderLineStatus;
-import org.bookmarks.domain.StockItem;
-import org.bookmarks.domain.SupplierDeliveryLine;
-import org.bookmarks.domain.SupplierOrderLine;
-import org.bookmarks.domain.SupplierOrder;
-import org.bookmarks.domain.SupplierOrderLineStatus;
-import org.bookmarks.domain.Level;
-import org.bookmarks.domain.SupplierOrderLineType;
-import org.springframework.validation.ObjectError;
-import org.bookmarks.service.CustomerOrderLineService;
-import org.bookmarks.service.Service;
-import org.bookmarks.service.StockItemService;
-import org.bookmarks.service.SupplierOrderLineService;
-import org.bookmarks.service.SupplierOrderService;
-import org.bookmarks.service.CustomerService;
-import org.bookmarks.service.StaticDataService;
-import org.bookmarks.ui.comparator.GardnersDeliveryComparator;
-import org.bookmarks.ui.comparator.SupplierOrderComparator;
+import org.bookmarks.domain.*;
+import org.bookmarks.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.apache.commons.lang3.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequestMapping("/supplierOrderLine")

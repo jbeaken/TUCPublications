@@ -23,7 +23,7 @@ public class InvoiceReportBean {
 		this.customer = new Customer(customerId, firstName, lastName, "", null);
 
 		this.total = total;
-		this.vat = vat == null ? new Double(0) : vat;
+		this.vat = vat == null ? 0.0 : vat;
 	}
 
 	public BigDecimal getTotal() {
