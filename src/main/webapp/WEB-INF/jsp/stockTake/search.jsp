@@ -45,7 +45,7 @@ Nothing Found
 	   <display:setProperty name="export.pdf" value="true" />
 	   <display:setProperty name="export.xml" value="false" />
 	   <display:setProperty name="export.pdf.filename" value="stockTake.pdf"/>
-	   <display:setProperty name="export.csv.filename" value="stockTake.txt"/>
+	   <display:setProperty name="export.csv.filename" value="stockTake.csv"/>
   <display:column property="stockItem.isbn" sortable="true" sortName="s.isbn" title="ISBN"/>
   <display:column property="stockItem.title" sortable="true" sortName="s.title" maxLength="100" title="Title" style="width:70%"/>
   <display:column property="quantity" sortable="true" maxLength="10" class="category" sortName="s.category.name" title="Quantity"/>
