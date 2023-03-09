@@ -39,7 +39,7 @@ public class StockTakeLineRepositoryImpl extends AbstractRepository<StockTakeLin
 		StockItemSearchBean stockItemSearchBean = (StockItemSearchBean) searchBean;
 		boolean whereAlreadyAppended = false;
 		whereAlreadyAppended = appendIsbn(stockItemSearchBean, query);
-		whereAlreadyAppended = appendTitle(stockItemSearchBean, query, whereAlreadyAppended);
+		appendTitle(stockItemSearchBean, query, whereAlreadyAppended);
 	}
 
 	private boolean appendTitle(StockItemSearchBean stockItemSearchBean,
